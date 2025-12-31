@@ -36,7 +36,7 @@ TASKS_TEST = [
     Task(
         annotator="0",
         user_id="support_agent",
-        instruction="I've finished diagnosing support ticket tick-250828-001. The issue was that the customer's PyraTech GraphForce 4080 16GB GPU requires a 750W PSU but they only have a CoreFlow 650W 80+ Bronze. I've recommended they upgrade to a CoreFlow 750W 80+ Gold Modular PSU. Please update the ticket status to 'resolved', assign it to David Pereboom (david-pereboom-74810), and create a resolution documenting that we provided troubleshooting steps.",
+        instruction="I've finished diagnosing support ticket tick-250828-001. The issue was that the customer's PyraTech GraphForce 4080 16GB GPU requires a 750W PSU but they only have a CoreFlow 650W 80+ Bronze. I've recommended they upgrade to a CoreFlow 750W 80+ Gold Modular PSU. Please update the ticket status to 'resolved', assign it to David Pereboom (david-pereboom), and create a resolution documenting that we provided troubleshooting steps.",
         actions=[
             Action(
                 name="updateTicketStatus",
@@ -165,7 +165,7 @@ TASKS_TEST = [
     Task(
         annotator="0",
         user_id="recall_coordinator",
-        instruction="We're processing refunds for the SkyForge X670E Pro motherboard recall due to defective capacitors. Please process refunds for these affected orders from August 2025:\n1. Tyler Martinez (tyler-martinez-83467) - order ord-250816-004 (payment: pay-250816-004, amount: $349.99)\n2. Sarah Kim (sarah-kim-43892) - order ord-250815-013 (payment: pay-250815-013, amount: $349.99)\n3. Clara Covington (clara-covington-19283) - order ord-250819-023 (payment: pay-250819-023, amount: $349.99)\nFor each order: create a refund with reason 'defective' and status 'approved', update the order status to 'cancelled', and update the payment status to 'refunded'.",
+        instruction="We're processing refunds for the SkyForge X670E Pro motherboard recall due to defective capacitors. Please process refunds for these affected orders from August 2025:\n1. Tyler Martinez (tyler-martinez-83467) - order ord-250816-004 (payment: pay-250816-004, amount: $349.99)\n2. Sarah Kim (sarah-kim-45632) - order ord-250815-013 (payment: pay-250815-013, amount: $349.99)\n3. Clara Covington (clara-covington-89429) - order ord-250819-023 (payment: pay-250819-023, amount: $349.99)\nFor each order: create a refund with reason 'defective' and status 'approved', update the order status to 'cancelled', and update the payment status to 'refunded'.",
         actions=[
             Action(
                 name="create_refund",

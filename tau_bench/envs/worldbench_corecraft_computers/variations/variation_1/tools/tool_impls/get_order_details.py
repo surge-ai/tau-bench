@@ -18,12 +18,14 @@ def getOrderDetails(
     """Get order details with related payment, shipment, and tickets"""
     if not order_id:
         raise ValueError("order_id is required")
-    # if not created_before:
-    #     raise ValueError("created_before is required")
-
-    # Validate created_before format
-    created_before = validate_date_format(created_before, "created_before")
-    created_before_timestamp = parse_datetime_to_timestamp(created_before)
+    
+    # Validate created_before format if provided
+    if created_before:
+        created_before = validate_date_format(created_before, "created_before")
+        created_before_timestamp = parse_datetime_to_timestamp(created_before)
+    else:
+        # Use a far future timestamp if not provided
+        created_before_timestamp = 9999999999999
 
     conn = get_db_conn()
 
@@ -54,13 +56,29 @@ def getOrderDetails(
                     pass
 
         # Format order to match JavaScript output (simplified, snake_case)
+        # Handle createdAt/updatedAt - can be ISO string or timestamp in ms
+        def format_datetime(dt_value):
+            if isinstance(dt_value, str):
+                # Already ISO format, return as-is (or normalize)
+                try:
+                    # Parse and reformat to ensure consistent format
+                    dt = datetime.fromisoformat(dt_value.replace('Z', '+00:00'))
+                    return dt.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+                except (ValueError, AttributeError):
+                    return dt_value
+            elif isinstance(dt_value, (int, float)):
+                # Timestamp in milliseconds
+                return datetime.fromtimestamp(dt_value / 1000, tz=timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+            else:
+                return str(dt_value)
+        
         formatted_order = {
             "id": order["id"],
             "customer_id": order["customerId"],
             "line_items": order["lineItems"],
             "status": order["status"],
-            "created_at": datetime.fromtimestamp(order["createdAt"] / 1000, tz=timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
-            "updated_at": datetime.fromtimestamp(order["updatedAt"] / 1000, tz=timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
+            "created_at": format_datetime(order.get("createdAt", "")),
+            "updated_at": format_datetime(order.get("updatedAt", "")),
         }
 
         # Get customer (only return simplified fields)

@@ -18,30 +18,13 @@ def _now_iso_from_data(data: Dict[str, Any]) -> str:
     return "1970-01-01T00:00:00Z"
 
 
-def _as_list_table(data: Dict[str, Any], key: str) -> List[Dict[str, Any]]:
-    v = data.get(key)
-    if v is None:
-        data[key] = []
-        return data[key]
-    if isinstance(v, list):
-        data[key] = [r for r in v if isinstance(r, dict)]
-        return data[key]
-    if isinstance(v, dict):
-        data[key] = [r for r in v.values() if isinstance(r, dict)]
-        return data[key]
-    data[key] = []
-    return data[key]
 
 
 def _exists_by_id(data: Dict[str, Any], keys: List[str], obj_id: str) -> bool:
     for key in keys:
         table = data.get(key)
-        if isinstance(table, list):
-            if any(isinstance(r, dict) and r.get("id") == obj_id for r in table):
-                return True
-        elif isinstance(table, dict):
-            if any(isinstance(r, dict) and r.get("id") == obj_id for r in table.values()):
-                return True
+        if isinstance(table, dict) and obj_id in table:
+            return True
     return False
 
 
@@ -57,19 +40,15 @@ class CreateResolution(Tool):
     ) -> str:
         """Create a resolution for a support ticket."""
         # Verify ticket exists
-        if not _exists_by_id(
-            data,
-            keys=["SupportTicket", "support_tickets", "tickets", "Ticket", "ticket"],
-            obj_id=ticket_id,
-        ):
+        if not _exists_by_id(data, keys=["support_ticket"], obj_id=ticket_id):
             raise ValueError(f"Ticket {ticket_id} not found")
 
         # Verify refund exists if provided
-        if linked_refund_id and not _exists_by_id(data, keys=["Refund", "refunds", "refund"], obj_id=linked_refund_id):
+        if linked_refund_id and not _exists_by_id(data, keys=["refund"], obj_id=linked_refund_id):
             raise ValueError(f"Refund {linked_refund_id} not found")
 
         # Verify employee exists if provided
-        if resolved_by_id and not _exists_by_id(data, keys=["Employee", "employees", "employee"], obj_id=resolved_by_id):
+        if resolved_by_id and not _exists_by_id(data, keys=["employee"], obj_id=resolved_by_id):
             raise ValueError(f"Employee {resolved_by_id} not found")
 
         # Create row
@@ -85,13 +64,10 @@ class CreateResolution(Tool):
             "createdAt": _now_iso_from_data(data),
         }
 
-        _as_list_table(data, "Resolution").append(row)
-
-        # Optional aliases
-        if "resolutions" in data:
-            _as_list_table(data, "resolutions").append(row)
-        elif "resolution" in data:
-            _as_list_table(data, "resolution").append(row)
+        # Use dictionary format keyed by ID
+        if "resolution" not in data or not isinstance(data["resolution"], dict):
+            data["resolution"] = {}
+        data["resolution"][resolution_id] = row
 
         return json.dumps(row)
 

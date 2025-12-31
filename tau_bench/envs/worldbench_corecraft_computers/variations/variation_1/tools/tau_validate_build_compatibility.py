@@ -12,18 +12,23 @@ class ValidateBuildCompatibility(Tool):
         conn = sqlite3.connect(":memory:")
         try:
             build_sqlite_from_data(conn, data)
+            # Patch get_db_conn in both utils and the module that imported it
             try:
-                import utils; utils.get_db_conn=lambda:conn
-                # Also update the reference in tool_impls since it has a direct import
+                from .tool_impls import utils as tool_utils
+                original_get_db_conn = tool_utils.get_db_conn
+                tool_utils.get_db_conn = lambda: conn
+                
+                from .tool_impls import validate_build_compatibility as validate_build_compatibility_module
+                validate_build_compatibility_module.get_db_conn = lambda: conn
+                
+                result = _orig(**kwargs)
+                return json.dumps(result)
+            finally:
                 try:
-                    tool_impls_module = importlib.import_module('.tool_impls.validate_build_compatibility', package=__package__)
-                    tool_impls_module.get_db_conn = lambda: conn
-                except Exception:
+                    tool_utils.get_db_conn = original_get_db_conn
+                    validate_build_compatibility_module.get_db_conn = original_get_db_conn
+                except:
                     pass
-            except Exception:
-                pass
-            result = _orig(**kwargs)
-            return json.dumps(result)
         finally:
             conn.close()
 

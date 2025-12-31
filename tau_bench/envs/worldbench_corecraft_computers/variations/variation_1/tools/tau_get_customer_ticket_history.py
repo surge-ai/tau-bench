@@ -15,24 +15,23 @@ class GetCustomerTicketHistory(Tool):
         conn = sqlite3.connect(":memory:")
         try:
             build_sqlite_from_data(conn, data)
-
-            # Monkeypatch get_db_conn() used by the legacy tool, if it imports from `utils`.
-            # Note: tool_impls does "from utils import get_db_conn", which creates a direct
-            # reference. We need to patch both utils.get_db_conn AND the reference in tool_impls.
+            # Patch get_db_conn in both utils and the module that imported it
             try:
-                import utils  # type: ignore
-                utils.get_db_conn = lambda: conn  # type: ignore
-                # Also update the reference in tool_impls since it has a direct import
+                from .tool_impls import utils as tool_utils
+                original_get_db_conn = tool_utils.get_db_conn
+                tool_utils.get_db_conn = lambda: conn
+                
+                from .tool_impls import get_customer_ticket_history as get_customer_ticket_history_module
+                get_customer_ticket_history_module.get_db_conn = lambda: conn
+                
+                result = _orig_getCustomerTicketHistory(**kwargs)
+                return json.dumps(result)
+            finally:
                 try:
-                    tool_impls_module = importlib.import_module('.tool_impls.get_customer_ticket_history', package=__package__)  # type: ignore
-                    tool_impls_module.get_db_conn = lambda: conn  # type: ignore
-                except Exception:
+                    tool_utils.get_db_conn = original_get_db_conn
+                    get_customer_ticket_history_module.get_db_conn = original_get_db_conn
+                except:
                     pass
-            except Exception:
-                pass
-
-            result = _orig_getCustomerTicketHistory(**kwargs)
-            return json.dumps(result)
         finally:
             conn.close()
 

@@ -3,16 +3,11 @@ from tau_bench.envs.tool import Tool
 
 
 def _iter_orders(data: Dict[str, Any]):
-    for key in ("orders", "Orders", "Order"):
-        table = data.get(key)
-        if isinstance(table, dict):
-            for row in table.values():
-                if isinstance(row, dict):
-                    yield row
-        elif isinstance(table, list):
-            for row in table:
-                if isinstance(row, dict):
-                    yield row
+    order_table = data.get("order")
+    if isinstance(order_table, dict):
+        for row in order_table.values():
+            if isinstance(row, dict):
+                yield row
 
 
 class SearchOrders(Tool):

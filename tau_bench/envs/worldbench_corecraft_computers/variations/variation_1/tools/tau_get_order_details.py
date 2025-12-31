@@ -15,20 +15,26 @@ class GetOrderDetails(Tool):
         conn = sqlite3.connect(":memory:")
         try:
             build_sqlite_from_data(conn, data)
+            # Patch get_db_conn in both utils and the module that imported it
             try:
-                import utils  # type: ignore
-                utils.get_db_conn = lambda: conn  # type: ignore
-                # Also update the reference in tool_impls since it has a direct import
+                # Patch in utils module
+                from .tool_impls import utils as tool_utils
+                original_get_db_conn = tool_utils.get_db_conn
+                tool_utils.get_db_conn = lambda: conn
+                
+                # Patch in get_order_details module (it does "from .utils import get_db_conn")
+                from .tool_impls import get_order_details as get_order_details_module
+                get_order_details_module.get_db_conn = lambda: conn
+                
+                result = _orig_getOrderDetails(**kwargs)
+                return json.dumps(result)
+            finally:
+                # Restore original function
                 try:
-                    tool_impls_module = importlib.import_module('.tool_impls.get_order_details', package=__package__)  # type: ignore
-                    tool_impls_module.get_db_conn = lambda: conn  # type: ignore
-                except Exception:
+                    tool_utils.get_db_conn = original_get_db_conn
+                    get_order_details_module.get_db_conn = original_get_db_conn
+                except:
                     pass
-            except Exception:
-                pass
-
-            result = _orig_getOrderDetails(**kwargs)
-            return json.dumps(result)
         finally:
             conn.close()
 

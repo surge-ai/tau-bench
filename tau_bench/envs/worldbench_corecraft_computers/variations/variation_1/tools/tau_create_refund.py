@@ -19,32 +19,12 @@ def _now_iso_from_data(data: Dict[str, Any]) -> str:
     return "1970-01-01T00:00:00Z"
 
 
-def _as_list_table(data: Dict[str, Any], key: str) -> List[Dict[str, Any]]:
-    v = data.get(key)
-    if v is None:
-        data[key] = []
-        return data[key]
-    if isinstance(v, list):
-        data[key] = [r for r in v if isinstance(r, dict)]
-        return data[key]
-    if isinstance(v, dict):
-        data[key] = [r for r in v.values() if isinstance(r, dict)]
-        return data[key]
-    data[key] = []
-    return data[key]
 
 
 def _find_payment(data: Dict[str, Any], payment_id: str) -> Optional[Dict[str, Any]]:
-    for key in ("Payment", "payment", "payments", "Payments"):
-        table = data.get(key)
-        if isinstance(table, list):
-            for r in table:
-                if isinstance(r, dict) and r.get("id") == payment_id:
-                    return r
-        elif isinstance(table, dict):
-            for r in table.values():
-                if isinstance(r, dict) and r.get("id") == payment_id:
-                    return r
+    payment_table = data.get("payment")
+    if isinstance(payment_table, dict) and payment_id in payment_table:
+        return payment_table[payment_id]
     return None
 
 
@@ -93,14 +73,10 @@ class CreateRefund(Tool):
             "processedAt": None,
         }
 
-        table = _as_list_table(data, "Refund")
-        table.append(row)
-
-        # Optional lowercase alias for other tools' expectations
-        if "refunds" in data:
-            _as_list_table(data, "refunds").append(row)
-        elif "refund" in data:
-            _as_list_table(data, "refund").append(row)
+        # Use dictionary format keyed by ID
+        if "refund" not in data or not isinstance(data["refund"], dict):
+            data["refund"] = {}
+        data["refund"][refund_id] = row
 
         return json.dumps(row)
 

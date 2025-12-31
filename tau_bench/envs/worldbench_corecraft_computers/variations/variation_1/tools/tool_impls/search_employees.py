@@ -17,7 +17,7 @@ def searchEmployees(
     ] = None,
     department: Annotated[
         Optional[str],
-        Field(description="Department to filter by. Valid values are \"operations\", \"order_processing\", \"engineering\", \"help_desk\", \"it_systems\", \"product_management\", \"finance\", and \"hr\".")
+        Field(description="Department to filter by. Valid values are \"operations\", \"order_processing\", \"engineering\", \"help_desk\", \"it_systems\", \"product_management\", \"finance\", \"hr\", \"recruitment\", and \"support\".")
     ] = None,
     role: Annotated[Optional[str], Field(description="Role/title to search for")] = None,
     has_permission: Annotated[

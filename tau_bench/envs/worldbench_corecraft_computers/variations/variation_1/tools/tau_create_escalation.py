@@ -20,34 +20,12 @@ def _now_iso_from_data(data: Dict[str, Any]) -> str:
     return "1970-01-01T00:00:00Z"
 
 
-def _as_list_table(data: Dict[str, Any], key: str) -> List[Dict[str, Any]]:
-    """Ensure `data[key]` is a list-of-dicts table, returning it."""
-    v = data.get(key)
-    if v is None:
-        data[key] = []
-        return data[key]
-    if isinstance(v, list):
-        # best effort: keep only dict rows
-        data[key] = [r for r in v if isinstance(r, dict)]
-        return data[key]
-    if isinstance(v, dict):
-        data[key] = [r for r in v.values() if isinstance(r, dict)]
-        return data[key]
-    data[key] = []
-    return data[key]
 
 
 def _find_ticket(data: Dict[str, Any], ticket_id: str) -> Optional[Dict[str, Any]]:
-    for key in ("SupportTicket", "support_ticket", "supportticket", "support_tickets", "supportTickets"):
-        table = data.get(key)
-        if isinstance(table, list):
-            for r in table:
-                if isinstance(r, dict) and r.get("id") == ticket_id:
-                    return r
-        elif isinstance(table, dict):
-            for r in table.values():
-                if isinstance(r, dict) and r.get("id") == ticket_id:
-                    return r
+    ticket_table = data.get("support_ticket")
+    if isinstance(ticket_table, dict) and ticket_id in ticket_table:
+        return ticket_table[ticket_id]
     return None
 
 
@@ -76,15 +54,10 @@ class CreateEscalation(Tool):
             "resolvedAt": None,
         }
 
-        # Prefer the canonical "Escalation" table name from your legacy SQL.
-        table = _as_list_table(data, "Escalation")
-        table.append(row)
-
-        # Optional: keep a lowercase alias if your other tools query `escalation`/`escalations`
-        if "escalations" in data:
-            _as_list_table(data, "escalations").append(row)
-        elif "escalation" in data:
-            _as_list_table(data, "escalation").append(row)
+        # Use dictionary format keyed by ID
+        if "escalation" not in data or not isinstance(data["escalation"], dict):
+            data["escalation"] = {}
+        data["escalation"][escalation_id] = row
 
         return json.dumps(row)
 

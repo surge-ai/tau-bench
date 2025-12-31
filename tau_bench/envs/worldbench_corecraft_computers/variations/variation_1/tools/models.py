@@ -39,6 +39,7 @@ class Department(Enum):
     finance = 'finance'
     hr = 'hr'
     recruitment = 'recruitment'
+    support = 'support'
 
 
 class SupportRole(Enum):
@@ -334,6 +335,7 @@ class Status4(Enum):
     refunded = 'refunded'
     disputed = 'disputed'
     voided = 'voided'
+    completed = 'completed'
 
 
 class Payment(BaseModel):

@@ -11,16 +11,26 @@ class SearchCustomers(Tool):
         conn=sqlite3.connect(":memory:")
         try:
             build_sqlite_from_data(conn,data)
+            # Patch get_db_conn in both utils and the module that imported it
             try:
-                import utils; utils.get_db_conn=lambda:conn
-                # Also update the reference in tool_impls since it has a direct import
+                from .tool_impls import utils as tool_utils
+                original_get_db_conn = tool_utils.get_db_conn
+                tool_utils.get_db_conn = lambda: conn
+                
+                from .tool_impls import search_customers as search_customers_module
+                search_customers_module.get_db_conn = lambda: conn
+                
+                res = _orig(**kwargs)
+                # Convert Pydantic models to dicts for JSON serialization
+                if isinstance(res, list):
+                    res = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in res]
+                return json.dumps(res, default=str)
+            finally:
                 try:
-                    tool_impls_module = importlib.import_module('.tool_impls.search_customers', package=__package__)
-                    tool_impls_module.get_db_conn = lambda: conn
-                except Exception: pass
-            except Exception: pass
-            res=_orig(**kwargs)
-            return json.dumps(res)
+                    tool_utils.get_db_conn = original_get_db_conn
+                    search_customers_module.get_db_conn = original_get_db_conn
+                except:
+                    pass
         finally:
             conn.close()
 

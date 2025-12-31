@@ -10,11 +10,10 @@ class UpdateOrderStatus(Tool):
         new_status = kwargs.get("status")
         updated = False
 
-        for order in data.get("orders", []):
-            if order.get("id") == order_id:
-                order["status"] = new_status
-                updated = True
-                break
+        order_table = data.get("order")
+        if isinstance(order_table, dict) and order_id in order_table:
+            order_table[order_id]["status"] = new_status
+            updated = True
 
         return json.dumps({"updated": updated})
 

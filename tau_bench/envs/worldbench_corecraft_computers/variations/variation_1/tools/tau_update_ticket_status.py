@@ -7,13 +7,20 @@ class UpdateTicketStatus(Tool):
     def invoke(data: Dict[str,Any], **kwargs)->str:
         ticket_id = kwargs.get("ticket_id")
         new_status = kwargs.get("status")
+        assigned_employee_id = kwargs.get("assigned_employee_id")
+        priority = kwargs.get("priority")
         updated = False
 
-        for ticket in data.get("tickets", []):
-            if ticket.get("id") == ticket_id:
+        ticket_table = data.get("support_ticket")
+        if isinstance(ticket_table, dict) and ticket_id in ticket_table:
+            ticket = ticket_table[ticket_id]
+            if new_status is not None:
                 ticket["status"] = new_status
-                updated = True
-                break
+            if assigned_employee_id is not None:
+                ticket["assignedEmployeeId"] = assigned_employee_id
+            if priority is not None:
+                ticket["priority"] = priority
+            updated = True
 
         return json.dumps({"updated": updated})
 

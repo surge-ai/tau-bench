@@ -9,11 +9,10 @@ class UpdatePaymentStatus(Tool):
         new_status = kwargs.get("status")
         updated = False
 
-        for payment in data.get("payments", []):
-            if payment.get("id") == payment_id:
-                payment["status"] = new_status
-                updated = True
-                break
+        payment_table = data.get("payment")
+        if isinstance(payment_table, dict) and payment_id in payment_table:
+            payment_table[payment_id]["status"] = new_status
+            updated = True
 
         return json.dumps({"updated": updated})
 
