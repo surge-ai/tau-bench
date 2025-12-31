@@ -1,15 +1,3 @@
-# typed: ignore
-# Tau Bench write tool: create_resolution
-#
-# Converted from create_resolution.py (legacy SQL tool) to Tau's Tool interface.
-# The original file is truncated in your upload, so this is a faithful best-effort
-# based on the visible intent:
-#   - verify ticket exists
-#   - optionally verify linked_refund_id and resolved_by_id exist
-#   - insert a Resolution row
-#
-# This implementation mutates the canonical `data` dict in-place (Tau-style).
-
 import json
 import uuid
 from typing import Any, Dict, List, Optional

@@ -1,7 +1,3 @@
-# typed: ignore
-# Auto-converted Tau Bench read-tool wrapper
-# Source: search_builds.py::searchBuilds
-
 import json
 import sqlite3
 from typing import Any, Dict

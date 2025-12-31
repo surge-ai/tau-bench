@@ -1,6 +1,3 @@
-# typed: ignore
-# Tau Bench read tool: search_orders
-
 from typing import Any, Dict, List, Optional
 from tau_bench.envs.tool import Tool
 

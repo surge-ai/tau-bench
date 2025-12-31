@@ -1,14 +1,3 @@
-# typed: ignore
-# Auto-converted to Tau Bench Tool format from a standalone function tool.
-#
-# NOTE:
-# - This tool builds an in-memory SQLite database from the current `data` dict on each invocation.
-# - This keeps compatibility with SQL-based read logic, while still allowing writes to mutate `data`
-#   (since the DB is rebuilt from `data` each time).
-#
-# If your env's canonical data keys differ (e.g. "Products" vs "products"), the loader below
-# creates both the original table name and a lowercased alias.
-
 import json
 import sqlite3
 from typing import Any, Dict, List, Optional

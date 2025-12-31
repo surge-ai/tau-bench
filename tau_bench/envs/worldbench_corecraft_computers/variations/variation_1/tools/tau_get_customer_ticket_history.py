@@ -1,12 +1,3 @@
-# typed: ignore
-# Auto-converted Tau Bench read-tool wrapper
-# Source: get_customer_ticket_history.py::getCustomerTicketHistory
-#
-# Strategy:
-# - Build an in-memory SQLite DB from the canonical Tau `data` dict on each invocation
-# - Monkeypatch utils.get_db_conn() (if present) so the legacy function can run unchanged
-# - Return JSON-serialized results
-
 import json
 import sqlite3
 from typing import Any, Dict

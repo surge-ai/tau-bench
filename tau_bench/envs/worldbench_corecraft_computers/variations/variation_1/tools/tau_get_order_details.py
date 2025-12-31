@@ -1,7 +1,3 @@
-# typed: ignore
-# Auto-converted Tau Bench read-tool wrapper
-# Source: get_order_details.py::getOrderDetails
-
 import json
 import sqlite3
 from typing import Any, Dict

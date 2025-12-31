@@ -1,10 +1,3 @@
-# typed: ignore
-# Tau Bench write tool: create_refund
-#
-# Converted from create_refund.py (legacy SQL tool) to Tau's Tool interface.
-# This implementation mutates the canonical `data` dict in-place (Tau-style),
-# and returns the created refund row as JSON.
-
 import json
 import uuid
 from datetime import datetime, timezone

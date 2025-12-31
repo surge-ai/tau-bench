@@ -1,15 +1,3 @@
-# typed: ignore
-# Tau Bench write tool: create_escalation
-#
-# Converted from create_escalation.py (legacy SQL tool) to Tau's Tool interface.
-# This implementation mutates the canonical `data` dict in-place (Tau-style).
-#
-# Original behavior (SQL):
-# - Verify SupportTicket exists
-# - INSERT into Escalation(id, type, ticketId, escalationType, destination, notes, createdAt, resolvedAt)
-# - createdAt = datetime('now') ; resolvedAt = NULL
-# - Return the created escalation row
-
 import json
 import uuid
 from datetime import datetime, timezone

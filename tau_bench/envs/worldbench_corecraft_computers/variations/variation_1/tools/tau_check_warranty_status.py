@@ -1,7 +1,3 @@
-# typed: ignore
-# Auto-converted Tau Bench tool wrapper
-# Source: check_warranty_status.py::checkWarrantyStatus
-
 import json
 import sqlite3
 from typing import Any, Dict, Optional
