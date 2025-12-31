@@ -25,6 +25,7 @@ ALL_TOOLS = [
     CheckWarrantyStatus,
     CreateEscalation,
     CreateRefund,
+    CreateResolution,
     GetCustomerTicketHistory,
     GetOrderDetails,
     GetProduct,

@@ -1,5 +1,5 @@
 import json
-import uuid
+import hashlib
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional, List
 
@@ -42,7 +42,10 @@ class CreateEscalation(Tool):
         if not _find_ticket(data, ticket_id):
             raise ValueError(f"Ticket {ticket_id} not found")
 
-        escalation_id = f"esc_{uuid.uuid4().hex}"
+        # Generate deterministic ID based on input parameters
+        id_input = f"{ticket_id}|{escalation_type}|{destination}|{notes or ''}"
+        id_hash = hashlib.sha256(id_input.encode()).hexdigest()[:12]
+        escalation_id = f"esc_{id_hash}"
         row: Dict[str, Any] = {
             "id": escalation_id,
             "type": "escalation",

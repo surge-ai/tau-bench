@@ -1,5 +1,5 @@
 import json
-import uuid
+import hashlib
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
@@ -58,7 +58,10 @@ class CreateRefund(Tool):
         if not _find_payment(data, payment_id):
             raise ValueError(f"Payment {payment_id} not found")
 
-        refund_id = f"refund_{uuid.uuid4().hex}"
+        # Generate deterministic ID based on input parameters
+        id_input = f"{payment_id}|{amount}|{currency}|{reason}|{status or 'pending'}"
+        id_hash = hashlib.sha256(id_input.encode()).hexdigest()[:12]
+        refund_id = f"refund_{id_hash}"
         row: Dict[str, Any] = {
             "id": refund_id,
             "type": "refund",

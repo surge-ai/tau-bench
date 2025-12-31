@@ -1,5 +1,5 @@
 import json
-import uuid
+import hashlib
 from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
@@ -51,8 +51,10 @@ class CreateResolution(Tool):
         if resolved_by_id and not _exists_by_id(data, keys=["employee"], obj_id=resolved_by_id):
             raise ValueError(f"Employee {resolved_by_id} not found")
 
-        # Create row
-        resolution_id = f"res_{uuid.uuid4().hex}"
+        # Generate deterministic ID based on input parameters
+        id_input = f"{ticket_id}|{outcome}|{resolved_by_id or ''}|{linked_refund_id or ''}"
+        id_hash = hashlib.sha256(id_input.encode()).hexdigest()[:12]
+        resolution_id = f"res_{id_hash}"
         row: Dict[str, Any] = {
             "id": resolution_id,
             "type": "resolution",
