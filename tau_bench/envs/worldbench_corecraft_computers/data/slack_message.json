@@ -1,0 +1,208 @@
+{
+    "msg-250828-004": {
+        "channelId": "engineering-support",
+        "text": "Check the 24-pin ATX connection first - I've seen those CoreFlow modulars have loose seating sometimes. Also have them try the paperclip test on the PSU to isolate if it's the board or PSU. And double-check the CPU power connector is fully seated.",
+        "ticketId": "tick-250827-002",
+        "reactions": [
+            {
+                "emoji": "thinking",
+                "employeeIds": [
+                    "nadia-petrova"
+                ]
+            }
+        ],
+        "timestamp": "2025-08-27T11:35:00Z",
+        "authorId": "sara-li"
+    },
+    "msg-250827-010": {
+        "channelId": "support-general",
+        "text": "According to FedEx, the Jacksonville facility is swamped right now. They either have tons of packages up in line before ours, or they've lost the package. Either way, I told them we'll report it missing if our customer doesn't get it by Monday. That should light a fire! Just let our customer know, if they don't get an update by Friday, we'll rush a new package, and you can waive the fee of course.",
+        "reactions": [
+            {
+                "emoji": "heart",
+                "employeeIds": [
+                    "kailani-voss"
+                ]
+            }
+        ],
+        "timestamp": "2025-08-27T08:12:00Z",
+        "authorId": "miguel-alvarez"
+    },
+    "msg-250828-005": {
+        "channelId": "support-general",
+        "text": "Dealing with a shipping mixup - customer says package was delivered but they never got it. Neighbors didn't see anything either. Tracking shows 'delivered' but something's fishy. Going to contact FedEx for GPS coordinates and proof of delivery photo.",
+        "ticketId": "tick-250828-003",
+        "timestamp": "2025-08-28T15:50:00Z",
+        "authorId": "bianca-rossi"
+    },
+    "msg-250828-002": {
+        "channelId": "product-team",
+        "text": "Noted! I'll add a prominent case clearance callout to all GPUs over 300mm. We should also create a KB article about measuring GPU clearance. This compatibility miss could've been prevented with better product info.",
+        "ticketId": "tick-250815-001",
+        "reactions": [
+            {
+                "emoji": "check",
+                "employeeIds": [
+                    "alex-morgan",
+                    "maya-craft"
+                ]
+            }
+        ],
+        "timestamp": "2025-08-15T10:45:00Z",
+        "authorId": "aisha-khan"
+    },
+    "msg-250915-002": {
+        "channelId": "support-general",
+        "authorId": "alex-morgan",
+        "text": "What kind of 'doesn't fit'? Was this a full build we did or a single part? Did she ask us for recommendations?",
+        "ticketId": "tick-250914-089",
+        "timestamp": "2025-09-15T13:18:00Z"
+    },
+    "msg-250702-001": {
+        "channelId": "support-general",
+        "authorId": "alex-morgan",
+        "text": "Hey everyone! 👋 I want to introduce Tim Bradley, our newest Customer Support Representative who joined us this week. Tim comes from retail electronics and has been diving deep into our compatibility guides and product knowledge base. He'll be handling Tier 1 support alongside Bianca and me. Please give him a warm CoreCraft welcome! 🎉",
+        "reactions": [
+            {
+                "emoji": "wave",
+                "employeeIds": [
+                    "bianca-rossi",
+                    "maya-craft",
+                    "nadia-petrova"
+                ]
+            },
+            {
+                "emoji": "party",
+                "employeeIds": [
+                    "maya-craft",
+                    "aisha-khan"
+                ]
+            },
+            {
+                "emoji": "welcome",
+                "employeeIds": [
+                    "bianca-rossi"
+                ]
+            }
+        ],
+        "timestamp": "2025-07-02T09:15:00Z"
+    },
+    "msg-250828-003": {
+        "channelId": "engineering-support",
+        "text": "Need some troubleshooting help. Customer built Dragonfire base config but getting zero power - no lights, fans, nothing. Guided them through PSU connections and front panel headers. @sara any other common gotchas with the Cryonix Z790 Apex?",
+        "ticketId": "tick-250827-002",
+        "timestamp": "2025-08-27T11:25:00Z",
+        "authorId": "nadia-petrova"
+    },
+    "msg-250702-002": {
+        "channelId": "support-general",
+        "authorId": "aisha-khan",
+        "text": "Welcome to the team, Tim! 🎉 Really excited to have you here. If you ever have questions about product specs or compatibility edge cases, don't hesitate to ping me. The compatibility matrix can be tricky at first, but you'll get the hang of it. Looking forward to working with you!",
+        "reactions": [
+            {
+                "emoji": "heart",
+                "employeeIds": [
+                    "alex-morgan",
+                    "tim-bradley"
+                ]
+            },
+            {
+                "emoji": "thumbs_up",
+                "employeeIds": [
+                    "bianca-rossi",
+                    "maya-craft"
+                ]
+            }
+        ],
+        "timestamp": "2025-07-02T09:22:00Z"
+    },
+    "msg-250915-001": {
+        "channelId": "support-general",
+        "authorId": "tim-bradley",
+        "text": "Hey Alex, got a compatibility issue with a customer. She's saying the CPU she ordered doesn't fit her motherboard at all. Ticket #089. Not sure what went wrong?",
+        "ticketId": "tick-250914-089",
+        "timestamp": "2025-09-15T13:15:00Z"
+    },
+    "msg-250828-001": {
+        "channelId": "support-general",
+        "text": "Hey team, got another GPU clearance issue. Customer ordered the 305mm GraphForce 4070 but her case only fits 280mm cards. This is like the 5th one this month. @aisha maybe we need better compatibility warnings on the product pages?",
+        "ticketId": "tick-250815-001",
+        "reactions": [
+            {
+                "emoji": "thumbs_up",
+                "employeeIds": [
+                    "bianca-rossi",
+                    "nadia-petrova"
+                ]
+            }
+        ],
+        "timestamp": "2025-08-15T10:30:00Z",
+        "authorId": "alex-morgan"
+    },
+    "msg-250702-003": {
+        "channelId": "support-general",
+        "authorId": "tim-bradley",
+        "text": "Thanks everyone! Happy to be here and looking forward to working with you all. @aisha I'll definitely reach out when I have questions about the trickier compatibility stuff. Still getting up to speed on all the socket types and chipset combinations.",
+        "reactions": [
+            {
+                "emoji": "thumbs_up",
+                "employeeIds": [
+                    "alex-morgan",
+                    "aisha-khan",
+                    "bianca-rossi"
+                ]
+            }
+        ],
+        "timestamp": "2025-07-02T09:35:00Z"
+    },
+    "msg-250901-014": {
+        "channelId": "support-general",
+        "authorId": "tim-bradley",
+        "text": "@aisha Quick compatibility question - customer has Z790 motherboard and wants to upgrade CPU. Looking at the ZentriCore Apex 8600X - this should work with Z790 chipset, right? Want to make sure before I recommend it.",
+        "ticketId": "tick-250901-123",
+        "timestamp": "2025-09-01T18:25:00Z"
+    },
+    "msg-250828-006": {
+        "channelId": "support-general",
+        "text": "For shipping issues like this, let's follow our standard protocol - request delivery proof from carrier first, then if that's inconclusive, file a claim and send replacement immediately. We'll eat the cost to keep customer happy. @bianca let me know if you need approval for the replacement shipment.",
+        "ticketId": "tick-250828-003",
+        "reactions": [
+            {
+                "emoji": "thumbs_up",
+                "employeeIds": [
+                    "bianca-rossi"
+                ]
+            }
+        ],
+        "timestamp": "2025-08-28T16:00:00Z",
+        "authorId": "maya-craft"
+    },
+    "msg-250828-007": {
+        "channelId": "support-general",
+        "text": "Warehouse mixup alert - customer ordered CryoWave Tower Air Cooler but got shipped wrong cooler instead. SKUs don't match at all. @darnell can you double-check our pick-and-pack process? This is a pretty big miss.",
+        "ticketId": "tick-250826-007",
+        "timestamp": "2025-08-26T12:35:00Z",
+        "authorId": "bianca-rossi"
+    },
+    "msg-250901-015": {
+        "channelId": "support-general",
+        "authorId": "tim-bradley",
+        "text": "Nevermind, found it in the product specs! Thanks anyway!",
+        "ticketId": "tick-250901-123",
+        "reactions": [
+            {
+                "emoji": "thumbs_up",
+                "employeeIds": [
+                    "aisha-khan"
+                ]
+            }
+        ],
+        "timestamp": "2025-09-01T18:28:00Z"
+    },
+    "msg-250827-009": {
+        "channelId": "support-general",
+        "text": "@Miguel Looks like we've hit a snag with FedEx with one of our build orders. The package got hung up at the transit center in Jacksonville. Can you help me investigate what's going on so I can touch base with the customer? Customer's name is Artemis Hatch...how cool is that?",
+        "timestamp": "2025-08-27T08:04:22Z",
+        "authorId": "kailani-voss"
+    }
+}

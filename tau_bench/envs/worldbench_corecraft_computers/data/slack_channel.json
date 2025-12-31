@@ -1,0 +1,322 @@
+{
+    "policy-discussion": {
+        "name": "policy-discussion",
+        "purpose": "Proposed policy changes before rollout - leadership and department heads discuss updates to returns, warranty, shipping policies",
+        "members": {
+            "connect": [
+                {
+                    "id": "evan-core"
+                },
+                {
+                    "id": "maya-craft"
+                },
+                {
+                    "id": "pauline-ortega"
+                },
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "darnell-brooks"
+                },
+                {
+                    "id": "ruth-gallagher"
+                },
+                {
+                    "id": "aisha-khan"
+                },
+                {
+                    "id": "jamal-nguyen"
+                },
+                {
+                    "id": "nadia-petrova"
+                },
+                {
+                    "id": "trevor-singh"
+                }
+            ]
+        }
+    },
+    "customer-feedback": {
+        "name": "customer-feedback",
+        "purpose": "Sharing positive customer feedback, feature requests, and suggestions from support interactions",
+        "members": {
+            "connect": [
+                {
+                    "id": "evan-core"
+                },
+                {
+                    "id": "maya-craft"
+                },
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                },
+                {
+                    "id": "tim-bradley"
+                },
+                {
+                    "id": "mei-zhang"
+                },
+                {
+                    "id": "david-pereboom"
+                },
+                {
+                    "id": "kailani-voss"
+                },
+                {
+                    "id": "aisha-khan"
+                },
+                {
+                    "id": "trevor-singh"
+                }
+            ]
+        }
+    },
+    "escalations": {
+        "name": "escalations",
+        "purpose": "Complex cases needing manager approval, unusual situations, handling VIP/enterprise customers",
+        "members": {
+            "connect": [
+                {
+                    "id": "kailani-voss"
+                },
+                {
+                    "id": "ruth-gallagher"
+                },
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                },
+                {
+                    "id": "maya-craft"
+                },
+                {
+                    "id": "evan-core"
+                }
+            ]
+        }
+    },
+    "engineering-support": {
+        "name": "engineering-support",
+        "purpose": "Technical escalations and complex troubleshooting with engineering team",
+        "members": {
+            "connect": [
+                {
+                    "id": "nadia-petrova"
+                },
+                {
+                    "id": "sara-li"
+                },
+                {
+                    "id": "owen-kim"
+                },
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                }
+            ]
+        }
+    },
+    "product-team": {
+        "name": "product-team",
+        "purpose": "Product management discussions and catalog improvements",
+        "members": {
+            "connect": [
+                {
+                    "id": "aisha-khan"
+                },
+                {
+                    "id": "maya-craft"
+                },
+                {
+                    "id": "nadia-petrova"
+                },
+                {
+                    "id": "evan-core"
+                }
+            ]
+        }
+    },
+    "fulfillment-updates": {
+        "name": "fulfillment-updates",
+        "purpose": "Warehouse/shipping alerts about delays, stock issues, damaged inventory that CS needs to communicate to customers",
+        "members": {
+            "connect": [
+                {
+                    "id": "darnell-brooks"
+                },
+                {
+                    "id": "tracy-nguyen"
+                },
+                {
+                    "id": "miguel-alvarez"
+                },
+                {
+                    "id": "caleb-jones"
+                },
+                {
+                    "id": "hannah-park"
+                },
+                {
+                    "id": "priya-patel"
+                },
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                },
+                {
+                    "id": "tim-bradley"
+                },
+                {
+                    "id": "mei-zhang"
+                },
+                {
+                    "id": "david-pereboom"
+                }
+            ]
+        }
+    },
+    "promotions-planning": {
+        "name": "promotions-planning",
+        "purpose": "Coordination of upcoming sales, active promotions, coupon codes so CS can answer customer questions accurately",
+        "members": {
+            "connect": [
+                {
+                    "id": "chloe-bennett"
+                },
+                {
+                    "id": "aisha-khan"
+                },
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                },
+                {
+                    "id": "tim-bradley"
+                },
+                {
+                    "id": "mei-zhang"
+                },
+                {
+                    "id": "maya-craft"
+                },
+                {
+                    "id": "jamal-nguyen"
+                }
+            ]
+        }
+    },
+    "returns-updates": {
+        "name": "returns-updates",
+        "purpose": "Returns coordinator posts inspection results, batch defect discoveries, RMA status updates",
+        "members": {
+            "connect": [
+                {
+                    "id": "gregory-moss"
+                },
+                {
+                    "id": "nadia-petrova"
+                },
+                {
+                    "id": "sara-li"
+                },
+                {
+                    "id": "victor-romero"
+                },
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                },
+                {
+                    "id": "mei-zhang"
+                },
+                {
+                    "id": "david-pereboom"
+                },
+                {
+                    "id": "jamal-nguyen"
+                }
+            ]
+        }
+    },
+    "support-general": {
+        "name": "support-general",
+        "purpose": "Main support team coordination and general customer ticket discussions",
+        "members": {
+            "connect": [
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                },
+                {
+                    "id": "tim-bradley"
+                },
+                {
+                    "id": "maya-craft"
+                },
+                {
+                    "id": "nadia-petrova"
+                },
+                {
+                    "id": "aisha-khan"
+                },
+                {
+                    "id": "kailani-voss"
+                },
+                {
+                    "id": "miguel-alvarez"
+                }
+            ]
+        }
+    },
+    "kb-updates": {
+        "name": "kb-updates",
+        "purpose": "Notifications when KB articles are published, updated, or deprecated so agents don't miss critical documentation changes",
+        "members": {
+            "connect": [
+                {
+                    "id": "alex-morgan"
+                },
+                {
+                    "id": "bianca-rossi"
+                },
+                {
+                    "id": "tim-bradley"
+                },
+                {
+                    "id": "mei-zhang"
+                },
+                {
+                    "id": "david-pereboom"
+                },
+                {
+                    "id": "kailani-voss"
+                },
+                {
+                    "id": "aisha-khan"
+                },
+                {
+                    "id": "nadia-petrova"
+                },
+                {
+                    "id": "trevor-singh"
+                }
+            ]
+        }
+    }
+}

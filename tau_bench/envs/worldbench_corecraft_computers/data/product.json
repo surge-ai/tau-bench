@@ -1,0 +1,1076 @@
+{
+    "cryowave-aio-240mm": {
+        "category": "cooling",
+        "sku": "CRYO-AIO-240MM",
+        "name": "CryoWave AIO 240mm Liquid Cooler",
+        "brand": "CryoWave",
+        "price": 99.99,
+        "inventory": {
+            "inStock": 19,
+            "backorderable": true
+        },
+        "specs": {
+            "cooling": {
+                "type": "aio",
+                "radiatorSizeMm": 240,
+                "heightMm": 52
+            }
+        },
+        "warrantyMonths": 60
+    },
+    "astralogic-phoenix-16800x": {
+        "category": "cpu",
+        "sku": "ASTRA-PHOENIX-16800X",
+        "name": "AstraLogic Phoenix 16800X",
+        "brand": "AstraLogic",
+        "price": 649.99,
+        "inventory": {
+            "inStock": 18,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "AM4",
+                "cores": 16,
+                "tdpWatts": 170,
+                "baseClockGhz": 3.4,
+                "boostClockGhz": 4.7
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "swifthand-K200": {
+        "category": "keyboard",
+        "sku": "SWIFTHAND-K200",
+        "name": "Swifthand K200 Full-Sized Clicky Keyboard",
+        "brand": "SwiftHand",
+        "price": 119.99,
+        "inventory": {
+            "inStock": 14,
+            "backorderable": true
+        },
+        "specs": {
+            "keyboard": {
+                "layout": "QWERTY",
+                "switchType": "clicky",
+                "keyCount": 104,
+                "backlit": true,
+                "programmable": true,
+                "connectivity": "wired",
+                "formFactor": "full-size",
+                "keycapMaterial": "laser-etched"
+            }
+        },
+        "warrantyMonths": 12
+    },
+    "pyratech-graphforce-4080-16gb": {
+        "category": "gpu",
+        "sku": "PYRA-GFX4080-16G",
+        "name": "PyraTech GraphForce 4080 16GB",
+        "brand": "PyraTech",
+        "price": 1199.99,
+        "inventory": {
+            "inStock": 8,
+            "backorderable": false
+        },
+        "specs": {
+            "gpu": {
+                "pcie": "4.0",
+                "recommendedPsuWatts": 750,
+                "lengthMm": 320,
+                "vramGb": 16,
+                "baseClockMhz": 2205,
+                "boostClockMhz": 2505,
+                "displayOutputs": {
+                    "hdmi": 2,
+                    "displayPort": 3,
+                    "dvi": 0,
+                    "usbc": 1
+                }
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "cryonix-z790-apex": {
+        "category": "motherboard",
+        "sku": "CRY-Z790-APEX",
+        "name": "Cryonix Z790 Apex",
+        "brand": "Cryonix",
+        "price": 399.99,
+        "inventory": {
+            "inStock": 18,
+            "backorderable": true
+        },
+        "specs": {
+            "motherboard": {
+                "socket": "LGA1700",
+                "chipset": "Z790",
+                "memoryType": "DDR5",
+                "formFactor": "ATX",
+                "maxMemoryMhz": 6400,
+                "maxMemorySlots": 4,
+                "pcieSlots": {
+                    "x16": 3,
+                    "x8": 0,
+                    "x4": 2,
+                    "x1": 2
+                },
+                "sataPorts": 6,
+                "m2_slots": 5
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "hypervolt-ddr4-16gb-3200": {
+        "category": "memory",
+        "sku": "HYPER-DDR4-16G-3200",
+        "name": "HyperVolt DDR4-3200 16GB Kit (2x8GB)",
+        "brand": "HyperVolt",
+        "price": 79.99,
+        "inventory": {
+            "inStock": 94,
+            "backorderable": true
+        },
+        "specs": {
+            "memory": {
+                "type": "DDR4",
+                "speedMhz": 3200,
+                "capacityGb": 16,
+                "modules": 2
+            }
+        },
+        "warrantyMonths": 60
+    },
+    "celestis-sata-1tb-hdd": {
+        "category": "storage",
+        "sku": "CELESTIS-SATA-1TB-HDD",
+        "name": "Celestis SATA 1TB 3.5\" HDD",
+        "brand": "Celestis",
+        "price": 69.99,
+        "inventory": {
+            "inStock": 37,
+            "backorderable": true
+        },
+        "specs": {
+            "storage": {
+                "interface": "SATA",
+                "capacityGb": 1000,
+                "form": "3.5in"
+            }
+        }
+    },
+    "hypervolt-ddr4-8gb-3000": {
+        "category": "memory",
+        "sku": "HYPER-DDR4-8GB-3000",
+        "name": "HyperVolt DDR4-3000 8GB Kit (2x4GB)",
+        "brand": "HyperVolt",
+        "price": 39.99,
+        "inventory": {
+            "inStock": 15,
+            "backorderable": true
+        },
+        "specs": {
+            "memory": {
+                "type": "DDR4",
+                "speedMhz": 3000,
+                "capacityGb": 8,
+                "modules": 2
+            }
+        },
+        "warrantyMonths": 60
+    },
+    "orionix-radiant-rx-7800-xt": {
+        "category": "gpu",
+        "sku": "ORION-RX7800-XT",
+        "name": "Orionix Radiant RX 7800 XT",
+        "brand": "Orionix",
+        "price": 499.99,
+        "inventory": {
+            "inStock": 15,
+            "backorderable": true
+        },
+        "specs": {
+            "gpu": {
+                "pcie": "4.0",
+                "recommendedPsuWatts": 700,
+                "lengthMm": 290,
+                "vramGb": 16,
+                "baseClockMhz": 1295,
+                "boostClockMhz": 2430,
+                "displayOutputs": {
+                    "hdmi": 2,
+                    "displayPort": 2,
+                    "dvi": 1,
+                    "usbc": 0
+                }
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "novachip-fusion-12400k": {
+        "category": "cpu",
+        "sku": "NOVA-FUSION-12400K",
+        "name": "NovaChip Fusion 12400K",
+        "brand": "NovaChip",
+        "price": 189.99,
+        "inventory": {
+            "inStock": 63,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "LGA1200",
+                "cores": 6,
+                "tdpWatts": 65,
+                "baseClockGhz": 2.5,
+                "boostClockGhz": 4.4
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "zentricore-apex-8600x": {
+        "category": "cpu",
+        "sku": "ZEN-APEX-8600X",
+        "name": "ZentriCore Apex 8600X",
+        "brand": "ZentriCore",
+        "price": 449.99,
+        "inventory": {
+            "inStock": 32,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "AM5",
+                "cores": 8,
+                "tdpWatts": 105,
+                "baseClockGhz": 3.9,
+                "boostClockGhz": 5.2
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "zentricore-storm-6600x": {
+        "category": "cpu",
+        "sku": "ZEN-STORM-6600X",
+        "name": "ZentriCore Storm 6600X",
+        "brand": "ZentriCore",
+        "price": 329.99,
+        "inventory": {
+            "inStock": 48,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "AM5",
+                "cores": 6,
+                "tdpWatts": 105,
+                "baseClockGhz": 3.8,
+                "boostClockGhz": 4.9
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "titanforge-full-hf-white": {
+        "category": "case",
+        "sku": "TITANFORGE-FULL-HYPERFLOW3-WHT",
+        "name": "TitanForge HYPERFLOW 3 Full Tower White",
+        "brand": "TitanForge",
+        "price": 349.99,
+        "inventory": {
+            "inStock": 9,
+            "backorderable": true
+        },
+        "specs": {
+            "case": {
+                "supportedFormFactors": [
+                    "E-ATX",
+                    "ATX",
+                    "Micro-ATX",
+                    "Mini-ITX"
+                ],
+                "gpuMaxLengthMm": 480,
+                "coolerMaxHeightMm": 300
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "pyratech-graphforce-4070-16gb": {
+        "category": "gpu",
+        "sku": "PYRA-GFX4070-16G",
+        "name": "PyraTech GraphForce 4070 16GB",
+        "brand": "PyraTech",
+        "price": 599.99,
+        "inventory": {
+            "inStock": 12,
+            "backorderable": true
+        },
+        "specs": {
+            "gpu": {
+                "pcie": "4.0",
+                "recommendedPsuWatts": 650,
+                "lengthMm": 305,
+                "vramGb": 16,
+                "baseClockMhz": 1920,
+                "boostClockMhz": 2475,
+                "displayOutputs": {
+                    "hdmi": 2,
+                    "displayPort": 3,
+                    "dvi": 0,
+                    "usbc": 0
+                }
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "coreflow-650w-bronze": {
+        "category": "psu",
+        "sku": "CF-650W-BRONZE",
+        "name": "CoreFlow 650W 80+ Bronze PSU",
+        "brand": "CoreFlow",
+        "price": 79.99,
+        "inventory": {
+            "inStock": 43,
+            "backorderable": true
+        },
+        "specs": {
+            "psu": {
+                "wattage": 650,
+                "efficiency": "80+ Bronze",
+                "modularity": "non-modular",
+                "gpuConnectors": [
+                    "8-pin"
+                ]
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "clarityone-24-1080p-165hz": {
+        "category": "monitor",
+        "sku": "CLAR-24-1080-165",
+        "name": "ClarityOne 24\" 1080p 165Hz Monitor",
+        "brand": "ClarityOne",
+        "price": 199.99,
+        "inventory": {
+            "inStock": 47,
+            "backorderable": true
+        },
+        "specs": {
+            "monitor": {
+                "screenSizeInches": 24,
+                "resolution": "1080p",
+                "refreshRateHz": 165,
+                "panelType": "VA",
+                "responseTimeMs": 1.5,
+                "brightnessNits": 300,
+                "connectivity": [
+                    "HDMI",
+                    "DisplayPort"
+                ],
+                "hdrSupport": false,
+                "adaptiveSync": "FreeSync"
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "novachip-titan-14900k": {
+        "category": "cpu",
+        "sku": "NOVA-TITAN-14900K",
+        "name": "NovaChip Titan 14900K",
+        "brand": "NovaChip",
+        "price": 589.99,
+        "inventory": {
+            "inStock": 22,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "LGA1700",
+                "cores": 16,
+                "tdpWatts": 125,
+                "baseClockGhz": 3.2,
+                "boostClockGhz": 5.8
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "vortexlabs-horizon-rx740t": {
+        "category": "gpu",
+        "sku": "VORTEXLABS-RX740-T",
+        "name": "VortexLabs Horizon RX740T",
+        "brand": "VortexLabs",
+        "price": 289.99,
+        "inventory": {
+            "inStock": 3,
+            "backorderable": false
+        },
+        "specs": {
+            "gpu": {
+                "pcie": "4.0",
+                "recommendedPsuWatts": 650,
+                "lengthMm": 240,
+                "vramGb": 16,
+                "baseClockMhz": 1000,
+                "boostClockMhz": 1600,
+                "displayOutputs": {
+                    "hdmi": 1,
+                    "displayPort": 2,
+                    "dvi": 0,
+                    "usbc": 1
+                }
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "novachip-fusion-12700k": {
+        "category": "cpu",
+        "sku": "NOVA-FUSION-12700K",
+        "name": "NovaChip Fusion 12700K",
+        "brand": "NovaChip",
+        "price": 419.99,
+        "inventory": {
+            "inStock": 35,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "LGA1700",
+                "cores": 12,
+                "tdpWatts": 125,
+                "baseClockGhz": 3.4,
+                "boostClockGhz": 5
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "zentricore-swift-4300": {
+        "category": "cpu",
+        "sku": "ZEN-SWIFT-4300",
+        "name": "ZentriCore Swift 4300",
+        "brand": "ZentriCore",
+        "price": 129.99,
+        "inventory": {
+            "inStock": 95,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "LGA1200",
+                "cores": 4,
+                "tdpWatts": 65,
+                "baseClockGhz": 3.6,
+                "boostClockGhz": 4.3
+            }
+        },
+        "warrantyMonths": 12
+    },
+    "hypervolt-ddr5-32gb-5600": {
+        "category": "memory",
+        "sku": "HYPER-DDR5-32G-5600",
+        "name": "HyperVolt DDR5-5600 32GB Kit (2x16GB)",
+        "brand": "HyperVolt",
+        "price": 189.99,
+        "inventory": {
+            "inStock": 67,
+            "backorderable": true
+        },
+        "specs": {
+            "memory": {
+                "type": "DDR5",
+                "speedMhz": 5600,
+                "capacityGb": 32,
+                "modules": 2
+            }
+        },
+        "warrantyMonths": 60
+    },
+    "astralogic-helix-3200": {
+        "category": "cpu",
+        "sku": "ASTRA-HELIX-3200",
+        "name": "AstraLogic Helix 3200",
+        "brand": "AstraLogic",
+        "price": 59.99,
+        "inventory": {
+            "inStock": 33,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "AM4",
+                "cores": 4,
+                "tdpWatts": 65,
+                "baseClockGhz": 3.6,
+                "boostClockGhz": 4
+            }
+        }
+    },
+    "vortexlabs-horizon-rx820l": {
+        "category": "gpu",
+        "sku": "VORTEXLABS-RX820L",
+        "name": "VortexLabs Horizon RX820L",
+        "brand": "VortexLabs",
+        "price": 469.99,
+        "inventory": {
+            "inStock": 10,
+            "backorderable": true
+        },
+        "specs": {
+            "gpu": {
+                "pcie": "5.0",
+                "recommendedPsuWatts": 750,
+                "lengthMm": 340,
+                "vramGb": 16,
+                "baseClockMhz": 1275,
+                "boostClockMhz": 1725,
+                "displayOutputs": {
+                    "hdmi": 2,
+                    "displayPort": 2,
+                    "dvi": 0,
+                    "usbc": 0
+                }
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "coreflow-750w-gold-modular": {
+        "category": "psu",
+        "sku": "CF-750W-GOLD-MOD",
+        "name": "CoreFlow 750W 80+ Gold Modular PSU",
+        "brand": "CoreFlow",
+        "price": 129.99,
+        "inventory": {
+            "inStock": 28,
+            "backorderable": true
+        },
+        "specs": {
+            "psu": {
+                "wattage": 750,
+                "efficiency": "80+ Gold",
+                "modularity": "modular",
+                "gpuConnectors": [
+                    "8-pin",
+                    "8-pin"
+                ]
+            }
+        },
+        "warrantyMonths": 84
+    },
+    "voltstorm-gaming-pc": {
+        "category": "prebuilt",
+        "sku": "VS-GAMING-RX780",
+        "name": "VoltStorm Gaming PC - Horizon RX780",
+        "brand": "CoreCraft",
+        "price": 1249.99,
+        "inventory": {
+            "inStock": 2,
+            "backorderable": true
+        },
+        "specs": {
+            "prebuilt": {
+                "series": "VoltStorm",
+                "baseBuildId": "voltstorm-gaming-base"
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "skyforge-b550m-micro": {
+        "category": "motherboard",
+        "sku": "SKY-B550-MICRO",
+        "name": "SkyForge B550M Micro",
+        "brand": "SkyForge",
+        "price": 129.99,
+        "inventory": {
+            "inStock": 41,
+            "backorderable": true
+        },
+        "specs": {
+            "motherboard": {
+                "socket": "AM4",
+                "chipset": "B550",
+                "memoryType": "DDR4",
+                "formFactor": "Micro-ATX",
+                "maxMemoryMhz": 3200,
+                "maxMemorySlots": 2,
+                "pcieSlots": {
+                    "x16": 1,
+                    "x8": 0,
+                    "x4": 1,
+                    "x1": 2
+                },
+                "sataPorts": 4,
+                "m2_slots": 2
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "dataforge-nvme-1tb-gen4": {
+        "category": "storage",
+        "sku": "DF-NVME-1TB-GEN4",
+        "name": "DataForge NVMe Gen4 1TB M.2 SSD",
+        "brand": "DataForge",
+        "price": 149.99,
+        "inventory": {
+            "inStock": 52,
+            "backorderable": true
+        },
+        "specs": {
+            "storage": {
+                "interface": "NVMe-Gen4",
+                "capacityGb": 1000,
+                "form": "M.2"
+            }
+        },
+        "warrantyMonths": 60
+    },
+    "aeroshell-compact-itx": {
+        "category": "case",
+        "sku": "AERO-ITX-COMPACT",
+        "name": "AeroShell Compact ITX Case",
+        "brand": "AeroShell",
+        "price": 119.99,
+        "inventory": {
+            "inStock": 22,
+            "backorderable": true
+        },
+        "specs": {
+            "case": {
+                "supportedFormFactors": [
+                    "Mini-ITX"
+                ],
+                "gpuMaxLengthMm": 280,
+                "coolerMaxHeightMm": 130
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "nebulax-workstation-pro": {
+        "category": "workstation",
+        "sku": "NX-WORKSTATION-PRO",
+        "name": "NebulaX Workstation Pro",
+        "brand": "CoreCraft",
+        "price": 2299.99,
+        "inventory": {
+            "inStock": 2,
+            "backorderable": true
+        },
+        "specs": {
+            "prebuilt": {
+                "series": "NebulaX",
+                "baseBuildId": "nebulax-workstation-base"
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "raptorkeys-rk80": {
+        "category": "keyboard",
+        "sku": "RAPTORKEYS-RK80",
+        "name": "RaptorKeys RK80 TKL Mechanical Keyboard",
+        "brand": "RaptorKeys",
+        "price": 89.99,
+        "inventory": {
+            "inStock": 11,
+            "backorderable": true
+        },
+        "specs": {
+            "keyboard": {
+                "layout": "QWERTY",
+                "switchType": "tactile",
+                "keyCount": 85,
+                "backlit": false,
+                "programmable": true,
+                "connectivity": "2.4ghz",
+                "formFactor": "tkl",
+                "keycapMaterial": "double-shot"
+            }
+        }
+    },
+    "skyforge-x670e-pro": {
+        "category": "motherboard",
+        "sku": "SKY-X670E-PRO",
+        "name": "SkyForge X670E Pro",
+        "brand": "SkyForge",
+        "price": 349.99,
+        "inventory": {
+            "inStock": 23,
+            "backorderable": true
+        },
+        "specs": {
+            "motherboard": {
+                "socket": "AM5",
+                "chipset": "X670",
+                "memoryType": "DDR5",
+                "formFactor": "ATX",
+                "maxMemoryMhz": 5600,
+                "maxMemorySlots": 4,
+                "pcieSlots": {
+                    "x16": 2,
+                    "x8": 1,
+                    "x4": 1,
+                    "x1": 3
+                },
+                "sataPorts": 8,
+                "m2_slots": 4
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "voltedge-v9980se": {
+        "category": "motherboard",
+        "sku": "VOLTEDGE-V9980S",
+        "name": "VoltEdge V9980se LGA E-ATX",
+        "brand": "SkyForge",
+        "price": 649.99,
+        "inventory": {
+            "inStock": 6,
+            "backorderable": true
+        },
+        "specs": {
+            "motherboard": {
+                "socket": "LGA1700",
+                "chipset": "X670",
+                "memoryType": "DDR5",
+                "formFactor": "E-ATX",
+                "maxMemoryMhz": 5600,
+                "maxMemorySlots": 4,
+                "pcieSlots": {
+                    "x16": 5,
+                    "x8": 1,
+                    "x4": 4,
+                    "x1": 2
+                },
+                "sataPorts": 8,
+                "m2_slots": 4
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "novachip-pulse-10600k": {
+        "category": "cpu",
+        "sku": "NOVA-PULSE-10600K",
+        "name": "NovaChip Pulse 10600K",
+        "brand": "NovaChip",
+        "price": 299.99,
+        "inventory": {
+            "inStock": 41,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "LGA1700",
+                "cores": 10,
+                "tdpWatts": 125,
+                "baseClockGhz": 3.7,
+                "boostClockGhz": 4.9
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "clarityone-32-4k-144hz": {
+        "category": "monitor",
+        "sku": "CLARITYONE-32-4K-144HZ",
+        "name": "ClarityOne 32\" 4K 144Hz Pro Monitor",
+        "brand": "ClarityOne",
+        "price": 299.99,
+        "inventory": {
+            "inStock": 21,
+            "backorderable": true
+        },
+        "specs": {
+            "monitor": {
+                "screenSizeInches": 32,
+                "resolution": "4K",
+                "refreshRateHz": 144,
+                "panelType": "IPS",
+                "responseTimeMs": 1,
+                "brightnessNits": 400,
+                "connectivity": [
+                    "HDMI",
+                    "DisplayPort",
+                    "USB-C"
+                ],
+                "hdrSupport": true,
+                "adaptiveSync": "G-Sync Compatible"
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "vortexlabs-horizon-rx780": {
+        "category": "gpu",
+        "sku": "VORTEXLABS-RX780",
+        "name": "VortexLabs Horizon RX780",
+        "brand": "VortexLabs",
+        "price": 329.99,
+        "inventory": {
+            "inStock": 10,
+            "backorderable": false
+        },
+        "specs": {
+            "gpu": {
+                "pcie": "4.0",
+                "recommendedPsuWatts": 650,
+                "lengthMm": 260,
+                "vramGb": 16,
+                "baseClockMhz": 1275,
+                "boostClockMhz": 1725,
+                "displayOutputs": {
+                    "hdmi": 1,
+                    "displayPort": 2,
+                    "dvi": 0,
+                    "usbc": 1
+                }
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "dragonfire-gaming-pc": {
+        "category": "prebuilt",
+        "sku": "DF-GAMING-GFX4070",
+        "name": "Dragonfire Gaming PC - GraphForce 4070",
+        "brand": "CoreCraft",
+        "price": 1499.99,
+        "inventory": {
+            "inStock": 3,
+            "backorderable": true
+        },
+        "specs": {
+            "prebuilt": {
+                "series": "Dragonfire",
+                "baseBuildId": "dragonfire-gaming-base"
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "dataforge-sata-2tb-ssd": {
+        "category": "storage",
+        "sku": "DF-SATA-2TB-SSD",
+        "name": "DataForge SATA 2TB 2.5\" SSD",
+        "brand": "DataForge",
+        "price": 199.99,
+        "inventory": {
+            "inStock": 31,
+            "backorderable": true
+        },
+        "specs": {
+            "storage": {
+                "interface": "SATA",
+                "capacityGb": 2000,
+                "form": "2.5in"
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "astralogic-vortex-8700x": {
+        "category": "cpu",
+        "sku": "ASTRA-VORTEX-8700X",
+        "name": "AstraLogic Vortex 8700X",
+        "brand": "AstraLogic",
+        "price": 279.99,
+        "inventory": {
+            "inStock": 56,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "AM4",
+                "cores": 8,
+                "tdpWatts": 105,
+                "baseClockGhz": 3.6,
+                "boostClockGhz": 4.6
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "astralogic-blade-4600": {
+        "category": "cpu",
+        "sku": "ASTRA-BLADE-4600",
+        "name": "AstraLogic Blade 4600",
+        "brand": "AstraLogic",
+        "price": 159.99,
+        "inventory": {
+            "inStock": 87,
+            "backorderable": true
+        },
+        "specs": {
+            "cpu": {
+                "socket": "AM4",
+                "cores": 6,
+                "tdpWatts": 65,
+                "baseClockGhz": 3.7,
+                "boostClockGhz": 4.2
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "clickforge-kx7": {
+        "category": "mouse",
+        "sku": "CLICKFORGE-KX7",
+        "name": "ClickForge kx7 Katana Gaming Mouse",
+        "brand": "ClickForge",
+        "price": 79.99,
+        "inventory": {
+            "inStock": 4,
+            "backorderable": true
+        },
+        "specs": {
+            "mouse": {
+                "sensorType": "optical",
+                "maxDpi": 12000,
+                "pollingRateHz": 1000,
+                "buttonCount": 9,
+                "programmable": true,
+                "connectivity": "usb-c",
+                "weightGrams": 95,
+                "ergonomicStyle": "right-handed"
+            }
+        }
+    },
+    "titanforge-full-hf-black": {
+        "category": "case",
+        "sku": "TITANFORGE-FULL-HYPERFLOW3-BLK",
+        "name": "TitanForge HYPERFLOW 3 Full Tower Black",
+        "brand": "TitanForge",
+        "price": 349.99,
+        "inventory": {
+            "inStock": 9,
+            "backorderable": true
+        },
+        "specs": {
+            "case": {
+                "supportedFormFactors": [
+                    "E-ATX",
+                    "ATX",
+                    "Micro-ATX",
+                    "Mini-ITX"
+                ],
+                "gpuMaxLengthMm": 480,
+                "coolerMaxHeightMm": 300
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "raptorkeys-clickforge-bundle": {
+        "category": "bundle",
+        "sku": "BUNDLE-KBMOUSE-RK80-KX7",
+        "name": "RaptorKeys RK80 Keyboard + ClickForge kx7 Katana Mouse Bundle",
+        "brand": "CoreCraft",
+        "price": 135.98,
+        "inventory": {
+            "inStock": 5,
+            "backorderable": true
+        },
+        "specs": {
+            "bundle": {
+                "bundleId": "raptorkeys-clickforge-bundle"
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "raptorkeys-clickforge-combo": {
+        "category": "bundle",
+        "sku": "BUNDLE-RKKB-CFM-001",
+        "name": "RaptorKeys RK80 Keyboard + ClickForge kx7 Katana Mouse Bundle",
+        "brand": "CoreCraft",
+        "price": 135.98,
+        "inventory": {
+            "inStock": 5,
+            "backorderable": true
+        },
+        "specs": {
+            "bundle": {
+                "bundleId": "raptorkeys-clickforge-bundle"
+            }
+        }
+    },
+    "visionix-27-4k-144hz": {
+        "category": "monitor",
+        "sku": "VIS-27-4K-144HZ",
+        "name": "Visionix 27\" 4K 144Hz Gaming Monitor",
+        "brand": "Visionix",
+        "price": 599.99,
+        "inventory": {
+            "inStock": 14,
+            "backorderable": true
+        },
+        "specs": {
+            "monitor": {
+                "screenSizeInches": 27,
+                "resolution": "4K",
+                "refreshRateHz": 144,
+                "panelType": "IPS",
+                "responseTimeMs": 1,
+                "brightnessNits": 350,
+                "connectivity": [
+                    "HDMI",
+                    "DisplayPort",
+                    "USB-C"
+                ],
+                "hdrSupport": true,
+                "adaptiveSync": "G-Sync Compatible"
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "titanforge-impressa-mid": {
+        "category": "case",
+        "sku": "TITANFORGE-IMPRESSA-MID",
+        "name": "TitanForge IMPRESSA Mid Tower Case",
+        "brand": "TitanForge",
+        "price": 169.99,
+        "inventory": {
+            "inStock": 12,
+            "backorderable": true
+        },
+        "specs": {
+            "case": {
+                "supportedFormFactors": [
+                    "ATX",
+                    "Micro-ATX",
+                    "Mini-ITX"
+                ],
+                "gpuMaxLengthMm": 480,
+                "coolerMaxHeightMm": 200
+            }
+        },
+        "warrantyMonths": 24
+    },
+    "cryowave-tower-air-cooler": {
+        "category": "cooling",
+        "sku": "CRYO-AIR-TOWER",
+        "name": "CryoWave Tower Air Cooler",
+        "brand": "CryoWave",
+        "price": 39.99,
+        "inventory": {
+            "inStock": 76,
+            "backorderable": true
+        },
+        "specs": {
+            "cooling": {
+                "type": "air",
+                "heightMm": 155
+            }
+        },
+        "warrantyMonths": 36
+    },
+    "aeroshell-mid-tower-rgb": {
+        "category": "case",
+        "sku": "AERO-MID-RGB-TG",
+        "name": "AeroShell Mid-Tower RGB Tempered Glass",
+        "brand": "AeroShell",
+        "price": 89.99,
+        "inventory": {
+            "inStock": 35,
+            "backorderable": true
+        },
+        "specs": {
+            "case": {
+                "supportedFormFactors": [
+                    "ATX",
+                    "Micro-ATX",
+                    "Mini-ITX"
+                ],
+                "gpuMaxLengthMm": 350,
+                "coolerMaxHeightMm": 165
+            }
+        },
+        "warrantyMonths": 24
+    }
+}

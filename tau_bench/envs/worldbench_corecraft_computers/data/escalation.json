@@ -1,0 +1,24 @@
+{
+    "esc-250815-001": {
+        "ticketId": "tick-250815-001",
+        "escalationType": "product_specialist",
+        "destination": "product_management",
+        "notes": "Customer compatibility miss highlights need for better GPU case clearance warnings on product pages. Fifth similar case this month. Escalating to product team for catalog improvements and better compatibility checking.",
+        "createdAt": "2025-08-15T10:35:00Z",
+        "resolvedAt": "2025-08-15T14:30:00Z"
+    },
+    "esc-250826-007": {
+        "ticketId": "tick-250826-007",
+        "escalationType": "policy_exception",
+        "destination": "operations",
+        "notes": "Warehouse fulfillment error - customer ordered CryoWave Tower Air Cooler but received wrong cooler model. Need expedited replacement and potential compensation for customer inconvenience.",
+        "createdAt": "2025-08-26T12:40:00Z"
+    },
+    "esc-250827-002": {
+        "ticketId": "tick-250827-002",
+        "escalationType": "technical",
+        "destination": "engineering",
+        "notes": "Complex no-boot issue with Dragonfire build. Initial troubleshooting (PSU connections, front panel headers) didn't resolve. Need advanced diagnostics and component isolation testing. High priority due to complete system failure.",
+        "createdAt": "2025-08-27T11:30:00Z"
+    }
+}
