@@ -24,9 +24,17 @@ class CheckWarrantyStatus(Tool):
             build_sqlite_from_data(conn, data)
 
             # Monkeypatch get_db_conn() used by the original tool code, if present.
+            # Note: tool_impls does "from utils import get_db_conn", which creates a direct
+            # reference. We need to patch both utils.get_db_conn AND the reference in tool_impls.
             try:
                 import utils  # type: ignore
                 utils.get_db_conn = lambda: conn  # type: ignore
+                # Also update the reference in tool_impls since it has a direct import
+                try:
+                    import tool_impls.check_warranty_status as tool_impls_module  # type: ignore
+                    tool_impls_module.get_db_conn = lambda: conn  # type: ignore
+                except Exception:
+                    pass
             except Exception:
                 pass
 

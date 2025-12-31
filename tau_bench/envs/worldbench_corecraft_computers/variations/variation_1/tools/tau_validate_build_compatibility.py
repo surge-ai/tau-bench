@@ -13,6 +13,12 @@ class ValidateBuildCompatibility(Tool):
             build_sqlite_from_data(conn, data)
             try:
                 import utils; utils.get_db_conn=lambda:conn
+                # Also update the reference in tool_impls since it has a direct import
+                try:
+                    import tool_impls.validate_build_compatibility as tool_impls_module
+                    tool_impls_module.get_db_conn = lambda: conn
+                except Exception:
+                    pass
             except Exception:
                 pass
             result = _orig(**kwargs)

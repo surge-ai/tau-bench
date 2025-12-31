@@ -17,6 +17,12 @@ class GetProduct(Tool):
             try:
                 import utils  # type: ignore
                 utils.get_db_conn = lambda: conn  # type: ignore
+                # Also update the reference in tool_impls since it has a direct import
+                try:
+                    import tool_impls.get_product as tool_impls_module  # type: ignore
+                    tool_impls_module.get_db_conn = lambda: conn  # type: ignore
+                except Exception:
+                    pass
             except Exception:
                 pass
 
