@@ -13,7 +13,7 @@ class Action(BaseModel):
 
 
 class Task(BaseModel):
-    user_id: str
+    user_id: str = ""
     actions: List[Action]
     instruction: str
     outputs: List[str]

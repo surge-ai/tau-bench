@@ -33,5 +33,15 @@ def get_env(
             user_provider=user_provider,
             task_index=task_index,
         )
+    elif env_name == "worldbench_corecraft_computers":
+        from tau_bench.envs.worldbench_corecraft_computers import MockCorecraftComputersEnv
+
+        return MockCorecraftComputersEnv(
+            user_strategy=user_strategy,
+            user_model=user_model,
+            task_split=task_split,
+            user_provider=user_provider,
+            task_index=task_index,
+        )
     else:
         raise ValueError(f"Unknown environment: {env_name}")

@@ -1,5 +1,6 @@
 # Copyright Sierra
 
+import json
 import random
 from hashlib import sha256
 from tau_bench.envs.tool import Tool
@@ -110,6 +111,12 @@ class Env(object):
         else:
             observation = f"Unknown action {action.name}"
             info.source = action.name
+
+        if not isinstance(observation, str):
+            try:
+                observation = json.dumps(observation, default=str)
+            except Exception:
+                observation = str(observation)
 
         if done:
             reward_res = self.calculate_reward()
