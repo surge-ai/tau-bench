@@ -1,8 +1,8 @@
 from typing import Annotated, List, Optional
 
-from models import SupportTicket
+from ..models import SupportTicket
 from pydantic import Field
-from utils import (get_db_conn, parse_datetime_to_timestamp,
+from .utils import (get_db_conn, parse_datetime_to_timestamp,
                    validate_date_format)
 
 

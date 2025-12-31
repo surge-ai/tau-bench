@@ -2,7 +2,7 @@ import json
 from typing import Annotated, Any, Dict, Optional, Union
 
 from pydantic import Field
-from utils import get_db_conn
+from .utils import get_db_conn
 
 
 def getProduct(

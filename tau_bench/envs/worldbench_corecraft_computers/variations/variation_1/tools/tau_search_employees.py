@@ -1,8 +1,9 @@
 import json, sqlite3
+import importlib
 from typing import Any, Dict
 from tau_bench.envs.tool import Tool
-from tau_sqlite_utils import build_sqlite_from_data
-from tool_impls.search_employees import searchEmployees as _orig
+from .tau_sqlite_utils import build_sqlite_from_data
+from .tool_impls.search_employees import searchEmployees as _orig
 
 class SearchEmployees(Tool):
     @staticmethod
@@ -14,7 +15,7 @@ class SearchEmployees(Tool):
                 import utils; utils.get_db_conn=lambda:conn
                 # Also update the reference in tool_impls since it has a direct import
                 try:
-                    import tool_impls.search_employees as tool_impls_module
+                    tool_impls_module = importlib.import_module('.tool_impls.search_employees', package=__package__)
                     tool_impls_module.get_db_conn = lambda: conn
                 except Exception: pass
             except Exception:

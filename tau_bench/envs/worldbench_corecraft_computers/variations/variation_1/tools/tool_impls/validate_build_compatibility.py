@@ -2,7 +2,7 @@ import json
 from typing import Annotated, Any, Dict, List
 
 from pydantic import Field
-from utils import get_db_conn
+from .utils import get_db_conn
 
 
 def validateBuildCompatibility(

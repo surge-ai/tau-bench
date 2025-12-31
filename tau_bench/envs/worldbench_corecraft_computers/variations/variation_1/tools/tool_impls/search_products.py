@@ -1,9 +1,9 @@
 import json
 from typing import Annotated, List, Optional, Union
 
-from models import Product
+from ..models import Product
 from pydantic import Field
-from utils import get_db_conn
+from .utils import get_db_conn
 
 
 def searchProducts(

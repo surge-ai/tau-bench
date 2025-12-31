@@ -1,9 +1,9 @@
 import json
 from typing import Annotated, List, Optional
 
-from models import Build
+from ..models import Build
 from pydantic import Field
-from utils import get_db_conn, validate_date_format, parse_datetime_to_timestamp
+from .utils import get_db_conn, validate_date_format, parse_datetime_to_timestamp
 
 
 def searchBuilds(

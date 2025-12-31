@@ -1,12 +1,13 @@
 import json
 import sqlite3
+import importlib
 from typing import Any, Dict, Optional
 
 from tau_bench.envs.tool import Tool
-from tau_sqlite_utils import build_sqlite_from_data
+from .tau_sqlite_utils import build_sqlite_from_data
 
 # Import the original function (kept as-is)
-from tool_impls.check_warranty_status import checkWarrantyStatus as _orig_checkWarrantyStatus
+from .tool_impls.check_warranty_status import checkWarrantyStatus as _orig_checkWarrantyStatus
 
 
 class CheckWarrantyStatus(Tool):
@@ -31,7 +32,7 @@ class CheckWarrantyStatus(Tool):
                 utils.get_db_conn = lambda: conn  # type: ignore
                 # Also update the reference in tool_impls since it has a direct import
                 try:
-                    import tool_impls.check_warranty_status as tool_impls_module  # type: ignore
+                    tool_impls_module = importlib.import_module('.tool_impls.check_warranty_status', package=__package__)  # type: ignore
                     tool_impls_module.get_db_conn = lambda: conn  # type: ignore
                 except Exception:
                     pass

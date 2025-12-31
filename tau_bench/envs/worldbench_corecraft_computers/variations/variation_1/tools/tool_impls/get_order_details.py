@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from typing import Annotated, Any, Dict, List, Optional
 
 from pydantic import Field
-from utils import get_db_conn, validate_date_format, parse_datetime_to_timestamp
+from .utils import get_db_conn, validate_date_format, parse_datetime_to_timestamp
 
 
 def getOrderDetails(

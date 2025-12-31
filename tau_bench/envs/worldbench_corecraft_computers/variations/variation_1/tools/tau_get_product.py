@@ -1,11 +1,12 @@
 import json
 import sqlite3
+import importlib
 from typing import Any, Dict
 
 from tau_bench.envs.tool import Tool
-from tau_sqlite_utils import build_sqlite_from_data
+from .tau_sqlite_utils import build_sqlite_from_data
 
-from tool_impls.get_product import getProduct as _orig_getProduct
+from .tool_impls.get_product import getProduct as _orig_getProduct
 
 
 class GetProduct(Tool):
@@ -19,7 +20,7 @@ class GetProduct(Tool):
                 utils.get_db_conn = lambda: conn  # type: ignore
                 # Also update the reference in tool_impls since it has a direct import
                 try:
-                    import tool_impls.get_product as tool_impls_module  # type: ignore
+                    tool_impls_module = importlib.import_module('.tool_impls.get_product', package=__package__)  # type: ignore
                     tool_impls_module.get_db_conn = lambda: conn  # type: ignore
                 except Exception:
                     pass

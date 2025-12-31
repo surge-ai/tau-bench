@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated, Any, Dict, Optional
 
 from pydantic import Field
-from utils import get_db_conn
+from .utils import get_db_conn
 
 
 # Default current date (September 8, 2025) - must match JavaScript implementation

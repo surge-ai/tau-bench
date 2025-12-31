@@ -1,8 +1,8 @@
 from typing import Annotated, List, Optional
 
-from models import Payment
+from ..models import Payment
 from pydantic import Field
-from utils import get_db_conn, validate_date_format, parse_datetime_to_timestamp
+from .utils import get_db_conn, validate_date_format, parse_datetime_to_timestamp
 
 
 def searchPayments(

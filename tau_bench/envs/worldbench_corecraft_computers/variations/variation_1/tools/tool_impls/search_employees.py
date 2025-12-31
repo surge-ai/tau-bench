@@ -1,9 +1,9 @@
 import json
 from typing import Annotated, List, Optional
 
-from models import Employee
+from ..models import Employee
 from pydantic import Field
-from utils import get_db_conn
+from .utils import get_db_conn
 
 
 def searchEmployees(

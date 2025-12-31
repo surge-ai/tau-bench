@@ -12,7 +12,7 @@ tools_dir = os.path.dirname(tests_dir)
 sys.path.insert(0, tools_dir)
 
 # Import dependencies first
-from tau_sqlite_utils import build_sqlite_from_data
+from ..tau_sqlite_utils import build_sqlite_from_data
 from tau_bench.envs.tool import Tool
 
 # Create a mock utils module for tool_impls that need it

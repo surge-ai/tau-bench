@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
 
-from tau_sqlite_utils import build_sqlite_from_data
+from .tau_sqlite_utils import build_sqlite_from_data
 class CalculatePrice(Tool):
     @staticmethod
     def invoke(

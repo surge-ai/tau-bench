@@ -1,11 +1,12 @@
 import json
 import sqlite3
+import importlib
 from typing import Any, Dict
 
 from tau_bench.envs.tool import Tool
-from tau_sqlite_utils import build_sqlite_from_data
+from .tau_sqlite_utils import build_sqlite_from_data
 
-from tool_impls.search_builds import searchBuilds as _orig_searchBuilds
+from .tool_impls.search_builds import searchBuilds as _orig_searchBuilds
 
 
 class SearchBuilds(Tool):
@@ -19,7 +20,7 @@ class SearchBuilds(Tool):
                 utils.get_db_conn = lambda: conn  # type: ignore
                 # Also update the reference in tool_impls since it has a direct import
                 try:
-                    import tool_impls.search_builds as tool_impls_module  # type: ignore
+                    tool_impls_module = importlib.import_module('.tool_impls.search_builds', package=__package__)  # type: ignore
                     tool_impls_module.get_db_conn = lambda: conn  # type: ignore
                 except Exception:
                     pass
