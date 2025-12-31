@@ -2,7 +2,7 @@ import json, sqlite3
 from typing import Any, Dict
 from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
-from validate_build_compatibility import validateBuildCompatibility as _orig
+from tool_impls.validate_build_compatibility import validateBuildCompatibility as _orig
 
 class ValidateBuildCompatibility(Tool):
     @staticmethod

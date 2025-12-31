@@ -5,7 +5,7 @@ from typing import Any, Dict
 from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
 
-from get_customer_ticket_history import getCustomerTicketHistory as _orig_getCustomerTicketHistory
+from tool_impls.get_customer_ticket_history import getCustomerTicketHistory as _orig_getCustomerTicketHistory
 
 
 class GetCustomerTicketHistory(Tool):

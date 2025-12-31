@@ -5,7 +5,7 @@ from typing import Any, Dict
 from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
 
-from get_order_details import getOrderDetails as _orig_getOrderDetails
+from tool_impls.get_order_details import getOrderDetails as _orig_getOrderDetails
 
 
 class GetOrderDetails(Tool):

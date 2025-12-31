@@ -2,7 +2,7 @@ import json, sqlite3
 from typing import Any, Dict
 from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
-from search_shipments import searchShipments as _orig
+from tool_impls.search_shipments import searchShipments as _orig
 
 class SearchShipments(Tool):
     @staticmethod

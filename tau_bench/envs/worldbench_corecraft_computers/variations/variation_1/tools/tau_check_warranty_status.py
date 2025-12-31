@@ -6,7 +6,7 @@ from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
 
 # Import the original function (kept as-is)
-from check_warranty_status import checkWarrantyStatus as _orig_checkWarrantyStatus
+from tool_impls.check_warranty_status import checkWarrantyStatus as _orig_checkWarrantyStatus
 
 
 class CheckWarrantyStatus(Tool):

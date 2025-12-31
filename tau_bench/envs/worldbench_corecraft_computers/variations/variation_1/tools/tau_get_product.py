@@ -5,7 +5,7 @@ from typing import Any, Dict
 from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
 
-from get_product import getProduct as _orig_getProduct
+from tool_impls.get_product import getProduct as _orig_getProduct
 
 
 class GetProduct(Tool):

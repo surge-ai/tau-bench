@@ -2,7 +2,7 @@ import json, sqlite3
 from typing import Any, Dict
 from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
-from search_knowledge_base import searchKnowledgeBase as _orig
+from tool_impls.search_knowledge_base import searchKnowledgeBase as _orig
 
 class SearchKnowledgeBase(Tool):
     @staticmethod

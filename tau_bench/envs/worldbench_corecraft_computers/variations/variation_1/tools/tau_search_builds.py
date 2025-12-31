@@ -5,7 +5,7 @@ from typing import Any, Dict
 from tau_bench.envs.tool import Tool
 from tau_sqlite_utils import build_sqlite_from_data
 
-from search_builds import searchBuilds as _orig_searchBuilds
+from tool_impls.search_builds import searchBuilds as _orig_searchBuilds
 
 
 class SearchBuilds(Tool):
