@@ -36,7 +36,6 @@ class CreateResolution(Tool):
         outcome: str,
         linked_refund_id: Optional[str] = None,
         resolved_by_id: Optional[str] = None,
-        notes: Optional[str] = None,
     ) -> str:
         """Create a resolution for a support ticket."""
         # Verify ticket exists
@@ -62,7 +61,6 @@ class CreateResolution(Tool):
             "outcome": outcome,
             "linkedRefundId": linked_refund_id,
             "resolvedById": resolved_by_id,
-            "notes": notes,
             "createdAt": _now_iso_from_data(data),
         }
 
@@ -96,7 +94,6 @@ class CreateResolution(Tool):
                             "type": "string",
                             "description": "Optional employee ID who resolved the ticket (must exist if provided).",
                         },
-                        "notes": {"type": "string", "description": "Optional resolution notes."},
                     },
                     "required": ["ticket_id", "outcome"],
                 },

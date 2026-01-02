@@ -36,14 +36,14 @@ TASKS_TEST = [
     Task(
         annotator="0",
         user_id="support_agent",
-        instruction="I've finished diagnosing support ticket tick-250828-001. The issue was that the customer's PyraTech GraphForce 4080 16GB GPU requires a 750W PSU but they only have a CoreFlow 650W 80+ Bronze. I've recommended they upgrade to a CoreFlow 750W 80+ Gold Modular PSU. Please update the ticket status to 'resolved', assign it to David Pereboom (david-pereboom), and create a resolution documenting that we provided troubleshooting steps.",
+        instruction="I've finished diagnosing support ticket tick-250828-001. The issue was that the customer's PyraTech GraphForce 4080 16GB GPU requires a 750W PSU but they only have a CoreFlow 650W 80+ Bronze. I've recommended they upgrade to a CoreFlow 750W 80+ Gold Modular PSU. Please update the ticket status to 'resolved', assign it to David Pereboom (david-pereboom), and create a resolution documenting that David resolved the issue by providing troubleshooting steps.",
         actions=[
             Action(
                 name="updateTicketStatus",
                 kwargs={
                     "ticket_id": "tick-250828-001",
                     "status": "resolved",
-                    "assigned_employee_id": "david-pereboom-74810",
+                    "assigned_employee_id": "david-pereboom",
                 },
             ),
             Action(
@@ -51,7 +51,7 @@ TASKS_TEST = [
                 kwargs={
                     "ticket_id": "tick-250828-001",
                     "outcome": "troubleshooting_steps",
-                    "resolved_by_id": "david-pereboom-74810",
+                    "resolved_by_id": "david-pereboom",
                 },
             ),
         ],
@@ -140,7 +140,7 @@ TASKS_TEST = [
     Task(
         annotator="0",
         user_id="support_supervisor",
-        instruction="Isabella Southgate (isabella-southgate-36927) has submitted 4 tickets in the past 30 days, which triggers our high-volume customer protocol. Her latest ticket tick-250829-112 about a malfunctioning GraphForce 4070 needs to be escalated to a product specialist for priority handling. Please create an escalation for this ticket to 'product_specialist' with a note explaining the high ticket volume, and update the ticket priority to 'high' and assign it to senior technician Michael Torres (michael-torres-18273).",
+        instruction="Isabella Southgate (isabella-southgate-36927) has submitted 4 tickets in the past 30 days, which triggers our high-volume customer protocol. Her latest ticket tick-250829-112 about a malfunctioning GraphForce 4070 needs to be escalated to a product specialist for priority handling. Please create an escalation for this ticket to 'product_specialist' with a note explaining the high ticket volume, and update the ticket priority to 'high' and assign it to senior technician Michael Torres (michael-torres).",
         actions=[
             Action(
                 name="create_escalation",
@@ -156,7 +156,7 @@ TASKS_TEST = [
                 kwargs={
                     "ticket_id": "tick-250829-112",
                     "priority": "high",
-                    "assigned_employee_id": "michael-torres-18273",
+                    "assigned_employee_id": "michael-torres",
                 },
             ),
         ],

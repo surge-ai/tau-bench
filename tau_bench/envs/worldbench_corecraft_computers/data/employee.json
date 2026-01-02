@@ -327,19 +327,10 @@
       "kb_edit"
     ]
   },
-  "david-pereboom-74810": {
-    "id": "david-pereboom-74810",
-    "name": "David Pereboom",
-    "email": "david.pereboom@corecraft.com",
-    "role": "technician",
-    "department": "support",
-    "createdAt": "2023-01-15T00:00:00Z"
-  },
-  "michael-torres-18273": {
-    "id": "michael-torres-18273",
+  "michael-torres": {
     "name": "Michael Torres",
     "email": "michael.torres@corecraft.com",
-    "role": "senior_technician",
+    "title": "Senior Technician",
     "department": "support",
     "createdAt": "2022-04-10T00:00:00Z"
   }
