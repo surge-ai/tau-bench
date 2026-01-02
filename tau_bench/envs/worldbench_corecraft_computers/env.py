@@ -42,9 +42,9 @@ class MockCorecraftComputersEnv(Env):
 
         # Load wiki from variation's policy.md
         variation_dir = os.path.join(base_dir, "variations", variation_path)
-        policy_path = os.path.join(variation_dir, "policy.md")
-        if os.path.exists(policy_path):
-            with open(policy_path, "r") as f:
+        wiki_path = os.path.join(variation_dir, "wiki.md")
+        if os.path.exists(wiki_path):
+            with open(wiki_path, "r") as f:
                 wiki = f.read()
         else:
             wiki = ""

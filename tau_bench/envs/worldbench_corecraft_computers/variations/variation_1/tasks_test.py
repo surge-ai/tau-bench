@@ -59,96 +59,15 @@ TASKS_TEST = [
     ),
     Task(
         annotator="0",
-        user_id="inventory_manager",
-        instruction="The ClarityOne 32\" 4K 144Hz Pro Monitor has been discontinued. We have identified 3 unfulfilled orders for this monitor in November 2025 that need to be cancelled and refunded. Please process the following actions:\n1. Cancel order ord-251116-008 (customer: cheryl-kim-25488, payment: pay-251116-008, amount: $799.99)\n2. Cancel order ord-251117-042 (customer: sarah-blake-41859, payment: pay-251117-042, amount: $799.99)\n3. Cancel order ord-251118-019 (customer: jessica-ferguson-74192, payment: pay-251118-019, amount: $799.99)\nFor each order, update the order status to 'cancelled', create a refund for the full amount with reason 'incompatible' (product unavailable), and update the payment status to 'refunded'.",
-        actions=[
-            Action(
-                name="updateOrderStatus",
-                kwargs={
-                    "order_id": "ord-251116-008",
-                    "status": "cancelled",
-                },
-            ),
-            Action(
-                name="create_refund",
-                kwargs={
-                    "payment_id": "pay-251116-008",
-                    "amount": 799.99,
-                    "currency": "USD",
-                    "reason": "incompatible",
-                    "status": "approved",
-                },
-            ),
-            Action(
-                name="updatePaymentStatus",
-                kwargs={
-                    "payment_id": "pay-251116-008",
-                    "status": "refunded",
-                },
-            ),
-            Action(
-                name="updateOrderStatus",
-                kwargs={
-                    "order_id": "ord-251117-042",
-                    "status": "cancelled",
-                },
-            ),
-            Action(
-                name="create_refund",
-                kwargs={
-                    "payment_id": "pay-251117-042",
-                    "amount": 799.99,
-                    "currency": "USD",
-                    "reason": "incompatible",
-                    "status": "approved",
-                },
-            ),
-            Action(
-                name="updatePaymentStatus",
-                kwargs={
-                    "payment_id": "pay-251117-042",
-                    "status": "refunded",
-                },
-            ),
-            Action(
-                name="updateOrderStatus",
-                kwargs={
-                    "order_id": "ord-251118-019",
-                    "status": "cancelled",
-                },
-            ),
-            Action(
-                name="create_refund",
-                kwargs={
-                    "payment_id": "pay-251118-019",
-                    "amount": 799.99,
-                    "currency": "USD",
-                    "reason": "incompatible",
-                    "status": "approved",
-                },
-            ),
-            Action(
-                name="updatePaymentStatus",
-                kwargs={
-                    "payment_id": "pay-251118-019",
-                    "status": "refunded",
-                },
-            ),
-        ],
-        outputs=[],
-    ),
-    Task(
-        annotator="0",
         user_id="support_supervisor",
-        instruction="Isabella Southgate (isabella-southgate-36927) has submitted 4 tickets in the past 30 days, which triggers our high-volume customer protocol. Her latest ticket tick-250829-112 about a malfunctioning GraphForce 4070 needs to be escalated to a product specialist for priority handling. Please create an escalation for this ticket to 'product_specialist' with a note explaining the high ticket volume, and update the ticket priority to 'high' and assign it to senior technician Michael Torres (michael-torres).",
+        instruction="Isabella Southgate (isabella-southgate-36927) has submitted 4 tickets in the past 30 days, which triggers our high-volume customer protocol. Her latest ticket tick-250829-112 about a malfunctioning GraphForce 4070 needs to be escalated to a product specialist for priority handling. Please create an escalation for this ticket with destination 'product_specialist_team' with a note explaining the high ticket volume, and update the ticket priority to 'high' and assign it to senior technician Michael Torres (michael-torres).",
         actions=[
             Action(
                 name="create_escalation",
                 kwargs={
                     "ticket_id": "tick-250829-112",
                     "escalation_type": "product_specialist",
-                    "destination": "product_specialist",
-                    "notes": "high ticket volume",
+                    "destination": "product_specialist_team",
                 },
             ),
             Action(
@@ -165,7 +84,7 @@ TASKS_TEST = [
     Task(
         annotator="0",
         user_id="recall_coordinator",
-        instruction="We're processing refunds for the SkyForge X670E Pro motherboard recall due to defective capacitors. Please process refunds for these affected orders from August 2025:\n1. Tyler Martinez (tyler-martinez-83467) - order ord-250816-004 (payment: pay-250816-004, amount: $349.99)\n2. Sarah Kim (sarah-kim-45632) - order ord-250815-013 (payment: pay-250815-013, amount: $349.99)\n3. Clara Covington (clara-covington-89429) - order ord-250819-023 (payment: pay-250819-023, amount: $349.99)\nFor each order: create a refund with reason 'defective' and status 'approved', update the order status to 'cancelled', and update the payment status to 'refunded'.",
+        instruction="We're processing refunds for the SkyForge X670E Pro motherboard recall due to defective capacitors. These refunds are all approved. For each order: create refund with reason 'defective' and status 'approved', update the order status to 'cancelled', and update the payment status to 'refunded':\n1. Tyler Martinez (tyler-martinez-83467) - order ord-250816-004 (payment: pay-250816-004, amount: $349.99)\n2. Sarah Kim (sarah-kim-45632) - order ord-250815-013 (payment: pay-250815-013, amount: $349.99)\n3. Clara Covington (clara-covington-89429) - order ord-250819-023 (payment: pay-250819-023, amount: $349.99).",
         actions=[
             Action(
                 name="create_refund",

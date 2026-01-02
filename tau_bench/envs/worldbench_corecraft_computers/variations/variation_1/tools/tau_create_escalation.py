@@ -36,14 +36,13 @@ class CreateEscalation(Tool):
         ticket_id: str,
         escalation_type: str,
         destination: str,
-        notes: Optional[str] = None,
     ) -> str:
         """Create an escalation record linked to an existing support ticket."""
         if not _find_ticket(data, ticket_id):
             raise ValueError(f"Ticket {ticket_id} not found")
 
         # Generate deterministic ID based on input parameters
-        id_input = f"{ticket_id}|{escalation_type}|{destination}|{notes or ''}"
+        id_input = f"{ticket_id}|{escalation_type}|{destination}"
         id_hash = hashlib.sha256(id_input.encode()).hexdigest()[:12]
         escalation_id = f"esc_{id_hash}"
         row: Dict[str, Any] = {
@@ -52,7 +51,6 @@ class CreateEscalation(Tool):
             "ticketId": ticket_id,
             "escalationType": escalation_type,
             "destination": destination,
-            "notes": notes,
             "createdAt": _now_iso_from_data(data),
             "resolvedAt": None,
         }
@@ -75,9 +73,8 @@ class CreateEscalation(Tool):
                     "type": "object",
                     "properties": {
                         "ticket_id": {"type": "string", "description": "Support ticket id to escalate."},
-                        "escalation_type": {"type": "string", "description": "Escalation type (free-form or constrained by rules)."},
+                        "escalation_type": {"type": "string", "description": "Escalation type (one of technical, policy_exception, product_specialist)."},
                         "destination": {"type": "string", "description": "Escalation destination (team/queue/person)."},
-                        "notes": {"type": "string", "description": "Optional notes for the escalation."},
                     },
                     "required": ["ticket_id", "escalation_type", "destination"],
                 },

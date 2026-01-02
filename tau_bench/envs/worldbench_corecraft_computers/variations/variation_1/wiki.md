@@ -36,9 +36,9 @@ All dates and times provided in the database are in EST. You can assume that all
 
 - Refund reason: Valid reasons are "customer_remorse", "defective", "incompatible", "shipping_issue", or "other". The agent must select the appropriate reason based on the customer's situation.
 
-- Refund status: Default is "pending". The agent can set it to "approved" if the refund is authorized.
+- Refund status: Default is "pending". If the reason is "defective," the status is always "approved." The agent can set it to "approved" if the refund is authorized.
 
-- After creating a refund, the agent should update the order status to "partially_refunded" (for partial refunds) or "cancelled" (for full refunds), and update the payment status to "refunded".
+- After creating a refund, the agent should always update the order status to "partially_refunded" (for partial refunds) or "cancelled" (for full refunds), and update the payment status to "refunded".
 
 ## Update Order Status
 

@@ -298,7 +298,7 @@
     "orderId": "ord-250816-004",
     "method": "paypal",
     "status": "captured",
-    "amount": 1609.92,
+    "amount": 349.99,
     "transactionId": "PAYID-SJJEJAJDDJ47372JJJS",
     "processedAt": "2025-08-16T22:47:08.115Z",
     "createdAt": "2025-08-16T22:47:07.675Z"
@@ -707,7 +707,7 @@
     "orderId": "ord-250815-013",
     "method": "card",
     "status": "captured",
-    "amount": 1679.93,
+    "amount": 349.99,
     "transactionId": "ch_3TrQ8LKuuB2C26R61SystemBuild",
     "processedAt": "2025-08-15T16:34:00Z",
     "createdAt": "2025-08-15T16:32:00Z"

@@ -36,7 +36,6 @@ class CreateRefund(Tool):
         amount: float,
         currency: str,
         reason: str,
-        notes: Optional[str] = None,
         status: Optional[str] = "pending",
         lines: Optional[List[Dict[str, Any]]] = None,
     ) -> str:
@@ -49,7 +48,6 @@ class CreateRefund(Tool):
           - amount
           - currency
           - reason
-          - notes
           - status
           - lines (list of dicts)
           - createdAt
@@ -69,7 +67,6 @@ class CreateRefund(Tool):
             "amount": float(amount),
             "currency": currency,
             "reason": reason,
-            "notes": notes,
             "status": status or "pending",
             "lines": lines or [],
             "createdAt": _now_iso_from_data(data),
@@ -100,7 +97,6 @@ class CreateRefund(Tool):
                             "type": "string",
                             "description": "Reason for refund (e.g. customer_remorse, defective, incompatible, shipping_issue, other).",
                         },
-                        "notes": {"type": "string", "description": "Optional notes."},
                         "status": {"type": "string", "description": "Refund status (default: pending)."},
                         "lines": {
                             "type": "array",
