@@ -7,6 +7,13 @@ from typing import Optional, Union
 from tau_bench.envs.user import UserStrategy
 import os
 
+# Hardcoded dates per variation (ISO 8601 extended format with UTC timezone)
+# These should match the wiki.md system prompts for each variation
+VARIATION_DATES = {
+    "variation_1": "2025-09-15T19:00:00Z",  # September 15, 2025, 14:00 EST
+    "variation_2": "2025-11-15T14:00:00Z",  # November 15, 2025, 14:00 EST
+}
+
 
 class MockCorecraftComputersEnv(Env):
     def __init__(
@@ -18,6 +25,8 @@ class MockCorecraftComputersEnv(Env):
         task_index: Optional[int] = None,
         variation: str = "variation_1",
     ):
+        self._current_time = VARIATION_DATES.get(variation)
+
         # Import tools from the specified variation
         # Look in worldbench_corecraft_computers/variations/ first
         base_dir = os.path.dirname(__file__)
@@ -61,4 +70,14 @@ class MockCorecraftComputersEnv(Env):
             task_index=task_index,
         )
         self.terminate_tools = []
+        # Inject the current date into data so tools can access it
+        if self._current_date:
+            self.data["current_time"] = self._current_date
+
+    def reset(self, task_index: Optional[int] = None):
+        response = super().reset(task_index)
+        # Re-inject the current date after data is reloaded
+        if self._current_time:
+            self.data["current_time"] = self._current_date
+        return response
 

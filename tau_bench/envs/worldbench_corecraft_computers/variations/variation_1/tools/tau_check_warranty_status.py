@@ -17,7 +17,6 @@ class CheckWarrantyStatus(Tool):
         order_id: Optional[str] = None,
         product_id: Optional[str] = None,
         purchase_date: Optional[str] = None,
-        current_date: Optional[str] = None,
     ) -> str:
         # Build an in-memory SQLite DB from `data` for read-only querying.
         conn = sqlite3.connect(":memory:")
@@ -32,7 +31,8 @@ class CheckWarrantyStatus(Tool):
                 
                 from .tool_impls import check_warranty_status as check_warranty_status_module
                 check_warranty_status_module.get_db_conn = lambda: conn
-
+                current_date = data.get("current_time")
+                
                 result = _orig_checkWarrantyStatus(
                     order_id=order_id,
                     product_id=product_id,
@@ -70,10 +70,6 @@ class CheckWarrantyStatus(Tool):
         "purchase_date": {
                 "type": "string",
                 "description": "The purchase_date parameter"
-        },
-        "current_date": {
-                "type": "string",
-                "description": "The current_date parameter"
         }
 },
                     "required": [],
