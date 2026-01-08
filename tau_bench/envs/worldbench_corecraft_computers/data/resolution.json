@@ -1,66 +1,337 @@
 {
-    "res-250812-004": {
-        "ticketId": "tick-250812-004",
-        "outcome": "recommendation_provided",
-        "details": "Customer has NebulaX workstation with Cryonix Z790 Apex motherboard supporting up to 128GB DDR5. Currently has 32GB (2x16GB) kit with 2 slots remaining. Recommended HyperVolt DDR5 64GB (2x32GB) 5600MHz kit (SKU: HYPER-DDR5-64GB-5600) for total of 96GB, perfect for 4K video editing workloads. Provided installation guide and compatibility confirmation.",
-        "createdAt": "2025-08-13T09:15:00Z"
-    },
-    "res-251019-132": {
-        "ticketId": "tick-251019-849",
-        "outcome": "order_updated",
-        "details": "Updated shipping address from Garland home address to Plano office address (2412 Yorktown Dr, Plano, TX 75074) as requested by customer. Order will ship to corrected address.",
-        "resolvedById": "bianca-rossi",
-        "createdAt": "2025-10-19T15:05:00Z"
-    },
-    "res-251029-012": {
-        "ticketId": "tick-251028-047",
-        "outcome": "refund_issued",
-        "details": "Customer requested refund for unused CoreFlow 650W Bronze PSU. Item unopened and in original packaging. Approved partial refund for PSU amount minus restocking fee per return policy.",
-        "linkedRefundId": "ref-251029-012",
-        "resolvedById": "jordan-lee",
-        "createdAt": "2025-10-29T14:30:00Z"
-    },
-    "res-250826-003": {
-        "ticketId": "tick-250826-003",
-        "outcome": "refund_issued",
-        "details": "Customer received monitor with multiple dead pixels and backlight bleed. Attempted troubleshooting but issue persists. Full refund of $199.99 approved. Customer has already packaged item for return. Will consider purchasing different model after refund processes.",
-        "createdAt": "2025-08-26T13:45:00Z"
-    },
-    "res-250818-015": {
-        "ticketId": "tick-250818-015",
-        "outcome": "refund_issued",
-        "details": "Customer approved for full refund per our 30 day return policy. Refund of $199.99 will be processed once item is received and inspected.",
-        "linkedRefundId": "ref-250818-015",
-        "createdAt": "2025-08-22T14:23:00Z"
-    },
-    "res-250823-001": {
-        "ticketId": "tick-250823-001",
-        "outcome": "refund_issued",
-        "details": "Customer received defective PyraTech GraphForce 4080 with visible damage to cooling fins. Approved for full refund of $1199.99. Return shipping label sent via email. Customer confirmed they will purchase replacement from us once refund is processed.",
-        "createdAt": "2025-08-23T16:45:00Z"
-    },
-    "res-250901-123": {
-        "ticketId": "tick-250901-123",
-        "outcome": "recommendation_provided",
-        "details": "Recommended ZentriCore Apex 8600X CPU upgrade for customer's gaming build. This 8-core CPU offers excellent single-core performance with 3.9GHz base / 5.2GHz boost clocks, perfect for gaming workloads. Fits customer's $450 budget at $449.99. Customer confirmed motherboard compatibility (Z790 chipset) and proceeded with purchase recommendation. Provided product link and installation guidance.",
-        "createdAt": "2025-09-01T18:47:00Z"
-    },
-    "res-250818-006": {
-        "ticketId": "tick-250818-006",
-        "outcome": "troubleshooting_steps",
-        "details": "GPU temperatures of 85-90°C are within spec but on the high side. Provided troubleshooting steps: 1) Increase case fan curves and add intake fans if needed 2) Set custom GPU fan curve to be more aggressive 3) Undervolt GPU using MSI Afterburner (-50mV to -100mV) 4) Ensure case has proper airflow (intake front, exhaust rear/top). Customer confirmed temperatures dropped to 75-80°C after adjustments.",
-        "createdAt": "2025-08-18T13:45:00Z"
-    },
-    "res-250815-001": {
-        "ticketId": "tick-250815-001",
-        "outcome": "refund_issued",
-        "details": "Customer approved for full refund due to GPU case clearance compatibility issue. Return shipping label provided via email. Refund of $599.99 will be processed once item is received and inspected. Also provided recommendations for compatible GPU alternatives that fit customer's case constraints (280mm max).",
-        "createdAt": "2025-08-15T14:30:00Z"
-    },
-    "res-250825-002": {
-        "ticketId": "tick-250825-002",
-        "outcome": "refund_issued",
-        "details": "Customer ordered wrong RAM speed. HyperVolt DDR5-32GB was incompatible with older motherboard. Partial refund of $189.99 approved for the RAM only. Customer keeping the SSD and case from the same order. Return shipping label provided.",
-        "createdAt": "2025-08-25T18:20:00Z"
-    }
+  "res-250812-004": {
+    "ticketId": "tick-250812-004",
+    "outcome": "recommendation_provided",
+    "details": "Customer has NebulaX workstation with Cryonix Z790 Apex motherboard supporting up to 128GB DDR5. Currently has 32GB (2x16GB) kit with 2 slots remaining. Recommended HyperVolt DDR5 64GB (2x32GB) 5600MHz kit (SKU: HYPER-DDR5-64GB-5600) for total of 96GB, perfect for 4K video editing workloads. Provided installation guide and compatibility confirmation.",
+    "createdAt": "2025-08-13T09:15:00Z"
+  },
+  "res-250818-006": {
+    "ticketId": "tick-250818-006",
+    "outcome": "troubleshooting_steps",
+    "details": "GPU temperatures of 85-90°C are within spec but on the high side. Provided troubleshooting steps: 1) Increase case fan curves and add intake fans if needed 2) Set custom GPU fan curve to be more aggressive 3) Undervolt GPU using MSI Afterburner (-50mV to -100mV) 4) Ensure case has proper airflow (intake front, exhaust rear/top). Customer confirmed temperatures dropped to 75-80°C after adjustments.",
+    "createdAt": "2025-08-18T13:45:00Z"
+  },
+  "res-250818-015": {
+    "ticketId": "tick-250818-015",
+    "outcome": "refund_issued",
+    "details": "Customer approved for full refund per our 30 day return policy. Refund of $199.99 will be processed once item is received and inspected.",
+    "linkedRefundId": "ref-250818-015",
+    "createdAt": "2025-08-22T14:23:00Z"
+  },
+  "res-250823-001": {
+    "ticketId": "tick-250823-001",
+    "outcome": "refund_issued",
+    "details": "Customer received defective PyraTech GraphForce 4080 with visible damage to cooling fins. Approved for full refund of $1199.99. Return shipping label sent via email. Customer confirmed they will purchase replacement from us once refund is processed.",
+    "createdAt": "2025-08-23T16:45:00Z"
+  },
+  "res-250825-002": {
+    "ticketId": "tick-250825-002",
+    "outcome": "refund_issued",
+    "details": "Customer ordered wrong RAM speed. HyperVolt DDR5-32GB was incompatible with older motherboard. Partial refund of $189.99 approved for the RAM only. Customer keeping the SSD and case from the same order. Return shipping label provided.",
+    "createdAt": "2025-08-25T18:20:00Z"
+  },
+  "res-250826-003": {
+    "ticketId": "tick-250826-003",
+    "outcome": "refund_issued",
+    "details": "Customer received monitor with multiple dead pixels and backlight bleed. Attempted troubleshooting but issue persists. Full refund of $199.99 approved. Customer has already packaged item for return. Will consider purchasing different model after refund processes.",
+    "createdAt": "2025-08-26T13:45:00Z"
+  },
+  "res-250828-001": {
+    "ticketId": "tick-250828-002",
+    "outcome": "refund_issued",
+    "details": "Customer approved for full refund due to GPU case clearance compatibility issue. Return shipping label provided via email. Refund of $599.99 will be processed once item is received and inspected. Also provided recommendations for compatible GPU alternatives that fit customer's case constraints (280mm max).",
+    "createdAt": "2025-08-28T14:30:00Z"
+  },
+  "res-250901-123": {
+    "ticketId": "tick-250901-123",
+    "outcome": "recommendation_provided",
+    "details": "Recommended ZentriCore Apex 8600X CPU upgrade for customer's gaming build. This 8-core CPU offers excellent single-core performance with 3.9GHz base / 5.2GHz boost clocks, perfect for gaming workloads. Fits customer's $450 budget at $449.99. Customer confirmed motherboard compatibility (Z790 chipset) and proceeded with purchase recommendation. Provided product link and installation guidance.",
+    "createdAt": "2025-09-01T18:47:00Z"
+  },
+  "res-251017-214": {
+    "ticketId": "tick-251017-107",
+    "outcome": "recommendation_provided",
+    "details": "Answered customer inquiry about VoltStorm Gaming PC. Current price is $1,249.99 per unit. We currently have 2 units in stock, but customer can place a backorder for 3 units and we will fulfill as soon as possible.",
+    "createdAt": "2025-10-17T23:45:28Z",
+    "resolvedById": "alex-morgan"
+  },
+  "res-251019-132": {
+    "ticketId": "tick-251019-849",
+    "outcome": "order_updated",
+    "details": "Updated shipping address from Garland home address to Plano office address (2412 Yorktown Dr, Plano, TX 75074) as requested by customer. Order will ship to corrected address.",
+    "resolvedById": "bianca-rossi",
+    "createdAt": "2025-10-19T15:05:00Z"
+  },
+  "res-251022-410": {
+    "ticketId": "tick-251021-256",
+    "outcome": "troubleshooting_steps",
+    "details": "Confirmed customer was only charged once via PayPal ($379.97) after two failed card attempts. Explained that Alaska deliveries may take 1-2 additional days beyond standard 5-7 day estimate due to distance. Advised customer to contact us if package doesn't arrive within 2 weeks of order date.",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-10-22T11:15:00Z"
+  },
+  "res-251022-810": {
+    "ticketId": "tick-251022-810",
+    "outcome": "no_action",
+    "details": "Customer provided positive feedback about address update service provided by Bianca Rossi. No action required - ticket closed as positive feedback.",
+    "createdAt": "2025-10-22T15:30:32Z"
+  },
+  "res-251023-735": {
+    "ticketId": "tick-251022-388",
+    "outcome": "replacement_sent",
+    "details": "Approved replacement for damaged monitor. New unit shipped with tracking number 1Z232nu1238547876. Customer can dispose of damaged unit.",
+    "createdAt": "2025-10-23T11:22:37Z",
+    "resolvedById": "pauline-ortega"
+  },
+  "res-251024-155": {
+    "ticketId": "tick-251024-607",
+    "outcome": "refund_issued",
+    "details": "Customer has been approved for partial return for HyperVolt DDR5-5600 32GB Kit. Item is within 21-day return window and unopened. Customer keeping ClickForge kx7 mouse from same order. Refund of $189.99 will be processed once item is received.",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-10-25T10:13:03Z"
+  },
+  "res-251024-186": {
+    "ticketId": "tick-251024-749",
+    "outcome": "refund_issued",
+    "details": "Approved return for defective keyboard. Customer advised to ship product back to Louisville warehouse. Issued refund, which will be processed after receipt and inspection of returned item.",
+    "linkedRefundId": "ref-251024-623",
+    "resolvedById": "bianca-rossi",
+    "createdAt": "2025-10-24T17:43:06Z"
+  },
+  "res-251024-529": {
+    "ticketId": "tick-251024-529",
+    "outcome": "order_updated",
+    "details": "Customer requested initial bank transfer payment on order to be voided. Customer then updated order to pay with card instead. Payment captured.",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-10-24T20:35:17Z"
+  },
+  "res-251024-665": {
+    "ticketId": "tick-251023-283",
+    "outcome": "recommendation_provided",
+    "details": "Recommended HyperVolt DDR5-5600 32GB Kit (2x16GB) (SKU:  HYPER-DDR5-32G-5600) DDR5 memory module with at least 16GB capacity. Explained compatibility and performance benefits.",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-10-24T08:55:00.000Z"
+  },
+  "res-251027-047": {
+    "ticketId": "tick-251027-047",
+    "outcome": "troubleshooting_steps",
+    "details": "Customer reported system not booting after RAM installation. Advised customer to clear CMOS by removing motherboard battery for 30 seconds and resetting BIOS settings. Customer followed steps and confirmed system now boots successfully and recognizes new RAM at full 32GB capacity. Recommended updating BIOS if issues persist, but current resolution successful.",
+    "resolvedById": "mei-zhang",
+    "createdAt": "2025-10-27T14:30:00Z"
+  },
+  "res-251027-460": {
+    "ticketId": "tick-251027-095",
+    "outcome": "troubleshooting_steps",
+    "details": "Customer suspected defective GPU. Identified shutdowns as being related to power/connector rather than a defective GPU. Customer confirmed PSU wattage met the GPU's recommendation, reseated PCIe power, updated GPU driver and motherboard BIOS. After following these steps, shutdowns stopped occurring.",
+    "createdAt": "2025-10-27T18:41:29Z"
+  },
+  "res-251028-847": {
+    "ticketId": "tick-251028-847",
+    "outcome": "recommendation_provided",
+    "details": "Provided complete build recommendation for 1440p gaming within customer's budget. Confirmed all components are compatible. Customer approved the build and proceeded to order.",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-10-28T16:45:00Z"
+  },
+  "res-251029-002": {
+    "ticketId": "tick-251024-333",
+    "outcome": "refund_issued",
+    "linkedRefundId": "ref-251028-001",
+    "details": "Customer accidentally ordered two DataForge SSDs and returned one in original packaging. Processed refund for the returned item.",
+    "createdAt": "2025-10-29T09:31:00Z"
+  },
+  "res-251029-012": {
+    "ticketId": "tick-251028-047",
+    "outcome": "refund_issued",
+    "details": "Customer requested refund for unused CoreFlow 650W Bronze PSU. Item unopened and in original packaging. Approved partial refund for PSU amount minus restocking fee per return policy.",
+    "linkedRefundId": "ref-251029-012",
+    "resolvedById": "bianca-rossi",
+    "createdAt": "2025-10-29T14:30:00Z"
+  },
+  "res-251030-154": {
+    "ticketId": "tick-251030-154",
+    "outcome": "refund_issued",
+    "details": "Customer's order was just placed and not yet fulfilled, so it is cancelled and refunded.",
+    "linkedRefundId": "ref-251030-154",
+    "createdAt": "2025-10-30T12:13:00Z"
+  },
+  "res-251102-294": {
+    "ticketId": "tick-251102-147",
+    "outcome": "recommendation_provided",
+    "details": "Component recommendations provided to customer with all requested components meeting specifications: 10-core CPU, 32GB RAM, 16GB GPU, 32-inch monitor, liquid cooling, clicky keyboard, and all other required components.",
+    "createdAt": "2025-11-02T21:01:38Z",
+    "resolvedById": "david-pereboom"
+  },
+  "res-251104-418": {
+    "ticketId": "tick-251104-418",
+    "outcome": "refund_issued",
+    "details": "Return approved for both items. Customer remorse return within policy window. Return shipping label issued. Refund will be processed upon receipt of items at warehouse.",
+    "linkedRefundId": "ref-251104-418",
+    "createdAt": "2025-11-04T20:24:34Z",
+    "resolvedById": "alex-morgan"
+  },
+  "res-251105-856": {
+    "ticketId": "tick-251103-856",
+    "outcome": "recommendation_provided",
+    "details": "Recommended the NovaChip Pulse 10600K CPU and the TitanForge Hyperflow 3 Full Tower case (available in white or black) which are both compatible with the VoltEdge V9980SE motherboard. These components total $649.98 plus $9.99 standard shipping = $659.97, well within the customer's $700 budget. Customer followed recommendation and purchased the CPU and black case.",
+    "createdAt": "2025-11-05T14:30:53Z",
+    "resolvedById": "david-pereboom"
+  },
+  "res-251106-886": {
+    "ticketId": "tick-251105-473",
+    "outcome": "refund_issued",
+    "details": "Approved return for VortexLabs Horizon RX820L GPU due to PSU incompatibility. Customer to keep CoreFlow 650W PSU. Refund issued for GPU only.",
+    "linkedRefundId": "ref-251106-298",
+    "resolvedById": "bianca-rossi",
+    "createdAt": "2025-11-06T10:22:13Z"
+  },
+  "res-251108-123": {
+    "ticketId": "tick-251108-710",
+    "outcome": "recommendation_provided",
+    "details": "Confirmed compatibility between CoreFlow 650W 80+ Bronze PSU and PyraTech GraphForce 4070 16GB GPU. The 4070 recommends 650W total system power. Advised customer safe to proceed with order.",
+    "resolvedById": "david-pereboom",
+    "createdAt": "2025-11-08T09:42:36Z"
+  },
+  "res-251110-424": {
+    "ticketId": "tick-251107-599",
+    "outcome": "troubleshooting_steps",
+    "details": "Instructed customer they can initiate return through their account portal. Once the item is received and inspected, a refund will be processed to the original payment method within 5-7 business days. Also noted customer is placing a separate order for replacement montior.",
+    "resolvedById": "tim-bradley",
+    "createdAt": "2025-11-10T15:26:35Z"
+  },
+  "res-251110-627": {
+    "ticketId": "tick-251110-627",
+    "outcome": "order_updated",
+    "details": "Customer notified that initial payment failed due to insufficient funds. Customer will resubmit payment and will ship order once received.",
+    "createdAt": "2025-11-10T15:42:51Z",
+    "resolvedById": "tim-bradley"
+  },
+  "res-251110-988": {
+    "ticketId": "tick-251110-141",
+    "outcome": "recommendation_provided",
+    "details": "Customer was advised that the shipment is currently in_transit according to the latest tracking update. Customer was instructed to contact FedEx Express directly at 1-800-463-3339 with tracking number 781030206874 to get more specific location information and potentially file a claim if the package cannot be located. If the package is confirmed lost by the carrier, customer should contact CoreCraft support again for options.",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-11-10T17:29:18Z"
+  },
+  "res-251112-258": {
+    "ticketId": "tick-251111-963",
+    "outcome": "replacement_sent",
+    "details": "Verified damaged PSU through video call. Authorized immediate shipment of CoreFlow 750W Gold Modular PSU via express shipping at no charge to the customer. Tracking number provided.",
+    "resolvedById": "david-pereboom",
+    "createdAt": "2025-11-12T18:45:17Z"
+  },
+  "res-251112-427": {
+    "ticketId": "tick-251112-427",
+    "outcome": "recommendation_provided",
+    "details": "Confirmed compatibility between NovaChip Titan 14900K CPU and VoltEdge V9980se LGA E-ATX Motherboard. Both use LGA1700 socket. Motherboard supports the CPU's power requirements and has adequate VRM cooling.",
+    "resolvedById": "mei-zhang",
+    "createdAt": "2025-11-12T12:04:16Z"
+  },
+  "res-251113-210": {
+    "ticketId": "tick-251112-768",
+    "outcome": "troubleshooting_steps",
+    "details": "Customer confirmed monitor cable was plugged into motherboard instead of GPU. Guided customer to connect cable to GPU DisplayPort. Display working correctly now.",
+    "resolvedById": "david-pereboom",
+    "createdAt": "2025-11-13T14:45:00Z"
+  },
+  "res-251114-030": {
+    "ticketId": "tick-251112-084",
+    "outcome": "replacement_sent",
+    "details": "Customer received incorrect product (HyperVolt DDR4-3000 8GB [product ID: hypervolt-ddr4-8gb-3000] instead of ordered DDR4-3200 16GB [product ID: hypervolt-ddr4-16gb-3200]). Provided return shipping label via email for incorrect item. Correct product (HyperVolt DDR4-3200 16GB Kit) shipped with expedited delivery at no charge. New tracking number provided to customer.",
+    "resolvedById": "darnell-brooks",
+    "createdAt": "2025-11-14T15:13:10Z"
+  },
+  "res-251114-539": {
+    "ticketId": "tick-251113-157",
+    "outcome": "recommendation_provided",
+    "details": "Recommended complete mid-range gaming build with premium 32GB RAM:\n\nCPU: NovaChip Pulse 10600K ($299.99) - Excellent gaming performance with 6 cores\nMotherboard: Cryonix Z790 Apex ($399.99) - Supports DDR5 and future upgrades\nGPU: VortexLabs Horizon RX820L ($469.99) - Great 1440p gaming performance\nRAM: HyperVolt DDR5-5600 32GB Kit (2x16GB) ($189.99) - Fast DDR5 with the 32GB capacity you requested\nStorage: DataForge NVMe Gen4 1TB M.2 SSD ($149.99) - Fast game loading times\nPSU: CoreFlow 750W 80+ Gold Modular PSU ($129.99) - Efficient with plenty of headroom\nCase: TitanForge IMPRESSA Mid Tower Case ($169.99) - Great airflow and cable management\nCooling: CryoWave Tower Air Cooler ($39.99) - Quiet and effective cooling\n\nTotal: $1,849.92\n\nThis build hits the mid-range sweet spot while giving you the premium 32GB RAM you wanted. All components are compatible and in stock. Let me know if you'd like to proceed with an order!",
+    "createdAt": "2025-11-14T16:43:21Z",
+    "resolvedById": "tim-bradley"
+  },
+  "res-251117-040": {
+    "ticketId": "tick-251116-887",
+    "outcome": "troubleshooting_steps",
+    "details": "DRAM LED (Usually Red) - Solid Red: RAM not detected or incompatible. Provided troubleshooting steps: 1) Reseat RAM modules firmly 2) Try single RAM stick in slot A2 (usually second from CPU) 3) Verify RAM compatibility with motherboard QVL 4) Clean RAM contacts with isopropyl alcohol 5) Test with known good RAM",
+    "resolvedById": "tim-bradley",
+    "createdAt": "2025-11-17T10:22:00Z"
+  },
+  "res-251117-088": {
+    "ticketId": "tick-251117-637",
+    "outcome": "refund_issued",
+    "details": "Customer ordered incorrect RAM specification. Approved return and started refund process for HyperVolt DDR4-3000 8GB Kit. Refund will process once item is received at warehouse.",
+    "linkedRefundId": "ref-251117-539",
+    "resolvedById": "bianca-rossi",
+    "createdAt": "2025-11-17T17:09:46Z"
+  },
+  "res-251117-428": {
+    "ticketId": "tick-251117-428",
+    "outcome": "recommendation_provided",
+    "details": "Checked the compatibility between the VoltEdge V9980SE motherboard and HyperVolt DDR5 32GB 5600MHz memory. Both components support DDR5 memory type. Customer can place their order.",
+    "resolvedById": "tim-bradley",
+    "createdAt": "2025-11-17T21:41:38Z"
+  },
+  "res-251119-735": {
+    "ticketId": "tick-251119-735",
+    "outcome": "troubleshooting_steps",
+    "details": "Customer needed to install Swifthand software from manufacturer website to enable backlight controls. Walked customer through installation process. Backlight is now functioning properly. Customer confirmed issue resolved.",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-11-19T17:35:09Z"
+  },
+  "res-251119-847": {
+    "ticketId": "tick-251119-847",
+    "outcome": "recommendation_provided",
+    "details": "Reviewed customer's existing four components and recommended the CoreFlow 650W Bronze power supply as a compatible part based on specifications and system requirements.",
+    "createdAt": "2025-11-19T14:45:00.000Z",
+    "resolvedById": "alex-morgan"
+  },
+  "res-251126-133": {
+    "ticketId": "tick-251120-133",
+    "outcome": "refund_issued",
+    "details": "Customer returned unopened motherboard within return window. Full refund approved for product cost only.",
+    "linkedRefundId": "ref-251126-133",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-11-26T22:35:00Z"
+  },
+  "res-251126-784": {
+    "ticketId": "tick-251124-673",
+    "outcome": "recommendation_provided",
+    "details": "Escalated request approved: Grant 20% discount on ClickForge KX7 mouse as one-time exception for bundle miss. Informed customer to place order with discount applied manually.",
+    "createdAt": "2025-11-26T16:30:00Z",
+    "resolvedById": "pauline-ortega"
+  },
+  "res-251126-856": {
+    "ticketId": "tick-251125-872",
+    "outcome": "recommendation_provided",
+    "details": "Recommended TitanForge IMPRESSA Mid Tower Case ($169.99). This case is compatible with all previously purchased components. The case features excellent airflow, tempered glass side panel, and comes within budget at $169.99.",
+    "createdAt": "2025-11-26T17:30:00Z",
+    "resolvedById": "alex-morgan"
+  },
+  "res-251128-008": {
+    "ticketId": "tick-251128-363",
+    "outcome": "refund_issued",
+    "details": "Approved return for Visionix monitor. Customer remorse within return window. RMA label sent to customer email. Refund will be processed once item is received and inspected at warehouse.",
+    "linkedRefundId": "ref-251128-653",
+    "createdAt": "2025-11-28T22:24:05Z"
+  },
+  "res-251128-144": {
+    "ticketId": "tick-251123-715",
+    "outcome": "refund_issued",
+    "details": "Customer approved to return 1 of 3 monitors ordered. Monitor confirmed unopened in original packaging. Partial refund issued for 1x Visionix 27\" 4K 144Hz monitor.",
+    "linkedRefundId": "ref-251128-573",
+    "resolvedById": "alex-morgan",
+    "createdAt": "2025-11-28T15:29:03Z"
+  },
+  "res-251129-088": {
+    "ticketId": "tick-251123-941",
+    "outcome": "replacement_sent",
+    "details": "Customer exchanged incompatible AM4 CPU (astralogic-vortex-8700x) for compatible AM5 CPU (zentricore-storm-6600x). Return processed and replacement order placed.",
+    "resolvedById": "tim-bradley",
+    "createdAt": "2025-11-29T16:30:00Z"
+  },
+  "res-251129-571": {
+    "ticketId": "tick-251128-428",
+    "outcome": "recommendation_provided",
+    "details": "Provided comprehensive comparison between Dragonfire Gaming PC - GraphForce 4070 and VoltStorm Gaming PC - Horizon RX780. Recommended the Dragonfire system based on customer's 1440p gaming and streaming requirements. Explained performance differences, encoding capabilities for streaming, and value proposition of each system.",
+    "linkedRefundId": null,
+    "createdAt": "2025-11-29T09:45:00Z",
+    "resolvedById": "alex-morgan"
+  }
 }

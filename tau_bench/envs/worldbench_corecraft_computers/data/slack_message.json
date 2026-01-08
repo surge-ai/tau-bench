@@ -1,208 +1,881 @@
 {
-    "msg-250828-004": {
-        "channelId": "engineering-support",
-        "text": "Check the 24-pin ATX connection first - I've seen those CoreFlow modulars have loose seating sometimes. Also have them try the paperclip test on the PSU to isolate if it's the board or PSU. And double-check the CPU power connector is fully seated.",
-        "ticketId": "tick-250827-002",
-        "reactions": [
-            {
-                "emoji": "thinking",
-                "employeeIds": [
-                    "nadia-petrova"
-                ]
-            }
-        ],
-        "timestamp": "2025-08-27T11:35:00Z",
-        "authorId": "sara-li"
-    },
-    "msg-250827-010": {
-        "channelId": "support-general",
-        "text": "According to FedEx, the Jacksonville facility is swamped right now. They either have tons of packages up in line before ours, or they've lost the package. Either way, I told them we'll report it missing if our customer doesn't get it by Monday. That should light a fire! Just let our customer know, if they don't get an update by Friday, we'll rush a new package, and you can waive the fee of course.",
-        "reactions": [
-            {
-                "emoji": "heart",
-                "employeeIds": [
-                    "kailani-voss"
-                ]
-            }
-        ],
-        "timestamp": "2025-08-27T08:12:00Z",
-        "authorId": "miguel-alvarez"
-    },
-    "msg-250828-005": {
-        "channelId": "support-general",
-        "text": "Dealing with a shipping mixup - customer says package was delivered but they never got it. Neighbors didn't see anything either. Tracking shows 'delivered' but something's fishy. Going to contact FedEx for GPS coordinates and proof of delivery photo.",
-        "ticketId": "tick-250828-003",
-        "timestamp": "2025-08-28T15:50:00Z",
-        "authorId": "bianca-rossi"
-    },
-    "msg-250828-002": {
-        "channelId": "product-team",
-        "text": "Noted! I'll add a prominent case clearance callout to all GPUs over 300mm. We should also create a KB article about measuring GPU clearance. This compatibility miss could've been prevented with better product info.",
-        "ticketId": "tick-250815-001",
-        "reactions": [
-            {
-                "emoji": "check",
-                "employeeIds": [
-                    "alex-morgan",
-                    "maya-craft"
-                ]
-            }
-        ],
-        "timestamp": "2025-08-15T10:45:00Z",
-        "authorId": "aisha-khan"
-    },
-    "msg-250915-002": {
-        "channelId": "support-general",
-        "authorId": "alex-morgan",
-        "text": "What kind of 'doesn't fit'? Was this a full build we did or a single part? Did she ask us for recommendations?",
-        "ticketId": "tick-250914-089",
-        "timestamp": "2025-09-15T13:18:00Z"
-    },
-    "msg-250702-001": {
-        "channelId": "support-general",
-        "authorId": "alex-morgan",
-        "text": "Hey everyone! 👋 I want to introduce Tim Bradley, our newest Customer Support Representative who joined us this week. Tim comes from retail electronics and has been diving deep into our compatibility guides and product knowledge base. He'll be handling Tier 1 support alongside Bianca and me. Please give him a warm CoreCraft welcome! 🎉",
-        "reactions": [
-            {
-                "emoji": "wave",
-                "employeeIds": [
-                    "bianca-rossi",
-                    "maya-craft",
-                    "nadia-petrova"
-                ]
-            },
-            {
-                "emoji": "party",
-                "employeeIds": [
-                    "maya-craft",
-                    "aisha-khan"
-                ]
-            },
-            {
-                "emoji": "welcome",
-                "employeeIds": [
-                    "bianca-rossi"
-                ]
-            }
-        ],
-        "timestamp": "2025-07-02T09:15:00Z"
-    },
-    "msg-250828-003": {
-        "channelId": "engineering-support",
-        "text": "Need some troubleshooting help. Customer built Dragonfire base config but getting zero power - no lights, fans, nothing. Guided them through PSU connections and front panel headers. @sara any other common gotchas with the Cryonix Z790 Apex?",
-        "ticketId": "tick-250827-002",
-        "timestamp": "2025-08-27T11:25:00Z",
-        "authorId": "nadia-petrova"
-    },
-    "msg-250702-002": {
-        "channelId": "support-general",
-        "authorId": "aisha-khan",
-        "text": "Welcome to the team, Tim! 🎉 Really excited to have you here. If you ever have questions about product specs or compatibility edge cases, don't hesitate to ping me. The compatibility matrix can be tricky at first, but you'll get the hang of it. Looking forward to working with you!",
-        "reactions": [
-            {
-                "emoji": "heart",
-                "employeeIds": [
-                    "alex-morgan",
-                    "tim-bradley"
-                ]
-            },
-            {
-                "emoji": "thumbs_up",
-                "employeeIds": [
-                    "bianca-rossi",
-                    "maya-craft"
-                ]
-            }
-        ],
-        "timestamp": "2025-07-02T09:22:00Z"
-    },
-    "msg-250915-001": {
-        "channelId": "support-general",
-        "authorId": "tim-bradley",
-        "text": "Hey Alex, got a compatibility issue with a customer. She's saying the CPU she ordered doesn't fit her motherboard at all. Ticket #089. Not sure what went wrong?",
-        "ticketId": "tick-250914-089",
-        "timestamp": "2025-09-15T13:15:00Z"
-    },
-    "msg-250828-001": {
-        "channelId": "support-general",
-        "text": "Hey team, got another GPU clearance issue. Customer ordered the 305mm GraphForce 4070 but her case only fits 280mm cards. This is like the 5th one this month. @aisha maybe we need better compatibility warnings on the product pages?",
-        "ticketId": "tick-250815-001",
-        "reactions": [
-            {
-                "emoji": "thumbs_up",
-                "employeeIds": [
-                    "bianca-rossi",
-                    "nadia-petrova"
-                ]
-            }
-        ],
-        "timestamp": "2025-08-15T10:30:00Z",
-        "authorId": "alex-morgan"
-    },
-    "msg-250702-003": {
-        "channelId": "support-general",
-        "authorId": "tim-bradley",
-        "text": "Thanks everyone! Happy to be here and looking forward to working with you all. @aisha I'll definitely reach out when I have questions about the trickier compatibility stuff. Still getting up to speed on all the socket types and chipset combinations.",
-        "reactions": [
-            {
-                "emoji": "thumbs_up",
-                "employeeIds": [
-                    "alex-morgan",
-                    "aisha-khan",
-                    "bianca-rossi"
-                ]
-            }
-        ],
-        "timestamp": "2025-07-02T09:35:00Z"
-    },
-    "msg-250901-014": {
-        "channelId": "support-general",
-        "authorId": "tim-bradley",
-        "text": "@aisha Quick compatibility question - customer has Z790 motherboard and wants to upgrade CPU. Looking at the ZentriCore Apex 8600X - this should work with Z790 chipset, right? Want to make sure before I recommend it.",
-        "ticketId": "tick-250901-123",
-        "timestamp": "2025-09-01T18:25:00Z"
-    },
-    "msg-250828-006": {
-        "channelId": "support-general",
-        "text": "For shipping issues like this, let's follow our standard protocol - request delivery proof from carrier first, then if that's inconclusive, file a claim and send replacement immediately. We'll eat the cost to keep customer happy. @bianca let me know if you need approval for the replacement shipment.",
-        "ticketId": "tick-250828-003",
-        "reactions": [
-            {
-                "emoji": "thumbs_up",
-                "employeeIds": [
-                    "bianca-rossi"
-                ]
-            }
-        ],
-        "timestamp": "2025-08-28T16:00:00Z",
-        "authorId": "maya-craft"
-    },
-    "msg-250828-007": {
-        "channelId": "support-general",
-        "text": "Warehouse mixup alert - customer ordered CryoWave Tower Air Cooler but got shipped wrong cooler instead. SKUs don't match at all. @darnell can you double-check our pick-and-pack process? This is a pretty big miss.",
-        "ticketId": "tick-250826-007",
-        "timestamp": "2025-08-26T12:35:00Z",
-        "authorId": "bianca-rossi"
-    },
-    "msg-250901-015": {
-        "channelId": "support-general",
-        "authorId": "tim-bradley",
-        "text": "Nevermind, found it in the product specs! Thanks anyway!",
-        "ticketId": "tick-250901-123",
-        "reactions": [
-            {
-                "emoji": "thumbs_up",
-                "employeeIds": [
-                    "aisha-khan"
-                ]
-            }
-        ],
-        "timestamp": "2025-09-01T18:28:00Z"
-    },
-    "msg-250827-009": {
-        "channelId": "support-general",
-        "text": "@Miguel Looks like we've hit a snag with FedEx with one of our build orders. The package got hung up at the transit center in Jacksonville. Can you help me investigate what's going on so I can touch base with the customer? Customer's name is Artemis Hatch...how cool is that?",
-        "timestamp": "2025-08-27T08:04:22Z",
-        "authorId": "kailani-voss"
-    }
+  "msg-250702-001": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Hey everyone! 👋 I want to introduce Tim Bradley, our newest Customer Support Representative who joined us this week. Tim comes from retail electronics and has been diving deep into our compatibility guides and product knowledge base. He'll be handling Tier 1 support alongside Bianca and me. Please give him a warm CoreCraft welcome! 🎉",
+    "reactions": [
+      {
+        "emoji": "wave",
+        "employeeIds": [
+          "bianca-rossi",
+          "maya-craft",
+          "nadia-petrova"
+        ]
+      },
+      {
+        "emoji": "party",
+        "employeeIds": [
+          "maya-craft",
+          "aisha-khan"
+        ]
+      },
+      {
+        "emoji": "welcome",
+        "employeeIds": [
+          "bianca-rossi"
+        ]
+      }
+    ],
+    "timestamp": "2025-07-02T09:15:00Z"
+  },
+  "msg-250702-002": {
+    "channelId": "support-general",
+    "authorId": "aisha-khan",
+    "text": "Welcome to the team, Tim! 🎉 Really excited to have you here. If you ever have questions about product specs or compatibility edge cases, don't hesitate to ping me. The compatibility matrix can be tricky at first, but you'll get the hang of it. Looking forward to working with you!",
+    "reactions": [
+      {
+        "emoji": "heart",
+        "employeeIds": [
+          "alex-morgan",
+          "tim-bradley"
+        ]
+      },
+      {
+        "emoji": "thumbs_up",
+        "employeeIds": [
+          "bianca-rossi",
+          "maya-craft"
+        ]
+      }
+    ],
+    "timestamp": "2025-07-02T09:22:00Z"
+  },
+  "msg-250702-003": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Thanks everyone! Happy to be here and looking forward to working with you all. @aisha I'll definitely reach out when I have questions about the trickier compatibility stuff. Still getting up to speed on all the socket types and chipset combinations.",
+    "reactions": [
+      {
+        "emoji": "thumbs_up",
+        "employeeIds": [
+          "alex-morgan",
+          "aisha-khan",
+          "bianca-rossi"
+        ]
+      }
+    ],
+    "timestamp": "2025-07-02T09:35:00Z"
+  },
+  "msg-250826-007": {
+    "channelId": "support-general",
+    "text": "Re: tick-250826-007 - Warehouse mixup alert - customer ordered CryoWave Tower Air Cooler but got shipped wrong cooler instead. SKUs don't match at all. @darnell can you double-check our pick-and-pack process? This is a pretty big miss.",
+    "timestamp": "2025-08-26T12:35:00Z",
+    "authorId": "bianca-rossi"
+  },
+  "msg-250827-009": {
+    "channelId": "support-general",
+    "text": "@Miguel Looks like we've hit a snag with FedEx with one of our build orders. The package got hung up at the transit center in Jacksonville. Can you help me investigate what's going on so I can touch base with the customer? Customer's name is Artemis Hatch...how cool is that?",
+    "timestamp": "2025-08-27T08:04:22Z",
+    "authorId": "kailani-voss"
+  },
+  "msg-250827-010": {
+    "channelId": "support-general",
+    "text": "According to FedEx, the Jacksonville facility is swamped right now. They either have tons of packages up in line before ours, or they've lost the package. Either way, I told them we'll report it missing if our customer doesn't get it by Monday. That should light a fire! Just let our customer know, if they don't get an update by Friday, we'll rush a new package, and you can waive the fee of course.",
+    "reactions": [
+      {
+        "emoji": "heart",
+        "employeeIds": [
+          "kailani-voss"
+        ]
+      }
+    ],
+    "timestamp": "2025-08-27T08:12:00Z",
+    "authorId": "miguel-alvarez"
+  },
+  "msg-250828-001": {
+    "channelId": "support-general",
+    "text": "Hey team, on tick-250828-002: got another GPU clearance issue. Customer ordered the 305mm GraphForce 4070 but her case only fits 280mm cards. This is like the 5th one this month. @aisha maybe we need better compatibility warnings on the product pages?",
+    "reactions": [
+      {
+        "emoji": "thumbs_up",
+        "employeeIds": [
+          "bianca-rossi",
+          "nadia-petrova"
+        ]
+      }
+    ],
+    "timestamp": "2025-08-28T10:30:00Z",
+    "authorId": "alex-morgan"
+  },
+  "msg-250828-002": {
+    "channelId": "product-team",
+    "text": "Re: tick-250828-002 - Noted! I'll add a prominent case clearance callout to all GPUs over 300mm. We should also create a KB article about measuring GPU clearance. This compatibility miss could've been prevented with better product info.",
+    "reactions": [
+      {
+        "emoji": "check",
+        "employeeIds": [
+          "alex-morgan",
+          "maya-craft"
+        ]
+      }
+    ],
+    "timestamp": "2025-08-28T10:45:00Z",
+    "authorId": "aisha-khan"
+  },
+  "msg-250828-003": {
+    "channelId": "engineering-support",
+    "text": "Need some troubleshooting help on tick-250827-002. Customer built Dragonfire base config but getting zero power - no lights, fans, nothing. Guided them through PSU connections and front panel headers. @sara any other common gotchas with the Cryonix Z790 Apex?",
+    "timestamp": "2025-08-27T11:25:00Z",
+    "authorId": "nadia-petrova"
+  },
+  "msg-250828-004": {
+    "channelId": "engineering-support",
+    "text": "For tick-250827-002: Check the 24-pin ATX connection first - I've seen those CoreFlow modulars have loose seating sometimes. Also have them try the paperclip test on the PSU to isolate if it's the board or PSU. And double-check the CPU power connector is fully seated.",
+    "reactions": [
+      {
+        "emoji": "thinking",
+        "employeeIds": [
+          "nadia-petrova"
+        ]
+      }
+    ],
+    "timestamp": "2025-08-27T11:35:00Z",
+    "authorId": "sara-li"
+  },
+  "msg-250828-005": {
+    "channelId": "support-general",
+    "text": "Dealing with a shipping mixup on tick-250828-003 - customer says package was delivered but they never got it. Neighbors didn't see anything either. Tracking shows 'delivered' but something's fishy. Going to contact FedEx for GPS coordinates and proof of delivery photo.",
+    "timestamp": "2025-08-28T15:50:00Z",
+    "authorId": "bianca-rossi"
+  },
+  "msg-250828-006": {
+    "channelId": "support-general",
+    "text": "Re: tick-250828-003 - For shipping issues like this, let's follow our standard protocol - request delivery proof from carrier first, then if that's inconclusive, file a claim and send replacement immediately. We'll eat the cost to keep customer happy. @bianca let me know if you need approval for the replacement shipment.",
+    "reactions": [
+      {
+        "emoji": "thumbs_up",
+        "employeeIds": [
+          "bianca-rossi"
+        ]
+      }
+    ],
+    "timestamp": "2025-08-28T16:00:00Z",
+    "authorId": "maya-craft"
+  },
+  "msg-250901-014": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "@aisha Quick tick-250901-123: compatibility question - customer has Z790 motherboard and wants to upgrade CPU. Looking at the ZentriCore Apex 8600X - this should work with Z790 chipset, right? Want to make sure before I recommend it.",
+    "timestamp": "2025-09-01T18:25:00Z"
+  },
+  "msg-250901-015": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Re: tick-250901-123 - Nevermind, found it in the product specs! Thanks anyway!",
+    "reactions": [
+      {
+        "emoji": "thumbs_up",
+        "employeeIds": [
+          "aisha-khan"
+        ]
+      }
+    ],
+    "timestamp": "2025-09-01T18:28:00Z"
+  },
+  "msg-250915-001": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Hey Alex, got a compatibility issue with a customer. She's saying the CPU she ordered doesn't fit her motherboard at all. Ticket tick-250914-089. Not sure what went wrong?",
+    "timestamp": "2025-09-15T13:15:00Z"
+  },
+  "msg-250915-002": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Re: tick-250914-089 - What kind of 'doesn't fit'? Was this a full build we did or a single part? Did she ask us for recommendations?",
+    "timestamp": "2025-09-15T13:18:00Z"
+  },
+  "msg-251022-337": {
+    "channelId": "customer-feedback",
+    "authorId": "maya-craft",
+    "text": "Re: tick-251022-810 - I love positive customer feedback! Great work @bianca-rossi - that's the CoreCraft standard right there! 👏",
+    "timestamp": "2025-10-22T15:42:20Z",
+    "reactions": [
+      {
+        "emoji": "tada",
+        "users": [
+          "tim-bradley",
+          "bianca-rossi"
+        ]
+      },
+      {
+        "emoji": "heart",
+        "users": [
+          "tim-bradley"
+        ]
+      }
+    ]
+  },
+  "msg-251022-592": {
+    "channelId": "customer-feedback",
+    "authorId": "tim-bradley",
+    "text": "Re: tick-251022-810 - Just to mention I noticed some great feedback from Boris Lundgren about @bianca-rossi! Customer said the address update was handled in under 45 minutes, and he specifically praised Bianca's efficiency and helpfulness! Always good to see some positive feedback for the team 🎉",
+    "timestamp": "2025-10-22T15:35:10Z",
+    "reactions": [
+      {
+        "emoji": "heart",
+        "users": [
+          "maya-craft"
+        ]
+      }
+    ]
+  },
+  "msg-251025-029": {
+    "channelId": "returns-updates",
+    "authorId": "alex-morgan",
+    "text": "Hey, I have tick-251025-018, a customer who wants to refund/replace the GPU in their VoltStorm prebuilt PC they just purchased. Yeah. Only the GPU, not returning the whole PC. This is complex and beyond my reach -- Mei or David, this is more your thing, do you want to weigh in? is escalation necessary or can you guys handle it?",
+    "timestamp": "2025-10-25T16:22:00Z"
+  },
+  "msg-251026-430": {
+    "channelId": "product-team",
+    "authorId": "aisha-khan",
+    "text": "@Nadia Petrova thanks for getting those student build prototypes put together so fast. We're shipping them off to the tester in Austin. He'll put them through the wringer over the next few weeks! I'll follow up with any updates here.",
+    "timestamp": "2025-10-27T14:15:23Z",
+    "reactions": []
+  },
+  "msg-251028-678": {
+    "channelId": "support-general",
+    "authorId": "bianca-rossi",
+    "text": "Hey team, I have an open ticket (tick-251028-678) for a lost overnight shipment. Customer ordered an NVMe drive, paid for overnight, and FedEx marked it as lost in Memphis after 3 days. What's our procedure here? Do we send a replacement immediately or wait for the carrier investigation to complete? Customer is understandably frustrated about paying for overnight and getting nothing.",
+    "timestamp": "2025-10-28T16:05:00Z"
+  },
+  "msg-251029-876": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Hey team, on tick-251029-377: I got a very upset customer who didn't get their items delivered, as it went to his billing address, not shipping. ord-251027-833. I just checked the shipment details and it checks out. It looks like we messed this one up, we somehow gave the carrier the customer's billing address on our shipping label. @Miguel Alvarez @Nadia Petrova let's get another pre-built ready to go so we can prep a resolution to send a replacement order. I'll prep a response to the customer when we have it sorted.",
+    "reactions": [
+      {
+        "emoji": "white_check_mark",
+        "employeeIds": [
+          "miguel-alvarez",
+          "nadia-petrova"
+        ]
+      },
+      {
+        "emoji": "eyes",
+        "employeeIds": [
+          "maya-craft",
+          "kailani-voss"
+        ]
+      }
+    ],
+    "timestamp": "2025-10-29T17:38:12Z"
+  },
+  "msg-251030-001": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Hey team, I'm looking at tick-20250830-023 - customer reported their DataForge NVMe Gen4 1TB overheated due to what looks like an improper thermal pad. This could be a manufacturing defect. @nadia-petrova could your engineering team visually inspect any units from the same batch that were shipped to us before the customer's order date in August 2023? We might have more of these in our warehouse.",
+    "timestamp": "2025-10-30T15:23:00Z",
+    "reactions": [
+      {
+        "emoji": "thumbsup",
+        "employeeIds": [
+          "nadia-petrova"
+        ]
+      }
+    ]
+  },
+  "msg-251030-002": {
+    "channelId": "support-general",
+    "authorId": "miguel-alvarez",
+    "text": "I'll have my shipping team pull those units from inventory for inspection. Give me a couple hours to get someone on the job and I'll get them set aside.",
+    "timestamp": "2025-10-30T15:27:00Z",
+    "reactions": []
+  },
+  "msg-251030-003": {
+    "channelId": "support-general",
+    "authorId": "nadia-petrova",
+    "timestamp": "2025-10-30T15:31:00Z",
+    "reactions": [
+      {
+        "emoji": "thumbsup",
+        "employeeIds": [
+          "alex-morgan"
+        ]
+      }
+    ],
+    "text": "On it. I'll get my team to do a thorough visual inspection of the thermal pad application on those units. Let me know when they've been pulled @miguel-alvarez. This is exactly the kind of thing we need to catch."
+  },
+  "msg-251030-004": {
+    "channelId": "engineering-support",
+    "authorId": "nadia-petrova",
+    "text": "@owen-kim We need you to do a visual inspection on DataForge NVMe Gen4 1TB units from older stock. Miguel's team will pull them from the warehouse. Focus on the thermal pad application - we have a customer report suggesting improper installation that caused overheating. Check for pad alignment, coverage, and any signs of manufacturing inconsistency.",
+    "timestamp": "2025-10-30T15:34:00Z",
+    "reactions": []
+  },
+  "msg-251030-005": {
+    "channelId": "engineering-support",
+    "authorId": "owen-kim",
+    "text": "Got it, Nadia. I'll head down as soon as they're ready and run a full inspection. Will document everything and report back with findings.",
+    "timestamp": "2025-10-30T15:38:00Z",
+    "reactions": []
+  },
+  "msg-251030-006": {
+    "channelId": "fulfillment-updates",
+    "authorId": "miguel-alvarez",
+    "text": "@caleb-jones Can you pull all DataForge NVMe Gen4 1TB M.2 SSDs that were shipped to us before August 2023 from warehouse stock for engineering inspection? Potential thermal pad defect on older batch. Need them set aside ASAP for Victor from engineering to review.",
+    "timestamp": "2025-10-30T15:40:00Z",
+    "reactions": [
+      {
+        "emoji": "white_check_mark",
+        "employeeIds": [
+          "caleb-jones"
+        ]
+      }
+    ]
+  },
+  "msg-251030-007": {
+    "channelId": "fulfillment-updates",
+    "authorId": "caleb-jones",
+    "text": "Will do. I'll pull them now and have them in the inspection area within the hour.",
+    "timestamp": "2025-10-30T15:43:00Z",
+    "reactions": []
+  },
+  "msg-251030-186": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Hello team, I'll need some assistance with tick-251030-314. The customer bought a CPU and memory from us, which I checked to be an AstraLogic Blade 4600 and a HyperVolt DDR4-3200 16GB Kit (2x8GB). She claims her device can no longer start up because of them. From what I know, these products should be compatible with each other. Any troubleshooting tips?",
+    "timestamp": "2025-10-30T21:49:02Z"
+  },
+  "msg-251030-190": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Re: tick-251030-314 - I would start by 1.) seeing if she purchased her motherboard from us by checking the order logs. Then 2.) from there, a compatibility check can be done to see if the CPU and/or memory matches the motherboard. If so, that's the issue. See if this works, and if not, message again for more elaborate steps.",
+    "timestamp": "2025-10-30T22:58:37Z"
+  },
+  "msg-251030-631": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Hey @aisha-khan - Got an interesting customer request. Jihoon Park runs a cafe and wants to check possibility of upgrading the motherboard in a Voltstorm Gaming PC from the Skyforge-micro to the Skyforge-pro that comes in the Dragonfire build. Would this be possible? Opened ticket tick-251030-428.",
+    "timestamp": "2025-10-30T17:24:00Z"
+  },
+  "msg-251030-703": {
+    "channelId": "fulfillment-updates",
+    "authorId": "darnell-brooks",
+    "text": "Heads up, we need to reorder from NovaChip. The following CPUs are running low on inventory after fulfilling a large B2B order:\n- NovaChip Fusion 12400K (18 units shipped)\n- NovaChip Titan 14900K (11 units shipped)\n- NovaChip Pulse 10600K (17 units shipped)\n- NovaChip Fusion 12700K (10 units shipped)\n\nCan someone relay this info to Jamal Nguyen to coordinate a new shipment from NovaChip to replenish these SKUs?",
+    "timestamp": "2025-10-30T17:00:00Z"
+  },
+  "msg-251103-428": {
+    "channelId": "returns-updates",
+    "authorId": "alex-morgan",
+    "text": "Hey <@Jamal>, I've been going through recent support tickets and noticed something concerning - we had two separate complaints about the RaptorKeys RK80 TKL mechanical keyboard, just two days apart at the end of October. Both customers reported keys sticking or not working at all. Can you look into whether there might be any batch defects?",
+    "timestamp": "2025-11-03T15:32:00Z",
+    "reactions": []
+  },
+  "msg-251103-857": {
+    "channelId": "returns-updates",
+    "authorId": "jamal-nguyen",
+    "text": "That's not good at all. I'll look into this right away - checking inventory lots and reaching out to the manufacturer about any known issues with recent batches. Thanks for flagging this.",
+    "timestamp": "2025-11-03T15:48:00Z",
+    "reactions": []
+  },
+  "msg-251104-155": {
+    "channelId": "support-general",
+    "authorId": "bianca-rossi",
+    "text": "Happy to review it before it goes live.",
+    "timestamp": "2025-11-04T16:12:00Z"
+  },
+  "msg-251104-271": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "I'll add to that - customers are always confused about whether they need to contact us or the manufacturer first.",
+    "timestamp": "2025-11-04T15:42:00Z"
+  },
+  "msg-251104-387": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Hey team - following up on that customer complaint about warranty transparency. We need to overhaul our warranty documentation, both on the website and also in our knowledge base. What would you guys say the top queries or questions are that you get regarding our extended warranty and the standard manufacturers warranty?",
+    "timestamp": "2025-11-04T15:22:00Z"
+  },
+  "msg-251104-428": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Need help ASAP! Customer says their PC is completely bricked after Win 11 upgrade. No receipt but serial number confirms it's one of our bundle builds from earlier this year. Customer is panicking and I don't know where to start!",
+    "timestamp": "2025-11-04T14:23:00Z"
+  },
+  "msg-251104-571": {
+    "channelId": "support-general",
+    "authorId": "mei-zhang",
+    "text": "Hey Tim, take a breath. Let's work through it step by step. First, I need you to go back to the customer and get the motherboard model - that's key for Win 11 compatibility issues.",
+    "timestamp": "2025-11-04T14:26:00Z"
+  },
+  "msg-251104-713": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Perfect, this is exactly what I needed. I'm going to draft a comprehensive KB article that will hopefully cover all of these common queries",
+    "timestamp": "2025-11-04T16:08:00Z"
+  },
+  "msg-251104-714": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "@mei-zhang Customer confirmed they have the Cryonix Z790 Apex (SKU: Cryonix Z790 Apex). What should I try next?",
+    "timestamp": "2025-11-04T14:35:00Z"
+  },
+  "msg-251104-829": {
+    "channelId": "support-general",
+    "authorId": "bianca-rossi",
+    "text": "Great timing on this. Top questions I get: 1) What's actually covered vs not covered, 2) what the actual process is for resolving an issue, 3) if there is any specific maintenance they are expected to have done to maintain the warranty",
+    "timestamp": "2025-11-04T15:35:00Z"
+  },
+  "msg-251104-857": {
+    "channelId": "support-general",
+    "authorId": "mei-zhang",
+    "text": "Perfect, Z790 is definitely Win 11 compatible. This is likely a TPM/Secure Boot issue. Walk the customer through these steps:/nStep 1: Enter BIOS/UEFI settings/n/nRestart the computer./nPress F12 to get to the BIOS./nStep 2: Disable CSM and enable UEFI mode/n/nNavigate to the Boot settings in the BIOS./nFind the option for CSM (Compatibility Support Module) and disable it./nIf you don't see an option for Secure Boot, disabling CSM should make it appear. /nStep 3: Enable Secure Boot/n/nLook for the Security or Boot menu, where you should now see the Secure Boot option.Enter the Secure Boot settings and set the option to Enabled./nStep 4: Save and exit /n/nSave your changes and exit the BIOS./nThe computer will restart.To verify the setting, open System Information in Windows and check the Secure Boot State.",
+    "timestamp": "2025-11-04T14:38:00Z"
+  },
+  "msg-251105-142": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "IT WORKED! Customer is back up and running. The computer is no longer bricked and Windows 11 is booting up fine! Thank you so much Mei!",
+    "timestamp": "2025-11-04T15:12:00Z"
+  },
+  "msg-251105-283": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Seeing a pattern today—third customer this week says their DP→HDMI adapter won't do 144 FPS. All ordered the active version, but symptoms look like passive. Could be a bin/packaging mix. Can Returns spot-check?",
+    "timestamp": "2025-11-05T18:23:00Z"
+  },
+  "msg-251105-285": {
+    "channelId": "support-general",
+    "authorId": "mei-zhang",
+    "text": "Great work Tim! Since this is a common issue with Win 11 upgrades, you should create a KB article while it's fresh. Document those BIOS steps - this will help other agents and customers.",
+    "timestamp": "2025-11-04T15:15:00Z"
+  },
+  "msg-251105-412": {
+    "channelId": "returns-updates",
+    "authorId": "tim-bradley",
+    "text": "Can anyone from returns pull a few units from the DP→HDMI (active) bin? We're getting multiple reports that the contents are HDMI→DP (passive). If confirmed, recommend quarantining that stock.",
+    "timestamp": "2025-11-05T18:45:00Z"
+  },
+  "msg-251105-571": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Just created KB article kb-472-win11sb documenting the fix. Let me know if I should add anything else!",
+    "timestamp": "2025-11-04T15:47:00Z"
+  },
+  "msg-251105-714": {
+    "channelId": "support-general",
+    "authorId": "mei-zhang",
+    "text": "Good start! But update it to note this solution works for all our motherboard products - the BIOS steps are similar across brands. Add the SkyForge B550M Micro (SKU: SKY-B550-MICRO), SkyForge X670E Pro (SKU: SKY-X670E-PRO), and VoltEdge V9980SE (SKU: VOLTEDGE-V9980S).",
+    "timestamp": "2025-11-04T15:50:00Z"
+  },
+  "msg-251105-847": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Same here—two cases yesterday. Customers checked the part and it's a HDMI→DP (passive) inside a DP→HDMI (active) box. Likely misboxed stock.",
+    "timestamp": "2025-11-05T18:31:00Z"
+  },
+  "msg-251106-176": {
+    "channelId": "returns-updates",
+    "authorId": "gregory-moss",
+    "text": "Confirmed. last batch received Oct 28 has passive HDMI→DP units in active DP→HDMI packaging. Around 100 estimated to be messed up. Quarantining that stock and opening a vendor RMA. Shipping hold in place until re-verified.",
+    "timestamp": "2025-11-06T14:22:00Z"
+  },
+  "msg-251106-539": {
+    "channelId": "policy-discussion",
+    "authorId": "pauline-ortega",
+    "text": "our policy on this: immediate reship of the correct adapter with a prepaid return label; no need to wait for the return first. Waive shipping/fees for impacted orders. Please tag cause as 'mislabeled stock' in your tickets.",
+    "timestamp": "2025-11-06T15:10:00Z"
+  },
+  "msg-251106-597": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "New warranty KB article is live! Thanks for all your input. Let me know if you think anything needs to be added and I will get right on it!",
+    "timestamp": "2025-11-06T14:30:00Z"
+  },
+  "msg-251106-857": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Updated! Added all the motherboards and made the steps more general. Thanks so much for your help Mei - learned a ton!",
+    "timestamp": "2025-11-04T16:07:00.000Z"
+  },
+  "msg-251107-268": {
+    "channelId": "returns-updates",
+    "authorId": "gregory-moss",
+    "text": "Stock update: all affected units are quarantined and relabeled pending vendor response. We've contacted 47 impacted orders (31 inbound tickets + 16 proactive emails). Support can proceed with the free reships.",
+    "timestamp": "2025-11-07T16:50:00Z"
+  },
+  "msg-251107-539": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Hey @miguel-alvarez - we've got three orders from November 1st that are all stuck at label_created status since November 3rd. All three are UPS Ground shipments that haven't moved from Louisville. Orders: ord-251101-847 (tracking 1Z999AA10123456789), ord-251101-738 (tracking 1Z999AA10234567890), and ord-251101-629 (tracking 1Z999AA10345678901). All three customers have now contacted us asking about their shipments. Can you investigate what's going on with these packages and why they haven't been picked up by UPS?",
+    "timestamp": "2025-11-07T12:21:03Z",
+    "reactions": []
+  },
+  "msg-251108-191": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Getting multiple tickets about monitor dead pixels. Do we have a standard policy doc and thresholds for exchanges? Customers are asking what counts.",
+    "timestamp": "2025-11-08T15:20:00Z"
+  },
+  "msg-251108-334": {
+    "channelId": "support-general",
+    "authorId": "gregory-moss",
+    "text": "Yes — we follow Class II-style thresholds. Quick version: IPS/VA is 5+ dead pixels or 3+ stuck in a 5 by 5 cluster; center-screen defects always qualify. 4K has slightly higher counts. OLED thresholds are stricter. I'll drop the full KB shortly.",
+    "timestamp": "2025-11-08T15:35:00Z"
+  },
+  "msg-251109-477": {
+    "channelId": "product-team",
+    "authorId": "aisha-khan",
+    "text": "Adding a dead-pixel policy section to all displays now. Should cut down on pre-sale questions and clarify expectations.",
+    "timestamp": "2025-11-09T09:15:00Z"
+  },
+  "msg-251109-620": {
+    "channelId": "returns-updates",
+    "authorId": "gregory-moss",
+    "text": "For dead-pixel returns: ask for photos on solid white/black/red/green/blue backgrounds and a 5-10s video. Have them circle defects. Confirm panel type/size and log counts/locations. If thresholds are met within 30 days, approve and send the prepaid label.",
+    "timestamp": "2025-11-09T11:45:00Z"
+  },
+  "msg-251109-763": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Perfect, thanks! I published a KB with the full policy and scripts. We'll reference it for any monitor pixel defect tickets going forward.",
+    "timestamp": "2025-11-09T14:20:00Z"
+  },
+  "msg-251110-228": {
+    "channelId": "engineering-support",
+    "authorId": "mei-zhang",
+    "text": "Are DDR5 vs DDR4 mismatches supposed to be caught by the Build Configurator? I've had multiple tickets like tick-250825-002 where customers installed the wrong generation RAM and the system won't POST. Shouldn't the Configurator prevent selecting incompatible memory types?",
+    "timestamp": "2025-11-10T15:22:00Z"
+  },
+  "msg-251110-68456": {
+    "channelId": "kb-updates",
+    "authorId": "aisha-khan",
+    "text": "Hey All, I've just uploaded two new KB articles for the VoltStorm Gaming PC Horizon RX780! An installation guide and a 'common issues' guide. Please take a look and let me know what you think and is there's anything else you would like added!",
+    "timestamp": "2025-11-10T09:57:00.000Z",
+    "reactions": null
+  },
+  "msg-251113-209": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Hey Alex, I just got assigned a ticket (tick-251113-635) where the customer's order wasn't delivered, and the tracking...basically just ended. The shipment reads 'lost'. I haven't seen this before. I'm wondering if you've heard anything from the carrier? What's the protocol to get this resolved? Thanks",
+    "timestamp": "2025-11-13T17:38:21Z"
+  },
+  "msg-251113-210": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Re: tick-251113-635 - That is weird, Tim. But we can figure it out. @Kailani, you seeing this? This is an unusual circumstance so I'm weighing if escalation is needed or if this all falls on the carrier's shoulders?",
+    "timestamp": "2025-11-13T17:40:39Z"
+  },
+  "msg-251113-247": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Getting a lot of tickets today about stacking the BF25 code with loyalty discounts. Customers keep trying both and think checkout is broken.",
+    "timestamp": "2025-11-13T18:22:00Z"
+  },
+  "msg-251113-494": {
+    "channelId": "support-general",
+    "authorId": "bianca-rossi",
+    "text": "Same here — had three chats this morning about using SAVE15 on top of BF25. Also getting questions about price matching Amazon's sale prices.",
+    "timestamp": "2025-11-13T18:28:00Z"
+  },
+  "msg-251113-741": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Thanks for flagging. Official guidance: BF25 can’t stack with loyalty discounts — checkout will automatically apply whichever gives the better total.",
+    "timestamp": "2025-11-13T19:05:00Z"
+  },
+  "msg-251114-041": {
+    "channelId": "fulfillment-updates",
+    "authorId": "darnell-brooks",
+    "text": "No specific numbers but early estimates say ~60% of UPS and about ~40% of our FedEx order may be affected. Recommend proactive emails to affected customers this afternoon with a 1-2 business day delay message.",
+    "timestamp": "2025-11-14T14:48:00Z"
+  },
+  "msg-251114-13911": {
+    "channelId": "policy-discussion",
+    "authorId": "pauline-ortega",
+    "text": "Wow y’all, we are one well oiled machine. who’s up for some team drinkies/recap on tuesday after work haha",
+    "timestamp": "2025-11-14T09:45:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-163": {
+    "channelId": "policy-discussion",
+    "authorId": "alex-morgan",
+    "text": "We need some clearer messaging on-site about discount stacking for Black Friday. Support is getting flooded with the same questions — maybe a homepage banner?",
+    "timestamp": "2025-11-14T09:15:00Z"
+  },
+  "msg-251114-29705": {
+    "channelId": "policy-discussion",
+    "authorId": "ruth-gallagher",
+    "text": "I’ll make sure Daniel gives our payment providers a heads up about the volume.",
+    "timestamp": "2025-11-14T06:49:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-309": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Re: tick-251026-935 - QQ: how do we look up the warranty info before replacing? I know some vendors have their own coverage but I can’t remember if we check that first?",
+    "timestamp": "2025-11-14T10:26:00Z"
+  },
+  "msg-251114-310": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Re: tick-251026-935 - Good question! Always FIRST check if the manufacturer offers a direct warranty. If their warranty is active, we’ll route them there. If it’s expired (some are pretty short) or the customer can’t get service, we can process the replacement under CoreCraft’s warranty. If you ever get a weird edge case, tag me and we’ll look at it together.",
+    "timestamp": "2025-11-14T10:28:00Z"
+  },
+  "msg-251114-33894": {
+    "channelId": "policy-discussion",
+    "authorId": "nadia-petrova",
+    "text": "nevermind, just saw that its coming out next week.",
+    "timestamp": "2025-11-14T07:50:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-347": {
+    "channelId": "fulfillment-updates",
+    "authorId": "darnell-brooks",
+    "text": "Heads up: UPS and FedEx report 24–48 hr linehaul delays out of Louisville due to severe weather. Pickups continue, but ETAs for standard and express shipments leaving today/tomorrow will slip. We’ll post counts shortly.",
+    "timestamp": "2025-11-14T14:22:00Z"
+  },
+  "msg-251114-388": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "I'm already seeing tickets about stalled tracking. Can we get a standard response for the weather delay so we're consistent?",
+    "timestamp": "2025-11-14T15:12:00Z"
+  },
+  "msg-251114-39267": {
+    "channelId": "policy-discussion",
+    "authorId": "jamal-nguyen",
+    "text": "Let me know how I can jump in to help out this year",
+    "timestamp": "2025-11-14T06:44:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-410": {
+    "channelId": "promotions-planning",
+    "authorId": "chloe-bennett",
+    "text": "Got it. We'll add a small banner and FAQ note clarifying that only one discount applies per order. Should go live this afternoon.",
+    "timestamp": "2025-11-14T10:42:00Z"
+  },
+  "msg-251114-479": {
+    "channelId": "product-team",
+    "text": "Hey team, just got a ticket from a new customer (tick-251114-479) asking about when we'll expand our keyboard range. He mentioned being disappointed with the limited options and wants to buy from us rather than going elsewhere. Are there any plans to bring in more keyboard/peripheral options in the pipeline? Would be good to give him a timeline if we have one.",
+    "reactions": null,
+    "timestamp": "2025-11-16T16:25:00.000Z",
+    "authorId": "alex-morgan"
+  },
+  "msg-251114-53354": {
+    "channelId": "policy-discussion",
+    "authorId": "darnell-brooks",
+    "text": "Let’s gooo! We got this!",
+    "timestamp": "2025-11-14T06:37:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-54586": {
+    "channelId": "policy-discussion",
+    "authorId": "nadia-petrova",
+    "text": "whats the discount this year?",
+    "timestamp": "2025-11-14T07:48:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-657": {
+    "channelId": "support-general",
+    "authorId": "mei-zhang",
+    "text": "Quick question, customer used BF25 and now wants a price match since another site is $50 cheaper but has no promo code. Do we go by pre-discount or final total?",
+    "timestamp": "2025-11-14T15:33:00Z"
+  },
+  "msg-251114-65951": {
+    "channelId": "policy-discussion",
+    "authorId": "alex-morgan",
+    "text": "10-4 boss! scared but ready lol",
+    "timestamp": "2025-11-14T06:38:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-68582": {
+    "channelId": "policy-discussion",
+    "authorId": "maya-craft",
+    "text": "Thanks team!",
+    "timestamp": "2025-11-14T11:48:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-694": {
+    "channelId": "fulfillment-updates",
+    "authorId": "alex-morgan",
+    "text": "Thanks for the alert. Do we have a rough count of affected orders? Should support notify customers, or wait for tracking to update?",
+    "timestamp": "2025-11-14T14:35:00Z"
+  },
+  "msg-251114-72302": {
+    "channelId": "policy-discussion",
+    "authorId": "evan-core",
+    "text": "Good Morning Team Leads!\nWe are officially two weeks out from Black Friday! As you all know, our customers look forward to this every year.\nThis year, the sale will run through the weekend and into Cyber Monday.\nI know we are well seasoned at this point, especially looking at you, help desk, logistics and IT, but I’ve put together a preparation guide as a reminder for us to get our ducks in a row: \"Black Friday 2025 - Preparation Guide\" (kb-252). \n\nMaya and I have the utmost confidence in you, I know we are gonna crush this!",
+    "timestamp": "2025-11-14T06:32:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-735": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Use this script: “Carriers are experiencing weather-related delays departing Louisville. Deliveries may be 1-2 business days late. Your tracking will update once linehaul resumes. Thank you for your patience.” Escalate per shipping-SLA if Overnight misses without a carrier exception.",
+    "timestamp": "2025-11-14T15:18:00Z"
+  },
+  "msg-251114-812": {
+    "channelId": "support-general",
+    "authorId": "bianca-rossi",
+    "text": "Hey team, I have a ticket (tick-251114-650) from Software Bros asking about bulk pricing for 15-20 NebulaX Workstation Pro units. This seems like it might need a policy exception for volume discount. Who's the best person to escalate this to - product team or do we have someone who handles enterprise pricing?",
+    "timestamp": "2025-11-14T15:47:30Z"
+  },
+  "msg-251114-90460": {
+    "channelId": "policy-discussion",
+    "authorId": "trevor-singh",
+    "text": "Nothing is going down under my watch!",
+    "timestamp": "2025-11-14T06:43:00.000Z",
+    "reactions": null
+  },
+  "msg-251114-98883": {
+    "channelId": "policy-discussion",
+    "authorId": "aisha-khan",
+    "text": "Not to brag, but our i’s are dotted and t’s are crossed. The catalog is looking pristine and we are ahead of schedule!",
+    "timestamp": "2025-11-14T06:57:00.000Z",
+    "reactions": null
+  },
+  "msg-251115-082": {
+    "channelId": "fulfillment-updates",
+    "authorId": "miguel-alvarez",
+    "text": "Follow-up: most affected shipments have movement scans overnight. Expect broad tracking updates within the next 12-24 hrs. We will post a final count once everything clears.",
+    "timestamp": "2025-11-15T09:45:00Z"
+  },
+  "msg-251115-847": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "timestamp": "2025-11-15T12:06:30Z",
+    "text": "Just took a call from a customer whose son built a PC with our Skyforge X670E Pro motherboard. Power went out during a BIOS/system update and now the PC boots unreliably and freezes after a few minutes. Son thinks it's the motherboard. Does this sound like something with a simple fix or should I escalate for deeper troubleshooting? Want to make sure I give her the right guidance. Ticket tick-251115-847"
+  },
+  "msg-251117-306": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Re: tick-251117-425 - Tim - tell the customer they'll be able to have the RAM replaced under warranty. I'll escalate this to quality assurance so they can review the failure pattern and approve the replacement.",
+    "timestamp": "2025-11-17T18:58:00Z"
+  },
+  "msg-251117-865": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Hey team, need some advice on tick-251117-425. Customer has a RAM issue with blue screens, they've already run diagnostics showing the RAM is bad and tried reseating. They're asking about warranty replacement. The order is 4 years old. What's the best way to handle this?",
+    "timestamp": "2025-11-17T18:42:00Z"
+  },
+  "msg-251118-417": {
+    "channelId": "engineering-support",
+    "authorId": "alex-morgan",
+    "text": "Escalated ticket tick-251118-417 to engineering. Customer aisha-patel-56923 needs troubleshooting help with order ord-250701-015. See full text in escalation.",
+    "timestamp": "2025-11-18T11:16:30Z",
+    "reactions": []
+  },
+  "msg-251120-229": {
+    "channelId": "engineering-support",
+    "authorId": "alex-morgan",
+    "text": "Hey team, got a ticket from a customer (tick-251120-189) whose Nebula X Workstation Pro cooling fans aren't turning on. System is overheating as a result. Customer confirmed the fan power cables are connected to the motherboard. Any ideas on what to check next?",
+    "timestamp": "2025-11-20T12:12:05Z"
+  },
+  "msg-251120-270": {
+    "channelId": "engineering-support",
+    "authorId": "sara-li",
+    "text": "Re: tick-251120-189 - Have them check the BIOS settings. Sometimes the fans are disabled or not detected properly in BIOS. They should verify the fans are visible in the hardware monitor section and that fan control is enabled.",
+    "timestamp": "2025-11-20T12:19:17Z"
+  },
+  "msg-251120-388": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "Hey @darnell-brooks, got a customer (tick-251120-041) who's visiting from London on business and wants to pick up their order at our warehouse instead of shipping. Are we able to do local pickups? Customer is ready to order but waiting on confirmation.",
+    "timestamp": "2025-11-20T10:17:30Z"
+  },
+  "msg-251120-735": {
+    "channelId": "support-general",
+    "authorId": "darnell-brooks",
+    "text": "Re: tick-251120-041 - Yes, we can do this. Just make sure the order and payment are properly processed first. Customer needs to pick up within 2 business days at the shipping dock - just ring the buzzer and bring ID for verification. We'll have it ready for them.",
+    "timestamp": "2025-11-20T11:45:02Z"
+  },
+  "msg-251128-281": {
+    "channelId": "fulfillment-updates",
+    "text": "Re: tick-251128-844 - Good catch, I have created an urgent ticket, will get back to you asap!",
+    "timestamp": "2025-11-28T14:38:00Z",
+    "reactions": [
+      {
+        "emoji": "thumbsup",
+        "employeeIds": [
+          "caleb-jones"
+        ]
+      }
+    ],
+    "authorId": "alex-morgan"
+  },
+  "msg-251128-292": {
+    "channelId": "fulfillment-updates",
+    "authorId": "darnell-brooks",
+    "text": "🚨 Alert: Potential damage identified to VortexLabs Horizon RX740T GPUs during warehouse handling today. We're currently assessing the extent of the issue. Please keep an eye out for any orders containing this product placed today or in the coming days - they may experience delays while we verify product integrity. Customer service teams may need to advise customers of potential shipping delays. Will update as we learn more.",
+    "reactions": [
+      {
+        "emoji": "thumbs_up",
+        "employeeIds": [
+          "tracy-nguyen",
+          "tim-bradley"
+        ]
+      }
+    ],
+    "timestamp": "2025-11-28T20:05:23Z"
+  },
+  "msg-251128-539": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Hey team, just got assigned a ticket (tick-251128-193) from a customer who wants to add extra components to a prebuilt PC order and needs assembly services. He's also asking about an individual discount and wants to return RAM from a previous order. It's a complex one with multiple questions about compatibility, pricing, assembly services, and delivery timelines. I'm eager to tackle this, but would really appreciate any support from you all - feel free to reach out via Slack or swing by my desk if you have insights. Thanks!",
+    "timestamp": "2025-11-28T16:18:35Z"
+  },
+  "msg-251128-854": {
+    "channelId": "fulfillment-updates",
+    "authorId": "caleb-jones",
+    "text": "Hey @alex-morgan, holding order ord-251128-733 for Allan Jefferson. Customer ordered skyforge-x670e-pro (motherboard) and novachip-pulse-10600k (CPU) - these are not compatible! Will delay shipment until support confirms customer is aware of the compatibility issue.",
+    "timestamp": "2025-11-28T14:14:00Z"
+  },
+  "slack_msg_0273": {
+    "authorId": "darnell-brooks",
+    "text": "Hey Miguel, we've been getting some questions from new warehouse staff about our packing procedures. Can you check if there is a knowledge base item about this, and if not, please create it? Thanks!",
+    "timestamp": "2025-11-05T14:22:00Z",
+    "channelId": "fulfillment-updates"
+  },
+  "slack_msg_1729": {
+    "channelId": "promotions-planning",
+    "authorId": "jamal-nguyen",
+    "text": "Confirmed - all keyboards included and stock levels are looking positive. Advising others to read KB beforehand.",
+    "timestamp": "2025-11-09T20:45:00Z"
+  },
+  "slack_msg_1938": {
+    "channelId": "support-general",
+    "authorId": "alex-morgan",
+    "text": "@support-general FYI - we're launching a keyboard promo sale starting next weekend.The team will need to prepare inn advance, please be across the promo conditions. If you have any support specific questions, raise them and let's get it sorted ahead of time. Can expand a FAQ if it'll end up being helpful.",
+    "timestamp": "2025-11-10T21:15:00Z"
+  },
+  "slack_msg_2801": {
+    "channelId": "promotions-planning",
+    "authorId": "chloe-bennett",
+    "text": "Heads up team - we're finalizing the keyboard promo for two weeks time. 15% all keyboards, KB article has been posted. Please prepare in advance and take the lead up time to raise any questions or feedback.",
+    "timestamp": "2025-11-09T19:30:00Z"
+  },
+  "slack_msg_4829": {
+    "authorId": "miguel-alvarez",
+    "text": "Article is live: 'Shipment Packaging Procedures - Standard Operating Guidelines' kb-471 is live now. Please let me know if you have any questions, suggestions, or issues.",
+    "timestamp": "2025-11-08T18:30:00Z",
+    "channelId": "fulfillment-updates"
+  },
+  "slack_msg_7384": {
+    "authorId": "miguel-alvarez",
+    "text": "On it. I'll draft something comprehensive covering our standard procedures, then send you the link to the kb when it's ready. Great idea!",
+    "timestamp": "2025-11-05T21:35:00Z",
+    "channelId": "fulfillment-updates"
+  },
+  "slack_msg_7492": {
+    "channelId": "support-general",
+    "authorId": "bianca-rossi",
+    "text": "Quick question - does the promo stack with loyalty tier discounts or are they mutually exclusive? I know the calculation will be done at checkout but interested as to what we should be advising customers.",
+    "timestamp": "2025-11-11T22:08:00Z"
+  },
+  "slack_msg_9562": {
+    "channelId": "support-general",
+    "authorId": "tim-bradley",
+    "text": "Good to know! I'll review the KB article and start brainstorming with the team about anything in particular that stands out as a concern.",
+    "timestamp": "2025-11-11T21:22:00Z"
+  }
 }

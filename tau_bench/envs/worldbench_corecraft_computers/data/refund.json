@@ -1,78 +1,265 @@
 {
-    "ref-251029-012": {
-        "paymentId": "pay-201203-010",
-        "ticketId": "tick-251028-047",
-        "amount": 79.99,
-        "reason": "customer_remorse",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "coreflow-650w-bronze",
-                "qty": 1,
-                "amount": 79.99
-            }
-        ],
-        "createdAt": "2025-10-29T14:32:00Z",
-        "processedAt": "2025-10-29T15:45:00Z"
-    },
-    "ref-250818-015": {
-        "paymentId": "pay-250818-015",
-        "ticketId": "tick-250818-015",
-        "amount": 199.99,
-        "reason": "customer_remorse",
-        "status": "approved",
-        "lines": [
-            {
-                "sku": "CLAR-24-1080-165",
-                "qty": 1,
-                "amount": 199.99
-            }
-        ],
-        "createdAt": "2025-08-22T14:25:00Z"
-    },
-    "ref-250826-003": {
-        "paymentId": "pay-250823-009",
-        "ticketId": "tick-250826-003",
-        "amount": 199.99,
-        "reason": "defective",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "CLAR-24-1080-165",
-                "qty": 1,
-                "amount": 199.99
-            }
-        ],
-        "createdAt": "2025-08-26T13:45:00Z"
-    },
-    "ref-250823-001": {
-        "paymentId": "pay-250820-007",
-        "ticketId": "tick-250823-001",
-        "amount": 1199.99,
-        "reason": "defective",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "PYRA-GFX4080-16G",
-                "qty": 1,
-                "amount": 1199.99
-            }
-        ],
-        "createdAt": "2025-08-23T16:45:00Z"
-    },
-    "ref-250825-002": {
-        "paymentId": "pay-250822-004",
-        "ticketId": "tick-250825-002",
-        "amount": 189.99,
-        "reason": "incompatible",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "HYPER-DDR5-32G-5600",
-                "qty": 1,
-                "amount": 189.99
-            }
-        ],
-        "createdAt": "2025-08-25T18:20:00Z"
-    }
+  "ref-250818-015": {
+    "paymentId": "pay-250818-015",
+    "ticketId": "tick-250818-015",
+    "amount": 199.99,
+    "reason": "customer_remorse",
+    "status": "approved",
+    "lines": [
+      {
+        "sku": "CLAR-24-1080-165",
+        "qty": 1,
+        "amount": 199.99
+      }
+    ],
+    "createdAt": "2025-08-22T14:25:00Z"
+  },
+  "ref-250823-001": {
+    "paymentId": "pay-250820-007",
+    "ticketId": "tick-250823-001",
+    "amount": 1199.99,
+    "reason": "defective",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "PYRA-GFX4080-16G",
+        "qty": 1,
+        "amount": 1199.99
+      }
+    ],
+    "createdAt": "2025-08-23T16:45:00Z",
+    "processedAt": "2025-08-25T10:30:00Z"
+  },
+  "ref-250825-002": {
+    "paymentId": "pay-250822-004",
+    "ticketId": "tick-250825-002",
+    "amount": 189.99,
+    "reason": "incompatible",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "HYPER-DDR5-32G-5600",
+        "qty": 1,
+        "amount": 189.99
+      }
+    ],
+    "createdAt": "2025-08-25T18:20:00Z",
+    "processedAt": "2025-08-27T10:00:00Z"
+  },
+  "ref-250826-003": {
+    "paymentId": "pay-250823-009",
+    "ticketId": "tick-250826-003",
+    "amount": 199.99,
+    "reason": "defective",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "CLAR-24-1080-165",
+        "qty": 1,
+        "amount": 199.99
+      }
+    ],
+    "createdAt": "2025-08-26T13:45:00Z",
+    "processedAt": "2025-08-29T09:15:00Z"
+  },
+  "ref-251024-623": {
+    "paymentId": "pay-251018-874",
+    "ticketId": "tick-251024-749",
+    "amount": 99.98,
+    "reason": "defective",
+    "status": "pending",
+    "createdAt": "2025-10-24T17:35:22Z"
+  },
+  "ref-251028-001": {
+    "paymentId": "pay-251017-010",
+    "ticketId": "tick-251024-333",
+    "amount": 189.99,
+    "reason": "customer_remorse",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "DF-SATA-2TB-SSD",
+        "qty": 1,
+        "amount": 189.99
+      }
+    ],
+    "createdAt": "2025-10-28T14:45:00Z",
+    "processedAt": "2025-10-30T09:30:00Z"
+  },
+  "ref-251029-012": {
+    "paymentId": "pay-201203-010",
+    "ticketId": "tick-251028-047",
+    "amount": 79.99,
+    "reason": "customer_remorse",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "coreflow-650w-bronze",
+        "qty": 1,
+        "amount": 79.99
+      }
+    ],
+    "createdAt": "2025-10-29T14:32:00Z",
+    "processedAt": "2025-10-29T15:45:00Z"
+  },
+  "ref-251030-154": {
+    "paymentId": "pay-251030-154",
+    "ticketId": "tick-251030-154",
+    "amount": 1249.99,
+    "reason": "other",
+    "status": "approved",
+    "lines": [
+      {
+        "sku": "VS-GAMING-RX780",
+        "qty": 1,
+        "amount": 1249.99
+      }
+    ],
+    "createdAt": "2025-10-30T12:13:20Z"
+  },
+  "ref-251030-558": {
+    "paymentId": "pay-251017-840",
+    "ticketId": "tick-251024-607",
+    "amount": 189.99,
+    "reason": "customer_remorse",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "HYPER-DDR5-32G-5600",
+        "qty": 1,
+        "amount": 189.99
+      }
+    ],
+    "createdAt": "2025-10-30T17:30:00Z",
+    "processedAt": "2025-10-30T18:20:00Z"
+  },
+  "ref-251104-418": {
+    "paymentId": "pay-251026-047",
+    "ticketId": "tick-251104-418",
+    "amount": 807.48,
+    "reason": "customer_remorse",
+    "status": "pending",
+    "lines": [
+      {
+        "sku": "VOLTEDGE-V9980S",
+        "qty": 1,
+        "amount": 617.49
+      },
+      {
+        "sku": "DF-SATA-2TB-SSD",
+        "qty": 1,
+        "amount": 189.99
+      }
+    ],
+    "createdAt": "2025-11-04T20:21:45Z"
+  },
+  "ref-251105-042": {
+    "paymentId": "pay-251101-029",
+    "ticketId": "tick-251105-042",
+    "amount": 99.99,
+    "reason": "defective",
+    "status": "pending",
+    "lines": [
+      {
+        "sku": "CRYO-AIO-240MM",
+        "qty": 1,
+        "amount": 99.99
+      }
+    ],
+    "createdAt": "2025-11-05T10:15:00Z"
+  },
+  "ref-251106-298": {
+    "paymentId": "pay-251102-649",
+    "ticketId": "tick-251105-473",
+    "amount": 469.99,
+    "reason": "incompatible",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "VORTEXLABS-RX820L",
+        "qty": 1,
+        "amount": 469.99
+      }
+    ],
+    "createdAt": "2025-11-06T10:22:13Z",
+    "processedAt": "2025-11-06T10:28:45Z"
+  },
+  "ref-251117-539": {
+    "paymentId": "pay-251108-735",
+    "ticketId": "tick-251117-637",
+    "amount": 39.99,
+    "reason": "customer_remorse",
+    "status": "pending",
+    "lines": [
+      {
+        "sku": "HYPER-DDR4-8GB-3000",
+        "qty": 1,
+        "amount": 39.99
+      }
+    ],
+    "createdAt": "2025-11-17T17:07:39Z"
+  },
+  "ref-251126-133": {
+    "paymentId": "pay-251117-133",
+    "ticketId": "tick-251120-133",
+    "amount": 649.99,
+    "reason": "customer_remorse",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "VOLTEDGE-V9980S",
+        "qty": 1,
+        "amount": 649.99
+      }
+    ],
+    "createdAt": "2025-11-26T22:27:00Z",
+    "processedAt": "2025-11-26T22:33:22Z"
+  },
+  "ref-251127-529": {
+    "paymentId": "pay-251119-294",
+    "ticketId": "tick-251123-941",
+    "amount": 279.99,
+    "reason": "incompatible",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "ASTRA-VORTEX-8700X",
+        "qty": 1,
+        "amount": 279.99
+      }
+    ],
+    "createdAt": "2025-11-24T09:30:00Z",
+    "processedAt": "2025-11-27T14:45:00Z"
+  },
+  "ref-251128-573": {
+    "paymentId": "pay-251117-857",
+    "ticketId": "tick-251123-715",
+    "amount": 599.99,
+    "reason": "customer_remorse",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "VIS-27-4K-144HZ",
+        "qty": 1,
+        "amount": 599.99
+      }
+    ],
+    "createdAt": "2025-11-28T14:20:03Z",
+    "processedAt": "2025-11-28T15:25:28Z"
+  },
+  "ref-251128-653": {
+    "paymentId": "pay-251123-073",
+    "ticketId": "tick-251128-363",
+    "reason": "customer_remorse",
+    "status": "approved",
+    "amount": 599.99,
+    "lines": [
+      {
+        "sku": "VIS-27-4K-144HZ",
+        "qty": 1,
+        "amount": 599.99
+      }
+    ],
+    "createdAt": "2025-11-28T22:22:09Z"
+  }
 }

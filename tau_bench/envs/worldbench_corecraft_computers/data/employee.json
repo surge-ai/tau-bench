@@ -1,230 +1,9 @@
 {
-  "daniel-price": {
-    "name": "Daniel Price",
-    "email": "dprice@corecraft.com",
-    "department": "finance",
-    "title": "Accounts Receivable Clerk",
-    "managerId": "ruth-gallagher",
-    "permissions": [
-      "issue_refund"
-    ]
-  },
-  "nadia-petrova": {
-    "name": "Nadia Petrova",
-    "email": "npetrova@corecraft.com",
-    "department": "engineering",
-    "title": "Engineering & Assembly Lead",
-    "managerId": "maya-craft",
-    "permissions": [
-      "edit_order",
-      "cancel_order",
-      "policy_override"
-    ]
-  },
-  "trevor-singh": {
-    "name": "Trevor Singh",
-    "email": "tsingh@corecraft.com",
-    "department": "it_systems",
-    "title": "IT Manager",
-    "managerId": "maya-craft",
-    "permissions": [
-      "edit_order",
-      "cancel_order",
-      "policy_override"
-    ]
-  },
-  "sara-li": {
-    "name": "Sara Li",
-    "email": "sli@corecraft.com",
-    "department": "engineering",
-    "title": "Repair Technician",
-    "managerId": "nadia-petrova",
-    "permissions": [
-      "kb_edit"
-    ]
-  },
-  "jamal-nguyen": {
-    "name": "Jamal Nguyen",
-    "email": "jnguyen@corecraft.com",
-    "department": "operations",
-    "title": "Procurement & Vendor Liaison",
-    "managerId": "maya-craft",
-    "permissions": []
-  },
-  "pauline-ortega": {
-    "name": "Pauline Ortega",
-    "email": "portega@corecraft.com",
-    "department": "operations",
-    "title": "Operations Manager",
-    "managerId": "maya-craft",
-    "permissions": [
-      "edit_order",
-      "cancel_order",
-      "policy_override"
-    ]
-  },
-  "gregory-moss": {
-    "name": "Gregory Moss",
-    "email": "gmoss@corecraft.com",
-    "department": "engineering",
-    "title": "QA & RMA Specialist",
-    "managerId": "nadia-petrova",
-    "permissions": [
-      "kb_edit"
-    ]
-  },
-  "mei-zhang": {
-    "name": "Mei Zhang",
-    "email": "mzhang@corecraft.com",
-    "department": "help_desk",
-    "title": "Tier 2 Technical Specialist",
-    "managerId": "pauline-ortega",
-    "permissions": [
-      "escalate"
-    ],
-    "supportRole": "specialist"
-  },
-  "willow-hart": {
-    "name": "Willow Hart",
-    "email": "hart@corecraft.com",
-    "department": "operations",
-    "title": "Facilities Coordinator",
-    "managerId": "pauline-ortega",
-    "permissions": []
-  },
-  "kailani-voss": {
-    "name": "Kailani Voss",
-    "email": "kvoss@corecraft.com",
-    "department": "help_desk",
-    "title": "Escalations & Customer Relations Specialist",
-    "managerId": "pauline-ortega",
-    "permissions": [
-      "escalate"
-    ],
-    "supportRole": "admin"
-  },
-  "victor-romero": {
-    "name": "Victor Romero",
-    "email": "vromero@corecraft.com",
-    "department": "engineering",
-    "title": "QA & Assembly Tech",
-    "managerId": "nadia-petrova",
-    "permissions": [
-      "kb_edit"
-    ]
-  },
-  "tim-bradley": {
-    "name": "Tim Bradley",
-    "email": "tbradley@corecraft.com",
-    "department": "help_desk",
-    "title": "Customer Support Representative",
-    "managerId": "alex-morgan",
-    "permissions": [],
-    "supportRole": "frontline"
-  },
-  "hannah-park": {
-    "name": "Hannah Park",
-    "email": "hpark@corecraft.com",
-    "department": "order_processing",
-    "title": "Receiving Specialist",
-    "managerId": "darnell-brooks",
-    "permissions": []
-  },
-  "tracy-nguyen": {
-    "name": "Tracy Nguyen",
-    "email": "tnguyen@corecraft.com",
-    "department": "order_processing",
-    "title": "Order Processing & Shipping Associate",
-    "managerId": "darnell-brooks",
-    "permissions": []
-  },
-  "ruth-gallagher": {
-    "name": "Ruth Gallagher",
-    "email": "rgallagher@corecraft.com",
-    "department": "finance",
-    "title": "Billing & Finance Manager",
-    "managerId": "pauline-ortega",
-    "permissions": [
-      "issue_refund",
-      "edit_order",
-      "cancel_order",
-      "policy_override"
-    ],
-    "supportRole": "admin"
-  },
-  "maya-craft": {
-    "name": "Maya Craft",
-    "email": "mcraft@corecraft.com",
-    "department": "operations",
-    "title": "Co-Founder & COO",
-    "managerId": "evan-core",
-    "permissions": [
-      "edit_order",
-      "cancel_order",
-      "policy_override",
-      "kb_edit",
-      "issue_refund",
-      "escalate"
-    ]
-  },
-  "evan-core": {
-    "name": "Evan Core",
-    "email": "ecore@corecraft.com",
-    "department": "operations",
-    "title": "Founder & CEO",
-    "permissions": [
-      "edit_order",
-      "cancel_order",
-      "policy_override",
-      "kb_edit",
-      "issue_refund",
-      "escalate"
-    ]
-  },
-  "markus-holt": {
-    "name": "Markus Holt",
-    "email": "mholt@corecraft.com",
-    "department": "it_systems",
-    "title": "SysAdmin/DBA",
-    "managerId": "trevor-singh",
-    "permissions": [
-      "kb_edit"
-    ]
-  },
-  "priya-patel": {
-    "name": "Priya Patel",
-    "email": "ppatel@corecraft.com",
-    "department": "order_processing",
-    "title": "Order Verification & Receiving",
-    "managerId": "darnell-brooks",
-    "permissions": []
-  },
-  "bianca-rossi": {
-    "name": "Bianca Rossi",
-    "email": "brossi@corecraft.com",
-    "department": "help_desk",
-    "title": "Business Ops Communications",
-    "managerId": "pauline-ortega",
-    "permissions": [
-      "escalate"
-    ],
-    "supportRole": "frontline"
-  },
-  "emily-chen": {
-    "name": "Emily Chen",
-    "email": "echen@corecraft.com",
-    "department": "engineering",
-    "title": "System Builder",
-    "managerId": "nadia-petrova",
-    "permissions": [
-      "kb_edit"
-    ]
-  },
-  "lena-whitfield": {
-    "name": "Lena Whitfield",
-    "email": "lwhitfield@corecraft.com",
-    "department": "hr",
-    "title": "HR Generalist",
+  "aisha-khan": {
+    "name": "Aisha Khan",
+    "email": "akhan@corecraft.com",
+    "department": "product_management",
+    "title": "Product & Catalog Manager",
     "managerId": "maya-craft",
     "permissions": [
       "edit_order",
@@ -244,17 +23,16 @@
     ],
     "supportRole": "frontline"
   },
-  "aisha-khan": {
-    "name": "Aisha Khan",
-    "email": "akhan@corecraft.com",
-    "department": "product_management",
-    "title": "Product & Catalog Manager",
-    "managerId": "maya-craft",
+  "bianca-rossi": {
+    "name": "Bianca Rossi",
+    "email": "brossi@corecraft.com",
+    "department": "help_desk",
+    "title": "Business Ops Communications",
+    "managerId": "pauline-ortega",
     "permissions": [
-      "edit_order",
-      "cancel_order",
-      "policy_override"
-    ]
+      "escalate"
+    ],
+    "supportRole": "frontline"
   },
   "caleb-jones": {
     "name": "Caleb Jones",
@@ -264,9 +42,166 @@
     "managerId": "darnell-brooks",
     "permissions": []
   },
+  "chloe-bennett": {
+    "name": "Chloe Bennett",
+    "email": "cbennett@corecraft.com",
+    "department": "operations",
+    "title": "Marketing & Media Liaison",
+    "managerId": "maya-craft",
+    "permissions": []
+  },
+  "claire-hayes": {
+    "name": "Claire Hayes",
+    "email": "chayes@corecraft.com",
+    "department": "recruitment",
+    "title": "Recruiter",
+    "managerId": "maya-craft",
+    "permissions": []
+  },
+  "daniel-price": {
+    "name": "Daniel Price",
+    "email": "dprice@corecraft.com",
+    "department": "finance",
+    "title": "Accounts Receivable Clerk",
+    "managerId": "ruth-gallagher",
+    "permissions": [
+      "issue_refund"
+    ]
+  },
+  "darnell-brooks": {
+    "name": "Darnell Brooks",
+    "email": "dbrooks@corecraft.com",
+    "department": "order_processing",
+    "title": "Warehouse & Logistics Manager",
+    "managerId": "pauline-ortega",
+    "permissions": [
+      "edit_order",
+      "cancel_order",
+      "policy_override"
+    ]
+  },
   "david-pereboom": {
     "name": "David Pereboom",
     "email": "dpereboom@corecraft.com",
+    "department": "help_desk",
+    "title": "Tier 2 Technical Specialist",
+    "managerId": "pauline-ortega",
+    "permissions": [
+      "escalate"
+    ],
+    "supportRole": "specialist"
+  },
+  "emily-chen": {
+    "name": "Emily Chen",
+    "email": "echen@corecraft.com",
+    "department": "engineering",
+    "title": "System Builder",
+    "managerId": "nadia-petrova",
+    "permissions": [
+      "kb_edit"
+    ]
+  },
+  "evan-core": {
+    "name": "Evan Core",
+    "email": "ecore@corecraft.com",
+    "department": "operations",
+    "title": "Founder & CEO",
+    "permissions": [
+      "edit_order",
+      "cancel_order",
+      "policy_override",
+      "kb_edit",
+      "issue_refund",
+      "escalate"
+    ]
+  },
+  "gregory-moss": {
+    "name": "Gregory Moss",
+    "email": "gmoss@corecraft.com",
+    "department": "engineering",
+    "title": "QA & RMA Specialist",
+    "managerId": "nadia-petrova",
+    "permissions": [
+      "kb_edit"
+    ]
+  },
+  "hannah-park": {
+    "name": "Hannah Park",
+    "email": "hpark@corecraft.com",
+    "department": "order_processing",
+    "title": "Receiving Specialist",
+    "managerId": "darnell-brooks",
+    "permissions": []
+  },
+  "ivy-santos": {
+    "name": "Ivy Santos",
+    "email": "isantos@corecraft.com",
+    "department": "it_systems",
+    "title": "Software Engineer",
+    "managerId": "trevor-singh",
+    "permissions": [
+      "kb_edit"
+    ]
+  },
+  "jamal-nguyen": {
+    "name": "Jamal Nguyen",
+    "email": "jnguyen@corecraft.com",
+    "department": "operations",
+    "title": "Procurement & Vendor Liaison",
+    "managerId": "maya-craft",
+    "permissions": []
+  },
+  "kailani-voss": {
+    "name": "Kailani Voss",
+    "email": "kvoss@corecraft.com",
+    "department": "help_desk",
+    "title": "Escalations & Customer Relations Specialist",
+    "managerId": "pauline-ortega",
+    "permissions": [
+      "escalate"
+    ],
+    "supportRole": "admin"
+  },
+  "lena-whitfield": {
+    "name": "Lena Whitfield",
+    "email": "lwhitfield@corecraft.com",
+    "department": "hr",
+    "title": "HR Generalist",
+    "managerId": "maya-craft",
+    "permissions": [
+      "edit_order",
+      "cancel_order",
+      "policy_override"
+    ]
+  },
+  "markus-holt": {
+    "name": "Markus Holt",
+    "email": "mholt@corecraft.com",
+    "department": "it_systems",
+    "title": "SysAdmin/DBA",
+    "managerId": "trevor-singh",
+    "permissions": [
+      "kb_edit"
+    ]
+  },
+  "maya-craft": {
+    "name": "Maya Craft",
+    "email": "mcraft@corecraft.com",
+    "department": "operations",
+    "title": "Co-Founder & COO",
+    "managerId": "evan-core",
+    "permissions": [
+      "edit_order",
+      "cancel_order",
+      "policy_override",
+      "kb_edit",
+      "issue_refund",
+      "escalate"
+    ]
+  },
+  "mei-zhang": {
+    "name": "Mei Zhang",
+    "email": "mzhang@corecraft.com",
     "department": "help_desk",
     "title": "Tier 2 Technical Specialist",
     "managerId": "pauline-ortega",
@@ -287,13 +222,17 @@
       "policy_override"
     ]
   },
-  "chloe-bennett": {
-    "name": "Chloe Bennett",
-    "email": "cbennett@corecraft.com",
-    "department": "operations",
-    "title": "Marketing & Media Liaison",
+  "nadia-petrova": {
+    "name": "Nadia Petrova",
+    "email": "npetrova@corecraft.com",
+    "department": "engineering",
+    "title": "Engineering & Assembly Lead",
     "managerId": "maya-craft",
-    "permissions": []
+    "permissions": [
+      "edit_order",
+      "cancel_order",
+      "policy_override"
+    ]
   },
   "owen-kim": {
     "name": "Owen Kim",
@@ -305,33 +244,95 @@
       "kb_edit"
     ]
   },
-  "darnell-brooks": {
-    "name": "Darnell Brooks",
-    "email": "dbrooks@corecraft.com",
-    "department": "order_processing",
-    "title": "Warehouse & Logistics Manager",
-    "managerId": "pauline-ortega",
+  "pauline-ortega": {
+    "name": "Pauline Ortega",
+    "email": "portega@corecraft.com",
+    "department": "operations",
+    "title": "Operations Manager",
+    "managerId": "maya-craft",
     "permissions": [
       "edit_order",
       "cancel_order",
       "policy_override"
     ]
   },
-  "ivy-santos": {
-    "name": "Ivy Santos",
-    "email": "isantos@corecraft.com",
-    "department": "it_systems",
-    "title": "Software Engineer",
-    "managerId": "trevor-singh",
+  "priya-patel": {
+    "name": "Priya Patel",
+    "email": "ppatel@corecraft.com",
+    "department": "order_processing",
+    "title": "Order Verification & Receiving",
+    "managerId": "darnell-brooks",
+    "permissions": []
+  },
+  "ruth-gallagher": {
+    "name": "Ruth Gallagher",
+    "email": "rgallagher@corecraft.com",
+    "department": "finance",
+    "title": "Billing & Finance Manager",
+    "managerId": "pauline-ortega",
+    "permissions": [
+      "issue_refund",
+      "edit_order",
+      "cancel_order",
+      "policy_override"
+    ],
+    "supportRole": "admin"
+  },
+  "sara-li": {
+    "name": "Sara Li",
+    "email": "sli@corecraft.com",
+    "department": "engineering",
+    "title": "Repair Technician",
+    "managerId": "nadia-petrova",
     "permissions": [
       "kb_edit"
     ]
   },
-  "michael-torres": {
-    "name": "Michael Torres",
-    "email": "michael.torres@corecraft.com",
-    "title": "Senior Technician",
-    "department": "support",
-    "createdAt": "2022-04-10T00:00:00Z"
+  "tim-bradley": {
+    "name": "Tim Bradley",
+    "email": "tbradley@corecraft.com",
+    "department": "help_desk",
+    "title": "Customer Support Representative",
+    "managerId": "alex-morgan",
+    "permissions": [],
+    "supportRole": "frontline"
+  },
+  "tracy-nguyen": {
+    "name": "Tracy Nguyen",
+    "email": "tnguyen@corecraft.com",
+    "department": "order_processing",
+    "title": "Order Processing & Shipping Associate",
+    "managerId": "darnell-brooks",
+    "permissions": []
+  },
+  "trevor-singh": {
+    "name": "Trevor Singh",
+    "email": "tsingh@corecraft.com",
+    "department": "it_systems",
+    "title": "IT Manager",
+    "managerId": "maya-craft",
+    "permissions": [
+      "edit_order",
+      "cancel_order",
+      "policy_override"
+    ]
+  },
+  "victor-romero": {
+    "name": "Victor Romero",
+    "email": "vromero@corecraft.com",
+    "department": "engineering",
+    "title": "QA & Assembly Tech",
+    "managerId": "nadia-petrova",
+    "permissions": [
+      "kb_edit"
+    ]
+  },
+  "willow-hart": {
+    "name": "Willow Hart",
+    "email": "hart@corecraft.com",
+    "department": "operations",
+    "title": "Facilities Coordinator",
+    "managerId": "pauline-ortega",
+    "permissions": []
   }
 }

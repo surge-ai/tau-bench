@@ -1,24 +1,69 @@
 {
-    "esc-250815-001": {
-        "ticketId": "tick-250815-001",
-        "escalationType": "product_specialist",
-        "destination": "product_management",
-        "notes": "Customer compatibility miss highlights need for better GPU case clearance warnings on product pages. Fifth similar case this month. Escalating to product team for catalog improvements and better compatibility checking.",
-        "createdAt": "2025-08-15T10:35:00Z",
-        "resolvedAt": "2025-08-15T14:30:00Z"
-    },
-    "esc-250826-007": {
-        "ticketId": "tick-250826-007",
-        "escalationType": "policy_exception",
-        "destination": "operations",
-        "notes": "Warehouse fulfillment error - customer ordered CryoWave Tower Air Cooler but received wrong cooler model. Need expedited replacement and potential compensation for customer inconvenience.",
-        "createdAt": "2025-08-26T12:40:00Z"
-    },
-    "esc-250827-002": {
-        "ticketId": "tick-250827-002",
-        "escalationType": "technical",
-        "destination": "engineering",
-        "notes": "Complex no-boot issue with Dragonfire build. Initial troubleshooting (PSU connections, front panel headers) didn't resolve. Need advanced diagnostics and component isolation testing. High priority due to complete system failure.",
-        "createdAt": "2025-08-27T11:30:00Z"
-    }
+  "esc-250826-007": {
+    "ticketId": "tick-250826-007",
+    "escalationType": "policy_exception",
+    "destination": "operations",
+    "notes": "Warehouse fulfillment error - customer ordered CryoWave Tower Air Cooler but received wrong cooler model. Need expedited replacement and potential compensation for customer inconvenience.",
+    "createdAt": "2025-08-26T12:40:00Z"
+  },
+  "esc-250827-002": {
+    "ticketId": "tick-250827-002",
+    "escalationType": "technical",
+    "destination": "engineering",
+    "notes": "Complex no-boot issue with Dragonfire build. Initial troubleshooting (PSU connections, front panel headers) didn't resolve. Need advanced diagnostics and component isolation testing. High priority due to complete system failure.",
+    "createdAt": "2025-08-27T11:30:00Z"
+  },
+  "esc-250828-001": {
+    "ticketId": "tick-250828-002",
+    "escalationType": "product_specialist",
+    "destination": "product_management",
+    "notes": "Customer compatibility miss highlights need for better GPU case clearance warnings on product pages. Fifth similar case this month. Escalating to product team for catalog improvements and better compatibility checking.",
+    "createdAt": "2025-08-28T10:35:00Z",
+    "resolvedAt": "2025-08-28T14:30:00Z"
+  },
+  "esc-251112-755": {
+    "ticketId": "tick-251112-316",
+    "escalationType": "product_specialist",
+    "destination": "darnell-brooks",
+    "notes": "Frontline support unable to provide backorder timeline for large keyboard/mouse order. Customer needs delivery by Nov 30th. Requires business operations input on supplier logistics and delivery ETA.",
+    "createdAt": "2025-11-12T11:47:00Z"
+  },
+  "esc-251113-005": {
+    "ticketId": "tick-251113-702",
+    "escalationType": "product_specialist",
+    "destination": "procurement_and_vendor_relations",
+    "notes": "Customer received GPU with dented, non-functional fans but both outer shipping box and inner product packaging show no damage. This suggests potential manufacturing or pre-packaging damage from PyraTech. May indicate broader quality control issue with recent PyraTech shipments. Recommend vendor investigation.",
+    "createdAt": "2025-11-14T12:45:00Z"
+  },
+  "esc-251117-746": {
+    "ticketId": "tick-251117-425",
+    "escalationType": "technical",
+    "destination": "quality_assurance",
+    "notes": "Customer reports RAM failure with blue screens. Memory diagnostics confirm bad RAM. Reseating did not resolve. RAM is under warranty.",
+    "createdAt": "2025-11-17T19:05:00Z",
+    "resolvedAt": null
+  },
+  "esc-251118-417": {
+    "ticketId": "tick-251118-417",
+    "escalationType": "technical",
+    "destination": "nadia-petrova",
+    "notes": "Customer needs technical assistance with order components. Escalating to technical lead for expert troubleshooting support. Text here: 'I'm having some issues with the monitor from my order. My monitor suddenly stopped displaying anything when I installed a new operating system. I have tried updating drivers, switching out the cable, double-checked the connections, and nothing is working. The monitor is turning on, but not displaying when connected. Can someone help me? Regards, Aisha Patel'. Support component is 'clarityone-24-1080p-165hz'. Attempted cable replacement, attempted driver replacement, Operating System is Win 11.0.12b, any ideas appreciated.",
+    "createdAt": "2025-11-18T11:16:20Z",
+    "resolvedAt": null
+  },
+  "esc-251125-784": {
+    "ticketId": "tick-251124-673",
+    "escalationType": "policy_exception",
+    "destination": "pauline-ortega",
+    "notes": "Customer requesting special 20% discount on mouse after missing bundle with keyboard purchase. Requires manager approval for exception.",
+    "createdAt": "2025-11-26T14:30:00Z",
+    "resolvedAt": "2025-11-26T16:00:00Z"
+  },
+  "esc-251126-876": {
+    "ticketId": "tick-251126-876",
+    "escalationType": "policy_exception",
+    "destination": "operations",
+    "notes": "Customer paid for overnight shipping that was not delivered within the guaranteed timeframe. Requesting approval for shipping cost refund of $39.99. Delay was weather-related per carrier, but customer has valid complaint about service guarantee not being met. Customer indicates work-related deadline was missed.",
+    "createdAt": "2025-11-26T17:00:00Z"
+  }
 }
