@@ -37,13 +37,23 @@ class SearchOrders(Tool):
             "type": "function",
             "function": {
                 "name": "search_orders",
-                "description": "Search orders by id, customer, or status.",
+                "description": "Search for orders with various filters. Returns an array of order records matching the criteria.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "order_id": {"type": "string"},
-                        "customer_id": {"type": "string"},
-                        "status": {"type": "string"},
+                        "order_id": {
+                            "type": "string",
+                            "description": "Exact order ID to find"
+                        },
+                        "customer_id": {
+                            "type": "string",
+                            "description": "Customer ID to filter by"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded"],
+                            "description": "Order status to filter by"
+                        },
                     },
                 },
             },

@@ -95,9 +95,14 @@ class CreateRefund(Tool):
                         "currency": {"type": "string", "description": "Currency code, e.g. USD."},
                         "reason": {
                             "type": "string",
-                            "description": "Reason for refund (e.g. customer_remorse, defective, incompatible, shipping_issue, other).",
+                            "enum": ["customer_remorse", "defective", "incompatible", "shipping_issue", "other"],
+                            "description": "Reason for refund.",
                         },
-                        "status": {"type": "string", "description": "Refund status (default: pending)."},
+                        "status": {
+                            "type": "string",
+                            "enum": ["pending", "approved", "denied", "processed", "failed"],
+                            "description": "Refund status (default: pending).",
+                        },
                         "lines": {
                             "type": "array",
                             "description": "Optional line items / breakdown for the refund.",

@@ -44,19 +44,19 @@ class GetOrderDetails(Tool):
             "type": "function",
             "function": {
                 "name": "getOrderDetails",
-                "description": "Get order details (legacy SQL tool wrapped for Tau).",
+                "description": "Get comprehensive order details including the order itself, associated payment, shipment, customer info, and related support tickets. Returns an object with order, payment, shipment, customer, and tickets fields.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-        "order_id": {
-                "type": "string",
-                "description": "The order_id parameter"
-        },
-        "created_before": {
-                "type": "string",
-                "description": "Filter order details to objects created before this date, inclusive (ISO 8601 format with UTC timezone, e.g., '2025-09-01T00:00:00Z')"
-        }
-},
+                        "order_id": {
+                            "type": "string",
+                            "description": "The order ID to retrieve details for"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter related objects (payments, shipments, tickets) to those created before this date, inclusive (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        }
+                    },
                     "required": ["order_id"],
                 },
             },

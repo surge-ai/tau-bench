@@ -40,47 +40,62 @@ class SearchTickets(Tool):
             "type":"function",
             "function":{
                 "name":"searchTickets",
-                "description":"Search tickets",
+                "description":"Search for support tickets with various filters. Returns an array of support ticket records matching the criteria, sorted by priority (high to low) and then by creation date (newest first).",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "ticket_id": {
-                    "type": "string"
-          },
-          "customer_id": {
-                    "type": "string"
-          },
-          "assigned_employee_id": {
-                    "type": "string"
-          },
-          "status": {
-                    "type": "string"
-          },
-          "priority": {
-                    "type": "string"
-          },
-          "ticket_type": {
-                    "type": "string"
-          },
-          "text": {
-                    "type": "string"
-          },
-          "created_after": {
-                    "type": "string"
-          },
-          "created_before": {
-                    "type": "string"
-          },
-          "resolved_after": {
-                    "type": "string"
-          },
-          "resolved_before": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          }
-},
+                        "ticket_id": {
+                            "type": "string",
+                            "description": "Specific ticket ID to find"
+                        },
+                        "customer_id": {
+                            "type": "string",
+                            "description": "Customer ID to filter by"
+                        },
+                        "assigned_employee_id": {
+                            "type": "string",
+                            "description": "Employee ID to filter by"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": ["new", "open", "pending_customer", "resolved", "closed"],
+                            "description": "Ticket status to filter by"
+                        },
+                        "priority": {
+                            "type": "string",
+                            "enum": ["low", "normal", "high"],
+                            "description": "Ticket priority to filter by"
+                        },
+                        "ticket_type": {
+                            "type": "string",
+                            "enum": ["return", "troubleshooting", "recommendation", "order_issue", "shipping", "billing", "other"],
+                            "description": "Ticket type to filter by"
+                        },
+                        "text": {
+                            "type": "string",
+                            "description": "Text to search in subject and body. Searches for exact matches (case insensitive)."
+                        },
+                        "created_after": {
+                            "type": "string",
+                            "description": "Filter tickets created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter tickets created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "resolved_after": {
+                            "type": "string",
+                            "description": "Filter tickets resolved after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "resolved_before": {
+                            "type": "string",
+                            "description": "Filter tickets resolved before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required":[]
                 }
             }
