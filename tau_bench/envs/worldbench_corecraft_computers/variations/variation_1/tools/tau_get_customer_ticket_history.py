@@ -41,35 +41,35 @@ class GetCustomerTicketHistory(Tool):
             "type": "function",
             "function": {
                 "name": "getCustomerTicketHistory",
-                "description": "Get customer ticket history (legacy SQL-based tool wrapped for Tau).",
+                "description": "Get a customer's support ticket history including escalations and resolutions. Returns an object with tickets (array of support tickets), escalations (array of escalation records), and resolutions (array of resolution records).",
                 "parameters": {
                     "type": "object",
                     "properties": {
-        "customer_id": {
-                "type": "string",
-                "description": "The customer_id parameter"
-        },
-        "include_resolved": {
-                "type": "string",
-                "description": "Include resolved/closed tickets (default: true)"
-        },
-        "tkt_created_after": {
-                "type": "string",
-                "description": "Filter tickets created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        },
-        "tkt_created_before": {
-                "type": "string",
-                "description": "Filter tickets created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        },
-        "tkt_updated_after": {
-                "type": "string",
-                "description": "Filter tickets updated after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        },
-        "tkt_updated_before": {
-                "type": "string",
-                "description": "Filter tickets updated before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        }
-},
+                        "customer_id": {
+                            "type": "string",
+                            "description": "The customer ID to retrieve ticket history for"
+                        },
+                        "include_resolved": {
+                            "type": "string",
+                            "description": "Include resolved/closed tickets. Set to \"false\" to exclude them (default: \"true\")"
+                        },
+                        "tkt_created_after": {
+                            "type": "string",
+                            "description": "Filter tickets created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "tkt_created_before": {
+                            "type": "string",
+                            "description": "Filter tickets created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "tkt_updated_after": {
+                            "type": "string",
+                            "description": "Filter tickets updated after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "tkt_updated_before": {
+                            "type": "string",
+                            "description": "Filter tickets updated before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        }
+                    },
                     "required": ["customer_id"],
                 },
             },

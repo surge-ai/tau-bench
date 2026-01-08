@@ -40,29 +40,37 @@ class SearchEmployees(Tool):
             "type":"function",
             "function":{
                 "name":"searchEmployees",
-                "description":"Search employees",
+                "description":"Search for employees with various filters. Returns an array of employee records matching the criteria.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "employee_id": {
-                    "type": "string"
-          },
-          "name": {
-                    "type": "string"
-          },
-          "department": {
-                    "type": "string"
-          },
-          "role": {
-                    "type": "string"
-          },
-          "has_permission": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          }
-},
+                        "employee_id": {
+                            "type": "string",
+                            "description": "Exact employee ID match"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Partial name search (case insensitive)"
+                        },
+                        "department": {
+                            "type": "string",
+                            "enum": ["operations", "order_processing", "engineering", "help_desk", "it_systems", "product_management", "finance", "hr", "recruitment", "support"],
+                            "description": "Department to filter by"
+                        },
+                        "role": {
+                            "type": "string",
+                            "description": "Role/title to search for"
+                        },
+                        "has_permission": {
+                            "type": "string",
+                            "enum": ["issue_refund", "edit_order", "cancel_order", "escalate", "kb_edit", "policy_override"],
+                            "description": "Permission to filter by"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required":[]
                 }
             }

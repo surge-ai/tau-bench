@@ -55,27 +55,27 @@ class CheckWarrantyStatus(Tool):
             "type": "function",
             "function": {
                 "name": "checkWarrantyStatus",
-                "description": "Check whether a product/order is still under warranty, based on order details and warranty terms.",
+                "description": "Check whether a product/order is still under warranty based on order details and product warranty terms. Returns is_under_warranty (boolean), warranty_end_date (YYYY-MM-DD string), and days_remaining (number). Either order_id or product_id must be provided.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-        "order_id": {
-                "type": "string",
-                "description": "The order_id parameter"
-        },
-        "product_id": {
-                "type": "string",
-                "description": "The product_id parameter"
-        },
-        "purchase_date": {
-                "type": "string",
-                "description": "The purchase_date parameter"
-        },
-        "current_date": {
-                "type": "string",
-                "description": "The current_date parameter"
-        }
-},
+                        "order_id": {
+                            "type": "string",
+                            "description": "The order ID to check warranty status for. If provided, purchase date is derived from the order's creation date."
+                        },
+                        "product_id": {
+                            "type": "string",
+                            "description": "The product ID to check warranty for. Can be used alone (with purchase_date) or combined with order_id to check a specific product in an order."
+                        },
+                        "purchase_date": {
+                            "type": "string",
+                            "description": "The purchase date (ISO 8601 format with UTC timezone, e.g., \"2025-01-15T00:00:00Z\"). Required when using product_id without order_id."
+                        },
+                        "current_date": {
+                            "type": "string",
+                            "description": "The current date for warranty calculation (ISO 8601 format with UTC timezone, e.g., \"2025-09-08T00:00:00Z\"). Defaults to September 8, 2025 if not provided."
+                        }
+                    },
                     "required": [],
                 },
             },
