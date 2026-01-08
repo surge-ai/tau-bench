@@ -1071,5 +1071,96 @@
       }
     },
     "warrantyMonths": 24
+  },
+  "graphforce-psu-bundle": {
+    "category": "bundle",
+    "sku": "BUNDLE-GPU-PSU-GF4070-CF750",
+    "name": "GraphForce 4070 + 750W PSU Bundle",
+    "brand": "CoreCraft",
+    "price": 679.98,
+    "inventory": {
+      "inStock": 7,
+      "backorderable": true
+    },
+    "specs": {
+      "components": [
+        {
+          "componentId": "pyratech-graphforce-4070-16gb",
+          "qty": 1
+        },
+        {
+          "componentId": "coreflow-750w-gold-modular",
+          "qty": 1
+        }
+      ],
+      "discount": {
+        "type": "fixed",
+        "value": 50
+      },
+      "componentCount": 2,
+      "categories": ["gpu", "psu"]
+    }
+  },
+  "zentricore-skyforge-bundle": {
+    "category": "bundle",
+    "sku": "BUNDLE-CPU-MB-ZC8600-SFX670",
+    "name": "ZentriCore Z7 + SkyForge X670E Bundle",
+    "brand": "CoreCraft",
+    "price": 759.98,
+    "inventory": {
+      "inStock": 6,
+      "backorderable": true
+    },
+    "specs": {
+      "components": [
+        {
+          "componentId": "zentricore-apex-8600x",
+          "qty": 1
+        },
+        {
+          "componentId": "skyforge-x670e-pro",
+          "qty": 1
+        }
+      ],
+      "discount": {
+        "type": "percent",
+        "value": 5
+      },
+      "componentCount": 2,
+      "categories": ["cpu", "motherboard"]
+    }
+  },
+  "hypervolt-novachip-voltedge-bundle": {
+    "category": "bundle",
+    "sku": "BUNDLE-CPU-MB-RAM-P10600-V9980-HV32",
+    "name": "Pulse 10600K + V9980se + HyperVolt DDR5 32GB RAM bundle",
+    "brand": "CoreCraft",
+    "price": 968.97,
+    "inventory": {
+      "inStock": 9,
+      "backorderable": true
+    },
+    "specs": {
+      "components": [
+        {
+          "componentId": "hypervolt-ddr5-32gb-5600",
+          "qty": 1
+        },
+        {
+          "componentId": "voltedge-v9980se",
+          "qty": 1
+        },
+        {
+          "componentId": "novachip-pulse-10600k",
+          "qty": 1
+        }
+      ],
+      "discount": {
+        "type": "percent",
+        "value": 15
+      },
+      "componentCount": 3,
+      "categories": ["memory", "motherboard", "cpu"]
+    }
   }
 }
