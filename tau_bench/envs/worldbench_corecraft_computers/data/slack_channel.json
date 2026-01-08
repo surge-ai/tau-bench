@@ -1,4 +1,42 @@
 {
+  "policy-discussion": {
+    "name": "policy-discussion",
+    "purpose": "Proposed policy changes before rollout - leadership and department heads discuss updates to returns, warranty, shipping policies",
+    "members": {
+      "connect": [
+        {
+          "id": "evan-core"
+        },
+        {
+          "id": "maya-craft"
+        },
+        {
+          "id": "pauline-ortega"
+        },
+        {
+          "id": "alex-morgan"
+        },
+        {
+          "id": "darnell-brooks"
+        },
+        {
+          "id": "ruth-gallagher"
+        },
+        {
+          "id": "aisha-khan"
+        },
+        {
+          "id": "jamal-nguyen"
+        },
+        {
+          "id": "nadia-petrova"
+        },
+        {
+          "id": "trevor-singh"
+        }
+      ]
+    }
+  },
   "customer-feedback": {
     "name": "customer-feedback",
     "purpose": "Sharing positive customer feedback, feature requests, and suggestions from support interactions",
@@ -37,6 +75,32 @@
       ]
     }
   },
+  "escalations": {
+    "name": "escalations",
+    "purpose": "Complex cases needing manager approval, unusual situations, handling VIP/enterprise customers",
+    "members": {
+      "connect": [
+        {
+          "id": "kailani-voss"
+        },
+        {
+          "id": "ruth-gallagher"
+        },
+        {
+          "id": "alex-morgan"
+        },
+        {
+          "id": "bianca-rossi"
+        },
+        {
+          "id": "maya-craft"
+        },
+        {
+          "id": "evan-core"
+        }
+      ]
+    }
+  },
   "engineering-support": {
     "name": "engineering-support",
     "purpose": "Technical escalations and complex troubleshooting with engineering team",
@@ -63,28 +127,25 @@
       ]
     }
   },
-  "escalations": {
-    "name": "escalations",
-    "purpose": "Complex cases needing manager approval, unusual situations, handling VIP/enterprise customers",
+  "product-team": {
+    "name": "product-team",
+    "purpose": "Product management discussions and catalog improvements",
     "members": {
       "connect": [
         {
-          "id": "kailani-voss"
-        },
-        {
-          "id": "ruth-gallagher"
-        },
-        {
-          "id": "alex-morgan"
-        },
-        {
-          "id": "bianca-rossi"
+          "id": "aisha-khan"
         },
         {
           "id": "maya-craft"
         },
         {
+          "id": "nadia-petrova"
+        },
+        {
           "id": "evan-core"
+        },
+        {
+          "id": "alex-morgan"
         }
       ]
     }
@@ -126,102 +187,6 @@
         },
         {
           "id": "david-pereboom"
-        }
-      ]
-    }
-  },
-  "kb-updates": {
-    "name": "kb-updates",
-    "purpose": "Notifications when KB articles are published, updated, or deprecated so agents don't miss critical documentation changes",
-    "members": {
-      "connect": [
-        {
-          "id": "alex-morgan"
-        },
-        {
-          "id": "bianca-rossi"
-        },
-        {
-          "id": "tim-bradley"
-        },
-        {
-          "id": "mei-zhang"
-        },
-        {
-          "id": "david-pereboom"
-        },
-        {
-          "id": "kailani-voss"
-        },
-        {
-          "id": "aisha-khan"
-        },
-        {
-          "id": "nadia-petrova"
-        },
-        {
-          "id": "trevor-singh"
-        }
-      ]
-    }
-  },
-  "policy-discussion": {
-    "name": "policy-discussion",
-    "purpose": "Proposed policy changes before rollout - leadership and department heads discuss updates to returns, warranty, shipping policies",
-    "members": {
-      "connect": [
-        {
-          "id": "evan-core"
-        },
-        {
-          "id": "maya-craft"
-        },
-        {
-          "id": "pauline-ortega"
-        },
-        {
-          "id": "alex-morgan"
-        },
-        {
-          "id": "darnell-brooks"
-        },
-        {
-          "id": "ruth-gallagher"
-        },
-        {
-          "id": "aisha-khan"
-        },
-        {
-          "id": "jamal-nguyen"
-        },
-        {
-          "id": "nadia-petrova"
-        },
-        {
-          "id": "trevor-singh"
-        }
-      ]
-    }
-  },
-  "product-team": {
-    "name": "product-team",
-    "purpose": "Product management discussions and catalog improvements",
-    "members": {
-      "connect": [
-        {
-          "id": "aisha-khan"
-        },
-        {
-          "id": "maya-craft"
-        },
-        {
-          "id": "nadia-petrova"
-        },
-        {
-          "id": "evan-core"
-        },
-        {
-          "id": "alex-morgan"
         }
       ]
     }
@@ -333,6 +298,41 @@
         },
         {
           "id": "gregory-moss"
+        }
+      ]
+    }
+  },
+  "kb-updates": {
+    "name": "kb-updates",
+    "purpose": "Notifications when KB articles are published, updated, or deprecated so agents don't miss critical documentation changes",
+    "members": {
+      "connect": [
+        {
+          "id": "alex-morgan"
+        },
+        {
+          "id": "bianca-rossi"
+        },
+        {
+          "id": "tim-bradley"
+        },
+        {
+          "id": "mei-zhang"
+        },
+        {
+          "id": "david-pereboom"
+        },
+        {
+          "id": "kailani-voss"
+        },
+        {
+          "id": "aisha-khan"
+        },
+        {
+          "id": "nadia-petrova"
+        },
+        {
+          "id": "trevor-singh"
         }
       ]
     }

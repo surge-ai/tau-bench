@@ -1,258 +1,4 @@
 {
-  "bills-cool-computer": {
-    "ownerType": "customer",
-    "customerId": "bill-mackenzie-178",
-    "name": "Bill's Cool Computer",
-    "componentIds": [
-      "aeroshell-mid-tower-rgb",
-      "skyforge-x670e-pro",
-      "hypervolt-ddr5-32gb-5600",
-      "zentricore-storm-6600x",
-      "orionix-radiant-rx-7800-xt",
-      "dataforge-nvme-1tb-gen4",
-      "coreflow-750w-gold-modular",
-      "cryowave-aio-240mm"
-    ],
-    "createdAt": "2025-11-17T16:04:00Z",
-    "updatedAt": "2025-11-17T16:04:00Z"
-  },
-  "chris-first-computer": {
-    "ownerType": "customer",
-    "customerId": "chris-charis-84769",
-    "name": "Chris's first computer",
-    "componentIds": [
-      "cryonix-z790-apex",
-      "aeroshell-mid-tower-rgb",
-      "novachip-pulse-10600k",
-      "cryowave-tower-air-cooler",
-      "orionix-radiant-rx-7800-xt",
-      "coreflow-750w-gold-modular",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-nvme-1tb-gen4"
-    ],
-    "createdAt": "2025-10-28T16:50:00Z",
-    "updatedAt": "2025-10-28T16:50:00Z"
-  },
-  "configurator-alan-jeong-0": {
-    "ownerType": "customer",
-    "customerId": "alan-jeong-08912",
-    "name": "PC Bang NY Build#1",
-    "componentIds": [
-      "aeroshell-mid-tower-rgb",
-      "cryonix-z790-apex",
-      "novachip-fusion-12700k",
-      "hypervolt-ddr5-32gb-5600",
-      "celestis-sata-1tb-hdd",
-      "cryowave-tower-air-cooler",
-      "pyratech-graphforce-4070-16gb",
-      "coreflow-750w-gold-modular"
-    ],
-    "createdAt": "2025-11-04T10:24:00Z",
-    "updatedAt": "2025-11-04T10:25:13Z"
-  },
-  "configurator-bianchi-0": {
-    "ownerType": "customer",
-    "customerId": "annunziata-bianchi-54071",
-    "name": "Annunziata Bianchi High-End Custom Build",
-    "componentIds": [
-      "novachip-titan-14900k",
-      "cryonix-z790-apex",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-sata-2tb-ssd",
-      "pyratech-graphforce-4080-16gb",
-      "coreflow-750w-gold-modular",
-      "titanforge-full-hf-black",
-      "cryowave-aio-240mm"
-    ],
-    "createdAt": "2025-11-21T18:36:45Z",
-    "updatedAt": "2025-11-24T19:45:32Z"
-  },
-  "configurator-brasky-0": {
-    "ownerType": "customer",
-    "customerId": "warren-brasky-57003",
-    "name": "Battlestation",
-    "createdAt": "2025-10-28T14:30:00Z",
-    "updatedAt": "2025-10-28T14:30:00Z",
-    "componentIds": [
-      "aeroshell-compact-itx",
-      "voltedge-v9980se",
-      "novachip-titan-14900k",
-      "coreflow-750w-gold-modular",
-      "hypervolt-ddr4-16gb-3200",
-      "pyratech-graphforce-4080-16gb",
-      "cryowave-aio-240mm",
-      "dataforge-sata-2tb-ssd",
-      "visionix-27-4k-144hz",
-      "raptorkeys-clickforge-bundle"
-    ]
-  },
-  "configurator-cassius-0": {
-    "ownerType": "customer",
-    "customerId": "cassius-lower-21111",
-    "name": "Cassius' configuration",
-    "createdAt": "2025-10-24T16:10:24.588Z",
-    "updatedAt": "2025-10-24T16:10:24.588Z",
-    "componentIds": [
-      "titanforge-impressa-mid",
-      "skyforge-x670e-pro",
-      "zentricore-storm-6600x",
-      "hypervolt-ddr5-32gb-5600",
-      "pyratech-graphforce-4080-16gb",
-      "dataforge-nvme-1tb-gen4",
-      "cryowave-tower-air-cooler",
-      "coreflow-650w-bronze"
-    ]
-  },
-  "configurator-connor-bates-0": {
-    "ownerType": "customer",
-    "customerId": "connor-bates-22613",
-    "name": "Connor's Gaming Build",
-    "componentIds": [
-      "coreflow-750w-gold-modular",
-      "skyforge-b550m-micro",
-      "hypervolt-ddr4-16gb-3200",
-      "pyratech-graphforce-4080-16gb",
-      "astralogic-helix-3200",
-      "aeroshell-mid-tower-rgb",
-      "cryowave-tower-air-cooler",
-      "dataforge-nvme-1tb-gen4"
-    ],
-    "createdAt": "2025-11-02T16:49:18Z",
-    "updatedAt": "2025-11-02T16:49:18Z"
-  },
-  "configurator-elijah-homme-0": {
-    "ownerType": "customer",
-    "customerId": "elijah-homme-10923",
-    "name": "Elijah's Build",
-    "componentIds": [
-      "skyforge-b550m-micro",
-      "visionix-27-4k-144hz",
-      "hypervolt-ddr4-8gb-3000",
-      "swifthand-K200",
-      "pyratech-graphforce-4070-16gb",
-      "astralogic-phoenix-16800x",
-      "coreflow-750w-gold-modular"
-    ],
-    "createdAt": "2025-11-02T16:22:10Z",
-    "updatedAt": "2025-11-02T16:29:02Z"
-  },
-  "configurator-ethan-morris-0": {
-    "ownerType": "customer",
-    "customerId": "ethan-morris-33263",
-    "name": "Ethan Morris Build",
-    "componentIds": [
-      "skyforge-b550m-micro",
-      "astralogic-helix-3200",
-      "vortexlabs-horizon-rx740t",
-      "cryowave-tower-air-cooler",
-      "aeroshell-mid-tower-rgb",
-      "coreflow-650w-bronze",
-      "hypervolt-ddr4-8gb-3000",
-      "celestis-sata-1tb-hdd",
-      "celestis-sata-1tb-hdd"
-    ],
-    "createdAt": "2025-11-08T22:48:21Z",
-    "updatedAt": "2025-11-08T23:06:26Z"
-  },
-  "configurator-hatch-0": {
-    "ownerType": "customer",
-    "customerId": "artemis-hatch-91102",
-    "name": "Budget Gamer",
-    "createdAt": "2025-08-20T23:15:24.588Z",
-    "updatedAt": "2025-08-20T23:15:24.588Z",
-    "componentIds": [
-      "aeroshell-mid-tower-rgb",
-      "astralogic-helix-3200",
-      "skyforge-b550m-micro",
-      "celestis-sata-1tb-hdd",
-      "coreflow-650w-bronze",
-      "vortexlabs-horizon-rx780"
-    ]
-  },
-  "configurator-hatch-1": {
-    "ownerType": "customer",
-    "customerId": "artemis-hatch-91102",
-    "name": "Budget Gamer 2",
-    "createdAt": "2025-08-21T23:27:24.588Z",
-    "updatedAt": "2025-08-21T23:27:24.588Z",
-    "componentIds": [
-      "aeroshell-mid-tower-rgb",
-      "astralogic-blade-4600",
-      "skyforge-b550m-micro",
-      "celestis-sata-1tb-hdd",
-      "coreflow-650w-bronze",
-      "vortexlabs-horizon-rx740t",
-      "cryowave-tower-air-cooler"
-    ]
-  },
-  "configurator-iris-mella-0": {
-    "ownerType": "customer",
-    "customerId": "iris-mella-89328",
-    "name": "Iris Custom Build Nov 2025",
-    "componentIds": [
-      "titanforge-full-hf-white",
-      "novachip-fusion-12700k",
-      "voltedge-v9980se",
-      "coreflow-750w-gold-modular",
-      "orionix-radiant-rx-7800-xt",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-nvme-1tb-gen4",
-      "cryowave-tower-air-cooler"
-    ],
-    "createdAt": "2025-11-18T10:22:00Z",
-    "updatedAt": "2025-11-18T10:22:00Z"
-  },
-  "configurator-isabelle-fournier-0": {
-    "ownerType": "customer",
-    "customerId": "isabelle-fournier-33877",
-    "name": "Isabelle's Custom Build",
-    "componentIds": [
-      "titanforge-full-hf-black",
-      "astralogic-helix-3200",
-      "skyforge-b550m-micro",
-      "dataforge-nvme-1tb-gen4",
-      "celestis-sata-1tb-hdd",
-      "coreflow-650w-bronze",
-      "vortexlabs-horizon-rx740t",
-      "hypervolt-ddr4-8gb-3000",
-      "cryowave-tower-air-cooler"
-    ],
-    "createdAt": "2025-11-04T13:26:35Z",
-    "updatedAt": "2025-11-04T13:26:35Z"
-  },
-  "configurator-jesus-martinez-0": {
-    "ownerType": "customer",
-    "customerId": "jesus-martinez-74291",
-    "name": "Jesus Martinez Gaming Machine",
-    "componentIds": [
-      "novachip-pulse-10600k",
-      "pyratech-graphforce-4070-16gb",
-      "coreflow-750w-gold-modular",
-      "voltedge-v9980se",
-      "hypervolt-ddr5-32gb-5600",
-      "celestis-sata-1tb-hdd",
-      "titanforge-full-hf-white",
-      "cryowave-aio-240mm"
-    ],
-    "createdAt": "2025-11-14T16:35:14Z",
-    "updatedAt": "2025-11-14T16:35:14Z"
-  },
-  "configurator-jones-0": {
-    "ownerType": "customer",
-    "customerId": "barbara-jones-34201",
-    "name": "Epic PC",
-    "componentIds": [
-      "cryonix-z790-apex",
-      "novachip-pulse-10600k",
-      "hypervolt-ddr5-32gb-5600",
-      "pyratech-graphforce-4080-16gb",
-      "coreflow-750w-gold-modular",
-      "titanforge-full-hf-black",
-      "cryowave-tower-air-cooler"
-    ],
-    "createdAt": "2025-10-28T14:30:00Z",
-    "updatedAt": "2025-10-28T14:45:00Z"
-  },
   "configurator-juan-garcia-0": {
     "ownerType": "customer",
     "customerId": "juan-garcia-46578",
@@ -266,238 +12,6 @@
     ],
     "createdAt": "2025-10-26T14:30:00Z",
     "updatedAt": "2025-10-26T14:30:00Z"
-  },
-  "configurator-kiara-hendricks-0": {
-    "ownerType": "customer",
-    "customerId": "kiara-hendricks-73846",
-    "name": "Custom Build - Kiara Hendricks",
-    "componentIds": [
-      "skyforge-b550m-micro",
-      "astralogic-phoenix-16800x",
-      "pyratech-graphforce-4080-16gb",
-      "hypervolt-ddr4-16gb-3200",
-      "dataforge-sata-2tb-ssd",
-      "coreflow-750w-gold-modular",
-      "titanforge-full-hf-white",
-      "cryowave-aio-240mm"
-    ],
-    "createdAt": "2025-11-06T14:35:00Z",
-    "updatedAt": "2025-11-06T14:35:00Z"
-  },
-  "configurator-landon-pierce-0": {
-    "ownerType": "customer",
-    "customerId": "landon-pierce-23562",
-    "name": "Landon's Custom Build",
-    "componentIds": [
-      "titanforge-full-hf-white",
-      "vortexlabs-horizon-rx820l",
-      "coreflow-750w-gold-modular",
-      "cryonix-z790-apex",
-      "celestis-sata-1tb-hdd",
-      "celestis-sata-1tb-hdd",
-      "celestis-sata-1tb-hdd",
-      "cryowave-aio-240mm",
-      "novachip-pulse-10600k",
-      "hypervolt-ddr5-32gb-5600"
-    ],
-    "createdAt": "2025-11-01T21:49:01Z",
-    "updatedAt": "2025-11-01T21:49:01Z"
-  },
-  "configurator-makala-naihe-0": {
-    "ownerType": "customer",
-    "customerId": "makala-naihe-73821",
-    "name": "Makala Custom Build",
-    "componentIds": [
-      "novachip-titan-14900k",
-      "titanforge-full-hf-black",
-      "cryonix-z790-apex",
-      "dataforge-nvme-1tb-gen4",
-      "coreflow-750w-gold-modular",
-      "pyratech-graphforce-4070-16gb",
-      "cryowave-tower-air-cooler"
-    ],
-    "createdAt": "2025-11-18T10:22:00Z",
-    "updatedAt": "2025-11-18T10:22:00Z"
-  },
-  "configurator-marcella-hammond-0": {
-    "ownerType": "customer",
-    "customerId": "marcella-hammond-89155",
-    "name": "Custom Build - Marcella Hammond",
-    "createdAt": "2025-08-19T20:48:15.705Z",
-    "updatedAt": "2025-08-19T20:48:15.705Z",
-    "componentIds": [
-      "aeroshell-compact-itx",
-      "skyforge-b550m-micro",
-      "astralogic-vortex-8700x",
-      "vortexlabs-horizon-rx780",
-      "hypervolt-ddr4-16gb-3200",
-      "dataforge-sata-2tb-ssd",
-      "coreflow-650w-bronze",
-      "cryowave-aio-240mm"
-    ]
-  },
-  "configurator-maria-rodriguez-428": {
-    "ownerType": "customer",
-    "customerId": "maria-rodriguez-73841",
-    "name": "Maria's Basics",
-    "componentIds": [
-      "skyforge-b550m-micro",
-      "hypervolt-ddr4-8gb-3000",
-      "astralogic-helix-3200",
-      "cryowave-tower-air-cooler",
-      "celestis-sata-1tb-hdd",
-      "aeroshell-mid-tower-rgb"
-    ],
-    "createdAt": "2025-10-23T14:22:00Z",
-    "updatedAt": "2025-10-23T14:22:00Z"
-  },
-  "configurator-mateo-alvarez-0": {
-    "ownerType": "customer",
-    "customerId": "mateo-alvarez-14520",
-    "name": "Mateo's Gaming Build",
-    "componentIds": [
-      "skyforge-b550m-micro",
-      "astralogic-helix-3200",
-      "pyratech-graphforce-4080-16gb",
-      "cryowave-tower-air-cooler",
-      "titanforge-full-hf-white",
-      "coreflow-750w-gold-modular",
-      "hypervolt-ddr4-8gb-3000",
-      "celestis-sata-1tb-hdd"
-    ],
-    "createdAt": "2025-11-16T23:37:41Z",
-    "updatedAt": "2025-11-16T23:37:41Z"
-  },
-  "configurator-mitch-jackson-0": {
-    "ownerType": "customer",
-    "customerId": "mitch-jackson-14125",
-    "name": "Mitch Jackson Custom Build",
-    "componentIds": [
-      "voltedge-v9980se",
-      "novachip-pulse-10600k",
-      "pyratech-graphforce-4070-16gb",
-      "cryowave-tower-air-cooler",
-      "titanforge-full-hf-black",
-      "coreflow-650w-bronze",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-nvme-1tb-gen4"
-    ],
-    "createdAt": "2025-11-18T19:47:52Z",
-    "updatedAt": "2025-11-18T19:47:52Z"
-  },
-  "configurator-riley-shepard-0": {
-    "ownerType": "customer",
-    "customerId": "riley-shepard-23919",
-    "name": "Riley's Custom Build",
-    "componentIds": [
-      "cryonix-z790-apex",
-      "novachip-fusion-12700k",
-      "vortexlabs-horizon-rx780",
-      "cryowave-aio-240mm",
-      "aeroshell-mid-tower-rgb",
-      "coreflow-650w-bronze",
-      "hypervolt-ddr5-32gb-5600",
-      "celestis-sata-1tb-hdd"
-    ],
-    "createdAt": "2025-11-18T22:13:18Z",
-    "updatedAt": "2025-11-18T22:13:18Z"
-  },
-  "configurator-rory-brightman-0": {
-    "ownerType": "customer",
-    "customerId": "rory-brightman-73845",
-    "name": "Rory's Custom Build",
-    "componentIds": [
-      "skyforge-b550m-micro",
-      "dataforge-nvme-1tb-gen4",
-      "hypervolt-ddr4-8gb-3000",
-      "vortexlabs-horizon-rx740t",
-      "coreflow-650w-bronze",
-      "astralogic-helix-3200",
-      "cryowave-tower-air-cooler"
-    ],
-    "createdAt": "2025-11-19T06:22:48Z",
-    "updatedAt": "2025-11-19T06:22:48Z"
-  },
-  "configurator-samantha-parker-0": {
-    "ownerType": "customer",
-    "customerId": "samantha-parker-194",
-    "name": "Samantha's Build",
-    "componentIds": [
-      "visionix-27-4k-144hz",
-      "swifthand-K200",
-      "titanforge-impressa-mid",
-      "astralogic-helix-3200"
-    ],
-    "createdAt": "2025-11-12T15:37:00Z",
-    "updatedAt": "2025-11-12T18:16:00Z"
-  },
-  "configurator-sara-klein-0": {
-    "ownerType": "customer",
-    "customerId": "sara-klein-08585",
-    "name": "Sara Klein Custom Build",
-    "componentIds": [
-      "skyforge-b550m-micro",
-      "astralogic-vortex-8700x",
-      "vortexlabs-horizon-rx820l",
-      "cryowave-aio-240mm",
-      "titanforge-full-hf-white",
-      "coreflow-750w-gold-modular",
-      "hypervolt-ddr4-8gb-3000",
-      "dataforge-sata-2tb-ssd"
-    ],
-    "createdAt": "2025-11-03T17:01:25Z",
-    "updatedAt": "2025-11-03T17:01:32Z"
-  },
-  "configurator-severov-1": {
-    "ownerType": "customer",
-    "customerId": "fidel-severov-34304",
-    "name": "New gaming PC",
-    "componentIds": [
-      "aeroshell-mid-tower-rgb",
-      "cryonix-z790-apex",
-      "hypervolt-ddr4-8gb-3000",
-      "novachip-fusion-12400k",
-      "dataforge-nvme-1tb-gen4",
-      "vortexlabs-horizon-rx780",
-      "cryowave-aio-240mm",
-      "coreflow-750w-gold-modular"
-    ],
-    "createdAt": "2025-09-09T13:55:21.940Z",
-    "updatedAt": "2025-09-09T13:55:21.940Z"
-  },
-  "configurator-sydney-ferguson-0": {
-    "ownerType": "customer",
-    "customerId": "sydney-ferguson-47722",
-    "name": "Custom Build - Sydney Ferguson",
-    "componentIds": [
-      "aeroshell-mid-tower-rgb",
-      "astralogic-blade-4600",
-      "celestis-sata-1tb-hdd",
-      "coreflow-650w-bronze",
-      "skyforge-b550m-micro",
-      "cryowave-tower-air-cooler",
-      "vortexlabs-horizon-rx780"
-    ],
-    "createdAt": "2025-11-04T10:15:00Z",
-    "updatedAt": "2025-11-04T10:15:00Z"
-  },
-  "configurator-umbleby-0": {
-    "ownerType": "customer",
-    "customerId": "darren-umbleby-38762",
-    "name": "Custom Build - Darren Umbleby",
-    "createdAt": "2025-08-15T01:10:00Z",
-    "updatedAt": "2025-08-15T01:10:00Z",
-    "componentIds": [
-      "titanforge-full-hf-white",
-      "novachip-titan-14900k",
-      "coreflow-750w-gold-modular",
-      "voltedge-v9980se",
-      "orionix-radiant-rx-7800-xt",
-      "hypervolt-ddr5-32gb-5600",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-sata-2tb-ssd",
-      "cryowave-tower-air-cooler"
-    ]
   },
   "configurator-umbleby-1": {
     "ownerType": "customer",
@@ -517,6 +31,57 @@
       "cryowave-tower-air-cooler"
     ]
   },
+  "configurator-umbleby-0": {
+    "ownerType": "customer",
+    "customerId": "darren-umbleby-38762",
+    "name": "Custom Build - Darren Umbleby",
+    "createdAt": "2025-08-15T01:10:00Z",
+    "updatedAt": "2025-08-15T01:10:00Z",
+    "componentIds": [
+      "titanforge-full-hf-white",
+      "novachip-titan-14900k",
+      "coreflow-750w-gold-modular",
+      "voltedge-v9980se",
+      "orionix-radiant-rx-7800-xt",
+      "hypervolt-ddr5-32gb-5600",
+      "hypervolt-ddr5-32gb-5600",
+      "dataforge-sata-2tb-ssd",
+      "cryowave-tower-air-cooler"
+    ]
+  },
+  "dragonfire-gaming-base": {
+    "ownerType": "internal",
+    "name": "Dragonfire Gaming Base Build",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z",
+    "componentIds": [
+      "zentricore-apex-8600x",
+      "skyforge-x670e-pro",
+      "pyratech-graphforce-4070-16gb",
+      "hypervolt-ddr5-32gb-5600",
+      "dataforge-nvme-1tb-gen4",
+      "coreflow-750w-gold-modular",
+      "aeroshell-mid-tower-rgb",
+      "cryowave-aio-240mm"
+    ]
+  },
+  "configurator-marcella-hammond-0": {
+    "ownerType": "customer",
+    "customerId": "marcella-hammond-89155",
+    "name": "Custom Build - Marcella Hammond",
+    "createdAt": "2025-08-19T20:48:15.705Z",
+    "updatedAt": "2025-08-19T20:48:15.705Z",
+    "componentIds": [
+      "aeroshell-compact-itx",
+      "skyforge-b550m-micro",
+      "astralogic-vortex-8700x",
+      "vortexlabs-horizon-rx780",
+      "hypervolt-ddr4-16gb-3200",
+      "dataforge-sata-2tb-ssd",
+      "coreflow-650w-bronze",
+      "cryowave-aio-240mm"
+    ]
+  },
   "configurator-umbleby-2": {
     "ownerType": "customer",
     "customerId": "darren-umbleby-38762",
@@ -532,6 +97,22 @@
       "hypervolt-ddr5-32gb-5600",
       "dataforge-nvme-1tb-gen4",
       "cryowave-tower-air-cooler"
+    ]
+  },
+  "voltstorm-gaming-base": {
+    "ownerType": "internal",
+    "name": "VoltStorm Gaming Base Build",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z",
+    "componentIds": [
+      "astralogic-vortex-8700x",
+      "skyforge-b550m-micro",
+      "vortexlabs-horizon-rx780",
+      "hypervolt-ddr4-16gb-3200",
+      "dataforge-nvme-1tb-gen4",
+      "coreflow-750w-gold-modular",
+      "aeroshell-compact-itx",
+      "cryowave-aio-240mm"
     ]
   },
   "customer-build-zachary": {
@@ -550,74 +131,21 @@
       "cryowave-tower-air-cooler"
     ]
   },
-  "dalton-custom-build": {
+  "configurator-hatch-1": {
     "ownerType": "customer",
-    "customerId": "isabelle-dalton-41792",
-    "name": "Dalton Custom Build",
+    "customerId": "artemis-hatch-91102",
+    "name": "Budget Gamer 2",
+    "createdAt": "2025-08-21T23:27:24.588Z",
+    "updatedAt": "2025-08-21T23:27:24.588Z",
     "componentIds": [
-      "novachip-fusion-12700k",
-      "cryonix-z790-apex",
-      "pyratech-graphforce-4070-16gb",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-nvme-1tb-gen4",
-      "coreflow-750w-gold-modular",
-      "titanforge-full-hf-black",
-      "cryowave-aio-240mm"
-    ],
-    "createdAt": "2025-11-27T23:15:00Z",
-    "updatedAt": "2025-11-27T23:15:00Z"
-  },
-  "dragonfire-gaming-base": {
-    "ownerType": "internal",
-    "name": "Dragonfire Gaming Base Build",
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": "2024-01-15T10:30:00Z",
-    "componentIds": [
-      "zentricore-apex-8600x",
-      "skyforge-x670e-pro",
-      "pyratech-graphforce-4070-16gb",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-nvme-1tb-gen4",
-      "coreflow-750w-gold-modular",
       "aeroshell-mid-tower-rgb",
-      "cryowave-aio-240mm"
-    ]
-  },
-  "maceys-christmas-pc": {
-    "ownerType": "customer",
-    "customerId": "bruce-bosco-80452",
-    "name": "Macey's Christmas PC",
-    "componentIds": [
-      "skyforge-x670e-pro",
-      "zentricore-storm-6600x",
-      "vortexlabs-horizon-rx740t",
-      "hypervolt-ddr5-32gb-5600",
+      "astralogic-blade-4600",
+      "skyforge-b550m-micro",
       "celestis-sata-1tb-hdd",
-      "coreflow-750w-gold-modular",
-      "aeroshell-mid-tower-rgb",
-      "cryowave-tower-air-cooler",
-      "clarityone-32-4k-144hz",
-      "raptorkeys-clickforge-bundle"
-    ],
-    "createdAt": "2025-11-02T20:02:08Z",
-    "updatedAt": "2025-11-02T20:02:08Z"
-  },
-  "mary-walker-gaming-setup": {
-    "ownerType": "customer",
-    "customerId": "mary-walker-15743",
-    "name": "Mary Walker Gaming Build",
-    "componentIds": [
-      "novachip-pulse-10600k",
-      "cryonix-z790-apex",
-      "vortexlabs-horizon-rx820l",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-nvme-1tb-gen4",
-      "coreflow-750w-gold-modular",
-      "titanforge-impressa-mid",
+      "coreflow-650w-bronze",
+      "vortexlabs-horizon-rx740t",
       "cryowave-tower-air-cooler"
-    ],
-    "createdAt": "2025-11-14T19:08:09Z",
-    "updatedAt": "2025-11-14T19:08:09Z"
+    ]
   },
   "monica-reynolds-gaming-rig-2021": {
     "ownerType": "customer",
@@ -636,70 +164,22 @@
       "cryowave-aio-240mm"
     ]
   },
-  "nebulax-workstation-base": {
-    "ownerType": "internal",
-    "name": "NebulaX Workstation Base Build",
-    "createdAt": "2024-01-15T11:00:00Z",
-    "updatedAt": "2024-01-15T11:00:00Z",
+  "configurator-severov-1": {
+    "ownerType": "customer",
+    "customerId": "fidel-severov-34304",
+    "name": "New gaming PC",
     "componentIds": [
-      "novachip-titan-14900k",
-      "cryonix-z790-apex",
-      "pyratech-graphforce-4080-16gb",
-      "hypervolt-ddr5-32gb-5600",
-      "dataforge-nvme-1tb-gen4",
-      "dataforge-sata-2tb-ssd",
-      "coreflow-750w-gold-modular",
       "aeroshell-mid-tower-rgb",
-      "cryowave-aio-240mm"
-    ]
-  },
-  "orbix-student-base": {
-    "ownerType": "internal",
-    "name": "OrbiX Student Base Build",
-    "createdAt": "2025-10-27T10:00:00Z",
-    "updatedAt": "2025-10-27T11:30:00Z",
-    "componentIds": [
-      "novachip-fusion-12400k",
-      "skyforge-x670e-pro",
-      "vortexlabs-horizon-rx740t",
-      "hypervolt-ddr4-16gb-3200",
-      "dataforge-nvme-1tb-gen4",
-      "coreflow-650w-bronze",
-      "aeroshell-compact-itx",
-      "cryowave-tower-air-cooler"
-    ]
-  },
-  "tiger-belly-legends": {
-    "ownerType": "customer",
-    "customerId": "sarah-chen-43892",
-    "componentIds": [
-      "skyforge-x670e-pro",
-      "zentricore-apex-8600x",
-      "hypervolt-ddr5-32gb-5600",
-      "pyratech-graphforce-4070-16gb",
-      "dataforge-nvme-1tb-gen4",
-      "coreflow-750w-gold-modular",
-      "titanforge-impressa-mid",
-      "cryowave-tower-air-cooler"
-    ],
-    "createdAt": "2025-11-24T10:15:00.000Z",
-    "updatedAt": "2025-11-24T10:45:00.000Z"
-  },
-  "toms-beast-build": {
-    "ownerType": "customer",
-    "customerId": "thomas-vance-80811",
-    "name": "Toms Beast",
-    "componentIds": [
-      "titanforge-impressa-mid",
-      "novachip-fusion-12700k",
-      "dataforge-sata-2tb-ssd",
       "cryonix-z790-apex",
-      "vortexlabs-horizon-rx820l",
-      "coreflow-750w-gold-modular",
-      "cryowave-tower-air-cooler"
+      "hypervolt-ddr4-8gb-3000",
+      "novachip-fusion-12400k",
+      "dataforge-nvme-1tb-gen4",
+      "vortexlabs-horizon-rx780",
+      "cryowave-aio-240mm",
+      "coreflow-750w-gold-modular"
     ],
-    "createdAt": "2025-11-28T11:33:00Z",
-    "updatedAt": "2025-11-28T11:33:00Z"
+    "createdAt": "2025-09-09T13:55:21.940Z",
+    "updatedAt": "2025-09-09T13:55:21.940Z"
   },
   "tylers-rad-zen-storm-rig": {
     "ownerType": "customer",
@@ -717,19 +197,35 @@
       "vortexlabs-horizon-rx780"
     ]
   },
-  "voltstorm-gaming-base": {
-    "ownerType": "internal",
-    "name": "VoltStorm Gaming Base Build",
-    "createdAt": "2024-01-15T10:30:00Z",
-    "updatedAt": "2024-01-15T10:30:00Z",
+  "configurator-hatch-0": {
+    "ownerType": "customer",
+    "customerId": "artemis-hatch-91102",
+    "name": "Budget Gamer",
+    "createdAt": "2025-08-20T23:15:24.588Z",
+    "updatedAt": "2025-08-20T23:15:24.588Z",
     "componentIds": [
-      "astralogic-vortex-8700x",
+      "aeroshell-mid-tower-rgb",
+      "astralogic-helix-3200",
       "skyforge-b550m-micro",
-      "vortexlabs-horizon-rx780",
-      "hypervolt-ddr4-16gb-3200",
+      "celestis-sata-1tb-hdd",
+      "coreflow-650w-bronze",
+      "vortexlabs-horizon-rx780"
+    ]
+  },
+  "nebulax-workstation-base": {
+    "ownerType": "internal",
+    "name": "NebulaX Workstation Base Build",
+    "createdAt": "2024-01-15T11:00:00Z",
+    "updatedAt": "2024-01-15T11:00:00Z",
+    "componentIds": [
+      "novachip-titan-14900k",
+      "cryonix-z790-apex",
+      "pyratech-graphforce-4080-16gb",
+      "hypervolt-ddr5-32gb-5600",
       "dataforge-nvme-1tb-gen4",
+      "dataforge-sata-2tb-ssd",
       "coreflow-750w-gold-modular",
-      "aeroshell-compact-itx",
+      "aeroshell-mid-tower-rgb",
       "cryowave-aio-240mm"
     ]
   }
