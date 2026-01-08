@@ -1349,18 +1349,28 @@
     "createdAt": "2025-10-21T10:15:00Z"
   },
   "sarah-blake-41859": {
-    "id": "sarah-blake-41859",
     "name": "Sarah Blake",
-    "email": "sarah.blake@example.com",
-    "createdAt": "2024-07-20T00:00:00Z"
+    "email": "sblake9292@gmail.com",
+    "phone": "(828) 374-2156",
+    "dateOfBirth": "1992-04-08",
+    "addresses": [
+      {
+        "label": "shipping",
+        "line1": "73 Mapleview Drive",
+        "city": "Asheville",
+        "region": "NC",
+        "postalCode": "28801",
+        "country": "US"
+      }
+    ],
+    "loyaltyTier": "none",
+    "createdAt": "2025-11-28T17:15:00Z"
   },
   "alan-jeong-08912": {
-    "type": "customer",
-    "id": "alan-jeong-08912",
     "name": "Alan Jeong",
-    "email": "alan.jeong@example.com",
-    "phone": "(212) 555-0123",
-    "dateOfBirth": "1985-03-15",
+    "email": "al.jeong@pcbangny.com",
+    "phone": "(212)-555-6403",
+    "dateOfBirth": "1996-04-14",
     "addresses": [
       {
         "label": "shipping",
@@ -1372,6 +1382,6 @@
       }
     ],
     "loyaltyTier": "none",
-    "createdAt": "2024-01-10T00:00:00Z"
+    "createdAt": "2025-11-04T09:53:46Z"
   }
 }

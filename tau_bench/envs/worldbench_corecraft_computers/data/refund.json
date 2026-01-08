@@ -1,78 +1,81 @@
 {
-    "ref-251029-012": {
-        "paymentId": "pay-201203-010",
-        "ticketId": "tick-251028-047",
-        "amount": 79.99,
-        "reason": "customer_remorse",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "coreflow-650w-bronze",
-                "qty": 1,
-                "amount": 79.99
-            }
-        ],
-        "createdAt": "2025-10-29T14:32:00Z",
-        "processedAt": "2025-10-29T15:45:00Z"
-    },
-    "ref-250818-015": {
-        "paymentId": "pay-250818-015",
-        "ticketId": "tick-250818-015",
-        "amount": 199.99,
-        "reason": "customer_remorse",
-        "status": "approved",
-        "lines": [
-            {
-                "sku": "CLAR-24-1080-165",
-                "qty": 1,
-                "amount": 199.99
-            }
-        ],
-        "createdAt": "2025-08-22T14:25:00Z"
-    },
-    "ref-250826-003": {
-        "paymentId": "pay-250823-009",
-        "ticketId": "tick-250826-003",
-        "amount": 199.99,
-        "reason": "defective",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "CLAR-24-1080-165",
-                "qty": 1,
-                "amount": 199.99
-            }
-        ],
-        "createdAt": "2025-08-26T13:45:00Z"
-    },
-    "ref-250823-001": {
-        "paymentId": "pay-250820-007",
-        "ticketId": "tick-250823-001",
-        "amount": 1199.99,
-        "reason": "defective",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "PYRA-GFX4080-16G",
-                "qty": 1,
-                "amount": 1199.99
-            }
-        ],
-        "createdAt": "2025-08-23T16:45:00Z"
-    },
-    "ref-250825-002": {
-        "paymentId": "pay-250822-004",
-        "ticketId": "tick-250825-002",
-        "amount": 189.99,
-        "reason": "incompatible",
-        "status": "processed",
-        "lines": [
-            {
-                "sku": "HYPER-DDR5-32G-5600",
-                "qty": 1,
-                "amount": 189.99
-            }
-        ],
-        "createdAt": "2025-08-25T18:20:00Z"
-    }
+  "ref-251029-012": {
+    "paymentId": "pay-201203-010",
+    "ticketId": "tick-251028-047",
+    "amount": 79.99,
+    "reason": "customer_remorse",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "coreflow-650w-bronze",
+        "qty": 1,
+        "amount": 79.99
+      }
+    ],
+    "createdAt": "2025-10-29T14:32:00Z",
+    "processedAt": "2025-10-29T15:45:00Z"
+  },
+  "ref-250818-015": {
+    "paymentId": "pay-250818-015",
+    "ticketId": "tick-250818-015",
+    "amount": 199.99,
+    "reason": "customer_remorse",
+    "status": "approved",
+    "lines": [
+      {
+        "sku": "CLAR-24-1080-165",
+        "qty": 1,
+        "amount": 199.99
+      }
+    ],
+    "createdAt": "2025-08-22T14:25:00Z"
+  },
+  "ref-250826-003": {
+    "paymentId": "pay-250823-009",
+    "ticketId": "tick-250826-003",
+    "amount": 199.99,
+    "reason": "defective",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "CLAR-24-1080-165",
+        "qty": 1,
+        "amount": 199.99
+      }
+    ],
+    "createdAt": "2025-08-26T13:45:00Z",
+    "processedAt": "2025-08-29T09:15:00Z"
+  },
+  "ref-250823-001": {
+    "paymentId": "pay-250820-007",
+    "ticketId": "tick-250823-001",
+    "amount": 1199.99,
+    "reason": "defective",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "PYRA-GFX4080-16G",
+        "qty": 1,
+        "amount": 1199.99
+      }
+    ],
+    "createdAt": "2025-08-23T16:45:00Z",
+    "processedAt": "2025-08-25T10:30:00Z"
+  },
+  "ref-250825-002": {
+    "paymentId": "pay-250822-004",
+    "ticketId": "tick-250825-002",
+    "amount": 189.99,
+    "reason": "incompatible",
+    "status": "processed",
+    "lines": [
+      {
+        "sku": "HYPER-DDR5-32G-5600",
+        "qty": 1,
+        "amount": 189.99
+      }
+    ],
+    "createdAt": "2025-08-25T18:20:00Z",
+    "processedAt": "2025-08-27T10:00:00Z"
+  }
 }

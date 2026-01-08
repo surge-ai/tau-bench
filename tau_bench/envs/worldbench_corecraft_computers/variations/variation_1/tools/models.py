@@ -359,7 +359,6 @@ class Model(BaseModel):
     order: Optional[Order] = None
     supportTicket: Optional[SupportTicket] = None
     build: Optional[Build] = None
-    bundle: Optional[Bundle] = None
     knowledgeBaseArticle: Optional[KnowledgeBaseArticle] = None
     refund: Optional[Refund] = None
     escalation: Optional[Escalation] = None

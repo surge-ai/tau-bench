@@ -1,66 +1,66 @@
 {
-    "res-250812-004": {
-        "ticketId": "tick-250812-004",
-        "outcome": "recommendation_provided",
-        "details": "Customer has NebulaX workstation with Cryonix Z790 Apex motherboard supporting up to 128GB DDR5. Currently has 32GB (2x16GB) kit with 2 slots remaining. Recommended HyperVolt DDR5 64GB (2x32GB) 5600MHz kit (SKU: HYPER-DDR5-64GB-5600) for total of 96GB, perfect for 4K video editing workloads. Provided installation guide and compatibility confirmation.",
-        "createdAt": "2025-08-13T09:15:00Z"
-    },
-    "res-251019-132": {
-        "ticketId": "tick-251019-849",
-        "outcome": "order_updated",
-        "details": "Updated shipping address from Garland home address to Plano office address (2412 Yorktown Dr, Plano, TX 75074) as requested by customer. Order will ship to corrected address.",
-        "resolvedById": "bianca-rossi",
-        "createdAt": "2025-10-19T15:05:00Z"
-    },
-    "res-251029-012": {
-        "ticketId": "tick-251028-047",
-        "outcome": "refund_issued",
-        "details": "Customer requested refund for unused CoreFlow 650W Bronze PSU. Item unopened and in original packaging. Approved partial refund for PSU amount minus restocking fee per return policy.",
-        "linkedRefundId": "ref-251029-012",
-        "resolvedById": "jordan-lee",
-        "createdAt": "2025-10-29T14:30:00Z"
-    },
-    "res-250826-003": {
-        "ticketId": "tick-250826-003",
-        "outcome": "refund_issued",
-        "details": "Customer received monitor with multiple dead pixels and backlight bleed. Attempted troubleshooting but issue persists. Full refund of $199.99 approved. Customer has already packaged item for return. Will consider purchasing different model after refund processes.",
-        "createdAt": "2025-08-26T13:45:00Z"
-    },
-    "res-250818-015": {
-        "ticketId": "tick-250818-015",
-        "outcome": "refund_issued",
-        "details": "Customer approved for full refund per our 30 day return policy. Refund of $199.99 will be processed once item is received and inspected.",
-        "linkedRefundId": "ref-250818-015",
-        "createdAt": "2025-08-22T14:23:00Z"
-    },
-    "res-250823-001": {
-        "ticketId": "tick-250823-001",
-        "outcome": "refund_issued",
-        "details": "Customer received defective PyraTech GraphForce 4080 with visible damage to cooling fins. Approved for full refund of $1199.99. Return shipping label sent via email. Customer confirmed they will purchase replacement from us once refund is processed.",
-        "createdAt": "2025-08-23T16:45:00Z"
-    },
-    "res-250901-123": {
-        "ticketId": "tick-250901-123",
-        "outcome": "recommendation_provided",
-        "details": "Recommended ZentriCore Apex 8600X CPU upgrade for customer's gaming build. This 8-core CPU offers excellent single-core performance with 3.9GHz base / 5.2GHz boost clocks, perfect for gaming workloads. Fits customer's $450 budget at $449.99. Customer confirmed motherboard compatibility (Z790 chipset) and proceeded with purchase recommendation. Provided product link and installation guidance.",
-        "createdAt": "2025-09-01T18:47:00Z"
-    },
-    "res-250818-006": {
-        "ticketId": "tick-250818-006",
-        "outcome": "troubleshooting_steps",
-        "details": "GPU temperatures of 85-90°C are within spec but on the high side. Provided troubleshooting steps: 1) Increase case fan curves and add intake fans if needed 2) Set custom GPU fan curve to be more aggressive 3) Undervolt GPU using MSI Afterburner (-50mV to -100mV) 4) Ensure case has proper airflow (intake front, exhaust rear/top). Customer confirmed temperatures dropped to 75-80°C after adjustments.",
-        "createdAt": "2025-08-18T13:45:00Z"
-    },
-    "res-250815-001": {
-        "ticketId": "tick-250815-001",
-        "outcome": "refund_issued",
-        "details": "Customer approved for full refund due to GPU case clearance compatibility issue. Return shipping label provided via email. Refund of $599.99 will be processed once item is received and inspected. Also provided recommendations for compatible GPU alternatives that fit customer's case constraints (280mm max).",
-        "createdAt": "2025-08-15T14:30:00Z"
-    },
-    "res-250825-002": {
-        "ticketId": "tick-250825-002",
-        "outcome": "refund_issued",
-        "details": "Customer ordered wrong RAM speed. HyperVolt DDR5-32GB was incompatible with older motherboard. Partial refund of $189.99 approved for the RAM only. Customer keeping the SSD and case from the same order. Return shipping label provided.",
-        "createdAt": "2025-08-25T18:20:00Z"
-    }
+  "res-250812-004": {
+    "ticketId": "tick-250812-004",
+    "outcome": "recommendation_provided",
+    "details": "Customer has NebulaX workstation with Cryonix Z790 Apex motherboard supporting up to 128GB DDR5. Currently has 32GB (2x16GB) kit with 2 slots remaining. Recommended HyperVolt DDR5 64GB (2x32GB) 5600MHz kit (SKU: HYPER-DDR5-64GB-5600) for total of 96GB, perfect for 4K video editing workloads. Provided installation guide and compatibility confirmation.",
+    "createdAt": "2025-08-13T09:15:00Z"
+  },
+  "res-251019-132": {
+    "ticketId": "tick-251019-849",
+    "outcome": "order_updated",
+    "details": "Updated shipping address from Garland home address to Plano office address (2412 Yorktown Dr, Plano, TX 75074) as requested by customer. Order will ship to corrected address.",
+    "resolvedById": "bianca-rossi",
+    "createdAt": "2025-10-19T15:05:00Z"
+  },
+  "res-251029-012": {
+    "ticketId": "tick-251028-047",
+    "outcome": "refund_issued",
+    "details": "Customer requested refund for unused CoreFlow 650W Bronze PSU. Item unopened and in original packaging. Approved partial refund for PSU amount minus restocking fee per return policy.",
+    "linkedRefundId": "ref-251029-012",
+    "resolvedById": "bianca-rossi",
+    "createdAt": "2025-10-29T14:30:00Z"
+  },
+  "res-250826-003": {
+    "ticketId": "tick-250826-003",
+    "outcome": "refund_issued",
+    "details": "Customer received monitor with multiple dead pixels and backlight bleed. Attempted troubleshooting but issue persists. Full refund of $199.99 approved. Customer has already packaged item for return. Will consider purchasing different model after refund processes.",
+    "createdAt": "2025-08-26T13:45:00Z"
+  },
+  "res-250818-015": {
+    "ticketId": "tick-250818-015",
+    "outcome": "refund_issued",
+    "details": "Customer approved for full refund per our 30 day return policy. Refund of $199.99 will be processed once item is received and inspected.",
+    "linkedRefundId": "ref-250818-015",
+    "createdAt": "2025-08-22T14:23:00Z"
+  },
+  "res-250823-001": {
+    "ticketId": "tick-250823-001",
+    "outcome": "refund_issued",
+    "details": "Customer received defective PyraTech GraphForce 4080 with visible damage to cooling fins. Approved for full refund of $1199.99. Return shipping label sent via email. Customer confirmed they will purchase replacement from us once refund is processed.",
+    "createdAt": "2025-08-23T16:45:00Z"
+  },
+  "res-250901-123": {
+    "ticketId": "tick-250901-123",
+    "outcome": "recommendation_provided",
+    "details": "Recommended ZentriCore Apex 8600X CPU upgrade for customer's gaming build. This 8-core CPU offers excellent single-core performance with 3.9GHz base / 5.2GHz boost clocks, perfect for gaming workloads. Fits customer's $450 budget at $449.99. Customer confirmed motherboard compatibility (Z790 chipset) and proceeded with purchase recommendation. Provided product link and installation guidance.",
+    "createdAt": "2025-09-01T18:47:00Z"
+  },
+  "res-250818-006": {
+    "ticketId": "tick-250818-006",
+    "outcome": "troubleshooting_steps",
+    "details": "GPU temperatures of 85-90°C are within spec but on the high side. Provided troubleshooting steps: 1) Increase case fan curves and add intake fans if needed 2) Set custom GPU fan curve to be more aggressive 3) Undervolt GPU using MSI Afterburner (-50mV to -100mV) 4) Ensure case has proper airflow (intake front, exhaust rear/top). Customer confirmed temperatures dropped to 75-80°C after adjustments.",
+    "createdAt": "2025-08-18T13:45:00Z"
+  },
+  "res-250828-001": {
+    "ticketId": "tick-250828-002",
+    "outcome": "refund_issued",
+    "details": "Customer approved for full refund due to GPU case clearance compatibility issue. Return shipping label provided via email. Refund of $599.99 will be processed once item is received and inspected. Also provided recommendations for compatible GPU alternatives that fit customer's case constraints (280mm max).",
+    "createdAt": "2025-08-15T14:30:00Z"
+  },
+  "res-250825-002": {
+    "ticketId": "tick-250825-002",
+    "outcome": "refund_issued",
+    "details": "Customer ordered wrong RAM speed. HyperVolt DDR5-32GB was incompatible with older motherboard. Partial refund of $189.99 approved for the RAM only. Customer keeping the SSD and case from the same order. Return shipping label provided.",
+    "createdAt": "2025-08-25T18:20:00Z"
+  }
 }
