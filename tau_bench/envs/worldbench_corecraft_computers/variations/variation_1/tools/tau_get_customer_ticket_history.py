@@ -1,7 +1,6 @@
 import json
 import sqlite3
-import importlib
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
@@ -11,7 +10,15 @@ from .tool_impls.get_customer_ticket_history import getCustomerTicketHistory as 
 
 class GetCustomerTicketHistory(Tool):
     @staticmethod
-    def invoke(data: Dict[str, Any], **kwargs) -> str:
+    def invoke(
+        data: Dict[str, Any],
+        customer_id: str,
+        include_resolved: Optional[str] = None,
+        tkt_created_after: Optional[str] = None,
+        tkt_created_before: Optional[str] = None,
+        tkt_updated_after: Optional[str] = None,
+        tkt_updated_before: Optional[str] = None,
+    ) -> str:
         conn = sqlite3.connect(":memory:")
         try:
             build_sqlite_from_data(conn, data)
@@ -20,11 +27,18 @@ class GetCustomerTicketHistory(Tool):
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import get_customer_ticket_history as get_customer_ticket_history_module
                 get_customer_ticket_history_module.get_db_conn = lambda: conn
-                
-                result = _orig_getCustomerTicketHistory(**kwargs)
+
+                result = _orig_getCustomerTicketHistory(
+                    customer_id=customer_id,
+                    include_resolved=include_resolved,
+                    tkt_created_after=tkt_created_after,
+                    tkt_created_before=tkt_created_before,
+                    tkt_updated_after=tkt_updated_after,
+                    tkt_updated_before=tkt_updated_before,
+                )
                 return json.dumps(result)
             finally:
                 try:
