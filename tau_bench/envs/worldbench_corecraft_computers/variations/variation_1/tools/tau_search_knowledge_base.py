@@ -1,9 +1,9 @@
 import json, sqlite3
-import importlib
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
 from .tool_impls.search_knowledge_base import searchKnowledgeBase as _orig
+
 
 class SearchKnowledgeBase(Tool):
     @staticmethod
@@ -16,10 +16,10 @@ class SearchKnowledgeBase(Tool):
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import search_knowledge_base as search_knowledge_base_module
                 search_knowledge_base_module.get_db_conn = lambda: conn
-                
+
                 result = _orig(**kwargs)
                 # Convert Pydantic models to dicts for JSON serialization
                 if isinstance(result, list):

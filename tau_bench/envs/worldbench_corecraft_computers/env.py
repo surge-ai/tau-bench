@@ -59,7 +59,7 @@ class MockCorecraftComputersEnv(Env):
             wiki = ""
 
         super().__init__(
-            data_load_func=load_data,
+            data_load_func=lambda: load_data(self._current_time),
             tools=ALL_TOOLS,
             tasks=tasks,
             wiki=wiki,
@@ -71,13 +71,13 @@ class MockCorecraftComputersEnv(Env):
         )
         self.terminate_tools = []
         # Inject the current date into data so tools can access it
-        if self._current_date:
-            self.data["current_time"] = self._current_date
+        if self._current_time:
+            self.data["current_time"] = self._current_time
 
     def reset(self, task_index: Optional[int] = None):
         response = super().reset(task_index)
         # Re-inject the current date after data is reloaded
         if self._current_time:
-            self.data["current_time"] = self._current_date
+            self.data["current_time"] = self._current_time
         return response
 
