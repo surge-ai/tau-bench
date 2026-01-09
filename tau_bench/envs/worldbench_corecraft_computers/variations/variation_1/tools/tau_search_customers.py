@@ -1,26 +1,49 @@
-import json, sqlite3
-import importlib
-from typing import Any, Dict
+import json
+import sqlite3
+from typing import Any, Dict, Optional
+
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
 from .tool_impls.search_customers import searchCustomers as _orig
 
+
 class SearchCustomers(Tool):
     @staticmethod
-    def invoke(data: Dict[str,Any], **kwargs)->str:
-        conn=sqlite3.connect(":memory:")
+    def invoke(
+        data: Dict[str, Any],
+        customer_id: Optional[str] = None,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        phone: Optional[str] = None,
+        loyalty_tier: Optional[str] = None,
+        address_text: Optional[str] = None,
+        created_after: Optional[str] = None,
+        created_before: Optional[str] = None,
+        limit: Optional[float] = None,
+    ) -> str:
+        conn = sqlite3.connect(":memory:")
         try:
-            build_sqlite_from_data(conn,data)
+            build_sqlite_from_data(conn, data)
             # Patch get_db_conn in both utils and the module that imported it
             try:
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import search_customers as search_customers_module
                 search_customers_module.get_db_conn = lambda: conn
-                
-                res = _orig(**kwargs)
+
+                res = _orig(
+                    customer_id=customer_id,
+                    name=name,
+                    email=email,
+                    phone=phone,
+                    loyalty_tier=loyalty_tier,
+                    address_text=address_text,
+                    created_after=created_after,
+                    created_before=created_before,
+                    limit=limit,
+                )
                 # Convert Pydantic models to dicts for JSON serialization
                 if isinstance(res, list):
                     res = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in res]

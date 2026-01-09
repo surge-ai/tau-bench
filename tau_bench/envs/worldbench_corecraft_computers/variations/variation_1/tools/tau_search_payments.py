@@ -1,26 +1,45 @@
-import json, sqlite3
-import importlib
-from typing import Any, Dict
+import json
+import sqlite3
+from typing import Any, Dict, Optional
+
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
 from .tool_impls.search_payments import searchPayments as _orig
 
+
 class SearchPayments(Tool):
     @staticmethod
-    def invoke(data: Dict[str,Any], **kwargs)->str:
-        conn=sqlite3.connect(":memory:")
+    def invoke(
+        data: Dict[str, Any],
+        order_id: Optional[str] = None,
+        status: Optional[str] = None,
+        created_after: Optional[str] = None,
+        created_before: Optional[str] = None,
+        processed_after: Optional[str] = None,
+        processed_before: Optional[str] = None,
+        limit: Optional[float] = None,
+    ) -> str:
+        conn = sqlite3.connect(":memory:")
         try:
-            build_sqlite_from_data(conn,data)
+            build_sqlite_from_data(conn, data)
             # Patch get_db_conn in both utils and the module that imported it
             try:
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import search_payments as search_payments_module
                 search_payments_module.get_db_conn = lambda: conn
-                
-                result = _orig(**kwargs)
+
+                result = _orig(
+                    order_id=order_id,
+                    status=status,
+                    created_after=created_after,
+                    created_before=created_before,
+                    processed_after=processed_after,
+                    processed_before=processed_before,
+                    limit=limit,
+                )
                 # Convert Pydantic models to dicts for JSON serialization
                 if isinstance(result, list):
                     result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]

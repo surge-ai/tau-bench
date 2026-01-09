@@ -1,26 +1,55 @@
-import json, sqlite3
-import importlib
-from typing import Any, Dict
+import json
+import sqlite3
+from typing import Any, Dict, Optional
+
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
 from .tool_impls.search_tickets import searchTickets as _orig
 
+
 class SearchTickets(Tool):
     @staticmethod
-    def invoke(data: Dict[str,Any], **kwargs)->str:
-        conn=sqlite3.connect(":memory:")
+    def invoke(
+        data: Dict[str, Any],
+        ticket_id: Optional[str] = None,
+        customer_id: Optional[str] = None,
+        assigned_employee_id: Optional[str] = None,
+        status: Optional[str] = None,
+        priority: Optional[str] = None,
+        ticket_type: Optional[str] = None,
+        text: Optional[str] = None,
+        created_after: Optional[str] = None,
+        created_before: Optional[str] = None,
+        resolved_after: Optional[str] = None,
+        resolved_before: Optional[str] = None,
+        limit: Optional[float] = None,
+    ) -> str:
+        conn = sqlite3.connect(":memory:")
         try:
-            build_sqlite_from_data(conn,data)
+            build_sqlite_from_data(conn, data)
             # Patch get_db_conn in both utils and the module that imported it
             try:
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import search_tickets as search_tickets_module
                 search_tickets_module.get_db_conn = lambda: conn
-                
-                result = _orig(**kwargs)
+
+                result = _orig(
+                    ticket_id=ticket_id,
+                    customer_id=customer_id,
+                    assigned_employee_id=assigned_employee_id,
+                    status=status,
+                    priority=priority,
+                    ticket_type=ticket_type,
+                    text=text,
+                    created_after=created_after,
+                    created_before=created_before,
+                    resolved_after=resolved_after,
+                    resolved_before=resolved_before,
+                    limit=limit,
+                )
                 # Convert Pydantic models to dicts for JSON serialization
                 if isinstance(result, list):
                     result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]
