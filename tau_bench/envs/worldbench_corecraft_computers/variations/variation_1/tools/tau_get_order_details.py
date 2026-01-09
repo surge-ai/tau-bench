@@ -1,6 +1,5 @@
 import json
 import sqlite3
-import importlib
 from typing import Any, Dict
 
 from tau_bench.envs.tool import Tool
@@ -21,11 +20,11 @@ class GetOrderDetails(Tool):
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 # Patch in get_order_details module (it does "from .utils import get_db_conn")
                 from .tool_impls import get_order_details as get_order_details_module
                 get_order_details_module.get_db_conn = lambda: conn
-                
+
                 result = _orig_getOrderDetails(**kwargs)
                 return json.dumps(result)
             finally:
