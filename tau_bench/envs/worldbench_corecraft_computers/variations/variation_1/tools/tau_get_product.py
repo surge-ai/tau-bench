@@ -41,15 +41,15 @@ class GetProduct(Tool):
             "type": "function",
             "function": {
                 "name": "getProduct",
-                "description": "Get product details (legacy SQL tool wrapped for Tau).",
+                "description": "Get detailed information about a product by its ID. Returns the full product record including category, SKU, name, brand, price, inventory, specs, and warranty information. Returns null if the product is not found.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-        "product_id": {
-                "type": "string",
-                "description": "The product_id parameter"
-        }
-},
+                        "product_id": {
+                            "type": "string",
+                            "description": "The product ID to retrieve"
+                        }
+                    },
                     "required": ["product_id"],
                 },
             },

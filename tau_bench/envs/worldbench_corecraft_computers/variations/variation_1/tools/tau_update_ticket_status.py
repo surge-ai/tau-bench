@@ -30,23 +30,29 @@ class UpdateTicketStatus(Tool):
             "type":"function",
             "function":{
                 "name":"updateTicketStatus",
-                "description":"Update ticket status",
+                "description":"Update the status, priority, or assignment of a support ticket. Returns whether the update was successful.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "ticket_id": {
-                    "type": "string"
-          },
-          "status": {
-                    "type": "string"
-          },
-          "assigned_employee_id": {
-                    "type": "string"
-          },
-          "priority": {
-                    "type": "string"
-          }
-},
+                        "ticket_id": {
+                            "type": "string",
+                            "description": "The support ticket ID to update"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": ["new", "open", "pending_customer", "resolved", "closed"],
+                            "description": "The new status to set for the ticket"
+                        },
+                        "assigned_employee_id": {
+                            "type": "string",
+                            "description": "Employee ID to assign the ticket to"
+                        },
+                        "priority": {
+                            "type": "string",
+                            "enum": ["low", "normal", "high"],
+                            "description": "The new priority to set for the ticket"
+                        }
+                    },
                     "required":["ticket_id"]
                 }
             }

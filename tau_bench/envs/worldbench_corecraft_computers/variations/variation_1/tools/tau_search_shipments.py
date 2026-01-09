@@ -40,26 +40,31 @@ class SearchShipments(Tool):
             "type":"function",
             "function":{
                 "name":"searchShipments",
-                "description":"Search shipments",
+                "description":"Search for shipments with various filters. Returns an array of shipment records matching the criteria.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "order_id": {
-                    "type": "string"
-          },
-          "tracking_number": {
-                    "type": "string"
-          },
-          "created_after": {
-                    "type": "string"
-          },
-          "created_before": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          }
-},
+                        "order_id": {
+                            "type": "string",
+                            "description": "Order ID to filter by"
+                        },
+                        "tracking_number": {
+                            "type": "string",
+                            "description": "Tracking number to filter by"
+                        },
+                        "created_after": {
+                            "type": "string",
+                            "description": "Filter shipments created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter shipments created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required":[]
                 }
             }

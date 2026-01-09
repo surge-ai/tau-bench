@@ -23,17 +23,20 @@ class UpdateOrderStatus(Tool):
             "type":"function",
             "function":{
                 "name":"updateOrderStatus",
-                "description":"Update order status",
+                "description":"Update the status of an order. Returns whether the update was successful.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "order_id": {
-                    "type": "string"
-          },
-          "status": {
-                    "type": "string"
-          }
-},
+                        "order_id": {
+                            "type": "string",
+                            "description": "The order ID to update"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded"],
+                            "description": "The new status to set for the order"
+                        }
+                    },
                     "required":["order_id", "status"]
                 }
             }

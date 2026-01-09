@@ -38,17 +38,18 @@ class ValidateBuildCompatibility(Tool):
             "type":"function",
             "function":{
                 "name":"validateBuildCompatibility",
-                "description":"Validate build compatibility",
+                "description":"Validate PC build compatibility for a list of product IDs. Checks CPU-motherboard socket compatibility, motherboard-case form factor compatibility, memory type and speed compatibility, memory slot count, SATA port count, GPU and cooler clearance, and PSU wattage requirements. Returns is_compatible (boolean), errors (list of incompatibility issues), and warnings (list of potential concerns).",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "product_ids": {
-                    "type": "array",
-                    "items": {
-                              "type": "string"
-                    }
-          }
-},
+                        "product_ids": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of product IDs to check for compatibility"
+                        }
+                    },
                     "required":["product_ids"]
                 }
             }

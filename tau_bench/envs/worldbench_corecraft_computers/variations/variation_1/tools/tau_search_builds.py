@@ -44,7 +44,7 @@ class SearchBuilds(Tool):
             "type": "function",
             "function": {
                 "name": "searchBuilds",
-                "description": "Search builds (legacy SQL tool wrapped for Tau).",
+                "description": "Search for PC builds with various filters. Returns an array of build records matching the criteria.",
                 "parameters": {
                     "type": "object",
                     "properties": {

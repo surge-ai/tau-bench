@@ -40,38 +40,48 @@ class SearchCustomers(Tool):
             "type":"function",
             "function":{
                 "name":"searchCustomers",
-                "description":"Search customers",
+                "description":"Search for customers with various filters. Returns an array of customer records matching the criteria.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "customer_id": {
-                    "type": "string"
-          },
-          "name": {
-                    "type": "string"
-          },
-          "email": {
-                    "type": "string"
-          },
-          "phone": {
-                    "type": "string"
-          },
-          "loyalty_tier": {
-                    "type": "string"
-          },
-          "address_text": {
-                    "type": "string"
-          },
-          "created_after": {
-                    "type": "string"
-          },
-          "created_before": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          }
-},
+                        "customer_id": {
+                            "type": "string",
+                            "description": "Exact customer ID match"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Partial name search (case insensitive)"
+                        },
+                        "email": {
+                            "type": "string",
+                            "description": "Exact email address match"
+                        },
+                        "phone": {
+                            "type": "string",
+                            "description": "Exact phone number match"
+                        },
+                        "loyalty_tier": {
+                            "type": "string",
+                            "enum": ["none", "silver", "gold", "platinum"],
+                            "description": "Customer loyalty tier to filter by"
+                        },
+                        "address_text": {
+                            "type": "string",
+                            "description": "Text search across all address fields (city, region, postal code, street address, etc.)"
+                        },
+                        "created_after": {
+                            "type": "string",
+                            "description": "Filter customers created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter customers created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required":[]
                 }
             }

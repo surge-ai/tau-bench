@@ -84,7 +84,8 @@ class CreateResolution(Tool):
                         "ticket_id": {"type": "string", "description": "The support ticket ID to resolve."},
                         "outcome": {
                             "type": "string",
-                            "description": "Resolution outcome. Common values: refund_approved, replacement_provided, troubleshooting_steps, order_updated, no_action.",
+                            "enum": ["refund_issued", "replacement_sent", "recommendation_provided", "troubleshooting_steps", "order_updated", "no_action"],
+                            "description": "Resolution outcome.",
                         },
                         "linked_refund_id": {
                             "type": "string",

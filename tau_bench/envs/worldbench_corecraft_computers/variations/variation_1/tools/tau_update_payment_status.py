@@ -22,20 +22,24 @@ class UpdatePaymentStatus(Tool):
             "type":"function",
             "function":{
                 "name":"updatePaymentStatus",
-                "description":"Update payment status",
+                "description":"Update the status of a payment. Returns whether the update was successful.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "payment_id": {
-                    "type": "string"
-          },
-          "status": {
-                    "type": "string"
-          },
-          "failure_reason": {
-                    "type": "string"
-          }
-},
+                        "payment_id": {
+                            "type": "string",
+                            "description": "The payment ID to update"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"],
+                            "description": "The new status to set for the payment"
+                        },
+                        "failure_reason": {
+                            "type": "string",
+                            "description": "Optional reason for payment failure (used when status is 'failed')"
+                        }
+                    },
                     "required":["payment_id", "status"]
                 }
             }

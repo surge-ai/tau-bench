@@ -40,35 +40,42 @@ class SearchKnowledgeBase(Tool):
             "type":"function",
             "function":{
                 "name":"searchKnowledgeBase",
-                "description":"Search knowledge base",
+                "description":"Search for knowledge base articles with various filters. Returns an array of article records matching the criteria.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "text": {
-                    "type": "string"
-          },
-          "tags": {
-                    "type": "array",
-                    "items": {
-                              "type": "string"
-                    }
-          },
-          "created_after": {
-                    "type": "string"
-          },
-          "created_before": {
-                    "type": "string"
-          },
-          "updated_after": {
-                    "type": "string"
-          },
-          "updated_before": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          }
-},
+                        "text": {
+                            "type": "string",
+                            "description": "Text to search in title and body"
+                        },
+                        "tags": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Tags to filter by"
+                        },
+                        "created_after": {
+                            "type": "string",
+                            "description": "Filter articles created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter articles created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "updated_after": {
+                            "type": "string",
+                            "description": "Filter articles updated after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "updated_before": {
+                            "type": "string",
+                            "description": "Filter articles updated before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required":[]
                 }
             }

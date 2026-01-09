@@ -73,7 +73,11 @@ class CreateEscalation(Tool):
                     "type": "object",
                     "properties": {
                         "ticket_id": {"type": "string", "description": "Support ticket id to escalate."},
-                        "escalation_type": {"type": "string", "description": "Escalation type (one of technical, policy_exception, product_specialist)."},
+                        "escalation_type": {
+                            "type": "string",
+                            "enum": ["technical", "policy_exception", "product_specialist"],
+                            "description": "Escalation type.",
+                        },
                         "destination": {"type": "string", "description": "Escalation destination (team/queue/person)."},
                     },
                     "required": ["ticket_id", "escalation_type", "destination"],

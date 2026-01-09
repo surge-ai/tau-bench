@@ -95,11 +95,13 @@ class CalculatePrice(Tool):
                         },
                         "loyalty_tier": {
                             "type": "string",
-                            "description": "Optional loyalty tier: silver, gold, or platinum.",
+                            "enum": ["silver", "gold", "platinum"],
+                            "description": "Optional loyalty tier for discount: silver (5%), gold (10%), or platinum (15%).",
                         },
                         "shipping_service": {
                             "type": "string",
-                            "description": "Shipping speed: standard, express, or overnight. Defaults to standard.",
+                            "enum": ["standard", "express", "overnight"],
+                            "description": "Shipping speed: standard ($9.99), express ($19.99), or overnight ($39.99). Defaults to standard.",
                         },
                     },
                     "required": ["product_ids"],

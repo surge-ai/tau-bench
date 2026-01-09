@@ -40,44 +40,56 @@ class SearchProducts(Tool):
             "type":"function",
             "function":{
                 "name":"searchProducts",
-                "description":"Search products",
+                "description":"Search for products with various filters. Returns an array of product records matching the criteria.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "category": {
-                    "type": "string"
-          },
-          "brand": {
-                    "type": "string"
-          },
-          "min_price": {
-                    "type": "number"
-          },
-          "max_price": {
-                    "type": "number"
-          },
-          "price": {
-                    "type": "number"
-          },
-          "inStockOnly": {
-                    "type": "string"
-          },
-          "minStock": {
-                    "type": "number"
-          },
-          "maxStock": {
-                    "type": "number"
-          },
-          "text": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          },
-          "product_id": {
-                    "type": "string"
-          }
-},
+                        "category": {
+                            "type": "string",
+                            "enum": ["cpu", "motherboard", "gpu", "memory", "storage", "psu", "case", "cooling", "prebuilt", "workstation", "monitor", "keyboard", "mouse", "headset", "networking", "cable", "accessory", "bundle"],
+                            "description": "Product category to filter by"
+                        },
+                        "brand": {
+                            "type": "string",
+                            "description": "Product brand name to filter by"
+                        },
+                        "min_price": {
+                            "type": "number",
+                            "description": "Minimum price filter"
+                        },
+                        "max_price": {
+                            "type": "number",
+                            "description": "Maximum price filter"
+                        },
+                        "price": {
+                            "type": "number",
+                            "description": "Exact price filter"
+                        },
+                        "inStockOnly": {
+                            "type": "string",
+                            "description": "Set to any non-empty value (e.g., \"true\") to only return products with inventory > 0"
+                        },
+                        "minStock": {
+                            "type": "number",
+                            "description": "Minimum stock level filter"
+                        },
+                        "maxStock": {
+                            "type": "number",
+                            "description": "Maximum stock level filter"
+                        },
+                        "text": {
+                            "type": "string",
+                            "description": "Text search across name, brand, and SKU"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        },
+                        "product_id": {
+                            "type": "string",
+                            "description": "Exact product ID filter"
+                        }
+                    },
                     "required":[]
                 }
             }

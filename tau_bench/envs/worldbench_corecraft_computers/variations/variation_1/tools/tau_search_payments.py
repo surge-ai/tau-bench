@@ -40,32 +40,40 @@ class SearchPayments(Tool):
             "type":"function",
             "function":{
                 "name":"searchPayments",
-                "description":"Search payments",
+                "description":"Search for payments with various filters. Returns an array of payment records matching the criteria.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "order_id": {
-                    "type": "string"
-          },
-          "status": {
-                    "type": "string"
-          },
-          "created_after": {
-                    "type": "string"
-          },
-          "created_before": {
-                    "type": "string"
-          },
-          "processed_after": {
-                    "type": "string"
-          },
-          "processed_before": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          }
-},
+                        "order_id": {
+                            "type": "string",
+                            "description": "Order ID to filter by"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"],
+                            "description": "Payment status to filter by"
+                        },
+                        "created_after": {
+                            "type": "string",
+                            "description": "Filter payments created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter payments created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "processed_after": {
+                            "type": "string",
+                            "description": "Filter payments processed after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "processed_before": {
+                            "type": "string",
+                            "description": "Filter payments processed before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required":[]
                 }
             }
