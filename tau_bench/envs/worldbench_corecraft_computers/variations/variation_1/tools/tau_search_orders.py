@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional
 from tau_bench.envs.tool import Tool
-
+import json
 
 def _iter_orders(data: Dict[str, Any]):
     order_table = data.get("order")
@@ -29,7 +29,7 @@ class SearchOrders(Tool):
                 continue
             results.append(row)
 
-        return str(results)
+        return json.dumps(results,default=str)
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

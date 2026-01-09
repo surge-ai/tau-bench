@@ -1,72 +1,15 @@
 import json
-import sys
-import os
 import unittest
 from typing import Dict, Any
 
-# Import the module directly without going through package __init__
-# We're in tests/ subdirectory, so go up one level to tools/
-tests_dir = os.path.dirname(os.path.abspath(__file__))
-tools_dir = os.path.dirname(tests_dir)
-sys.path.insert(0, tools_dir)
-
-# Import dependencies first
-from ..tau_sqlite_utils import build_sqlite_from_data
-from tau_bench.envs.tool import Tool
-
-# Create a mock utils module for tool_impls that need it
-import types
-import sqlite3
-utils_module = types.ModuleType("utils")
-utils_module.get_db_conn = lambda: sqlite3.connect(":memory:")
-sys.modules["utils"] = utils_module
-
-# Mock the models module for Product
-models_module = types.ModuleType("models")
-class Product:
-    def __init__(self, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-    
-    def dict(self):
-        return {k: v for k, v in self.__dict__.items()}
-    
-    def __repr__(self):
-        return f"Product({self.__dict__})"
-
-models_module.Product = Product
-sys.modules["models"] = models_module
-
-# Import tool_impls first so it uses our utils module
-import tool_impls.search_products  # noqa: F401
-
-# Now import the tool module normally
-if tools_dir not in sys.path:
-    sys.path.insert(0, tools_dir)
-
-from tau_search_products import SearchProducts
-
-# Patch json.dumps in the tool module to handle Product objects
-import json as json_module
-_original_dumps = json_module.dumps
-
-def _custom_dumps(obj, **kwargs):
-    """Custom JSON dumps that handles Product objects."""
-    if isinstance(obj, list):
-        obj = [item.dict() if isinstance(item, Product) else item for item in obj]
-    elif isinstance(obj, Product):
-        obj = obj.dict()
-    return _original_dumps(obj, **kwargs)
-
-import tau_search_products
-tau_search_products.json.dumps = _custom_dumps
+from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_search_products import SearchProducts
 
 
 class TestSearchProducts(unittest.TestCase):
     def setUp(self):
         """Set up test data with products."""
         self.data: Dict[str, Any] = {
-            "Product": {
+            "product": {
                 "prod1": {
                     "id": "prod1",
                     "name": "CPU Processor",
@@ -135,11 +78,11 @@ class TestSearchProducts(unittest.TestCase):
         """Test searching products with no filters."""
         result = SearchProducts.invoke(self.data)
         result_list = json.loads(result)
-        
+
         # Should return all products (up to default limit of 50)
         self.assertIsInstance(result_list, list)
-        self.assertGreater(len(result_list), 0)
-        
+        self.assertEqual(len(result_list), 4)
+
         # Check structure of first product
         if result_list:
             product = result_list[0]
@@ -154,11 +97,10 @@ class TestSearchProducts(unittest.TestCase):
             category="cpu",
         )
         result_list = json.loads(result)
-        
+
         # Should return products in cpu category
-        self.assertGreater(len(result_list), 0)
-        for product in result_list:
-            self.assertEqual(product["category"], "cpu")
+        self.assertEqual(len(result_list), 1)
+        self.assertEqual(result_list[0]["category"], "cpu")
 
     def test_search_products_by_brand(self):
         """Test searching products by brand."""
@@ -167,9 +109,9 @@ class TestSearchProducts(unittest.TestCase):
             brand="BrandA",
         )
         result_list = json.loads(result)
-        
+
         # Should return products from BrandA
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 2)
         for product in result_list:
             self.assertEqual(product["brand"], "BrandA")
 
@@ -180,11 +122,10 @@ class TestSearchProducts(unittest.TestCase):
             product_id="prod1",
         )
         result_list = json.loads(result)
-        
-        # Should return exactly one product (may have duplicates from lowercase alias)
-        self.assertGreater(len(result_list), 0)
-        product_ids = [p["id"] for p in result_list]
-        self.assertIn("prod1", product_ids)
+
+        # Should return exactly one product
+        self.assertEqual(len(result_list), 1)
+        self.assertEqual(result_list[0]["id"], "prod1")
 
     def test_search_products_by_min_price(self):
         """Test searching products by minimum price."""
@@ -193,9 +134,9 @@ class TestSearchProducts(unittest.TestCase):
             min_price=150.0,
         )
         result_list = json.loads(result)
-        
+
         # Should return products with price >= 150.0
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 2)
         for product in result_list:
             self.assertGreaterEqual(product["price"], 150.0)
 
@@ -206,9 +147,9 @@ class TestSearchProducts(unittest.TestCase):
             max_price=100.0,
         )
         result_list = json.loads(result)
-        
+
         # Should return products with price <= 100.0
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 2)
         for product in result_list:
             self.assertLessEqual(product["price"], 100.0)
 
@@ -219,11 +160,10 @@ class TestSearchProducts(unittest.TestCase):
             price=100.0,
         )
         result_list = json.loads(result)
-        
+
         # Should return products with price == 100.0
-        self.assertGreater(len(result_list), 0)
-        for product in result_list:
-            self.assertEqual(product["price"], 100.0)
+        self.assertEqual(len(result_list), 1)
+        self.assertEqual(result_list[0]["price"], 100.0)
 
     def test_search_products_by_price_range(self):
         """Test searching products by price range."""
@@ -233,9 +173,9 @@ class TestSearchProducts(unittest.TestCase):
             max_price=150.0,
         )
         result_list = json.loads(result)
-        
+
         # Should return products with price between 50.0 and 150.0
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 3)
         for product in result_list:
             self.assertGreaterEqual(product["price"], 50.0)
             self.assertLessEqual(product["price"], 150.0)
@@ -247,9 +187,9 @@ class TestSearchProducts(unittest.TestCase):
             inStockOnly="true",
         )
         result_list = json.loads(result)
-        
+
         # Should return products with inventory > 0
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 3)
         for product in result_list:
             if "inventory" in product:
                 inventory = product["inventory"]
@@ -263,9 +203,9 @@ class TestSearchProducts(unittest.TestCase):
             minStock=10,
         )
         result_list = json.loads(result)
-        
+
         # Should return products with stock >= 10
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 2)
         for product in result_list:
             if "inventory" in product:
                 inventory = product["inventory"]
@@ -279,9 +219,9 @@ class TestSearchProducts(unittest.TestCase):
             maxStock=10,
         )
         result_list = json.loads(result)
-        
+
         # Should return products with stock <= 10
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 3)
         for product in result_list:
             if "inventory" in product:
                 inventory = product["inventory"]
@@ -295,16 +235,10 @@ class TestSearchProducts(unittest.TestCase):
             text="CPU",
         )
         result_list = json.loads(result)
-        
+
         # Should find products with "CPU" in name, brand, or SKU
-        self.assertGreater(len(result_list), 0)
-        for product in result_list:
-            name_brand_sku = (
-                product.get("name", "") + " " +
-                product.get("brand", "") + " " +
-                product.get("sku", "")
-            )
-            self.assertIn("CPU", name_brand_sku)
+        self.assertEqual(len(result_list), 1)
+        self.assertEqual(result_list[0]["id"], "prod1")
 
     def test_search_products_multiple_filters(self):
         """Test searching with multiple filters."""
@@ -315,12 +249,12 @@ class TestSearchProducts(unittest.TestCase):
             min_price=50.0,
         )
         result_list = json.loads(result)
-        
+
         # Should match products that satisfy all filters
-        for product in result_list:
-            self.assertEqual(product["category"], "cpu")
-            self.assertEqual(product["brand"], "BrandA")
-            self.assertGreaterEqual(product["price"], 50.0)
+        self.assertEqual(len(result_list), 1)
+        self.assertEqual(result_list[0]["category"], "cpu")
+        self.assertEqual(result_list[0]["brand"], "BrandA")
+        self.assertGreaterEqual(result_list[0]["price"], 50.0)
 
     def test_search_products_with_limit(self):
         """Test limiting the number of results."""
@@ -329,7 +263,7 @@ class TestSearchProducts(unittest.TestCase):
             limit=2,
         )
         result_list = json.loads(result)
-        
+
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
 
@@ -340,15 +274,15 @@ class TestSearchProducts(unittest.TestCase):
             limit=500,  # Request more than max
         )
         result_list = json.loads(result)
-        
-        # Should return at most 200 results
+
+        # Should return at most 200 results (but we only have 4)
         self.assertLessEqual(len(result_list), 200)
 
     def test_search_products_default_limit(self):
         """Test that default limit is 50."""
         result = SearchProducts.invoke(self.data)
         result_list = json.loads(result)
-        
+
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
 
@@ -359,12 +293,11 @@ class TestSearchProducts(unittest.TestCase):
             product_id="prod1",
         )
         result_list = json.loads(result)
-        
-        # Should find prod1 (may have duplicates)
-        self.assertGreater(len(result_list), 0)
-        prod1 = next((p for p in result_list if p["id"] == "prod1"), None)
-        self.assertIsNotNone(prod1)
-        
+
+        # Should find prod1
+        self.assertEqual(len(result_list), 1)
+        prod1 = result_list[0]
+
         # inventory should be parsed from JSON string to dict
         if "inventory" in prod1:
             self.assertIsInstance(prod1["inventory"], dict)
@@ -377,12 +310,11 @@ class TestSearchProducts(unittest.TestCase):
             product_id="prod1",
         )
         result_list = json.loads(result)
-        
-        # Should find prod1 (may have duplicates)
-        self.assertGreater(len(result_list), 0)
-        prod1 = next((p for p in result_list if p["id"] == "prod1"), None)
-        self.assertIsNotNone(prod1)
-        
+
+        # Should find prod1
+        self.assertEqual(len(result_list), 1)
+        prod1 = result_list[0]
+
         # specs should be parsed from JSON string to dict
         if "specs" in prod1:
             self.assertIsInstance(prod1["specs"], dict)
@@ -391,7 +323,7 @@ class TestSearchProducts(unittest.TestCase):
         """Test that results are sorted by name ASC, then id ASC."""
         result = SearchProducts.invoke(self.data)
         result_list = json.loads(result)
-        
+
         if len(result_list) >= 2:
             # Check that products are sorted by name
             for i in range(len(result_list) - 1):
@@ -413,14 +345,14 @@ class TestSearchProducts(unittest.TestCase):
             category="nonexistent_category",
         )
         result_list = json.loads(result)
-        
+
         # Should return empty list
         self.assertEqual(len(result_list), 0)
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""
         info = SearchProducts.get_info()
-        
+
         self.assertEqual(info["type"], "function")
         self.assertEqual(info["function"]["name"], "searchProducts")
         self.assertIn("description", info["function"])
@@ -442,4 +374,3 @@ class TestSearchProducts(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

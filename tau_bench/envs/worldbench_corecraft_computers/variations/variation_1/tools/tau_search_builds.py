@@ -1,11 +1,15 @@
 import json
-import sqlite3
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
 
-from .tool_impls.search_builds import searchBuilds as _orig_searchBuilds
+from .data_utils import (
+    iter_entities,
+    parse_iso_datetime,
+    parse_entity_json_fields,
+    get_created_at,
+    apply_limit,
+)
 
 
 class SearchBuilds(Tool):
@@ -18,37 +22,40 @@ class SearchBuilds(Tool):
         created_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
+        results: List[Dict[str, Any]] = []
 
-                from .tool_impls import search_builds as search_builds_module
-                search_builds_module.get_db_conn = lambda: conn
+        # Parse date filters
+        created_after_dt = parse_iso_datetime(created_after) if created_after else None
+        created_before_dt = parse_iso_datetime(created_before) if created_before else None
 
-                result = _orig_searchBuilds(
-                    name=name,
-                    customer_id=customer_id,
-                    created_after=created_after,
-                    created_before=created_before,
-                    limit=limit,
-                )
-                # Convert Pydantic models to dicts for JSON serialization
-                if isinstance(result, list):
-                    result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]
-                return json.dumps(result, default=str)
-            finally:
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    search_builds_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+        for row in iter_entities(data, "build"):
+            # Exact customer_id match
+            if customer_id and row.get("customerId") != customer_id:
+                continue
+            # Partial name match (case insensitive)
+            if name:
+                row_name = row.get("name", "")
+                if name.lower() not in row_name.lower():
+                    continue
+            # Date filtering - createdAt
+            created_at = get_created_at(row)
+            if created_at is not None:
+                if created_after_dt and created_at < created_after_dt:
+                    continue
+                if created_before_dt and created_at > created_before_dt:
+                    continue
+
+            # Parse JSON fields
+            result_row = parse_entity_json_fields(row, ["componentIds"])
+            results.append(result_row)
+
+        # Sort by name ASC, then by id ASC
+        results.sort(key=lambda b: (b.get("name", ""), b.get("id", "")))
+
+        # Apply limit
+        results = apply_limit(results, limit)
+
+        return json.dumps(results, default=str)
 
     @staticmethod
     def get_info() -> Dict[str, Any]:
@@ -60,27 +67,27 @@ class SearchBuilds(Tool):
                 "parameters": {
                     "type": "object",
                     "properties": {
-        "name": {
-                "type": "string",
-                "description": "Build name to search for"
-        },
-        "customer_id": {
-                "type": "string",
-                "description": "Customer ID to filter by"
-        },
-        "created_after": {
-                "type": "string",
-                "description": "Filter builds created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
-        },
-        "created_before": {
-                "type": "string",
-                "description": "Filter builds created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
-        },
-        "limit": {
-                "type": "number",
-                "description": "Maximum number of results (default 50, max 200)"
-        }
-},
+                        "name": {
+                            "type": "string",
+                            "description": "Build name to search for"
+                        },
+                        "customer_id": {
+                            "type": "string",
+                            "description": "Customer ID to filter by"
+                        },
+                        "created_after": {
+                            "type": "string",
+                            "description": "Filter builds created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter builds created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required": [],
                 },
             },

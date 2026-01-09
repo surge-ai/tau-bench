@@ -1,11 +1,14 @@
 import json
-import sqlite3
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
 
-from .tool_impls.get_customer_ticket_history import getCustomerTicketHistory as _orig_getCustomerTicketHistory
+from .data_utils import (
+    iter_entities,
+    parse_iso_datetime,
+    get_created_at,
+    get_updated_at,
+)
 
 
 class GetCustomerTicketHistory(Tool):
@@ -19,35 +22,85 @@ class GetCustomerTicketHistory(Tool):
         tkt_updated_after: Optional[str] = None,
         tkt_updated_before: Optional[str] = None,
     ) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
+        if not customer_id:
+            raise ValueError("customer_id is required")
 
-                from .tool_impls import get_customer_ticket_history as get_customer_ticket_history_module
-                get_customer_ticket_history_module.get_db_conn = lambda: conn
+        # Parse date filters
+        created_after_dt = parse_iso_datetime(tkt_created_after) if tkt_created_after else None
+        created_before_dt = parse_iso_datetime(tkt_created_before) if tkt_created_before else None
+        updated_after_dt = parse_iso_datetime(tkt_updated_after) if tkt_updated_after else None
+        updated_before_dt = parse_iso_datetime(tkt_updated_before) if tkt_updated_before else None
 
-                result = _orig_getCustomerTicketHistory(
-                    customer_id=customer_id,
-                    include_resolved=include_resolved,
-                    tkt_created_after=tkt_created_after,
-                    tkt_created_before=tkt_created_before,
-                    tkt_updated_after=tkt_updated_after,
-                    tkt_updated_before=tkt_updated_before,
-                )
-                return json.dumps(result)
-            finally:
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    get_customer_ticket_history_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+        include_resolved_bool = include_resolved != "false" if include_resolved else True
+
+        # Find matching tickets
+        tickets: List[Dict[str, Any]] = []
+        ticket_ids: List[str] = []
+
+        for row in iter_entities(data, "supportTicket"):
+            if row.get("customerId") != customer_id:
+                continue
+            if not include_resolved_bool:
+                if row.get("status") in ("resolved", "closed"):
+                    continue
+            # Date filtering - createdAt
+            created_at = get_created_at(row)
+            if created_at is not None:
+                if created_after_dt and created_at < created_after_dt:
+                    continue
+                if created_before_dt and created_at >= created_before_dt:
+                    continue
+            # Date filtering - updatedAt
+            updated_at = get_updated_at(row)
+            if updated_at is not None:
+                if updated_after_dt and updated_at < updated_after_dt:
+                    continue
+                if updated_before_dt and updated_at >= updated_before_dt:
+                    continue
+
+            formatted_ticket = {
+                "id": row.get("id"),
+                "customerId": row.get("customerId"),
+                "category": row.get("ticketType"),
+                "status": row.get("status"),
+                "priority": row.get("priority"),
+                "subject": row.get("subject"),
+                "createdAt": row.get("createdAt"),
+                "updatedAt": row.get("updatedAt"),
+            }
+            tickets.append(formatted_ticket)
+            ticket_ids.append(row.get("id"))
+
+        # Sort by createdAt DESC, then id ASC
+        tickets.sort(key=lambda t: (t.get("createdAt", "") or "", t.get("id", "")), reverse=True)
+
+        # Get escalations for these tickets
+        escalations: List[Dict[str, Any]] = []
+        for e in iter_entities(data, "escalation"):
+            if e.get("ticketId") in ticket_ids:
+                escalations.append({
+                    "id": e.get("id"),
+                    "ticketId": e.get("ticketId"),
+                    "escalation_type": e.get("escalationType"),
+                    "destination": e.get("destination"),
+                })
+
+        # Get resolutions for these tickets
+        resolutions: List[Dict[str, Any]] = []
+        for r in iter_entities(data, "resolution"):
+            if r.get("ticketId") in ticket_ids:
+                resolutions.append({
+                    "id": r.get("id"),
+                    "ticketId": r.get("ticketId"),
+                    "outcome": r.get("outcome"),
+                    "details": r.get("details"),
+                })
+
+        return json.dumps({
+            "tickets": tickets,
+            "escalations": escalations,
+            "resolutions": resolutions
+        }, default=str)
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

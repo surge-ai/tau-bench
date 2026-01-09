@@ -1,10 +1,24 @@
 import json
-import sqlite3
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
-from .tool_impls.search_payments import searchPayments as _orig
+
+from .data_utils import (
+    iter_entities,
+    parse_iso_datetime,
+    get_created_at,
+    apply_limit,
+)
+
+
+def _get_processed_at(entity: Dict[str, Any]):
+    """Get the processedAt datetime from an entity."""
+    processed_at = entity.get("processedAt")
+    if processed_at is None:
+        return None
+    if isinstance(processed_at, str):
+        return parse_iso_datetime(processed_at)
+    return None
 
 
 class SearchPayments(Tool):
@@ -19,50 +33,59 @@ class SearchPayments(Tool):
         processed_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
+        results: List[Dict[str, Any]] = []
 
-                from .tool_impls import search_payments as search_payments_module
-                search_payments_module.get_db_conn = lambda: conn
+        # Parse date filters
+        created_after_dt = parse_iso_datetime(created_after) if created_after else None
+        created_before_dt = parse_iso_datetime(created_before) if created_before else None
+        processed_after_dt = parse_iso_datetime(processed_after) if processed_after else None
+        processed_before_dt = parse_iso_datetime(processed_before) if processed_before else None
 
-                result = _orig(
-                    order_id=order_id,
-                    status=status,
-                    created_after=created_after,
-                    created_before=created_before,
-                    processed_after=processed_after,
-                    processed_before=processed_before,
-                    limit=limit,
-                )
-                # Convert Pydantic models to dicts for JSON serialization
-                if isinstance(result, list):
-                    result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]
-                return json.dumps(result, default=str)
-            finally:
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    search_payments_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+        for row in iter_entities(data, "payment"):
+            # Exact order_id match
+            if order_id and row.get("orderId") != order_id:
+                continue
+            # Exact status match
+            if status and row.get("status") != status:
+                continue
+            # Date filtering - createdAt
+            created_at = get_created_at(row)
+            if created_at is not None:
+                if created_after_dt and created_at < created_after_dt:
+                    continue
+                if created_before_dt and created_at > created_before_dt:
+                    continue
+            # Date filtering - processedAt
+            # If filtering by processedAt, exclude payments that haven't been processed
+            processed_at = _get_processed_at(row)
+            if processed_after_dt or processed_before_dt:
+                if processed_at is None:
+                    continue
+                if processed_after_dt and processed_at < processed_after_dt:
+                    continue
+                if processed_before_dt and processed_at > processed_before_dt:
+                    continue
+
+            results.append(dict(row))
+
+        # Sort by createdAt DESC, then by id ASC
+        results.sort(key=lambda p: (p.get("createdAt", "") or "", p.get("id", "")), reverse=True)
+
+        # Apply limit
+        results = apply_limit(results, limit)
+
+        return json.dumps(results, default=str)
 
     @staticmethod
-    def get_info()->Dict[str,Any]:
+    def get_info() -> Dict[str, Any]:
         return {
-            "type":"function",
-            "function":{
-                "name":"searchPayments",
-                "description":"Search for payments with various filters. Returns an array of payment records matching the criteria.",
-                "parameters":{
-                    "type":"object",
-                    "properties":{
+            "type": "function",
+            "function": {
+                "name": "searchPayments",
+                "description": "Search for payments with various filters. Returns an array of payment records matching the criteria.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
                         "order_id": {
                             "type": "string",
                             "description": "Order ID to filter by"
@@ -93,7 +116,7 @@ class SearchPayments(Tool):
                             "description": "Maximum number of results (default 50, max 200)"
                         }
                     },
-                    "required":[]
+                    "required": []
                 }
             }
         }

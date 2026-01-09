@@ -1,10 +1,16 @@
 import json
-import sqlite3
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
-from .tool_impls.search_customers import searchCustomers as _orig
+
+from .data_utils import (
+    iter_entities,
+    parse_iso_datetime,
+    parse_entity_json_fields,
+    get_created_at,
+    matches_json_text_search,
+    apply_limit,
+)
 
 
 class SearchCustomers(Tool):
@@ -21,52 +27,63 @@ class SearchCustomers(Tool):
         created_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
+        results: List[Dict[str, Any]] = []
 
-                from .tool_impls import search_customers as search_customers_module
-                search_customers_module.get_db_conn = lambda: conn
+        # Parse date filters
+        created_after_dt = parse_iso_datetime(created_after) if created_after else None
+        created_before_dt = parse_iso_datetime(created_before) if created_before else None
 
-                res = _orig(
-                    customer_id=customer_id,
-                    name=name,
-                    email=email,
-                    phone=phone,
-                    loyalty_tier=loyalty_tier,
-                    address_text=address_text,
-                    created_after=created_after,
-                    created_before=created_before,
-                    limit=limit,
-                )
-                # Convert Pydantic models to dicts for JSON serialization
-                if isinstance(res, list):
-                    res = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in res]
-                return json.dumps(res, default=str)
-            finally:
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    search_customers_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+        for row in iter_entities(data, "customer"):
+            # Exact customer_id match
+            if customer_id and row.get("id") != customer_id:
+                continue
+            # Exact email match
+            if email and row.get("email") != email:
+                continue
+            # Exact phone match
+            if phone and row.get("phone") != phone:
+                continue
+            # Exact loyalty tier match
+            if loyalty_tier and row.get("loyaltyTier") != loyalty_tier:
+                continue
+            # Partial name match (case insensitive)
+            if name:
+                row_name = row.get("name", "")
+                if name.lower() not in row_name.lower():
+                    continue
+            # Address text search
+            if address_text and not matches_json_text_search(row, "addresses", address_text):
+                continue
+            # Date filtering
+            created_at = get_created_at(row)
+            if created_at is not None:
+                if created_after_dt and created_at < created_after_dt:
+                    continue
+                if created_before_dt and created_at > created_before_dt:
+                    continue
+
+            # Parse JSON fields
+            result_row = parse_entity_json_fields(row, ["addresses"])
+            results.append(result_row)
+
+        # Sort by name ASC, then id ASC
+        results.sort(key=lambda c: (c.get("name", ""), c.get("id", "")))
+
+        # Apply limit
+        results = apply_limit(results, limit)
+
+        return json.dumps(results, default=str)
 
     @staticmethod
-    def get_info()->Dict[str,Any]:
+    def get_info() -> Dict[str, Any]:
         return {
-            "type":"function",
-            "function":{
-                "name":"searchCustomers",
-                "description":"Search for customers with various filters. Returns an array of customer records matching the criteria.",
-                "parameters":{
-                    "type":"object",
-                    "properties":{
+            "type": "function",
+            "function": {
+                "name": "searchCustomers",
+                "description": "Search for customers with various filters. Returns an array of customer records matching the criteria.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
                         "customer_id": {
                             "type": "string",
                             "description": "Exact customer ID match"
@@ -105,7 +122,7 @@ class SearchCustomers(Tool):
                             "description": "Maximum number of results (default 50, max 200)"
                         }
                     },
-                    "required":[]
+                    "required": []
                 }
             }
         }

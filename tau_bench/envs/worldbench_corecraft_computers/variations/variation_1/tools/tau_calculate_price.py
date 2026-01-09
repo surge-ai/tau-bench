@@ -1,10 +1,13 @@
 import json
-import sqlite3
 from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
 
-from .tau_sqlite_utils import build_sqlite_from_data
+from .data_utils import (
+    get_entity_by_id,
+)
+
+
 class CalculatePrice(Tool):
     @staticmethod
     def invoke(
@@ -14,64 +17,41 @@ class CalculatePrice(Tool):
         loyalty_tier: Optional[str] = None,
         shipping_service: Optional[str] = None,
     ) -> str:
-        """Calculate subtotal/discount/shipping/total for a list of products.
-
-        This mirrors the legacy SQL-based implementation:
-          - Reads product rows from a `products` table.
-          - Subtotal = sum(price * quantity) for each product id.
-          - Optional loyalty discount: silver 5%, gold 10%, platinum 15%.
-          - Shipping: standard 9.99, express 19.99, overnight 39.99.
-        """
+        """Calculate subtotal/discount/shipping/total for a list of products."""
         if quantities is None:
             quantities = [1] * len(product_ids)
 
         if len(product_ids) != len(quantities):
             return json.dumps({"error": "product_ids and quantities must have same length"})
 
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-
-            placeholders = ",".join(["?"] * len(product_ids)) if product_ids else "NULL"
-            query = f"""
-                SELECT id, name, price, weight, inventory_count
-                FROM products
-                WHERE id IN ({placeholders})
-            """
-            cur = conn.cursor()
-            cur.execute(query, product_ids)
-            products = {row[0]: row for row in cur.fetchall()}  # id -> row tuple
-
-            subtotal = 0.0
-            for pid, qty in zip(product_ids, quantities):
-                row = products.get(pid)
-                if not row:
-                    continue
-                price = float(row[2] or 0.0)  # price column
+        # Calculate subtotal
+        subtotal = 0.0
+        for pid, qty in zip(product_ids, quantities):
+            product = get_entity_by_id(data, "product", pid)
+            if product:
+                price = float(product.get("price", 0) or 0)
                 subtotal += price * int(qty)
 
-            # Apply loyalty discount
-            discount = 0.0
-            if loyalty_tier:
-                discounts = {"silver": 0.05, "gold": 0.1, "platinum": 0.15}
-                discount = subtotal * discounts.get(loyalty_tier.lower(), 0.0)
+        # Apply loyalty discount
+        discount = 0.0
+        if loyalty_tier:
+            discounts = {"silver": 0.05, "gold": 0.1, "platinum": 0.15}
+            discount = subtotal * discounts.get(loyalty_tier.lower(), 0.0)
 
-            # Shipping
-            shipping_rates = {"standard": 9.99, "express": 19.99, "overnight": 39.99}
-            shipping = shipping_rates.get((shipping_service or "standard").lower(), 9.99)
+        # Shipping
+        shipping_rates = {"standard": 9.99, "express": 19.99, "overnight": 39.99}
+        shipping = shipping_rates.get((shipping_service or "standard").lower(), 9.99)
 
-            after_discount = subtotal - discount
-            total = after_discount + shipping
+        after_discount = subtotal - discount
+        total = after_discount + shipping
 
-            result = {
-                "subtotal": round(subtotal * 100) / 100,
-                "discount": round(discount * 100) / 100,
-                "shipping": shipping,
-                "total": round(total * 100) / 100,
-            }
-            return json.dumps(result)
-        finally:
-            conn.close()
+        result = {
+            "subtotal": round(subtotal * 100) / 100,
+            "discount": round(discount * 100) / 100,
+            "shipping": shipping,
+            "total": round(total * 100) / 100,
+        }
+        return json.dumps(result)
 
     @staticmethod
     def get_info() -> Dict[str, Any]:
