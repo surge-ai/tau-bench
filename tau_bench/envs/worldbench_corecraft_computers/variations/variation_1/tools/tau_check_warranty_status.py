@@ -8,6 +8,7 @@ from tau_bench.envs.tool import Tool
 from .data_utils import (
     get_entity_by_id,
     parse_entity_json_fields,
+    parse_iso_datetime,
 )
 
 
@@ -73,21 +74,16 @@ class CheckWarrantyStatus(Tool):
 
             # Use provided purchase date or default
             if purchase_date:
-                parsed_purchase = datetime.fromisoformat(purchase_date.replace('Z', '+00:00'))
-                if parsed_purchase.tzinfo:
-                    purchase_dt = parsed_purchase.astimezone(timezone.utc)
-                else:
-                    purchase_dt = parsed_purchase.replace(tzinfo=timezone.utc)
+                purchase_dt = parse_iso_datetime(purchase_date, "purchase_date")
             else:
                 purchase_dt = CURRENT_DATE
 
         # Use current_date parameter if provided, otherwise use hardcoded CURRENT_DATE
         if current_date:
-            parsed_current = datetime.fromisoformat(current_date.replace('Z', '+00:00'))
-            if parsed_current.tzinfo:
-                current_dt = parsed_current.astimezone(timezone.utc)
-            else:
-                current_dt = parsed_current.replace(tzinfo=timezone.utc)
+            try:
+                current_dt = parse_iso_datetime(current_date, "current_time")
+            except ValueError:
+                current_dt = CURRENT_DATE
         else:
             current_dt = CURRENT_DATE
 

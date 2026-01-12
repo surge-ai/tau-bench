@@ -25,10 +25,10 @@ class GetCustomerTicketHistory(Tool):
             raise ValueError("customer_id is required")
 
         # Parse date filters
-        created_after_dt = parse_iso_datetime(tkt_created_after) if tkt_created_after else None
-        created_before_dt = parse_iso_datetime(tkt_created_before) if tkt_created_before else None
-        updated_after_dt = parse_iso_datetime(tkt_updated_after) if tkt_updated_after else None
-        updated_before_dt = parse_iso_datetime(tkt_updated_before) if tkt_updated_before else None
+        created_after_dt = parse_iso_datetime(tkt_created_after, "tkt_created_after")
+        created_before_dt = parse_iso_datetime(tkt_created_before, "tkt_created_before")
+        updated_after_dt = parse_iso_datetime(tkt_updated_after, "tkt_updated_after")
+        updated_before_dt = parse_iso_datetime(tkt_updated_before, "tkt_updated_before")
 
         include_resolved_bool = include_resolved != "false" if include_resolved else True
 

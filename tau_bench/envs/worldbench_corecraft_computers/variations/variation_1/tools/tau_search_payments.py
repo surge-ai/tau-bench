@@ -25,11 +25,11 @@ class SearchPayments(Tool):
     ) -> str:
         results: List[Dict[str, Any]] = []
 
-        # Parse date filters
-        created_after_dt = parse_iso_datetime(created_after) if created_after else None
-        created_before_dt = parse_iso_datetime(created_before) if created_before else None
-        processed_after_dt = parse_iso_datetime(processed_after) if processed_after else None
-        processed_before_dt = parse_iso_datetime(processed_before) if processed_before else None
+        # Parse date filters, will be None if _before or _after is None
+        created_after_dt = parse_iso_datetime(created_after, "created_after")
+        created_before_dt = parse_iso_datetime(created_before, "created_before")
+        processed_after_dt = parse_iso_datetime(processed_after, "processed_after")
+        processed_before_dt = parse_iso_datetime(processed_before, "processed_before")
 
         for row in iter_entities(data, "payment"):
             # Exact order_id match

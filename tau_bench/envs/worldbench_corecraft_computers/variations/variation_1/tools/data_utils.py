@@ -53,31 +53,56 @@ def get_entity_by_id(data: Dict[str, Any], table_name: str, entity_id: str) -> O
     return None
 
 
-def parse_iso_datetime(date_str: str) -> Optional[datetime]:
-    """Parse an ISO 8601 date string to a datetime object.
+def parse_iso_datetime(date_str: str, param_name: str) -> Optional[datetime]:
+    """Parse and validate an ISO 8601 date string to a datetime object.
+
+    Accepts both UTC (with Z suffix) and timezone-aware ISO 8601 formats,
+    converting timezone-aware strings to UTC.
 
     Args:
         date_str: ISO 8601 date string (e.g., "2025-08-01T00:00:00Z")
+        param_name: Parameter name for error message
 
     Returns:
-        datetime object with timezone, or None if parsing fails
+        datetime object with UTC timezone, or None if date_str is empty/None
+
+    Raises:
+        ValueError: If date format is invalid or missing timezone
     """
     if not date_str:
         return None
     try:
-        dt_str = date_str.replace("Z", "+00:00")
+        # Handle Z suffix
+        if date_str.endswith("Z"):
+            dt_str = date_str.replace("Z", "+00:00")
+        else:
+            dt_str = date_str
+
         parsed_dt = datetime.fromisoformat(dt_str)
+
+        # If naive datetime, raise error asking for explicit timezone
         if parsed_dt.tzinfo is None:
-            parsed_dt = parsed_dt.replace(tzinfo=timezone.utc)
-        return parsed_dt
-    except (ValueError, AttributeError):
-        return None
+            raise ValueError(
+                f"{param_name} must include timezone information "
+                f'(e.g., "2025-08-01T00:00:00Z" or "2025-08-01T00:00:00-07:00")'
+            )
+
+        # Convert to UTC
+        return parsed_dt.astimezone(timezone.utc)
+    except ValueError:
+        raise
+    except (TypeError, AttributeError) as e:
+        raise ValueError(
+            f"{param_name} must be in ISO 8601 format with timezone "
+            f'(e.g., "2025-08-01T00:00:00Z" or "2025-08-01T00:00:00-07:00"): {str(e)}'
+        )
 
 
 def get_datetime_field(entity: Dict[str, Any], field: str) -> Optional[datetime]:
     """Get a datetime field from an entity.
 
     Handles both string (ISO 8601) and datetime values.
+    This is for reading entity data, not user input, so it returns None on invalid data.
 
     Args:
         entity: The entity dictionary
@@ -90,7 +115,10 @@ def get_datetime_field(entity: Dict[str, Any], field: str) -> Optional[datetime]
     if value is None:
         return None
     if isinstance(value, str):
-        return parse_iso_datetime(value)
+        try:
+            return parse_iso_datetime(value, field)
+        except ValueError:
+            return None
     if isinstance(value, datetime):
         return value
     return None

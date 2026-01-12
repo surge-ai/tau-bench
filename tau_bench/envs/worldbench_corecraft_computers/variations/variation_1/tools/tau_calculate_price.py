@@ -22,7 +22,7 @@ class CalculatePrice(Tool):
             quantities = [1] * len(product_ids)
 
         if len(product_ids) != len(quantities):
-            return json.dumps({"error": "product_ids and quantities must have same length"})
+            raise ValueError("product_ids and quantities must have same length")
 
         # Calculate subtotal
         subtotal = 0.0

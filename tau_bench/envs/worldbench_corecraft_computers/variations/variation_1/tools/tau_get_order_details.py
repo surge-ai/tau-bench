@@ -28,7 +28,7 @@ class GetOrderDetails(Tool):
             raise ValueError("order_id is required")
 
         # Parse created_before filter
-        created_before_dt = parse_iso_datetime(created_before) if created_before else None
+        created_before_dt = parse_iso_datetime(created_before, "created_before")
 
         # Get order
         order = get_entity_by_id(data, "order", order_id)

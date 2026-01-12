@@ -26,8 +26,8 @@ class SearchOrders(Tool):
         results: List[Dict[str, Any]] = []
 
         # Parse date filters
-        created_after_dt = parse_iso_datetime(created_after) if created_after else None
-        created_before_dt = parse_iso_datetime(created_before) if created_before else None
+        created_after_dt = parse_iso_datetime(created_after, "created_after")
+        created_before_dt = parse_iso_datetime(created_before, "created_before")
 
         for row in iter_entities(data, "order"):
             # Exact order_id match

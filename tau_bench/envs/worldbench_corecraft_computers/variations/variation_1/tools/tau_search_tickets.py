@@ -32,10 +32,10 @@ class SearchTickets(Tool):
         results: List[Dict[str, Any]] = []
 
         # Parse date filters
-        created_after_dt = parse_iso_datetime(created_after) if created_after else None
-        created_before_dt = parse_iso_datetime(created_before) if created_before else None
-        resolved_after_dt = parse_iso_datetime(resolved_after) if resolved_after else None
-        resolved_before_dt = parse_iso_datetime(resolved_before) if resolved_before else None
+        created_after_dt = parse_iso_datetime(created_after, "created_after")
+        created_before_dt = parse_iso_datetime(created_before, "created_before")
+        resolved_after_dt = parse_iso_datetime(resolved_after, "resolved_after")
+        resolved_before_dt = parse_iso_datetime(resolved_before, "resolved_before")
 
         for row in iter_entities(data, "support_ticket"):
             # Exact ticket_id match
