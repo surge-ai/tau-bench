@@ -1,26 +1,49 @@
-import json, sqlite3
-import importlib
-from typing import Any, Dict
+import json
+import sqlite3
+from typing import Any, Dict, Optional
+
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
 from .tool_impls.search_customers import searchCustomers as _orig
 
+
 class SearchCustomers(Tool):
     @staticmethod
-    def invoke(data: Dict[str,Any], **kwargs)->str:
-        conn=sqlite3.connect(":memory:")
+    def invoke(
+        data: Dict[str, Any],
+        customer_id: Optional[str] = None,
+        name: Optional[str] = None,
+        email: Optional[str] = None,
+        phone: Optional[str] = None,
+        loyalty_tier: Optional[str] = None,
+        address_text: Optional[str] = None,
+        created_after: Optional[str] = None,
+        created_before: Optional[str] = None,
+        limit: Optional[float] = None,
+    ) -> str:
+        conn = sqlite3.connect(":memory:")
         try:
-            build_sqlite_from_data(conn,data)
+            build_sqlite_from_data(conn, data)
             # Patch get_db_conn in both utils and the module that imported it
             try:
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import search_customers as search_customers_module
                 search_customers_module.get_db_conn = lambda: conn
-                
-                res = _orig(**kwargs)
+
+                res = _orig(
+                    customer_id=customer_id,
+                    name=name,
+                    email=email,
+                    phone=phone,
+                    loyalty_tier=loyalty_tier,
+                    address_text=address_text,
+                    created_after=created_after,
+                    created_before=created_before,
+                    limit=limit,
+                )
                 # Convert Pydantic models to dicts for JSON serialization
                 if isinstance(res, list):
                     res = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in res]
@@ -40,38 +63,48 @@ class SearchCustomers(Tool):
             "type":"function",
             "function":{
                 "name":"searchCustomers",
-                "description":"Search customers",
+                "description":"Search for customers with various filters. Returns an array of customer records matching the criteria.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "customer_id": {
-                    "type": "string"
-          },
-          "name": {
-                    "type": "string"
-          },
-          "email": {
-                    "type": "string"
-          },
-          "phone": {
-                    "type": "string"
-          },
-          "loyalty_tier": {
-                    "type": "string"
-          },
-          "address_text": {
-                    "type": "string"
-          },
-          "created_after": {
-                    "type": "string"
-          },
-          "created_before": {
-                    "type": "string"
-          },
-          "limit": {
-                    "type": "number"
-          }
-},
+                        "customer_id": {
+                            "type": "string",
+                            "description": "Exact customer ID match"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Partial name search (case insensitive)"
+                        },
+                        "email": {
+                            "type": "string",
+                            "description": "Exact email address match"
+                        },
+                        "phone": {
+                            "type": "string",
+                            "description": "Exact phone number match"
+                        },
+                        "loyalty_tier": {
+                            "type": "string",
+                            "enum": ["none", "silver", "gold", "platinum"],
+                            "description": "Customer loyalty tier to filter by"
+                        },
+                        "address_text": {
+                            "type": "string",
+                            "description": "Text search across all address fields (city, region, postal code, street address, etc.)"
+                        },
+                        "created_after": {
+                            "type": "string",
+                            "description": "Filter customers created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                        },
+                        "created_before": {
+                            "type": "string",
+                            "description": "Filter customers created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Maximum number of results (default 50, max 200)"
+                        }
+                    },
                     "required":[]
                 }
             }

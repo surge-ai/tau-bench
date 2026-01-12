@@ -1,7 +1,6 @@
 import json
 import sqlite3
-import importlib
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
@@ -11,7 +10,15 @@ from .tool_impls.get_customer_ticket_history import getCustomerTicketHistory as 
 
 class GetCustomerTicketHistory(Tool):
     @staticmethod
-    def invoke(data: Dict[str, Any], **kwargs) -> str:
+    def invoke(
+        data: Dict[str, Any],
+        customer_id: str,
+        include_resolved: Optional[str] = None,
+        tkt_created_after: Optional[str] = None,
+        tkt_created_before: Optional[str] = None,
+        tkt_updated_after: Optional[str] = None,
+        tkt_updated_before: Optional[str] = None,
+    ) -> str:
         conn = sqlite3.connect(":memory:")
         try:
             build_sqlite_from_data(conn, data)
@@ -20,11 +27,18 @@ class GetCustomerTicketHistory(Tool):
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import get_customer_ticket_history as get_customer_ticket_history_module
                 get_customer_ticket_history_module.get_db_conn = lambda: conn
-                
-                result = _orig_getCustomerTicketHistory(**kwargs)
+
+                result = _orig_getCustomerTicketHistory(
+                    customer_id=customer_id,
+                    include_resolved=include_resolved,
+                    tkt_created_after=tkt_created_after,
+                    tkt_created_before=tkt_created_before,
+                    tkt_updated_after=tkt_updated_after,
+                    tkt_updated_before=tkt_updated_before,
+                )
                 return json.dumps(result)
             finally:
                 try:
@@ -41,35 +55,35 @@ class GetCustomerTicketHistory(Tool):
             "type": "function",
             "function": {
                 "name": "getCustomerTicketHistory",
-                "description": "Get customer ticket history (legacy SQL-based tool wrapped for Tau).",
+                "description": "Get a customer's support ticket history including escalations and resolutions. Returns an object with tickets (array of support tickets), escalations (array of escalation records), and resolutions (array of resolution records).",
                 "parameters": {
                     "type": "object",
                     "properties": {
-        "customer_id": {
-                "type": "string",
-                "description": "The customer_id parameter"
-        },
-        "include_resolved": {
-                "type": "string",
-                "description": "Include resolved/closed tickets (default: true)"
-        },
-        "tkt_created_after": {
-                "type": "string",
-                "description": "Filter tickets created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        },
-        "tkt_created_before": {
-                "type": "string",
-                "description": "Filter tickets created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        },
-        "tkt_updated_after": {
-                "type": "string",
-                "description": "Filter tickets updated after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        },
-        "tkt_updated_before": {
-                "type": "string",
-                "description": "Filter tickets updated before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
-        }
-},
+                        "customer_id": {
+                            "type": "string",
+                            "description": "The customer ID to retrieve ticket history for"
+                        },
+                        "include_resolved": {
+                            "type": "string",
+                            "description": "Include resolved/closed tickets. Set to \"false\" to exclude them (default: \"true\")"
+                        },
+                        "tkt_created_after": {
+                            "type": "string",
+                            "description": "Filter tickets created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "tkt_created_before": {
+                            "type": "string",
+                            "description": "Filter tickets created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "tkt_updated_after": {
+                            "type": "string",
+                            "description": "Filter tickets updated after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        },
+                        "tkt_updated_before": {
+                            "type": "string",
+                            "description": "Filter tickets updated before this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-27T00:00:00Z\")"
+                        }
+                    },
                     "required": ["customer_id"],
                 },
             },

@@ -1,17 +1,26 @@
 import json
 from typing import Any, Dict
+
 from tau_bench.envs.tool import Tool
+
+_NOT_PROVIDED = object()
+
 
 class UpdatePaymentStatus(Tool):
     @staticmethod
-    def invoke(data: Dict[str,Any], **kwargs)->str:
-        payment_id = kwargs.get("payment_id")
-        new_status = kwargs.get("status")
+    def invoke(
+        data: Dict[str, Any],
+        payment_id: str,
+        status: str,
+        failure_reason: Any = _NOT_PROVIDED,
+    ) -> str:
         updated = False
 
         payment_table = data.get("payment")
         if isinstance(payment_table, dict) and payment_id in payment_table:
-            payment_table[payment_id]["status"] = new_status
+            payment_table[payment_id]["status"] = status
+            if failure_reason is not _NOT_PROVIDED:
+                payment_table[payment_id]["failure_reason"] = failure_reason
             updated = True
 
         return json.dumps({"updated": updated})
@@ -22,20 +31,24 @@ class UpdatePaymentStatus(Tool):
             "type":"function",
             "function":{
                 "name":"updatePaymentStatus",
-                "description":"Update payment status",
+                "description":"Update the status of a payment. Returns whether the update was successful.",
                 "parameters":{
                     "type":"object",
                     "properties":{
-          "payment_id": {
-                    "type": "string"
-          },
-          "status": {
-                    "type": "string"
-          },
-          "failure_reason": {
-                    "type": "string"
-          }
-},
+                        "payment_id": {
+                            "type": "string",
+                            "description": "The payment ID to update"
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"],
+                            "description": "The new status to set for the payment"
+                        },
+                        "failure_reason": {
+                            "type": "string",
+                            "description": "Optional reason for payment failure (used when status is 'failed')"
+                        }
+                    },
                     "required":["payment_id", "status"]
                 }
             }

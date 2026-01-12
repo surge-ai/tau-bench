@@ -1,7 +1,6 @@
 import json
 import sqlite3
-import importlib
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from tau_bench.envs.tool import Tool
 from .tau_sqlite_utils import build_sqlite_from_data
@@ -11,7 +10,14 @@ from .tool_impls.search_builds import searchBuilds as _orig_searchBuilds
 
 class SearchBuilds(Tool):
     @staticmethod
-    def invoke(data: Dict[str, Any], **kwargs) -> str:
+    def invoke(
+        data: Dict[str, Any],
+        name: Optional[str] = None,
+        customer_id: Optional[str] = None,
+        created_after: Optional[str] = None,
+        created_before: Optional[str] = None,
+        limit: Optional[float] = None,
+    ) -> str:
         conn = sqlite3.connect(":memory:")
         try:
             build_sqlite_from_data(conn, data)
@@ -20,11 +26,17 @@ class SearchBuilds(Tool):
                 from .tool_impls import utils as tool_utils
                 original_get_db_conn = tool_utils.get_db_conn
                 tool_utils.get_db_conn = lambda: conn
-                
+
                 from .tool_impls import search_builds as search_builds_module
                 search_builds_module.get_db_conn = lambda: conn
-                
-                result = _orig_searchBuilds(**kwargs)
+
+                result = _orig_searchBuilds(
+                    name=name,
+                    customer_id=customer_id,
+                    created_after=created_after,
+                    created_before=created_before,
+                    limit=limit,
+                )
                 # Convert Pydantic models to dicts for JSON serialization
                 if isinstance(result, list):
                     result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]
@@ -44,7 +56,7 @@ class SearchBuilds(Tool):
             "type": "function",
             "function": {
                 "name": "searchBuilds",
-                "description": "Search builds (legacy SQL tool wrapped for Tau).",
+                "description": "Search for PC builds with various filters. Returns an array of build records matching the criteria.",
                 "parameters": {
                     "type": "object",
                     "properties": {
