@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_update_order_status import UpdateOrderStatus
+from ..tau_update_order_status import UpdateOrderStatus
 
 
 class TestUpdateOrderStatus(unittest.TestCase):

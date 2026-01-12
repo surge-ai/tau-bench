@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_get_order_details import GetOrderDetails
+from ..tau_get_order_details import GetOrderDetails
 
 
 class TestGetOrderDetails(unittest.TestCase):

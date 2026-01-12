@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_create_refund import CreateRefund
+from ..tau_create_refund import CreateRefund
 
 
 class TestCreateRefund(unittest.TestCase):

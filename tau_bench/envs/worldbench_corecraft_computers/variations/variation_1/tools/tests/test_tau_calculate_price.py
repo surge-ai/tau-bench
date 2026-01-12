@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_calculate_price import CalculatePrice
+from ..tau_calculate_price import CalculatePrice
 
 
 class TestCalculatePrice(unittest.TestCase):

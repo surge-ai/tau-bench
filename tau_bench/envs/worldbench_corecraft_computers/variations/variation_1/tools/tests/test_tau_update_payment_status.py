@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_update_payment_status import UpdatePaymentStatus
+from ..tau_update_payment_status import UpdatePaymentStatus
 
 
 class TestUpdatePaymentStatus(unittest.TestCase):

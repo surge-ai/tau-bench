@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_search_employees import SearchEmployees
+from ..tau_search_employees import SearchEmployees
 
 
 class TestSearchEmployees(unittest.TestCase):

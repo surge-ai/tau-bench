@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_search_builds import SearchBuilds
+from ..tau_search_builds import SearchBuilds
 
 
 class TestSearchBuilds(unittest.TestCase):

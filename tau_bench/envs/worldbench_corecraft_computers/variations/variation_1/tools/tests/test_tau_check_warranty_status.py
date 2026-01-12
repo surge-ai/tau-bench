@@ -3,7 +3,7 @@ import unittest
 from typing import Dict, Any
 from datetime import datetime, timedelta, timezone
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_check_warranty_status import CheckWarrantyStatus
+from ..tau_check_warranty_status import CheckWarrantyStatus
 
 
 class TestCheckWarrantyStatus(unittest.TestCase):

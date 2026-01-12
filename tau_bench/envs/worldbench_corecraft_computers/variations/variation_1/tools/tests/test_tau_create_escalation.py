@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_create_escalation import CreateEscalation
+from ..tau_create_escalation import CreateEscalation
 
 
 class TestCreateEscalation(unittest.TestCase):

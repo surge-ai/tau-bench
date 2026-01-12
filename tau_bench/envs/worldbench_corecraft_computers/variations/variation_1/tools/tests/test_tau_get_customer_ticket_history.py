@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_get_customer_ticket_history import GetCustomerTicketHistory
+from ..tau_get_customer_ticket_history import GetCustomerTicketHistory
 
 
 class TestGetCustomerTicketHistory(unittest.TestCase):

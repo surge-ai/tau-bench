@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import Dict, Any
 
-from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tools.tau_validate_build_compatibility import ValidateBuildCompatibility
+from ..tau_validate_build_compatibility import ValidateBuildCompatibility
 
 
 class TestValidateBuildCompatibility(unittest.TestCase):
