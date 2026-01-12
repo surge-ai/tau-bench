@@ -11,14 +11,14 @@ class UpdateOrderStatus(Tool):
         order_id: str,
         status: str,
     ) -> str:
-        updated = False
-
         order_table = data.get("order")
-        if isinstance(order_table, dict) and order_id in order_table:
-            order_table[order_id]["status"] = status
-            updated = True
+        if not isinstance(order_table, dict):
+            raise ValueError("Order table not found in data")
+        if order_id not in order_table:
+            raise ValueError(f"Order {order_id} not found")
 
-        return json.dumps({"updated": updated})
+        order_table[order_id]["status"] = status
+        return json.dumps(order_table[order_id])
 
     @staticmethod
     def get_info()->Dict[str,Any]:
