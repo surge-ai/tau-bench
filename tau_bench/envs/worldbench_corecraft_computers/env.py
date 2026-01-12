@@ -1,6 +1,6 @@
 # Copyright Sierra
 
-from tau_bench.envs.base import Env
+from tau_bench.envs.base import Env, to_hashable, consistent_hash
 from tau_bench.envs.worldbench_corecraft_computers.data import load_data
 from tau_bench.envs.worldbench_corecraft_computers.rules import RULES
 from typing import Optional, Union
@@ -80,4 +80,58 @@ class MockCorecraftComputersEnv(Env):
         if self._current_time:
             self.data["current_time"] = self._current_time
         return response
+
+    def get_data_hash(self) -> str:
+        """
+        Override to make hash insensitive to new entity IDs.
+
+        For collections where new entities can be created (e.g., orders),
+        we want the hash to be based on the set of entity values, not the
+        specific ID keys. This way, for new keys order1 and order2:
+          {"order": {"order1": {"customer_id": "customer_a"}, "order2": {"customer_id": "customer_b"}}}
+        has the same hash as:
+          {"order": {"order2": {"customer_b"}, "order1": {"customer_id": "customer_a"}}}
+        when the inner values are swapped but the set of values is the same.
+        """
+        # Get the initial data keys to identify which keys existed before actions
+        initial_data = self.data_load_func()
+        if self._current_time:
+            initial_data["current_time"] = self._current_time
+
+        # Build a hashable representation where new entity keys are excluded
+        # but their values are still included as a sorted tuple
+        hashable_data = {}
+        for collection_name, entities in self.data.items():
+            if not isinstance(entities, dict):
+                hashable_data[collection_name] = to_hashable(entities)
+                continue
+
+            initial_keys = set(initial_data.get(collection_name, {}).keys()) if isinstance(initial_data.get(collection_name), dict) else set()
+
+            # Separate existing vs new entities
+            existing_entities = {}
+            new_entity_values = []
+
+            for entity_id, entity in entities.items():
+                if entity_id in initial_keys:
+                    # Keep the key for existing entities
+                    existing_entities[entity_id] = entity
+                else:
+                    # For new entities, replace the unique ID with the collection name
+                    # This ensures entities are created in the correct collection
+                    new_entity_values.append((collection_name, entity))
+
+            # Convert existing entities to hashable with keys preserved
+            hashable_existing = to_hashable(existing_entities)
+
+            # Convert new entity values to a sorted tuple (order-independent)
+            # Each value is (collection_name, entity) to ensure type correctness
+            # Sort by string representation to handle nested structures
+            hashable_new_values = [to_hashable(v) for v in new_entity_values]
+            hashable_new = tuple(sorted(hashable_new_values, key=str))
+
+            # Combine both parts
+            hashable_data[collection_name] = (hashable_existing, hashable_new)
+
+        return consistent_hash(to_hashable(hashable_data))
 
