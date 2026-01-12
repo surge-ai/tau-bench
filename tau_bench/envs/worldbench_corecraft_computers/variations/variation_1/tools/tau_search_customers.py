@@ -7,7 +7,7 @@ from .data_utils import (
     iter_entities,
     parse_iso_datetime,
     parse_entity_json_fields,
-    get_created_at,
+    get_datetime_field,
     matches_json_text_search,
     apply_limit,
 )
@@ -55,7 +55,7 @@ class SearchCustomers(Tool):
             if address_text and not matches_json_text_search(row, "addresses", address_text):
                 continue
             # Date filtering
-            created_at = get_created_at(row)
+            created_at = get_datetime_field(row, "createdAt")
             if created_at is not None:
                 if created_after_dt and created_at < created_after_dt:
                     continue

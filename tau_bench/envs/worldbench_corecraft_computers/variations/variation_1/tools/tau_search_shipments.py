@@ -7,7 +7,7 @@ from .data_utils import (
     iter_entities,
     parse_iso_datetime,
     parse_entity_json_fields,
-    get_created_at,
+    get_datetime_field,
     apply_limit,
 )
 
@@ -36,7 +36,7 @@ class SearchShipments(Tool):
             if tracking_number and row.get("trackingNumber") != tracking_number:
                 continue
             # Date filtering - createdAt
-            created_at = get_created_at(row)
+            created_at = get_datetime_field(row, "createdAt")
             if created_at is not None:
                 if created_after_dt and created_at < created_after_dt:
                     continue
@@ -48,7 +48,8 @@ class SearchShipments(Tool):
             results.append(result_row)
 
         # Sort by createdAt DESC, then by id ASC
-        results.sort(key=lambda s: (s.get("createdAt", "") or "", s.get("id", "")), reverse=True)
+        results.sort(key=lambda s: s.get("id", ""))  # Secondary: id ASC
+        results.sort(key=lambda s: s.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
 
         # Apply limit
         results = apply_limit(results, limit)

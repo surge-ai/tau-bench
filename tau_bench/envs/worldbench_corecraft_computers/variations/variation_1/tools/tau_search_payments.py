@@ -6,19 +6,9 @@ from tau_bench.envs.tool import Tool
 from .data_utils import (
     iter_entities,
     parse_iso_datetime,
-    get_created_at,
+    get_datetime_field,
     apply_limit,
 )
-
-
-def _get_processed_at(entity: Dict[str, Any]):
-    """Get the processedAt datetime from an entity."""
-    processed_at = entity.get("processedAt")
-    if processed_at is None:
-        return None
-    if isinstance(processed_at, str):
-        return parse_iso_datetime(processed_at)
-    return None
 
 
 class SearchPayments(Tool):
@@ -49,7 +39,7 @@ class SearchPayments(Tool):
             if status and row.get("status") != status:
                 continue
             # Date filtering - createdAt
-            created_at = get_created_at(row)
+            created_at = get_datetime_field(row, "createdAt")
             if created_at is not None:
                 if created_after_dt and created_at < created_after_dt:
                     continue
@@ -57,7 +47,7 @@ class SearchPayments(Tool):
                     continue
             # Date filtering - processedAt
             # If filtering by processedAt, exclude payments that haven't been processed
-            processed_at = _get_processed_at(row)
+            processed_at = get_datetime_field(row, "processedAt")
             if processed_after_dt or processed_before_dt:
                 if processed_at is None:
                     continue
@@ -69,7 +59,8 @@ class SearchPayments(Tool):
             results.append(dict(row))
 
         # Sort by createdAt DESC, then by id ASC
-        results.sort(key=lambda p: (p.get("createdAt", "") or "", p.get("id", "")), reverse=True)
+        results.sort(key=lambda p: p.get("id", ""))  # Secondary: id ASC
+        results.sort(key=lambda p: p.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
 
         # Apply limit
         results = apply_limit(results, limit)

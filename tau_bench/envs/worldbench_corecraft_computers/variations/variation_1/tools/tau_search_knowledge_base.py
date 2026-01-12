@@ -8,8 +8,7 @@ from .data_utils import (
     parse_iso_datetime,
     parse_entity_json_fields,
     parse_json_field,
-    get_created_at,
-    get_updated_at,
+    get_datetime_field,
     matches_text_search,
     apply_limit,
 )
@@ -38,7 +37,7 @@ class SearchKnowledgeBase(Tool):
         updated_after_dt = parse_iso_datetime(updated_after) if updated_after else None
         updated_before_dt = parse_iso_datetime(updated_before) if updated_before else None
 
-        for row in iter_entities(data, "knowledgeBaseArticle"):
+        for row in iter_entities(data, "knowledge_base_article"):
             # Text search in title and body
             if text and not matches_text_search(row, ["title", "body"], text):
                 continue
@@ -63,14 +62,14 @@ class SearchKnowledgeBase(Tool):
                 if not all(t in row_tags for t in tags):
                     continue
             # Date filtering - createdAt
-            created_at = get_created_at(row)
+            created_at = get_datetime_field(row, "createdAt")
             if created_at is not None:
                 if created_after_dt and created_at < created_after_dt:
                     continue
                 if created_before_dt and created_at >= created_before_dt:
                     continue
             # Date filtering - updatedAt
-            updated_at = get_updated_at(row)
+            updated_at = get_datetime_field(row, "updatedAt")
             if updated_at is not None:
                 if updated_after_dt and updated_at < updated_after_dt:
                     continue

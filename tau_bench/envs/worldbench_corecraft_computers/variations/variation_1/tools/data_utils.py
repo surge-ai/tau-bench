@@ -11,61 +11,29 @@ from typing import Any, Dict, Iterator, List, Optional, Sequence
 
 
 def iter_entities(data: Dict[str, Any], table_name: str) -> Iterator[Dict[str, Any]]:
-    """Iterate over entity records from various key name conventions.
+    """Iterate over entity records from a data table.
 
-    Supports common naming patterns:
-    - Singular lowercase (e.g., "customer")
-    - Singular capitalized (e.g., "Customer")
-    - Plural lowercase (e.g., "customers")
-    - Plural capitalized (e.g., "Customers")
-    - Snake_case variants (e.g., "support_ticket", "knowledge_base_article")
-
-    Also handles both dict-keyed and list formats:
+    Handles both dict-keyed and list formats:
     - Dict format: {"id1": {...}, "id2": {...}}
     - List format: [{...}, {...}]
 
     Args:
         data: The data dictionary to search
-        table_name: Base table name (e.g., "customer", "order", "product", "supportTicket")
+        table_name: Table name in snake_case (e.g., "customer", "order", "support_ticket")
 
     Yields:
         Individual entity records as dictionaries
     """
-    # Build key variations
-    base = table_name.lower()
-    capitalized = base.capitalize()
-
-    # Handle camelCase to snake_case conversion
-    snake_case = ""
-    for i, char in enumerate(table_name):
-        if char.isupper() and i > 0:
-            snake_case += "_" + char.lower()
-        else:
-            snake_case += char.lower()
-
-    # Handle special plural forms
-    if base.endswith("y"):
-        plural = base[:-1] + "ies"
-        plural_cap = capitalized[:-1] + "ies"
-    else:
-        plural = base + "s"
-        plural_cap = capitalized + "s"
-
-    # Include original table_name to handle camelCase keys
-    key_variants = [table_name, base, capitalized, plural, plural_cap, snake_case]
-
-    for key in key_variants:
-        table = data.get(key)
-        if table is not None:
-            if isinstance(table, dict):
-                for row in table.values():
-                    if isinstance(row, dict):
-                        yield row
-            elif isinstance(table, list):
-                for row in table:
-                    if isinstance(row, dict):
-                        yield row
-            return
+    table = data.get(table_name)
+    if table is not None:
+        if isinstance(table, dict):
+            for row in table.values():
+                if isinstance(row, dict):
+                    yield row
+        elif isinstance(table, list):
+            for row in table:
+                if isinstance(row, dict):
+                    yield row
 
 
 def get_entity_by_id(data: Dict[str, Any], table_name: str, entity_id: str) -> Optional[Dict[str, Any]]:
@@ -106,41 +74,25 @@ def parse_iso_datetime(date_str: str) -> Optional[datetime]:
         return None
 
 
-def get_created_at(entity: Dict[str, Any]) -> Optional[datetime]:
-    """Get the createdAt datetime from an entity.
+def get_datetime_field(entity: Dict[str, Any], field: str) -> Optional[datetime]:
+    """Get a datetime field from an entity.
+
+    Handles both string (ISO 8601) and datetime values.
 
     Args:
         entity: The entity dictionary
+        field: The field name to retrieve (e.g., "createdAt", "updatedAt", "processedAt")
 
     Returns:
         datetime object, or None if not present or invalid
     """
-    created_at = entity.get("createdAt")
-    if created_at is None:
+    value = entity.get(field)
+    if value is None:
         return None
-    if isinstance(created_at, str):
-        return parse_iso_datetime(created_at)
-    if isinstance(created_at, datetime):
-        return created_at
-    return None
-
-
-def get_updated_at(entity: Dict[str, Any]) -> Optional[datetime]:
-    """Get the updatedAt datetime from an entity.
-
-    Args:
-        entity: The entity dictionary
-
-    Returns:
-        datetime object, or None if not present or invalid
-    """
-    updated_at = entity.get("updatedAt")
-    if updated_at is None:
-        return None
-    if isinstance(updated_at, str):
-        return parse_iso_datetime(updated_at)
-    if isinstance(updated_at, datetime):
-        return updated_at
+    if isinstance(value, str):
+        return parse_iso_datetime(value)
+    if isinstance(value, datetime):
+        return value
     return None
 
 

@@ -9,7 +9,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
     def setUp(self):
         """Set up test data with knowledge base articles."""
         self.data: Dict[str, Any] = {
-            "knowledgeBaseArticle": {
+            "knowledge_base_article": {
                 "kb1": {
                     "id": "kb1",
                     "title": "How to Troubleshoot Boot Issues",

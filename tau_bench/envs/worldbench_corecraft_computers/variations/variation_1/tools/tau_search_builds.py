@@ -7,7 +7,7 @@ from .data_utils import (
     iter_entities,
     parse_iso_datetime,
     parse_entity_json_fields,
-    get_created_at,
+    get_datetime_field,
     apply_limit,
 )
 
@@ -38,7 +38,7 @@ class SearchBuilds(Tool):
                 if name.lower() not in row_name.lower():
                     continue
             # Date filtering - createdAt
-            created_at = get_created_at(row)
+            created_at = get_datetime_field(row, "createdAt")
             if created_at is not None:
                 if created_after_dt and created_at < created_after_dt:
                     continue

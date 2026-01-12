@@ -66,7 +66,7 @@ class TestGetOrderDetails(unittest.TestCase):
                     "createdAt": "2025-09-01T00:20:00Z",
                 },
             },
-            "supportTicket": {
+            "support_ticket": {
                 "ticket1": {
                     "id": "ticket1",
                     "orderId": "order1",

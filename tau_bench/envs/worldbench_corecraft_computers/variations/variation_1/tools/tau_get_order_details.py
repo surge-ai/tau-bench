@@ -8,7 +8,7 @@ from .data_utils import (
     get_entity_by_id,
     parse_iso_datetime,
     parse_entity_json_fields,
-    get_created_at,
+    get_datetime_field,
 )
 
 
@@ -73,12 +73,13 @@ class GetOrderDetails(Tool):
         for p in iter_entities(data, "payment"):
             if p.get("orderId") != order_id:
                 continue
-            created_at = get_created_at(p)
+            created_at = get_datetime_field(p, "createdAt")
             if created_at is not None and created_before_dt and created_at > created_before_dt:
                 continue
             matching_payments.append(p)
         # Sort by createdAt DESC, then id ASC
-        matching_payments.sort(key=lambda x: (x.get("createdAt", "") or "", x.get("id", "")), reverse=True)
+        matching_payments.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
+        matching_payments.sort(key=lambda x: x.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
         if matching_payments:
             p = matching_payments[0]
             payment = {
@@ -94,12 +95,13 @@ class GetOrderDetails(Tool):
         for s in iter_entities(data, "shipment"):
             if s.get("orderId") != order_id:
                 continue
-            created_at = get_created_at(s)
+            created_at = get_datetime_field(s, "createdAt")
             if created_at is not None and created_before_dt and created_at > created_before_dt:
                 continue
             matching_shipments.append(s)
         # Sort by createdAt DESC, then id ASC
-        matching_shipments.sort(key=lambda x: (x.get("createdAt", "") or "", x.get("id", "")), reverse=True)
+        matching_shipments.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
+        matching_shipments.sort(key=lambda x: x.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
         if matching_shipments:
             s = matching_shipments[0]
             shipment = {
@@ -111,10 +113,10 @@ class GetOrderDetails(Tool):
 
         # Get tickets (all before created_before)
         tickets: List[Dict[str, Any]] = []
-        for t in iter_entities(data, "supportTicket"):
+        for t in iter_entities(data, "support_ticket"):
             if t.get("orderId") != order_id:
                 continue
-            created_at = get_created_at(t)
+            created_at = get_datetime_field(t, "createdAt")
             if created_at is not None and created_before_dt and created_at > created_before_dt:
                 continue
             tickets.append({
@@ -123,7 +125,8 @@ class GetOrderDetails(Tool):
                 "status": t.get("status")
             })
         # Sort by createdAt DESC, then id ASC
-        tickets.sort(key=lambda x: (x.get("createdAt", "") or "", x.get("id", "")), reverse=True)
+        tickets.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
+        tickets.sort(key=lambda x: x.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
 
         return json.dumps({
             "order": formatted_order,

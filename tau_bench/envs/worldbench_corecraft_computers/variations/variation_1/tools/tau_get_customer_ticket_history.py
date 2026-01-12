@@ -1,13 +1,12 @@
 import json
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 
 from tau_bench.envs.tool import Tool
 
 from .data_utils import (
     iter_entities,
     parse_iso_datetime,
-    get_created_at,
-    get_updated_at,
+    get_datetime_field,
 )
 
 
@@ -35,23 +34,23 @@ class GetCustomerTicketHistory(Tool):
 
         # Find matching tickets
         tickets: List[Dict[str, Any]] = []
-        ticket_ids: List[str] = []
+        ticket_ids: Set[str] = set()  # Use set for O(1) lookup
 
-        for row in iter_entities(data, "supportTicket"):
+        for row in iter_entities(data, "support_ticket"):
             if row.get("customerId") != customer_id:
                 continue
             if not include_resolved_bool:
                 if row.get("status") in ("resolved", "closed"):
                     continue
             # Date filtering - createdAt
-            created_at = get_created_at(row)
+            created_at = get_datetime_field(row, "createdAt")
             if created_at is not None:
                 if created_after_dt and created_at < created_after_dt:
                     continue
                 if created_before_dt and created_at >= created_before_dt:
                     continue
             # Date filtering - updatedAt
-            updated_at = get_updated_at(row)
+            updated_at = get_datetime_field(row, "updatedAt")
             if updated_at is not None:
                 if updated_after_dt and updated_at < updated_after_dt:
                     continue
@@ -69,10 +68,11 @@ class GetCustomerTicketHistory(Tool):
                 "updatedAt": row.get("updatedAt"),
             }
             tickets.append(formatted_ticket)
-            ticket_ids.append(row.get("id"))
+            ticket_ids.add(row.get("id"))
 
         # Sort by createdAt DESC, then id ASC
-        tickets.sort(key=lambda t: (t.get("createdAt", "") or "", t.get("id", "")), reverse=True)
+        tickets.sort(key=lambda t: t.get("id", ""))  # Secondary: id ASC
+        tickets.sort(key=lambda t: t.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
 
         # Get escalations for these tickets
         escalations: List[Dict[str, Any]] = []

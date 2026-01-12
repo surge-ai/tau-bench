@@ -148,7 +148,7 @@ class TestSearchOrders(unittest.TestCase):
         info = SearchOrders.get_info()
 
         self.assertEqual(info["type"], "function")
-        self.assertEqual(info["function"]["name"], "search_orders")
+        self.assertEqual(info["function"]["name"], "searchOrders")
         self.assertIn("description", info["function"])
         self.assertIn("parameters", info["function"])
         self.assertIn("order_id", info["function"]["parameters"]["properties"])

@@ -6,8 +6,7 @@ from tau_bench.envs.tool import Tool
 from .data_utils import (
     iter_entities,
     parse_iso_datetime,
-    get_created_at,
-    get_updated_at,
+    get_datetime_field,
     matches_text_search,
     apply_limit,
 )
@@ -38,7 +37,7 @@ class SearchTickets(Tool):
         resolved_after_dt = parse_iso_datetime(resolved_after) if resolved_after else None
         resolved_before_dt = parse_iso_datetime(resolved_before) if resolved_before else None
 
-        for row in iter_entities(data, "supportTicket"):
+        for row in iter_entities(data, "support_ticket"):
             # Exact ticket_id match
             if ticket_id and row.get("id") != ticket_id:
                 continue
@@ -61,14 +60,14 @@ class SearchTickets(Tool):
             if text and not matches_text_search(row, ["subject", "body"], text):
                 continue
             # Date filtering - createdAt
-            created_at = get_created_at(row)
+            created_at = get_datetime_field(row, "createdAt")
             if created_at is not None:
                 if created_after_dt and created_at < created_after_dt:
                     continue
                 if created_before_dt and created_at > created_before_dt:
                     continue
             # Date filtering - resolved (uses updatedAt)
-            updated_at = get_updated_at(row)
+            updated_at = get_datetime_field(row, "updatedAt")
             if updated_at is not None:
                 if resolved_after_dt and updated_at < resolved_after_dt:
                     continue
@@ -78,29 +77,11 @@ class SearchTickets(Tool):
             results.append(dict(row))
 
         # Sort by priority (high -> normal -> low), then by createdAt DESC, then by id ASC
+        # Using Python's stable sort: sort by least significant key first, then more significant
         priority_order = {"high": 1, "normal": 2, "low": 3}
-        results.sort(
-            key=lambda ticket: (
-                priority_order.get(ticket.get("priority", "normal"), 4),
-                ticket.get("createdAt", "") or "",  # DESC handled by reversing string comparison
-                ticket.get("id", "")
-            ),
-            reverse=False
-        )
-        # Re-sort to get createdAt DESC properly
-        results.sort(
-            key=lambda ticket: (
-                priority_order.get(ticket.get("priority", "normal"), 4),
-                ticket.get("id", "")
-            )
-        )
-        results.sort(
-            key=lambda ticket: ticket.get("createdAt", "") or "",
-            reverse=True
-        )
-        results.sort(
-            key=lambda ticket: priority_order.get(ticket.get("priority", "normal"), 4)
-        )
+        results.sort(key=lambda t: t.get("id", ""))  # Tertiary: id ASC
+        results.sort(key=lambda t: t.get("createdAt", "") or "", reverse=True)  # Secondary: createdAt DESC
+        results.sort(key=lambda t: priority_order.get(t.get("priority", "normal"), 4))  # Primary: priority ASC
 
         # Apply limit
         results = apply_limit(results, limit)
