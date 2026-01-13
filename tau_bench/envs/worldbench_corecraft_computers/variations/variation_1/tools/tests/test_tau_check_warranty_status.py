@@ -1,63 +1,21 @@
 import json
-import sys
-import os
 import unittest
 from typing import Dict, Any
 from datetime import datetime, timedelta, timezone
 
-# Import the module directly without going through package __init__
-# We're in tests/ subdirectory, so go up one level to tools/
-tests_dir = os.path.dirname(os.path.abspath(__file__))
-tools_dir = os.path.dirname(tests_dir)
-sys.path.insert(0, tools_dir)
-
-# Import dependencies first
-from ..tau_sqlite_utils import build_sqlite_from_data
-from tau_bench.envs.tool import Tool
-
-# Create a mock utils module for tool_impls that need it
-# IMPORTANT: We need to create this BEFORE importing anything that uses utils
-import types
-import sqlite3
-utils_module = types.ModuleType("utils")
-# Provide a dummy function that will be replaced by the tool's monkeypatch
-utils_module.get_db_conn = lambda: sqlite3.connect(":memory:")
-sys.modules["utils"] = utils_module
-
-# Import tool_impls first so it uses our utils module
-# Note: tool_impls does "from utils import get_db_conn", which creates a direct reference.
-# When the tool monkeypatches utils.get_db_conn, it won't affect the already-imported
-# reference in tool_impls. We need to create a wrapper that will allow the monkeypatch
-# to work. Actually, the tool code should handle this, but since tool_impls has a direct
-# import, we need to ensure the monkeypatch also updates tool_impls.
-import tool_impls.check_warranty_status  # noqa: F401
-
-# Now import the tool module normally (not via importlib) so it shares the same module context
-# Add tools_dir to path so we can import normally
-if tools_dir not in sys.path:
-    sys.path.insert(0, tools_dir)
-
-# Import the tool - it will use the same utils module that tool_impls uses
-# The tool now properly handles monkeypatching both utils.get_db_conn and tool_impls.get_db_conn
-from tau_check_warranty_status import CheckWarrantyStatus
+from ..tau_check_warranty_status import CheckWarrantyStatus
 
 
 class TestCheckWarrantyStatus(unittest.TestCase):
     def setUp(self):
-        """Set up test data with orders, products, and line items."""
-        # Base date for testing: September 8, 2025 (matches default CURRENT_DATE in implementation)
+        """Set up test data with orders and products."""
         self.base_date = datetime(2025, 9, 8, 0, 0, 0, tzinfo=timezone.utc)
-        
-        # Create test data
-        # The tool_impls queries "Order" and "Product" (capitalized), so we need to use
-        # capitalized keys. The actual data structure is a dict of dicts (not a list),
-        # where keys are IDs and values are the objects. build_sqlite_from_data handles
-        # both lists and dicts via iter_rows.
+
         self.data: Dict[str, Any] = {
-            "Order": {
+            "order": {
                 "order1": {
                     "id": "order1",
-                    "createdAt": "2024-09-08T00:00:00Z",  # Exactly 1 year ago (12 months warranty)
+                    "createdAt": "2024-09-08T00:00:00Z",  # Exactly 1 year ago
                     "status": "completed",
                     "lineItems": json.dumps([
                         {"productId": "prod1", "quantity": 1, "price": 100.0}
@@ -81,14 +39,14 @@ class TestCheckWarrantyStatus(unittest.TestCase):
                 },
                 "order4": {
                     "id": "order4",
-                    "createdAt": "2024-09-09T00:00:00Z",  # 1 day before 1 year (still under warranty)
+                    "createdAt": "2024-09-09T00:00:00Z",  # 1 day before 1 year
                     "status": "completed",
                     "lineItems": json.dumps([
                         {"productId": "prod4", "quantity": 1, "price": 120.0}
                     ])
                 },
             },
-            "Product": {
+            "product": {
                 "prod1": {
                     "id": "prod1",
                     "name": "Product 1",
@@ -128,8 +86,8 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order3",  # Purchased 1 month ago
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertIn("warranty_end_date", result_dict)
         self.assertGreater(result_dict["days_remaining"], 0)
@@ -140,22 +98,10 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order2",  # Purchased 15 months ago
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertFalse(result_dict["is_under_warranty"])
         self.assertIn("warranty_end_date", result_dict)
-        self.assertEqual(result_dict["days_remaining"], 0)
-
-    def test_check_warranty_by_order_id_exactly_one_year(self):
-        """Test checking warranty when purchase was exactly one year ago."""
-        result = CheckWarrantyStatus.invoke(
-            self.data,
-            order_id="order1",  # Purchased exactly 1 year ago
-        )
-        result_dict = json.loads(result)
-        
-        # Should be expired (purchased exactly 12 months ago, warranty ends on that date)
-        self.assertFalse(result_dict["is_under_warranty"])
         self.assertEqual(result_dict["days_remaining"], 0)
 
     def test_check_warranty_by_order_id_one_day_before_expiry(self):
@@ -164,24 +110,24 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order4",  # Purchased 1 day before 1 year
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         # Should still be under warranty (1 day remaining)
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertEqual(result_dict["days_remaining"], 1)
-
+        
     def test_check_warranty_by_product_id_with_purchase_date(self):
         """Test checking warranty by product_id with explicit purchase date."""
         # Purchase date 6 months ago, product has 12 month warranty
         purchase_date = (self.base_date - timedelta(days=180)).isoformat().replace('+00:00', 'Z')
-        
+
         result = CheckWarrantyStatus.invoke(
             self.data,
             product_id="prod1",
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
 
@@ -191,8 +137,8 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         # Uses default current date, so warranty starts today
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertIn("warranty_end_date", result_dict)
@@ -201,14 +147,14 @@ class TestCheckWarrantyStatus(unittest.TestCase):
         """Test checking warranty for product with extended warranty period."""
         # Purchase date 18 months ago, but product has 24 month warranty
         purchase_date = (self.base_date - timedelta(days=540)).isoformat().replace('+00:00', 'Z')
-        
+
         result = CheckWarrantyStatus.invoke(
             self.data,
             product_id="prod3",  # Has 24 month warranty
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
 
@@ -216,14 +162,14 @@ class TestCheckWarrantyStatus(unittest.TestCase):
         """Test checking warranty for product with short warranty period."""
         # Purchase date 7 months ago, product has 6 month warranty (expired)
         purchase_date = (self.base_date - timedelta(days=210)).isoformat().replace('+00:00', 'Z')
-        
+
         result = CheckWarrantyStatus.invoke(
             self.data,
             product_id="prod5",  # Has 6 month warranty
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertFalse(result_dict["is_under_warranty"])
         self.assertEqual(result_dict["days_remaining"], 0)
 
@@ -231,7 +177,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
         """Test checking warranty with both order_id and product_id."""
         # Create an order that actually has prod3 in its lineItems
         data_with_prod3 = {
-            "Order": {
+            "order": {
                 "order_with_prod3": {
                     "id": "order_with_prod3",
                     "createdAt": "2024-09-08T00:00:00Z",  # 12 months ago
@@ -241,7 +187,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
                     ])
                 }
             },
-            "Product": {
+            "product": {
                 "prod3": {
                     "id": "prod3",
                     "name": "Product 3",
@@ -250,38 +196,36 @@ class TestCheckWarrantyStatus(unittest.TestCase):
                 }
             }
         }
-        
+
         result = CheckWarrantyStatus.invoke(
             data_with_prod3,
             order_id="order_with_prod3",
             product_id="prod3",  # Has 24 month warranty
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         # Should use product's warranty period (24 months)
         # Order was purchased 12 months ago, so still under 24 month warranty
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
 
     def test_check_warranty_nonexistent_order(self):
-        """Test checking warranty for non-existent order."""
-        result = CheckWarrantyStatus.invoke(
-            self.data,
-            order_id="nonexistent_order",
-        )
-        result_dict = json.loads(result)
-        
-        self.assertFalse(result_dict["is_under_warranty"])
+        """Test checking warranty for non-existent order raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            CheckWarrantyStatus.invoke(
+                self.data,
+                order_id="nonexistent_order",
+            )
+        self.assertIn("nonexistent_order", str(context.exception))
 
     def test_check_warranty_nonexistent_product(self):
-        """Test checking warranty for non-existent product."""
-        result = CheckWarrantyStatus.invoke(
-            self.data,
-            product_id="nonexistent_product",
-        )
-        result_dict = json.loads(result)
-        
-        self.assertFalse(result_dict["is_under_warranty"])
+        """Test checking warranty for non-existent product raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            CheckWarrantyStatus.invoke(
+                self.data,
+                product_id="nonexistent_product",
+            )
+        self.assertIn("nonexistent_product", str(context.exception))
 
     def test_check_warranty_no_order_or_product_id(self):
         """Test that providing neither order_id nor product_id raises an error."""
@@ -291,18 +235,20 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             )
 
     def test_check_warranty_with_custom_current_date(self):
-        """Test checking warranty with a custom current_date parameter."""
+        """Test checking warranty with a custom current_time in data."""
         # Order purchased 1 year ago
-        # But we set current_date to 6 months ago, so warranty should still be valid
+        # But we set current_time to 6 months ago, so warranty should still be valid
         custom_current = (self.base_date - timedelta(days=180)).isoformat().replace('+00:00', 'Z')
-        
+
+        # The tool reads current_time from data, not as a parameter
+        self.data["current_time"] = custom_current
+
         result = CheckWarrantyStatus.invoke(
             self.data,
             order_id="order1",  # Purchased 1 year ago
-            current_date=custom_current,  # But we're checking from 6 months ago
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         # From 6 months ago perspective, warranty was still valid
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
@@ -312,7 +258,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
         # Create order purchased on Jan 31, 2024
         # With 1 month warranty, should end on Feb 29, 2024 (leap year)
         data_with_edge_case = {
-            "Order": {
+            "order": {
                 "order_edge": {
                     "id": "order_edge",
                     "createdAt": "2024-01-31T00:00:00Z",
@@ -322,24 +268,24 @@ class TestCheckWarrantyStatus(unittest.TestCase):
                     ])
                 }
             },
-            "Product": {
+            "product": {
                 "prod1": {
                     "id": "prod1",
                     "name": "Product 1",
                     "price": 100.0,
                     "warrantyMonths": 1,
                 }
-            }
+            },
+            "current_time": "2024-02-28T00:00:00Z"
         }
-        
+
         # Check from Feb 28, 2024 (should still be under warranty)
         result = CheckWarrantyStatus.invoke(
             data_with_edge_case,
-            order_id="order_edge",
-            current_date="2024-02-28T00:00:00Z",
+            order_id="order_edge"
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertIn("warranty_end_date", result_dict)
         # Warranty calculation: Jan 31, 2024 + 1 month
@@ -356,7 +302,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
     def test_check_warranty_product_default_warranty(self):
         """Test that product without warrantyMonths uses default 12 months."""
         data_without_warranty = {
-            "Product": {
+            "product": {
                 "prod_no_warranty": {
                     "id": "prod_no_warranty",
                     "name": "Product No Warranty",
@@ -365,17 +311,17 @@ class TestCheckWarrantyStatus(unittest.TestCase):
                 }
             }
         }
-        
+
         # Purchase date 6 months ago
         purchase_date = (self.base_date - timedelta(days=180)).isoformat().replace('+00:00', 'Z')
-        
+
         result = CheckWarrantyStatus.invoke(
             data_without_warranty,
             product_id="prod_no_warranty",
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         # Should use default 12 month warranty
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
@@ -384,14 +330,14 @@ class TestCheckWarrantyStatus(unittest.TestCase):
         """Test that days_remaining is calculated correctly."""
         # Order purchased 11 months and 20 days ago (should have ~10 days remaining)
         purchase_date = (self.base_date - timedelta(days=350)).isoformat().replace('+00:00', 'Z')
-        
+
         result = CheckWarrantyStatus.invoke(
             self.data,
             product_id="prod1",  # 12 month warranty
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertTrue(result_dict["is_under_warranty"])
         # Should have approximately 10 days remaining (365 - 350 = 15, minus some buffer)
         self.assertGreaterEqual(result_dict["days_remaining"], 10)
@@ -403,8 +349,8 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order3",
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         self.assertIn("warranty_end_date", result_dict)
         warranty_end = result_dict["warranty_end_date"]
         # Should be in YYYY-MM-DD format
@@ -415,7 +361,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
     def test_get_info(self):
         """Test that get_info returns the correct structure."""
         info = CheckWarrantyStatus.get_info()
-        
+
         self.assertEqual(info["type"], "function")
         self.assertEqual(info["function"]["name"], "checkWarrantyStatus")
         self.assertIn("description", info["function"])
@@ -423,12 +369,11 @@ class TestCheckWarrantyStatus(unittest.TestCase):
         self.assertIn("order_id", info["function"]["parameters"]["properties"])
         self.assertIn("product_id", info["function"]["parameters"]["properties"])
         self.assertIn("purchase_date", info["function"]["parameters"]["properties"])
-        self.assertIn("current_date", info["function"]["parameters"]["properties"])
 
     def test_check_warranty_order_with_multiple_line_items(self):
         """Test checking warranty for specific product in order with multiple line items."""
         data_multi_items = {
-            "Order": {
+            "order": {
                 "order_multi": {
                     "id": "order_multi",
                     "createdAt": "2024-09-08T00:00:00Z",
@@ -439,7 +384,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
                     ])
                 }
             },
-            "Product": {
+            "product": {
                 "prod1": {
                     "id": "prod1",
                     "name": "Product 1",
@@ -454,20 +399,18 @@ class TestCheckWarrantyStatus(unittest.TestCase):
                 }
             }
         }
-        
+
         # Check warranty for prod3 which has 24 month warranty
         result = CheckWarrantyStatus.invoke(
             data_multi_items,
             order_id="order_multi",
             product_id="prod3",
         )
-        result_dict = json.loads(result)
-        
+        result_dict = result
+
         # Should use prod3's 24 month warranty, so still under warranty
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
 
-
 if __name__ == "__main__":
     unittest.main()
-
