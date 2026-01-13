@@ -99,20 +99,29 @@ class TestSearchBuilds(unittest.TestCase):
 
         # Should only include builds created before the date
         self.assertEqual(len(result_list), 2)
+        for build in result_list:
+            self.assertLess(build["createdAt"], "2025-09-02T12:00:00Z")
 
     def test_search_builds_multiple_filters(self):
         """Test searching with multiple filters."""
         result = SearchBuilds.invoke(
             self.data,
-            customer_id="customer1",
             name="Gaming",
+            customer_id="customer1",
+            created_after="2025-09-01T00:00:00Z",
         )
         result_list = json.loads(result)
 
         # Should match builds that satisfy all filters
+        # - name="Gaming": matches build1, build3 (2 builds)
+        # - customer_id="customer1": matches build1, build2 (2 builds)
+        # - created_after="2025-09-01": matches build1, build2, build3 (3 builds)
+        # Combined: only build1 matches all three
         self.assertEqual(len(result_list), 1)
-        self.assertEqual(result_list[0]["customerId"], "customer1")
-        self.assertIn("Gaming", result_list[0]["name"])
+        for build in result_list:
+            self.assertIn("Gaming", build["name"])
+            self.assertEqual(build["customerId"], "customer1")
+            self.assertGreaterEqual(build["createdAt"], "2025-09-01T00:00:00Z")
 
     def test_search_builds_with_limit(self):
         """Test limiting the number of results."""
@@ -159,6 +168,36 @@ class TestSearchBuilds(unittest.TestCase):
         # componentIds should be parsed from JSON string to list
         if "componentIds" in build1:
             self.assertIsInstance(build1["componentIds"], list)
+            if build1["componentIds"]:
+                self.assertIsInstance(build1["componentIds"][0], str)
+
+    def test_search_builds_empty_component_ids(self):
+        """Test build with empty componentIds."""
+        # Add a build with empty componentIds
+        data_with_empty = {
+            "build": {
+                "build_empty": {
+                    "id": "build_empty",
+                    "name": "Empty Build",
+                    "customerId": "customer1",
+                    "componentIds": json.dumps([]),
+                    "createdAt": "2025-09-01T00:00:00Z",
+                },
+            }
+        }
+        result = SearchBuilds.invoke(
+            data_with_empty,
+            name="Empty Build",
+        )
+        result_list = json.loads(result)
+
+        # Should find the build with empty componentIds
+        self.assertEqual(len(result_list), 1)
+        build = result_list[0]
+        self.assertEqual(build["id"], "build_empty")
+        self.assertIn("componentIds", build)
+        self.assertIsInstance(build["componentIds"], list)
+        self.assertEqual(len(build["componentIds"]), 0)
 
     def test_search_builds_sorted_by_name(self):
         """Test that results are sorted by name ASC, then id ASC."""
@@ -189,6 +228,35 @@ class TestSearchBuilds(unittest.TestCase):
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)
+
+    def test_search_builds_invalid_json_handling(self):
+        """Test that invalid JSON in componentIds is handled gracefully."""
+        data_invalid_json = {
+            "build": {
+                "build_invalid": {
+                    "id": "build_invalid",
+                    "name": "Invalid JSON Build",
+                    "customerId": "customer1",
+                    "componentIds": "not valid json {",
+                    "createdAt": "2025-09-01T00:00:00Z",
+                },
+            }
+        }
+
+        result = SearchBuilds.invoke(
+            data_invalid_json,
+            name="Invalid JSON Build",
+        )
+        result_list = json.loads(result)
+
+        # Should still return the build, with invalid JSON kept as string
+        self.assertEqual(len(result_list), 1)
+        build = result_list[0]
+        self.assertEqual(build["id"], "build_invalid")
+        # Invalid JSON should remain as string (not parsed)
+        self.assertIn("componentIds", build)
+        self.assertIsInstance(build["componentIds"], str)
+        self.assertEqual(build["componentIds"], "not valid json {")
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

@@ -9,6 +9,18 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
     def setUp(self):
         """Set up test data with support tickets, escalations, and resolutions."""
         self.data: Dict[str, Any] = {
+            "customer": {
+                "customer1": {
+                    "id": "customer1",
+                    "name": "Test Customer 1",
+                    "email": "customer1@test.com",
+                },
+                "customer2": {
+                    "id": "customer2",
+                    "name": "Test Customer 2",
+                    "email": "customer2@test.com",
+                },
+            },
             "support_ticket": {
                 "ticket1": {
                     "id": "ticket1",
@@ -135,7 +147,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
         result = GetCustomerTicketHistory.invoke(
             self.data,
             customer_id="customer1",
-            include_resolved="false",
+            include_resolved=False,
         )
         result_dict = json.loads(result)
 
@@ -146,6 +158,23 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
         self.assertIn("ticket1", ticket_ids)  # open
         self.assertNotIn("ticket2", ticket_ids)  # resolved
         self.assertNotIn("ticket3", ticket_ids)  # closed
+
+    def test_get_ticket_history_include_resolved_explicit(self):
+        """Test explicitly including resolved tickets."""
+        result = GetCustomerTicketHistory.invoke(
+            self.data,
+            customer_id="customer1",
+            include_resolved=True,
+        )
+        result_dict = json.loads(result)
+
+        tickets = result_dict["tickets"]
+        ticket_ids = [t["id"] for t in tickets]
+
+        # Should include all tickets
+        self.assertIn("ticket1", ticket_ids)
+        self.assertIn("ticket2", ticket_ids)
+        self.assertIn("ticket3", ticket_ids)
 
     def test_get_ticket_history_filter_created_after(self):
         """Test filtering tickets created after a date."""
@@ -175,7 +204,59 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
 
         # Should have 2 tickets (ticket1 and ticket2)
         self.assertLessEqual(len(tickets), 2)
+        for ticket in tickets:
+                self.assertLessEqual(ticket["createdAt"], "2025-09-02T12:00:00Z")
 
+    def test_get_ticket_history_filter_updated_after(self):
+        """Test filtering tickets updated after a date."""
+        result = GetCustomerTicketHistory.invoke(
+            self.data,
+            customer_id="customer1",
+            tkt_updated_after="2025-09-01T12:00:00Z",
+        )
+        result_dict = json.loads(result)
+
+        tickets = result_dict["tickets"]
+
+        # Should only include tickets updated on or after 2025-09-02
+        for ticket in tickets:
+            self.assertGreaterEqual(ticket["updatedAt"], "2025-09-01T12:00:00Z")
+    
+    def test_get_ticket_history_filter_updated_before(self):
+        """Test filtering tickets updated before a date."""
+        result = GetCustomerTicketHistory.invoke(
+            self.data,
+            customer_id="customer1",
+            tkt_updated_before="2025-09-03T12:00:00Z",
+        )
+        result_dict = json.loads(result)
+
+        tickets = result_dict["tickets"]
+
+        for ticket in tickets:
+                self.assertLessEqual(ticket["updatedAt"], "2025-09-03T12:00:00Z")
+
+    def test_get_ticket_history_multiple_filters(self):
+        """Test using multiple filters together."""
+        result = GetCustomerTicketHistory.invoke(
+            self.data,
+            customer_id="customer1",
+            tkt_created_after="2025-09-01T12:00:00Z",
+            tkt_created_before="2025-09-03T00:00:00Z",
+            include_resolved=False,
+        )
+        result_dict = json.loads(result)
+
+        tickets = result_dict["tickets"]
+        ticket_ids = [t["id"] for t in tickets]
+
+        # Should only include open tickets created in the date range
+        # ticket1: created 2025-09-01 (before 12:00, so excluded)
+        # ticket2: created 2025-09-02 (in range) but resolved (excluded)
+        # ticket3: created 2025-09-03 (after end date, excluded)
+        self.assertEqual(len(ticket_ids), 0)
+        # Should have 2 tickets (ticket1 and ticket2)
+        
     def test_get_ticket_history_includes_escalations(self):
         """Test that escalations are included in the response."""
         result = GetCustomerTicketHistory.invoke(
@@ -212,20 +293,13 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
         self.assertIn("ticket3", resolution_ticket_ids)
 
     def test_get_ticket_history_empty_result(self):
-        """Test getting history for customer with no tickets."""
-        result = GetCustomerTicketHistory.invoke(
-            self.data,
-            customer_id="nonexistent_customer",
-        )
-        result_dict = json.loads(result)
-
-        # Should return empty lists
-        self.assertIn("tickets", result_dict)
-        self.assertEqual(len(result_dict["tickets"]), 0)
-        self.assertIn("escalations", result_dict)
-        self.assertEqual(len(result_dict["escalations"]), 0)
-        self.assertIn("resolutions", result_dict)
-        self.assertEqual(len(result_dict["resolutions"]), 0)
+        """Test getting history for nonexistent customer raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            GetCustomerTicketHistory.invoke(
+                self.data,
+                customer_id="nonexistent_customer",
+            )
+        self.assertIn("nonexistent_customer", str(context.exception))
 
     def test_get_ticket_history_tickets_sorted(self):
         """Test that tickets are sorted by createdAt DESC, then id ASC."""
@@ -244,6 +318,31 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
                 current_created = tickets[i]["createdAt"]
                 next_created = tickets[i + 1]["createdAt"]
                 self.assertGreaterEqual(current_created, next_created)
+
+    def test_get_ticket_history_ticket_format(self):
+        """Test that tickets have the correct format."""
+        result = GetCustomerTicketHistory.invoke(
+            self.data,
+            customer_id="customer1",
+        )
+        result_dict = json.loads(result)
+
+        tickets = result_dict["tickets"]
+        if tickets:
+            ticket = tickets[0]
+            # Check required fields
+            self.assertIn("id", ticket)
+            self.assertIn("customerId", ticket)
+            self.assertIn("category", ticket)  # mapped from ticketType
+            self.assertIn("status", ticket)
+            self.assertIn("priority", ticket)
+            self.assertIn("subject", ticket)
+            self.assertIn("createdAt", ticket)
+            self.assertIn("updatedAt", ticket)
+
+            # Check that dates are in ISO format
+            self.assertRegex(ticket["createdAt"], r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$')
+            self.assertRegex(ticket["updatedAt"], r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$')
 
     def test_get_ticket_history_missing_customer_id(self):
         """Test that missing customer_id raises an error."""

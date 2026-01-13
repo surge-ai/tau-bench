@@ -199,28 +199,24 @@ class TestCalculatePrice(unittest.TestCase):
         self.assertEqual(result_dict["shipping"], 9.99)
 
     def test_missing_product(self):
-        """Test that missing products are skipped (not an error)."""
-        result = CalculatePrice.invoke(
-            self.data,
-            product_ids=["prod1", "nonexistent"],
-            quantities=[1, 1],
-        )
-        result_dict = json.loads(result)
-
-        # Only prod1 should be counted
-        self.assertEqual(result_dict["subtotal"], 100.0)
+        """Test that missing products raise ValueError."""
+        with self.assertRaises(ValueError) as context:
+            CalculatePrice.invoke(
+                self.data,
+                product_ids=["prod1", "nonexistent"],
+                quantities=[1, 1],
+            )
+        self.assertIn("nonexistent", str(context.exception))
 
     def test_quantity_mismatch_error(self):
-        """Test that mismatched product_ids and quantities returns an error."""
-        result = CalculatePrice.invoke(
-            self.data,
-            product_ids=["prod1", "prod2"],
-            quantities=[1],  # Mismatch: 2 products but 1 quantity
-        )
-        result_dict = json.loads(result)
-
-        self.assertIn("error", result_dict)
-        self.assertIn("must have same length", result_dict["error"])
+        """Test that mismatched product_ids and quantities raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            CalculatePrice.invoke(
+                self.data,
+                product_ids=["prod1", "prod2"],
+                quantities=[1],  # Mismatch: 2 products but 1 quantity
+            )
+        self.assertIn("must have same length", str(context.exception))
 
     def test_complex_scenario(self):
         """Test a complex scenario with all features."""

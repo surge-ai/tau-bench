@@ -80,15 +80,13 @@ class TestGetProduct(unittest.TestCase):
         self.assertEqual(result_dict["warrantyMonths"], 12)
 
     def test_get_product_nonexistent(self):
-        """Test getting a non-existent product."""
-        result = GetProduct.invoke(
-            self.data,
-            product_id="nonexistent",
-        )
-        result_dict = json.loads(result)
-
-        # Should return None (serialized as null in JSON)
-        self.assertIsNone(result_dict)
+        """Test getting a non-existent product raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            GetProduct.invoke(
+                self.data,
+                product_id="nonexistent",
+            )
+        self.assertIn("nonexistent", str(context.exception))
 
     def test_get_product_parses_inventory_json(self):
         """Test that inventory JSON field is parsed."""

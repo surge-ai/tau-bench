@@ -16,7 +16,7 @@ class GetCustomerTicketHistory(Tool):
     def invoke(
         data: Dict[str, Any],
         customer_id: str,
-        include_resolved: Optional[str] = None,
+        include_resolved: Optional[bool] = None,
         tkt_created_after: Optional[str] = None,
         tkt_created_before: Optional[str] = None,
         tkt_updated_after: Optional[str] = None,
@@ -36,7 +36,7 @@ class GetCustomerTicketHistory(Tool):
         updated_after_dt = parse_iso_datetime(tkt_updated_after, "tkt_updated_after")
         updated_before_dt = parse_iso_datetime(tkt_updated_before, "tkt_updated_before")
 
-        include_resolved_bool = include_resolved != "false" if include_resolved else True
+        include_resolved_bool = include_resolved if include_resolved is not None else True
 
         # Find matching tickets
         tickets: List[Dict[str, Any]] = []
@@ -123,8 +123,8 @@ class GetCustomerTicketHistory(Tool):
                             "description": "The customer ID to retrieve ticket history for"
                         },
                         "include_resolved": {
-                            "type": "string",
-                            "description": "Include resolved/closed tickets. Set to \"false\" to exclude them (default: \"true\")"
+                            "type": "boolean",
+                            "description": "Include resolved/closed tickets. Set to false to exclude them (default: true)"
                         },
                         "tkt_created_after": {
                             "type": "string",
