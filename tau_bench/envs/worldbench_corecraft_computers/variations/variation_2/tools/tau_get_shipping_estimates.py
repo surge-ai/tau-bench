@@ -16,7 +16,7 @@ class GetShippingEstimates(Tool):
         """Get shipping cost and delivery time estimates for products."""
         product_table = data.get("product", {})
         if not isinstance(product_table, dict):
-            return json.dumps({"error": "Product data not available"})
+            return json.loads(json.dumps({"error": "Product data not available"}))
 
         # Calculate total weight
         total_weight = 0.0
@@ -25,7 +25,7 @@ class GetShippingEstimates(Tool):
         for pid in product_ids:
             product = product_table.get(pid)
             if not product:
-                return json.dumps({"error": f"Product {pid} not found"})
+                return json.loads(json.dumps({"error": f"Product {pid} not found"}))
 
             weight = float(product.get("weight", 0))
             total_weight += weight
@@ -105,7 +105,7 @@ class GetShippingEstimates(Tool):
             "destination_zip": destination_zip,
         }
 
-        return json.dumps(result)
+        return json.loads(json.dumps(result))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

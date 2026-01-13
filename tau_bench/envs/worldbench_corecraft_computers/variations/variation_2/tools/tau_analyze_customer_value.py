@@ -10,7 +10,7 @@ class AnalyzeCustomerValue(Tool):
         """Analyze customer value metrics: LTV, order frequency, average order value, support interactions."""
         customer_table = data.get("customer", {})
         if not isinstance(customer_table, dict) or customer_id not in customer_table:
-            return json.dumps({"error": f"Customer {customer_id} not found"})
+            return json.loads(json.dumps({"error": f"Customer {customer_id} not found"}))
 
         customer = customer_table[customer_id]
 
@@ -92,7 +92,7 @@ class AnalyzeCustomerValue(Tool):
             "customer_segment": _determine_segment(total_revenue, total_orders, len(customer_tickets)),
         }
 
-        return json.dumps(result)
+        return json.loads(json.dumps(result))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

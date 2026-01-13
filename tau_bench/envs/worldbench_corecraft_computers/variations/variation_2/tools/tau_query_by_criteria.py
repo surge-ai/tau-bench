@@ -36,11 +36,11 @@ class QueryByCriteria(Tool):
 
         data_key = entity_map.get(entity_type.lower())
         if not data_key:
-            return json.dumps({"error": f"Unknown entity type: {entity_type}"})
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
-            return json.dumps({"results": []})
+            return json.loads(json.dumps({"results": []}))
 
         # Iterate through entities and apply filters
         for entity in entity_table.values():
@@ -99,7 +99,7 @@ class QueryByCriteria(Tool):
                 if limit and len(results) >= limit:
                     break
 
-        return json.dumps({"results": results, "count": len(results)})
+        return json.loads(json.dumps({"results": results, "count": len(results)}))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

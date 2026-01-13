@@ -27,11 +27,11 @@ class AggregateByField(Tool):
 
         data_key = entity_map.get(entity_type.lower())
         if not data_key:
-            return json.dumps({"error": f"Unknown entity type: {entity_type}"})
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
-            return json.dumps({"aggregations": {}, "total": 0})
+            return json.loads(json.dumps({"aggregations": {}, "total": 0}))
 
         # Group by field value
         groups: Dict[str, List[Dict[str, Any]]] = {}
@@ -71,13 +71,13 @@ class AggregateByField(Tool):
 
             aggregations[group_value] = agg_result
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "entity_type": entity_type,
             "grouped_by": group_by_field,
             "aggregations": aggregations,
             "total_entities": sum(agg["count"] for agg in aggregations.values()),
             "unique_groups": len(aggregations),
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

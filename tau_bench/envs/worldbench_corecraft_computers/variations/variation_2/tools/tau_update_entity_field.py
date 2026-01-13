@@ -40,11 +40,11 @@ class UpdateEntityField(Tool):
 
         data_key = entity_map.get(entity_type.lower())
         if not data_key:
-            return json.dumps({"error": f"Unknown entity type: {entity_type}"})
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict) or entity_id not in entity_table:
-            return json.dumps({"error": f"{entity_type} {entity_id} not found"})
+            return json.loads(json.dumps({"error": f"{entity_type} {entity_id} not found"}))
 
         entity = entity_table[entity_id]
         old_value = entity.get(field_name)
@@ -56,7 +56,7 @@ class UpdateEntityField(Tool):
         if "updatedAt" in entity:
             entity["updatedAt"] = _now_iso_from_data(data)
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "success": True,
             "entity_type": entity_type,
             "entity_id": entity_id,
@@ -64,7 +64,7 @@ class UpdateEntityField(Tool):
             "old_value": old_value,
             "new_value": field_value,
             "updated_entity": entity,
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

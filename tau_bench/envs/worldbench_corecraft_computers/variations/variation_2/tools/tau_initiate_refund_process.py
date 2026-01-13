@@ -27,7 +27,7 @@ class InitiateRefundProcess(Tool):
         # Validate order exists
         order_table = data.get("order", {})
         if not isinstance(order_table, dict) or order_id not in order_table:
-            return json.dumps({"error": f"Order {order_id} not found"})
+            return json.loads(json.dumps({"error": f"Order {order_id} not found"}))
 
         order = order_table[order_id]
 
@@ -41,7 +41,7 @@ class InitiateRefundProcess(Tool):
                     break
 
         if not payment:
-            return json.dumps({"error": f"No payment found for order {order_id}"})
+            return json.loads(json.dumps({"error": f"No payment found for order {order_id}"}))
 
         payment_id = payment.get("id")
         payment_amount = float(payment.get("amount", 0))
@@ -53,16 +53,16 @@ class InitiateRefundProcess(Tool):
         else:
             refund_amount = float(amount)
             if refund_amount > payment_amount:
-                return json.dumps({
+                return json.loads(json.dumps({
                     "error": f"Refund amount ${refund_amount} exceeds payment amount ${payment_amount}"
-                })
+                }))
 
         # Validate products if specified
         if product_ids:
             order_product_ids = order.get("productIds", [])
             for pid in product_ids:
                 if pid not in order_product_ids:
-                    return json.dumps({"error": f"Product {pid} not found in order"})
+                    return json.loads(json.dumps({"error": f"Product {pid} not found in order"}))
 
         # Generate refund ID
         id_input = f"{payment_id}|{refund_amount}|{reason}"
@@ -89,11 +89,11 @@ class InitiateRefundProcess(Tool):
             data["refund"] = {}
         data["refund"][refund_id] = refund
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "success": True,
             "refund": refund,
             "message": f"Refund {refund_id} initiated for ${refund_amount}",
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

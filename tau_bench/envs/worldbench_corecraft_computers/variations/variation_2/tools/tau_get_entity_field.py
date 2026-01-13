@@ -31,32 +31,32 @@ class GetEntityField(Tool):
 
         data_key = entity_map.get(entity_type.lower())
         if not data_key:
-            return json.dumps({"error": f"Unknown entity type: {entity_type}"})
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict) or entity_id not in entity_table:
-            return json.dumps({"error": f"{entity_type} {entity_id} not found"})
+            return json.loads(json.dumps({"error": f"{entity_type} {entity_id} not found"}))
 
         entity = entity_table[entity_id]
 
         # If no fields specified, return all fields
         if not fields:
-            return json.dumps({
+            return json.loads(json.dumps({
                 "entity_id": entity_id,
                 "entity_type": entity_type,
                 "fields": entity,
-            })
+            }))
 
         # Extract specific fields
         field_values = {}
         for field in fields:
             field_values[field] = entity.get(field)
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "entity_id": entity_id,
             "entity_type": entity_type,
             "fields": field_values,
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

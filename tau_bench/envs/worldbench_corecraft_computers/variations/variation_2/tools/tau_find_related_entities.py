@@ -43,7 +43,7 @@ class FindRelatedEntities(Tool):
                 break
 
         if not source_entity:
-            return json.dumps({"error": f"Entity {entity_id} not found", "results": result})
+            return json.loads(json.dumps({"error": f"Entity {entity_id} not found", "results": result}))
 
         # Now find all related entities based on the source type
         customer_id = source_entity.get("customerId")
@@ -151,12 +151,12 @@ class FindRelatedEntities(Tool):
         # Calculate summary
         summary = {k: len(v) for k, v in result.items()}
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "source_entity_id": entity_id,
             "source_entity_type": source_type,
             "results": result,
             "summary": summary,
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

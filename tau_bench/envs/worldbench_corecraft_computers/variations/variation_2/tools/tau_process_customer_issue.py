@@ -28,7 +28,7 @@ class ProcessCustomerIssue(Tool):
         # Validate customer
         customer_table = data.get("customer", {})
         if not isinstance(customer_table, dict) or customer_id not in customer_table:
-            return json.dumps({"error": f"Customer {customer_id} not found"})
+            return json.loads(json.dumps({"error": f"Customer {customer_id} not found"}))
 
         customer = customer_table[customer_id]
 
@@ -36,7 +36,7 @@ class ProcessCustomerIssue(Tool):
         if order_id:
             order_table = data.get("order", {})
             if not isinstance(order_table, dict) or order_id not in order_table:
-                return json.dumps({"error": f"Order {order_id} not found"})
+                return json.loads(json.dumps({"error": f"Order {order_id} not found"}))
 
         # Determine priority based on issue type and customer loyalty
         priority_map = {
@@ -109,7 +109,7 @@ class ProcessCustomerIssue(Tool):
                 data["escalation"] = {}
             data["escalation"][escalation_id] = escalation
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "success": True,
             "ticket": ticket,
             "escalation": escalation,
@@ -117,7 +117,7 @@ class ProcessCustomerIssue(Tool):
             "priority": priority,
             "message": f"Issue processed: Ticket {ticket_id} created with {priority} priority" +
                       (f" and escalated to {escalation['destination']}" if escalation else ""),
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

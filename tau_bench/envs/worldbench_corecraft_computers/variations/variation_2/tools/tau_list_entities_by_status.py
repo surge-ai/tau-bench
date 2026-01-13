@@ -20,11 +20,11 @@ class ListEntitiesByStatus(Tool):
 
         data_key = entity_map.get(entity_type.lower())
         if not data_key:
-            return json.dumps({"error": f"Unknown entity type: {entity_type}"})
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
-            return json.dumps({"by_status": {}, "total": 0})
+            return json.loads(json.dumps({"by_status": {}, "total": 0}))
 
         # Group by status
         by_status: Dict[str, List[Dict[str, Any]]] = {}
@@ -41,12 +41,12 @@ class ListEntitiesByStatus(Tool):
         # Calculate counts
         status_counts = {status: len(entities) for status, entities in by_status.items()}
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "entity_type": entity_type,
             "by_status": by_status,
             "status_counts": status_counts,
             "total": sum(status_counts.values()),
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

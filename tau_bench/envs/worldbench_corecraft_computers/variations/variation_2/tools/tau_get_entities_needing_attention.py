@@ -69,11 +69,11 @@ class GetEntitiesNeedingAttention(Tool):
         summary = {k: len(v) for k, v in results.items()}
         total_items = sum(summary.values())
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "results": results,
             "summary": summary,
             "total_items_needing_attention": total_items,
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

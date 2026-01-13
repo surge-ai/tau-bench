@@ -32,11 +32,11 @@ class BulkStatusUpdate(Tool):
 
         data_key = entity_map.get(entity_type.lower())
         if not data_key:
-            return json.dumps({"error": f"Unknown entity type: {entity_type}"})
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
-            return json.dumps({"error": f"No {entity_type} data available"})
+            return json.loads(json.dumps({"error": f"No {entity_type} data available"}))
 
         results = {
             "updated": [],
@@ -80,7 +80,7 @@ class BulkStatusUpdate(Tool):
                 "new_status": status,
             })
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "success": len(results["updated"]) > 0,
             "entity_type": entity_type,
             "status": status,
@@ -91,7 +91,7 @@ class BulkStatusUpdate(Tool):
                 "not_found": len(results["not_found"]),
                 "errors": len(results["errors"]),
             },
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

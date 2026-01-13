@@ -29,11 +29,11 @@ class BatchEntityLookup(Tool):
 
         data_key = entity_map.get(entity_type.lower())
         if not data_key:
-            return json.dumps({"error": f"Unknown entity type: {entity_type}"})
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
-            return json.dumps({"found": [], "not_found": entity_ids, "count": 0})
+            return json.loads(json.dumps({"found": [], "not_found": entity_ids, "count": 0}))
 
         found = []
         not_found = []
@@ -44,12 +44,12 @@ class BatchEntityLookup(Tool):
             else:
                 not_found.append(entity_id)
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "entity_type": entity_type,
             "found": found,
             "not_found": not_found,
             "count": len(found),
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

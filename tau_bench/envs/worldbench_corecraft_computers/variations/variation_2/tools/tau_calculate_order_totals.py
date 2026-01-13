@@ -20,11 +20,11 @@ class CalculateOrderTotals(Tool):
             quantities = [1] * len(product_ids)
 
         if len(product_ids) != len(quantities):
-            return json.dumps({"error": "product_ids and quantities must have same length"})
+            return json.loads(json.dumps({"error": "product_ids and quantities must have same length"}))
 
         product_table = data.get("product", {})
         if not isinstance(product_table, dict):
-            return json.dumps({"error": "Product data not available"})
+            return json.loads(json.dumps({"error": "Product data not available"}))
 
         # Calculate subtotal
         subtotal = 0.0
@@ -119,7 +119,7 @@ class CalculateOrderTotals(Tool):
             "grand_total": round(total, 2),
         }
 
-        return json.dumps(result)
+        return json.loads(json.dumps(result))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

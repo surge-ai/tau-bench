@@ -27,7 +27,7 @@ class ResolveAndClose(Tool):
         # Validate ticket
         ticket_table = data.get("support_ticket", {})
         if not isinstance(ticket_table, dict) or ticket_id not in ticket_table:
-            return json.dumps({"error": f"Ticket {ticket_id} not found"})
+            return json.loads(json.dumps({"error": f"Ticket {ticket_id} not found"}))
 
         ticket = ticket_table[ticket_id]
         customer_id = ticket.get("customerId")
@@ -86,7 +86,7 @@ class ResolveAndClose(Tool):
                     data["notification"] = {}
                 data["notification"][notification_id] = notification
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "success": True,
             "resolution": resolution,
             "updated_ticket": ticket,
@@ -94,7 +94,7 @@ class ResolveAndClose(Tool):
             "customer_notified": notification is not None,
             "message": f"Ticket {ticket_id} resolved and closed" +
                       (" with customer notification sent" if notification else ""),
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

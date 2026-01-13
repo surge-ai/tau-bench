@@ -62,11 +62,11 @@ class LookupByReference(Tool):
                         results["employees"].append(employee)
 
         total_results = sum(len(v) for v in results.values())
-        return json.dumps({
+        return json.loads(json.dumps({
             "results": results,
             "total_count": total_results,
             "query": reference,
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:
