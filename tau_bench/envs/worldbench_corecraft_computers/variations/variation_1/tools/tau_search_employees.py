@@ -8,7 +8,11 @@ from .data_utils import (
     parse_entity_json_fields,
     matches_json_text_search,
     apply_limit,
+    validate_enum,
 )
+
+DEPARTMENTS = ["operations", "order_processing", "engineering", "help_desk", "it_systems", "product_management", "finance", "hr", "recruitment", "support"]
+PERMISSIONS = ["issue_refund", "edit_order", "cancel_order", "escalate", "kb_edit", "policy_override"]
 
 
 class SearchEmployees(Tool):
@@ -22,6 +26,9 @@ class SearchEmployees(Tool):
         has_permission: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        validate_enum(department, DEPARTMENTS, "department")
+        validate_enum(has_permission, PERMISSIONS, "has_permission")
+
         results: List[Dict[str, Any]] = []
 
         for row in iter_entities(data, "employee"):

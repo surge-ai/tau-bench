@@ -5,7 +5,11 @@ from tau_bench.envs.tool import Tool
 
 from .data_utils import (
     get_entity_by_id,
+    validate_enum,
 )
+
+LOYALTY_TIERS = ["silver", "gold", "platinum"]
+SHIPPING_SERVICES = ["standard", "express", "overnight"]
 
 
 class CalculatePrice(Tool):
@@ -18,6 +22,9 @@ class CalculatePrice(Tool):
         shipping_service: Optional[str] = None,
     ) -> str:
         """Calculate subtotal/discount/shipping/total for a list of products."""
+        validate_enum(loyalty_tier, LOYALTY_TIERS, "loyalty_tier")
+        validate_enum(shipping_service, SHIPPING_SERVICES, "shipping_service")
+
         if quantities is None:
             quantities = [1] * len(product_ids)
 

@@ -132,16 +132,14 @@ class TestSearchOrders(unittest.TestCase):
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["id"], "order1")
 
-    def test_search_orders_partial_match(self):
-        """Test that filters must match exactly (no partial matching)."""
-        result = SearchOrders.invoke(
-            self.data,
-            status="pai",  # Partial match should not work
-        )
-        result_list = json.loads(result)
-
-        # Should return empty list (exact match required)
-        self.assertEqual(len(result_list), 0)
+    def test_search_orders_invalid_status(self):
+        """Test that invalid status raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            SearchOrders.invoke(
+                self.data,
+                status="pai",  # Invalid status
+            )
+        self.assertIn("Invalid status", str(context.exception))
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

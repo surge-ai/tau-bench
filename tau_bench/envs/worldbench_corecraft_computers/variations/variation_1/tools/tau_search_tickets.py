@@ -9,7 +9,12 @@ from .data_utils import (
     get_datetime_field,
     matches_text_search,
     apply_limit,
+    validate_enum,
 )
+
+TICKET_STATUSES = ["new", "open", "pending_customer", "resolved", "closed"]
+TICKET_PRIORITIES = ["low", "normal", "high"]
+TICKET_TYPES = ["return", "troubleshooting", "recommendation", "order_issue", "shipping", "billing", "other"]
 
 
 class SearchTickets(Tool):
@@ -29,6 +34,10 @@ class SearchTickets(Tool):
         resolved_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        validate_enum(status, TICKET_STATUSES, "status")
+        validate_enum(priority, TICKET_PRIORITIES, "priority")
+        validate_enum(ticket_type, TICKET_TYPES, "ticket_type")
+
         results: List[Dict[str, Any]] = []
 
         # Parse date filters

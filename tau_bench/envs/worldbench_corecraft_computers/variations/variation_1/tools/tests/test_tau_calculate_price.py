@@ -121,28 +121,25 @@ class TestCalculatePrice(unittest.TestCase):
         self.assertEqual(result_dict["shipping"], 9.99)
         self.assertEqual(result_dict["total"], 349.99)
 
-    def test_loyalty_discount_case_insensitive(self):
-        """Test that loyalty tier is case-insensitive."""
-        result = CalculatePrice.invoke(
-            self.data,
-            product_ids=["prod1"],
-            loyalty_tier="GOLD",
-        )
-        result_dict = json.loads(result)
-
-        # Should still apply 10% discount
-        self.assertEqual(result_dict["discount"], 10.0)
-
     def test_loyalty_discount_invalid_tier(self):
-        """Test that invalid loyalty tier results in no discount."""
-        result = CalculatePrice.invoke(
-            self.data,
-            product_ids=["prod1"],
-            loyalty_tier="invalid",
-        )
-        result_dict = json.loads(result)
+        """Test that invalid loyalty tier raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            CalculatePrice.invoke(
+                self.data,
+                product_ids=["prod1"],
+                loyalty_tier="invalid",
+            )
+        self.assertIn("Invalid loyalty_tier", str(context.exception))
 
-        self.assertEqual(result_dict["discount"], 0.0)
+    def test_loyalty_discount_case_sensitive(self):
+        """Test that loyalty tier is case-sensitive (must match exactly)."""
+        with self.assertRaises(ValueError) as context:
+            CalculatePrice.invoke(
+                self.data,
+                product_ids=["prod1"],
+                loyalty_tier="GOLD",  # Should be "gold" (lowercase)
+            )
+        self.assertIn("Invalid loyalty_tier", str(context.exception))
 
     def test_shipping_standard(self):
         """Test standard shipping rate."""
@@ -188,15 +185,14 @@ class TestCalculatePrice(unittest.TestCase):
         self.assertEqual(result_dict["shipping"], 9.99)
 
     def test_shipping_invalid_service(self):
-        """Test that invalid shipping service defaults to standard."""
-        result = CalculatePrice.invoke(
-            self.data,
-            product_ids=["prod1"],
-            shipping_service="invalid",
-        )
-        result_dict = json.loads(result)
-
-        self.assertEqual(result_dict["shipping"], 9.99)
+        """Test that invalid shipping service raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            CalculatePrice.invoke(
+                self.data,
+                product_ids=["prod1"],
+                shipping_service="invalid",
+            )
+        self.assertIn("Invalid shipping_service", str(context.exception))
 
     def test_missing_product(self):
         """Test that missing products raise ValueError."""

@@ -9,7 +9,10 @@ from .data_utils import (
     parse_entity_json_fields,
     get_datetime_field,
     apply_limit,
+    validate_enum,
 )
+
+ORDER_STATUSES = ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded"]
 
 
 class SearchOrders(Tool):
@@ -23,6 +26,8 @@ class SearchOrders(Tool):
         created_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        validate_enum(status, ORDER_STATUSES, "status")
+
         results: List[Dict[str, Any]] = []
 
         # Parse date filters

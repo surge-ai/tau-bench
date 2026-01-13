@@ -8,7 +8,10 @@ from .data_utils import (
     parse_iso_datetime,
     get_datetime_field,
     apply_limit,
+    validate_enum,
 )
+
+PAYMENT_STATUSES = ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"]
 
 
 class SearchPayments(Tool):
@@ -23,6 +26,8 @@ class SearchPayments(Tool):
         processed_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        validate_enum(status, PAYMENT_STATUSES, "status")
+
         results: List[Dict[str, Any]] = []
 
         # Parse date filters, will be None if _before or _after is None

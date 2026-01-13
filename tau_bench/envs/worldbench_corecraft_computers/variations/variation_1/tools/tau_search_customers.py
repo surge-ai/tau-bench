@@ -10,7 +10,10 @@ from .data_utils import (
     get_datetime_field,
     matches_json_text_search,
     apply_limit,
+    validate_enum,
 )
+
+LOYALTY_TIERS = ["none", "silver", "gold", "platinum"]
 
 
 class SearchCustomers(Tool):
@@ -27,6 +30,8 @@ class SearchCustomers(Tool):
         created_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        validate_enum(loyalty_tier, LOYALTY_TIERS, "loyalty_tier")
+
         results: List[Dict[str, Any]] = []
 
         # Parse date filters

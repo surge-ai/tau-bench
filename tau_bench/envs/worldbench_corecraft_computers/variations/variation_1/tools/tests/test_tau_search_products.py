@@ -342,12 +342,21 @@ class TestSearchProducts(unittest.TestCase):
         """Test search with filters that match no products."""
         result = SearchProducts.invoke(
             self.data,
-            category="nonexistent_category",
+            brand="nonexistent_brand",
         )
         result_list = json.loads(result)
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)
+
+    def test_search_products_invalid_category(self):
+        """Test that invalid category raises ValueError."""
+        with self.assertRaises(ValueError) as context:
+            SearchProducts.invoke(
+                self.data,
+                category="nonexistent_category",
+            )
+        self.assertIn("Invalid category", str(context.exception))
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

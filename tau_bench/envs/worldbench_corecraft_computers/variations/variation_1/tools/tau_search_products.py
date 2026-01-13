@@ -8,7 +8,10 @@ from .data_utils import (
     parse_entity_json_fields,
     matches_text_search,
     apply_limit,
+    validate_enum,
 )
+
+PRODUCT_CATEGORIES = ["cpu", "motherboard", "gpu", "memory", "storage", "psu", "case", "cooling", "prebuilt", "workstation", "monitor", "keyboard", "mouse", "headset", "networking", "cable", "accessory", "bundle"]
 
 
 def _get_inventory_in_stock(entity: Dict[str, Any]) -> Optional[int]:
@@ -42,6 +45,8 @@ class SearchProducts(Tool):
         limit: Optional[float] = None,
         product_id: Optional[str] = None,
     ) -> str:
+        validate_enum(category, PRODUCT_CATEGORIES, "category")
+
         results: List[Dict[str, Any]] = []
 
         for row in iter_entities(data, "product"):
