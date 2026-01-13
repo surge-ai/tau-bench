@@ -21,16 +21,14 @@ class ResolveAndClose(Tool):
         ticket_id: str,
         resolution_type: str,
         resolution_notes: str,
-        notify_customer: bool = True,
     ) -> str:
-        """Workflow tool: Create resolution, close ticket, and optionally send notification - all in one step."""
+        """Workflow tool: Create resolution and close ticket in one atomic operation."""
         # Validate ticket
         ticket_table = data.get("support_ticket", {})
         if not isinstance(ticket_table, dict) or ticket_id not in ticket_table:
             return json.loads(json.dumps({"error": f"Ticket {ticket_id} not found"}))
 
         ticket = ticket_table[ticket_id]
-        customer_id = ticket.get("customerId")
 
         # Create resolution
         res_id_input = f"{ticket_id}|{resolution_type}|{_now_iso_from_data(data)}"
@@ -56,44 +54,11 @@ class ResolveAndClose(Tool):
         ticket["resolvedAt"] = _now_iso_from_data(data)
         ticket["updatedAt"] = _now_iso_from_data(data)
 
-        # Send notification if requested
-        notification = None
-        if notify_customer and customer_id:
-            customer_table = data.get("customer", {})
-            if isinstance(customer_table, dict) and customer_id in customer_table:
-                customer = customer_table[customer_id]
-
-                notif_id_input = f"{customer_id}|ticket_resolved|{_now_iso_from_data(data)}"
-                notif_id_hash = hashlib.sha256(notif_id_input.encode()).hexdigest()[:12]
-                notification_id = f"notif_{notif_id_hash}"
-
-                notification = {
-                    "id": notification_id,
-                    "type": "notification",
-                    "recipientId": customer_id,
-                    "recipientType": "customer",
-                    "recipientEmail": customer.get("email"),
-                    "subject": f"Your ticket {ticket_id} has been resolved",
-                    "message": f"Your issue has been resolved: {resolution_notes}",
-                    "channel": "email",
-                    "status": "sent",
-                    "relatedEntityType": "ticket",
-                    "relatedEntityId": ticket_id,
-                    "sentAt": _now_iso_from_data(data),
-                }
-
-                if "notification" not in data or not isinstance(data["notification"], dict):
-                    data["notification"] = {}
-                data["notification"][notification_id] = notification
-
         return json.loads(json.dumps({
             "success": True,
             "resolution": resolution,
             "updated_ticket": ticket,
-            "notification": notification,
-            "customer_notified": notification is not None,
-            "message": f"Ticket {ticket_id} resolved and closed" +
-                      (" with customer notification sent" if notification else ""),
+            "message": f"Ticket {ticket_id} resolved and closed",
         }))
 
     @staticmethod
@@ -102,7 +67,7 @@ class ResolveAndClose(Tool):
             "type": "function",
             "function": {
                 "name": "resolve_and_close",
-                "description": "Workflow tool: Create resolution, close ticket, and optionally notify customer - all in one atomic operation.",
+                "description": "Workflow tool: Create resolution and close ticket in one atomic operation.",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -117,10 +82,6 @@ class ResolveAndClose(Tool):
                         "resolution_notes": {
                             "type": "string",
                             "description": "Detailed notes about how the issue was resolved.",
-                        },
-                        "notify_customer": {
-                            "type": "boolean",
-                            "description": "Whether to send notification to customer (default: true).",
                         },
                     },
                     "required": ["ticket_id", "resolution_type", "resolution_notes"],

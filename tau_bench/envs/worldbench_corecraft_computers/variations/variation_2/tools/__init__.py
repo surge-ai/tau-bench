@@ -31,9 +31,6 @@ from .tau_process_customer_issue import ProcessCustomerIssue
 from .tau_resolve_and_close import ResolveAndClose
 from .tau_initiate_refund_process import InitiateRefundProcess
 
-# Communication (1)
-from .tau_send_notification import SendNotification
-
 ALL_TOOLS = [
     # Generic Query & Lookup (4)
     QueryByCriteria,
@@ -59,6 +56,4 @@ ALL_TOOLS = [
     ProcessCustomerIssue,
     ResolveAndClose,
     InitiateRefundProcess,
-    # Communication (1)
-    SendNotification,
 ]
