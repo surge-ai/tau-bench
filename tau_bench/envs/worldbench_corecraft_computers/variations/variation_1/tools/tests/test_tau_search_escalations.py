@@ -1,4 +1,3 @@
-import json
 import unittest
 from typing import Dict, Any
 
@@ -51,8 +50,7 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_no_filters(self):
         """Test searching escalations with no filters."""
-        result = SearchEscalations.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = SearchEscalations.invoke(self.data)
 
         # Should return all escalations (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -69,33 +67,30 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_by_escalation_id(self):
         """Test searching escalations by escalation ID."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             escalation_id="escalation1",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["id"], "escalation1")
 
     def test_search_escalations_by_ticket_id(self):
         """Test searching escalations by ticket ID."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             ticket_id="tick-002",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["ticketId"], "tick-002")
 
     def test_search_escalations_by_escalation_type(self):
         """Test searching escalations by escalation type."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             escalation_type="product_specialist",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
         for escalation in result_list:
@@ -103,11 +98,10 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_by_destination(self):
         """Test searching escalations by destination."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             destination="product_management",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
         for escalation in result_list:
@@ -115,11 +109,10 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_by_notes_text(self):
         """Test searching escalations by notes text (case-insensitive)."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             notes_text="GPU",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
         for escalation in result_list:
@@ -127,21 +120,19 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_by_notes_text_case_insensitive(self):
         """Test that notes text search is case-insensitive."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             notes_text="gpu",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
 
     def test_search_escalations_filter_created_after(self):
         """Test filtering escalations created after a date."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             created_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
 
         # Should only include escalations created on or after 2025-09-02
         self.assertEqual(len(result_list), 3)
@@ -150,22 +141,20 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_filter_created_before(self):
         """Test filtering escalations created before a date."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             created_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
 
         # Should only include escalations created before the date
         self.assertEqual(len(result_list), 2)
 
     def test_search_escalations_filter_resolved_after(self):
         """Test filtering escalations resolved after a date."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             resolved_after="2025-09-01T10:00:00Z",
         )
-        result_list = json.loads(result)
 
         # Should only include escalations resolved on or after the date (excludes None resolvedAt)
         self.assertEqual(len(result_list), 2)
@@ -175,23 +164,21 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_filter_resolved_before(self):
         """Test filtering escalations resolved before a date."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             resolved_before="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
 
         # Should only include escalations resolved before the date
         self.assertEqual(len(result_list), 1)
 
     def test_search_escalations_multiple_filters(self):
         """Test searching with multiple filters."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             escalation_type="product_specialist",
             destination="product_management",
         )
-        result_list = json.loads(result)
 
         # Should match escalations that satisfy all filters
         self.assertEqual(len(result_list), 2)
@@ -201,38 +188,34 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_with_limit(self):
         """Test limiting the number of results."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
 
     def test_search_escalations_limit_max_200(self):
         """Test that limit is capped at 200."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
 
     def test_search_escalations_default_limit(self):
         """Test that default limit is 50."""
-        result = SearchEscalations.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = SearchEscalations.invoke(self.data)
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
 
     def test_search_escalations_sorted_by_created_at(self):
         """Test that results are sorted by createdAt DESC, then id ASC."""
-        result = SearchEscalations.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = SearchEscalations.invoke(self.data)
 
         if len(result_list) >= 2:
             # Check that escalations are sorted by createdAt descending
@@ -250,11 +233,10 @@ class TestSearchEscalations(unittest.TestCase):
 
     def test_search_escalations_no_results(self):
         """Test search with filters that match no escalations."""
-        result = SearchEscalations.invoke(
+        result_list = SearchEscalations.invoke(
             self.data,
             escalation_id="nonexistent",
         )
-        result_list = json.loads(result)
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)
