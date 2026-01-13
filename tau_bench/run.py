@@ -72,6 +72,7 @@ def run(config: RunConfig) -> List[EnvRunResult]:
                 task_split=config.task_split,
                 user_provider=config.user_model_provider,
                 task_index=idx,
+                variation=config.variation,
             )
 
             print(f"Running task {idx}")

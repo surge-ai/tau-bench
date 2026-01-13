@@ -37,6 +37,11 @@ class MockCorecraftComputersEnv(Env):
                     from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tasks_test import TASKS_TEST as tasks
                 elif variation == "variation_2":
                     from tau_bench.envs.worldbench_corecraft_computers.variations.variation_2.tasks_test import TASKS_TEST as tasks
+            case "simple":
+                if variation == "variation_1":
+                    from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tasks_simple import TASKS_SIMPLE as tasks
+                elif variation == "variation_2":
+                    from tau_bench.envs.worldbench_corecraft_computers.variations.variation_2.tasks_simple import TASKS_SIMPLE as tasks
             case _:
                 raise ValueError(f"Unknown task split: {task_split}")
 
