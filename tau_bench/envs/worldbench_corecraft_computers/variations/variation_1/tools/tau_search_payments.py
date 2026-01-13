@@ -70,7 +70,7 @@ class SearchPayments(Tool):
         # Apply limit
         results = apply_limit(results, limit)
 
-        return json.dumps(results, default=str)
+        return json.loads(json.dumps(results, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

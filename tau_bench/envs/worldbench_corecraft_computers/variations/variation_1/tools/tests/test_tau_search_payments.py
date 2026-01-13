@@ -56,7 +56,7 @@ class TestSearchPayments(unittest.TestCase):
     def test_search_payments_no_filters(self):
         """Test searching payments with no filters."""
         result = SearchPayments.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all payments (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -75,7 +75,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return payments for order1
         self.assertEqual(len(result_list), 2)
@@ -88,7 +88,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             status="captured",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return payments with captured status
         self.assertEqual(len(result_list), 2)
@@ -101,7 +101,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             created_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include payments created on or after 2025-09-02
         self.assertEqual(len(result_list), 3)
@@ -114,7 +114,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             created_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include payments created before the date
         self.assertEqual(len(result_list), 2)
@@ -125,7 +125,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             processed_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include payments processed on or after the date
         self.assertEqual(len(result_list), 2)
@@ -139,7 +139,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             processed_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include payments processed before the date
         self.assertEqual(len(result_list), 2)
@@ -151,7 +151,7 @@ class TestSearchPayments(unittest.TestCase):
             order_id="order1",
             status="captured",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match payments that satisfy all filters
         self.assertEqual(len(result_list), 1)
@@ -164,7 +164,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -175,7 +175,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
@@ -183,7 +183,7 @@ class TestSearchPayments(unittest.TestCase):
     def test_search_payments_default_limit(self):
         """Test that default limit is 50."""
         result = SearchPayments.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -191,7 +191,7 @@ class TestSearchPayments(unittest.TestCase):
     def test_search_payments_sorted_by_created_at(self):
         """Test that results are sorted by createdAt DESC, then id ASC."""
         result = SearchPayments.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that payments are sorted by createdAt descending
@@ -213,7 +213,7 @@ class TestSearchPayments(unittest.TestCase):
             self.data,
             order_id="nonexistent",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)

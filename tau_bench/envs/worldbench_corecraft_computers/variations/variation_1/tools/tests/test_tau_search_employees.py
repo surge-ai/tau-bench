@@ -52,7 +52,7 @@ class TestSearchEmployees(unittest.TestCase):
     def test_search_employees_no_filters(self):
         """Test searching employees with no filters."""
         result = SearchEmployees.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all employees (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -71,7 +71,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             employee_id="employee1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return exactly one employee
         self.assertEqual(len(result_list), 1)
@@ -84,7 +84,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             name="John",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find employees with "John" in name
         self.assertGreater(len(result_list), 0)
@@ -97,7 +97,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             department="engineering",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return employees in engineering department
         self.assertEqual(len(result_list), 2)
@@ -110,7 +110,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             role="Engineer",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find employees with "Engineer" in title
         self.assertEqual(len(result_list), 2)
@@ -123,7 +123,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             has_permission="edit_order",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return employees with edit_order permission
         self.assertEqual(len(result_list), 2)
@@ -144,7 +144,7 @@ class TestSearchEmployees(unittest.TestCase):
             department="engineering",
             role="Engineer",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match employees that satisfy all filters
         self.assertEqual(len(result_list), 2)
@@ -158,7 +158,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -169,7 +169,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
@@ -177,7 +177,7 @@ class TestSearchEmployees(unittest.TestCase):
     def test_search_employees_default_limit(self):
         """Test that default limit is 50."""
         result = SearchEmployees.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -188,7 +188,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             employee_id="employee1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find employee1
         self.assertEqual(len(result_list), 1)
@@ -203,7 +203,7 @@ class TestSearchEmployees(unittest.TestCase):
     def test_search_employees_sorted_by_name(self):
         """Test that results are sorted by name ASC, then id ASC."""
         result = SearchEmployees.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that employees are sorted by name
@@ -225,7 +225,7 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             employee_id="nonexistent",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)

@@ -123,13 +123,13 @@ class GetOrderDetails(Tool):
         tickets.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
         tickets.sort(key=lambda x: x.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "order": formatted_order,
             "payment": payment,
             "shipment": shipment,
             "customer": customer,
             "tickets": tickets
-        }, default=str)
+        }, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

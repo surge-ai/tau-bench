@@ -127,11 +127,11 @@ class CheckWarrantyStatus(Tool):
             days_remaining = max(math.ceil(time_diff_seconds / 86400), 0)
             is_under_warranty = True
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "is_under_warranty": is_under_warranty,
             "warranty_end_date": warranty_end_str,
             "days_remaining": max(days_remaining, 0) if is_under_warranty else 0
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

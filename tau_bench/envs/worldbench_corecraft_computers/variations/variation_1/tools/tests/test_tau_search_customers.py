@@ -70,7 +70,7 @@ class TestSearchCustomers(unittest.TestCase):
     def test_search_customers_no_filters(self):
         """Test searching customers with no filters."""
         result = SearchCustomers.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all customers (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -89,7 +89,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["id"], "customer1")
@@ -101,7 +101,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             name="John",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find customers with "John" in name
         self.assertGreater(len(result_list), 0)
@@ -114,7 +114,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             email="jane@example.com",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["email"], "jane@example.com")
@@ -125,7 +125,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             phone="(555) 123-4567",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["phone"], "(555) 123-4567")
@@ -136,7 +136,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             loyalty_tier="gold",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return customers with gold tier
         self.assertGreater(len(result_list), 0)
@@ -149,7 +149,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             address_text="New York",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find customers with "New York" in addresses
         self.assertGreater(len(result_list), 0)
@@ -165,7 +165,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             created_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include customers created on or after 2025-09-02
         self.assertGreater(len(result_list), 0)
@@ -178,7 +178,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             created_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include customers created before the date
         self.assertGreater(len(result_list), 0)
@@ -191,7 +191,7 @@ class TestSearchCustomers(unittest.TestCase):
             name="John",
             loyalty_tier="gold",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match customers that satisfy all filters
         for customer in result_list:
@@ -204,7 +204,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -215,7 +215,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
@@ -223,7 +223,7 @@ class TestSearchCustomers(unittest.TestCase):
     def test_search_customers_default_limit(self):
         """Test that default limit is 50."""
         result = SearchCustomers.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -234,7 +234,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         self.assertEqual(len(result_list), 1)
         customer1 = result_list[0]
@@ -247,7 +247,7 @@ class TestSearchCustomers(unittest.TestCase):
     def test_search_customers_sorted_by_name(self):
         """Test that results are sorted by name ASC, then id ASC."""
         result = SearchCustomers.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that customers are sorted by name
@@ -269,7 +269,7 @@ class TestSearchCustomers(unittest.TestCase):
             self.data,
             customer_id="nonexistent",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)

@@ -68,7 +68,7 @@ class TestGetProduct(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertIsNotNone(result_dict)
         self.assertEqual(result_dict["id"], "prod1")
@@ -94,7 +94,7 @@ class TestGetProduct(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # inventory should be parsed from JSON string to dict
         self.assertIn("inventory", result_dict)
@@ -108,7 +108,7 @@ class TestGetProduct(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # specs should be parsed from JSON string to dict
         self.assertIn("specs", result_dict)
@@ -122,7 +122,7 @@ class TestGetProduct(unittest.TestCase):
             self.data,
             product_id="prod3",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should still return the product
         self.assertIsNotNone(result_dict)
@@ -134,7 +134,7 @@ class TestGetProduct(unittest.TestCase):
             self.data,
             product_id="prod3",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should still return the product
         self.assertIsNotNone(result_dict)
@@ -146,7 +146,7 @@ class TestGetProduct(unittest.TestCase):
             self.data,
             product_id="prod2",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Check all fields
         self.assertEqual(result_dict["id"], "prod2")
@@ -183,7 +183,7 @@ class TestGetProduct(unittest.TestCase):
             data_invalid_json,
             product_id="prod_invalid",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should still return the product, with invalid JSON as strings
         self.assertIsNotNone(result_dict)

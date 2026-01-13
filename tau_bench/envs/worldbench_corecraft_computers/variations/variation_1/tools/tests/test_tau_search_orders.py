@@ -40,7 +40,7 @@ class TestSearchOrders(unittest.TestCase):
     def test_search_orders_no_filters(self):
         """Test searching orders with no filters."""
         result = SearchOrders.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all orders
         self.assertIsInstance(result_list, list)
@@ -59,7 +59,7 @@ class TestSearchOrders(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return exactly one order
         self.assertEqual(len(result_list), 1)
@@ -72,7 +72,7 @@ class TestSearchOrders(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return orders for customer1
         self.assertEqual(len(result_list), 2)
@@ -85,7 +85,7 @@ class TestSearchOrders(unittest.TestCase):
             self.data,
             status="paid",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return orders with paid status
         self.assertEqual(len(result_list), 2)
@@ -99,7 +99,7 @@ class TestSearchOrders(unittest.TestCase):
             customer_id="customer1",
             status="paid",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match orders that satisfy all filters
         self.assertEqual(len(result_list), 1)
@@ -113,7 +113,7 @@ class TestSearchOrders(unittest.TestCase):
             self.data,
             order_id="nonexistent",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)
@@ -126,7 +126,7 @@ class TestSearchOrders(unittest.TestCase):
             customer_id="customer1",
             status="paid",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return order1
         self.assertEqual(len(result_list), 1)

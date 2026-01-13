@@ -64,7 +64,7 @@ class CalculatePrice(Tool):
             "shipping": shipping,
             "total": round(total * 100) / 100,
         }
-        return json.dumps(result)
+        return json.loads(json.dumps(result))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

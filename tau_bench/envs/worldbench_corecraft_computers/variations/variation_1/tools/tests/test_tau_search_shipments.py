@@ -55,7 +55,7 @@ class TestSearchShipments(unittest.TestCase):
     def test_search_shipments_no_filters(self):
         """Test searching shipments with no filters."""
         result = SearchShipments.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all shipments (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -73,7 +73,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return shipments for order1
         self.assertEqual(len(result_list), 2)
@@ -86,7 +86,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             tracking_number="TRACK123",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return shipment with matching tracking number
         self.assertEqual(len(result_list), 1)
@@ -98,7 +98,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             created_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include shipments created on or after 2025-09-02
         self.assertEqual(len(result_list), 2)
@@ -111,7 +111,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             created_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include shipments created before the date
         self.assertEqual(len(result_list), 2)
@@ -123,7 +123,7 @@ class TestSearchShipments(unittest.TestCase):
             order_id="order1",
             created_after="2025-09-01T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match shipments that satisfy all filters
         self.assertEqual(len(result_list), 2)
@@ -136,7 +136,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -147,7 +147,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
@@ -155,7 +155,7 @@ class TestSearchShipments(unittest.TestCase):
     def test_search_shipments_default_limit(self):
         """Test that default limit is 50."""
         result = SearchShipments.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -166,7 +166,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             tracking_number="TRACK123",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find shipment1
         self.assertEqual(len(result_list), 1)
@@ -181,7 +181,7 @@ class TestSearchShipments(unittest.TestCase):
     def test_search_shipments_sorted_by_created_at(self):
         """Test that results are sorted by createdAt DESC, then id ASC."""
         result = SearchShipments.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that shipments are sorted by createdAt descending
@@ -203,7 +203,7 @@ class TestSearchShipments(unittest.TestCase):
             self.data,
             order_id="nonexistent",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)

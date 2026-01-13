@@ -37,7 +37,7 @@ class TestSearchBuilds(unittest.TestCase):
     def test_search_builds_no_filters(self):
         """Test searching builds with no filters."""
         result = SearchBuilds.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all builds (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -56,7 +56,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             name="Gaming",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find builds with "Gaming" in name
         self.assertEqual(len(result_list), 2)
@@ -69,7 +69,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return builds for customer1
         self.assertEqual(len(result_list), 2)
@@ -82,7 +82,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             created_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include builds created on or after 2025-09-02
         self.assertEqual(len(result_list), 2)
@@ -95,7 +95,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             created_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include builds created before the date
         self.assertEqual(len(result_list), 2)
@@ -110,7 +110,7 @@ class TestSearchBuilds(unittest.TestCase):
             customer_id="customer1",
             created_after="2025-09-01T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match builds that satisfy all filters
         # - name="Gaming": matches build1, build3 (2 builds)
@@ -129,7 +129,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -140,7 +140,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
@@ -148,7 +148,7 @@ class TestSearchBuilds(unittest.TestCase):
     def test_search_builds_default_limit(self):
         """Test that default limit is 50."""
         result = SearchBuilds.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -159,7 +159,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             name="Gaming PC Build",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find build1
         self.assertGreater(len(result_list), 0)
@@ -189,7 +189,7 @@ class TestSearchBuilds(unittest.TestCase):
             data_with_empty,
             name="Empty Build",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find the build with empty componentIds
         self.assertEqual(len(result_list), 1)
@@ -202,7 +202,7 @@ class TestSearchBuilds(unittest.TestCase):
     def test_search_builds_sorted_by_name(self):
         """Test that results are sorted by name ASC, then id ASC."""
         result = SearchBuilds.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that builds are sorted by name
@@ -224,7 +224,7 @@ class TestSearchBuilds(unittest.TestCase):
             self.data,
             customer_id="nonexistent",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)
@@ -247,7 +247,7 @@ class TestSearchBuilds(unittest.TestCase):
             data_invalid_json,
             name="Invalid JSON Build",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should still return the build, with invalid JSON kept as string
         self.assertEqual(len(result_list), 1)

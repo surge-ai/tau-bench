@@ -40,7 +40,7 @@ class TestCalculatePrice(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertEqual(result_dict["subtotal"], 100.0)
         self.assertEqual(result_dict["discount"], 0.0)
@@ -54,7 +54,7 @@ class TestCalculatePrice(unittest.TestCase):
             product_ids=["prod1", "prod2"],
             quantities=[2, 3],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # prod1: 100 * 2 = 200, prod2: 50 * 3 = 150, total = 350
         self.assertEqual(result_dict["subtotal"], 350.0)
@@ -68,7 +68,7 @@ class TestCalculatePrice(unittest.TestCase):
             self.data,
             product_ids=["prod1", "prod2", "prod3"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # All quantities default to 1: 100 + 50 + 200 = 350
         self.assertEqual(result_dict["subtotal"], 350.0)
@@ -81,7 +81,7 @@ class TestCalculatePrice(unittest.TestCase):
             quantities=[1],
             loyalty_tier="silver",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # 100 * 0.05 = 5 discount
         self.assertEqual(result_dict["subtotal"], 100.0)
@@ -97,7 +97,7 @@ class TestCalculatePrice(unittest.TestCase):
             quantities=[1, 1],
             loyalty_tier="gold",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Subtotal: 150, discount: 150 * 0.1 = 15
         self.assertEqual(result_dict["subtotal"], 150.0)
@@ -113,7 +113,7 @@ class TestCalculatePrice(unittest.TestCase):
             quantities=[2],
             loyalty_tier="platinum",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Subtotal: 400, discount: 400 * 0.15 = 60
         self.assertEqual(result_dict["subtotal"], 400.0)
@@ -148,7 +148,7 @@ class TestCalculatePrice(unittest.TestCase):
             product_ids=["prod1"],
             shipping_service="standard",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertEqual(result_dict["shipping"], 9.99)
 
@@ -159,7 +159,7 @@ class TestCalculatePrice(unittest.TestCase):
             product_ids=["prod1"],
             shipping_service="express",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertEqual(result_dict["shipping"], 19.99)
 
@@ -170,7 +170,7 @@ class TestCalculatePrice(unittest.TestCase):
             product_ids=["prod1"],
             shipping_service="overnight",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertEqual(result_dict["shipping"], 39.99)
 
@@ -180,7 +180,7 @@ class TestCalculatePrice(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertEqual(result_dict["shipping"], 9.99)
 
@@ -223,7 +223,7 @@ class TestCalculatePrice(unittest.TestCase):
             loyalty_tier="platinum",
             shipping_service="express",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Subtotal: (100*2) + (50*1) + (200*3) = 200 + 50 + 600 = 850
         # Discount: 850 * 0.15 = 127.5
@@ -240,7 +240,7 @@ class TestCalculatePrice(unittest.TestCase):
             self.data,
             product_ids=[],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertEqual(result_dict["subtotal"], 0.0)
         self.assertEqual(result_dict["discount"], 0.0)
@@ -267,7 +267,7 @@ class TestCalculatePrice(unittest.TestCase):
             product_ids=["prod_decimal"],
             quantities=[3],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # 33.333 * 3 = 99.999, should round to 100.0
         self.assertEqual(result_dict["subtotal"], 100.0)

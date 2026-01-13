@@ -38,7 +38,7 @@ class ValidateBuildCompatibility(Tool):
         missing_products = [pid for pid in product_ids if pid not in found_ids]
         if missing_products:
             errors.append(f"Products not found: {', '.join(missing_products)}")
-            return json.dumps({"is_compatible": False, "errors": errors, "warnings": warnings})
+            return json.loads(json.dumps({"is_compatible": False, "errors": errors, "warnings": warnings}))
 
         # Categorize products and sort by id for deterministic behavior
         def by_id(p: Dict[str, Any]) -> str:
@@ -195,11 +195,11 @@ class ValidateBuildCompatibility(Tool):
         elif cpus or gpus:
             warnings.append("No PSU selected")
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "is_compatible": len(errors) == 0,
             "errors": errors,
             "warnings": warnings
-        })
+        }))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

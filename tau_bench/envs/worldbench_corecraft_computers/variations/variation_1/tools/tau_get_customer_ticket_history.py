@@ -102,11 +102,11 @@ class GetCustomerTicketHistory(Tool):
                     "details": r.get("details"),
                 })
 
-        return json.dumps({
+        return json.loads(json.dumps({
             "tickets": tickets,
             "escalations": escalations,
             "resolutions": resolutions
-        }, default=str)
+        }, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

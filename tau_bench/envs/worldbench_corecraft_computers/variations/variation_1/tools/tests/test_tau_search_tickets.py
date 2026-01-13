@@ -52,7 +52,7 @@ class TestSearchTickets(unittest.TestCase):
     def test_search_tickets_no_filters(self):
         """Test searching tickets with no filters."""
         result = SearchTickets.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all tickets (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -71,7 +71,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             ticket_id="ticket1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return exactly one ticket
         self.assertEqual(len(result_list), 1)
@@ -83,7 +83,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return tickets for customer1
         self.assertEqual(len(result_list), 2)
@@ -96,7 +96,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             assigned_employee_id="employee1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return tickets assigned to employee1
         self.assertEqual(len(result_list), 1)
@@ -108,7 +108,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             status="open",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return tickets with open status
         self.assertEqual(len(result_list), 1)
@@ -120,7 +120,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             priority="high",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return tickets with high priority
         self.assertEqual(len(result_list), 1)
@@ -132,7 +132,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             ticket_type="troubleshooting",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return tickets with troubleshooting type
         self.assertEqual(len(result_list), 1)
@@ -144,7 +144,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             text="boot",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find tickets with "boot" in subject or body
         self.assertEqual(len(result_list), 1)
@@ -156,7 +156,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             created_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include tickets created on or after 2025-09-02
         self.assertEqual(len(result_list), 2)
@@ -169,7 +169,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             created_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include tickets created before the date
         self.assertEqual(len(result_list), 2)
@@ -180,7 +180,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             resolved_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include tickets updated on or after the date
         self.assertEqual(len(result_list), 2)
@@ -191,7 +191,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             resolved_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include tickets updated before the date
         self.assertEqual(len(result_list), 2)
@@ -204,7 +204,7 @@ class TestSearchTickets(unittest.TestCase):
             status="open",
             priority="high",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match tickets that satisfy all filters
         self.assertEqual(len(result_list), 1)
@@ -218,7 +218,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -229,7 +229,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
@@ -237,7 +237,7 @@ class TestSearchTickets(unittest.TestCase):
     def test_search_tickets_default_limit(self):
         """Test that default limit is 50."""
         result = SearchTickets.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -245,7 +245,7 @@ class TestSearchTickets(unittest.TestCase):
     def test_search_tickets_sorted_by_priority(self):
         """Test that results are sorted by priority (high -> normal -> low), then createdAt DESC."""
         result = SearchTickets.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that tickets are sorted by priority first
@@ -277,7 +277,7 @@ class TestSearchTickets(unittest.TestCase):
             self.data,
             ticket_id="nonexistent",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)

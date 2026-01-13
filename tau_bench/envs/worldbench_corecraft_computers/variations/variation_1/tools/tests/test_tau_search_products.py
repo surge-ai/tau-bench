@@ -77,7 +77,7 @@ class TestSearchProducts(unittest.TestCase):
     def test_search_products_no_filters(self):
         """Test searching products with no filters."""
         result = SearchProducts.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all products (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -96,7 +96,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             category="cpu",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products in cpu category
         self.assertEqual(len(result_list), 1)
@@ -108,7 +108,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             brand="BrandA",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products from BrandA
         self.assertEqual(len(result_list), 2)
@@ -121,7 +121,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return exactly one product
         self.assertEqual(len(result_list), 1)
@@ -133,7 +133,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             min_price=150.0,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products with price >= 150.0
         self.assertEqual(len(result_list), 2)
@@ -146,7 +146,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             max_price=100.0,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products with price <= 100.0
         self.assertEqual(len(result_list), 2)
@@ -159,7 +159,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             price=100.0,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products with price == 100.0
         self.assertEqual(len(result_list), 1)
@@ -172,7 +172,7 @@ class TestSearchProducts(unittest.TestCase):
             min_price=50.0,
             max_price=150.0,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products with price between 50.0 and 150.0
         self.assertEqual(len(result_list), 3)
@@ -186,7 +186,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             inStockOnly="true",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products with inventory > 0
         self.assertEqual(len(result_list), 3)
@@ -202,7 +202,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             minStock=10,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products with stock >= 10
         self.assertEqual(len(result_list), 2)
@@ -218,7 +218,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             maxStock=10,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return products with stock <= 10
         self.assertEqual(len(result_list), 3)
@@ -234,7 +234,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             text="CPU",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find products with "CPU" in name, brand, or SKU
         self.assertEqual(len(result_list), 1)
@@ -248,7 +248,7 @@ class TestSearchProducts(unittest.TestCase):
             brand="BrandA",
             min_price=50.0,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match products that satisfy all filters
         self.assertEqual(len(result_list), 1)
@@ -262,7 +262,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -273,7 +273,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results (but we only have 4)
         self.assertLessEqual(len(result_list), 200)
@@ -281,7 +281,7 @@ class TestSearchProducts(unittest.TestCase):
     def test_search_products_default_limit(self):
         """Test that default limit is 50."""
         result = SearchProducts.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -292,7 +292,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find prod1
         self.assertEqual(len(result_list), 1)
@@ -309,7 +309,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find prod1
         self.assertEqual(len(result_list), 1)
@@ -322,7 +322,7 @@ class TestSearchProducts(unittest.TestCase):
     def test_search_products_sorted_by_name(self):
         """Test that results are sorted by name ASC, then id ASC."""
         result = SearchProducts.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that products are sorted by name
@@ -344,7 +344,7 @@ class TestSearchProducts(unittest.TestCase):
             self.data,
             brand="nonexistent_brand",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)

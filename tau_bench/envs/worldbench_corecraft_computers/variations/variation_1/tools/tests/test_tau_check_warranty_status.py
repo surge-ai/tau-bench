@@ -86,7 +86,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order3",  # Purchased 1 month ago
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertIn("warranty_end_date", result_dict)
@@ -98,7 +98,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order2",  # Purchased 15 months ago
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertFalse(result_dict["is_under_warranty"])
         self.assertIn("warranty_end_date", result_dict)
@@ -110,7 +110,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order4",  # Purchased 1 day before 1 year
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should still be under warranty (1 day remaining)
         self.assertTrue(result_dict["is_under_warranty"])
@@ -126,7 +126,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             product_id="prod1",
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
@@ -137,7 +137,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             product_id="prod1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Uses default current date, so warranty starts today
         self.assertTrue(result_dict["is_under_warranty"])
@@ -153,7 +153,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             product_id="prod3",  # Has 24 month warranty
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertGreater(result_dict["days_remaining"], 0)
@@ -168,7 +168,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             product_id="prod5",  # Has 6 month warranty
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertFalse(result_dict["is_under_warranty"])
         self.assertEqual(result_dict["days_remaining"], 0)
@@ -202,7 +202,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             order_id="order_with_prod3",
             product_id="prod3",  # Has 24 month warranty
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should use product's warranty period (24 months)
         # Order was purchased 12 months ago, so still under 24 month warranty
@@ -247,7 +247,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order1",  # Purchased 1 year ago
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # From 6 months ago perspective, warranty was still valid
         self.assertTrue(result_dict["is_under_warranty"])
@@ -284,7 +284,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             data_with_edge_case,
             order_id="order_edge"
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertTrue(result_dict["is_under_warranty"])
         self.assertIn("warranty_end_date", result_dict)
@@ -320,7 +320,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             product_id="prod_no_warranty",
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should use default 12 month warranty
         self.assertTrue(result_dict["is_under_warranty"])
@@ -336,7 +336,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             product_id="prod1",  # 12 month warranty
             purchase_date=purchase_date,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertTrue(result_dict["is_under_warranty"])
         # Should have approximately 10 days remaining (365 - 350 = 15, minus some buffer)
@@ -349,7 +349,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             self.data,
             order_id="order3",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertIn("warranty_end_date", result_dict)
         warranty_end = result_dict["warranty_end_date"]
@@ -406,7 +406,7 @@ class TestCheckWarrantyStatus(unittest.TestCase):
             order_id="order_multi",
             product_id="prod3",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should use prod3's 24 month warranty, so still under warranty
         self.assertTrue(result_dict["is_under_warranty"])

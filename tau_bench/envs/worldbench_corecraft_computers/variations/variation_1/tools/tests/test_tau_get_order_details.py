@@ -129,7 +129,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Check structure
         self.assertIn("order", result_dict)
@@ -163,7 +163,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         customer = result_dict["customer"]
         self.assertIsNotNone(customer)
@@ -177,7 +177,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         payment = result_dict["payment"]
         self.assertIsNotNone(payment)
@@ -192,7 +192,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         shipment = result_dict["shipment"]
         self.assertIsNotNone(shipment)
@@ -207,7 +207,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         self.assertIsInstance(tickets, list)
@@ -235,7 +235,7 @@ class TestGetOrderDetails(unittest.TestCase):
             order_id="order1",
             created_before="2025-09-01T00:18:00Z",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Order should still be returned
         self.assertIsNotNone(result_dict["order"])
@@ -262,7 +262,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         order = result_dict["order"]
         # line_items should be parsed from JSON string
@@ -293,7 +293,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         order = result_dict["order"]
         # Dates should be ISO format
@@ -321,7 +321,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order2",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # order2 has payment3, so payment should not be None
         # Let's create a test with an order that has no payments
@@ -352,7 +352,7 @@ class TestGetOrderDetails(unittest.TestCase):
             data_no_payment,
             order_id="order_no_payment",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertIn("payment", result_dict)
         self.assertIsNone(result_dict["payment"])
@@ -386,7 +386,7 @@ class TestGetOrderDetails(unittest.TestCase):
             data_no_shipment,
             order_id="order_no_shipment",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertIn("shipment", result_dict)
         self.assertIsNone(result_dict["shipment"])
@@ -420,7 +420,7 @@ class TestGetOrderDetails(unittest.TestCase):
             data_no_tickets,
             order_id="order_no_tickets",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         self.assertIn("tickets", result_dict)
         self.assertIsInstance(result_dict["tickets"], list)
@@ -448,7 +448,7 @@ class TestGetOrderDetails(unittest.TestCase):
             data_missing_customer,
             order_id="order_missing_cust",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Customer should be None since the customerId doesn't exist
         self.assertIn("customer", result_dict)
@@ -460,7 +460,7 @@ class TestGetOrderDetails(unittest.TestCase):
             self.data,
             order_id="order1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         self.assertEqual(len(tickets), 2)
@@ -477,7 +477,7 @@ class TestGetOrderDetails(unittest.TestCase):
             order_id="order1",
             created_before="2025-09-01T00:05:00Z",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Order should still be returned
         self.assertIsNotNone(result_dict["order"])

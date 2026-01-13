@@ -205,7 +205,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "ram1", "psu1"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should be compatible
         self.assertTrue(result_dict["is_compatible"])
@@ -217,7 +217,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo2"],  # AM4 CPU with LGA1700 motherboard
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -233,7 +233,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "cpu2", "mobo1"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -248,7 +248,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "mobo2"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -264,7 +264,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "case3"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -280,7 +280,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "ram2"],  # DDR4 motherboard with DDR5 RAM
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -315,7 +315,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             data_with_fast_ram,
             product_ids=["cpu1", "mobo1", "ram3"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should be compatible but have warnings
         self.assertTrue(result_dict["is_compatible"])
@@ -362,7 +362,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             data_many_ram,
             product_ids=["cpu1", "mobo1", "ram1", "ram3", "ram4"],  # 6 modules total
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -376,7 +376,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "gpu2", "case2"],  # GPU 350mm in case with 250mm max
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -392,7 +392,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "cooler2", "case2"],  # Cooler 170mm in case with 150mm max
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -426,7 +426,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             data_low_psu,
             product_ids=["cpu2", "mobo2", "psu3"],  # CPU needs 125W, PSU only 50W
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -442,7 +442,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "gpu2", "psu1"],  # GPU needs 750W, PSU only 600W
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -457,7 +457,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "gpu1"],  # No PSU
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should be compatible (no errors, just warnings)
         self.assertTrue(result_dict["is_compatible"])
@@ -472,7 +472,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["nonexistent1", "nonexistent2"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -540,7 +540,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             data_many_sata,
             product_ids=["cpu1", "mobo1", "storage1", "storage2", "storage3", "storage4", "storage5", "storage6", "storage7"],  # 7 SATA devices, mobo1 has 6 ports
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should not be compatible
         self.assertFalse(result_dict["is_compatible"])
@@ -577,7 +577,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             data_mixed_ram,
             product_ids=["cpu1", "mobo1", "ram1", "ram3"],  # Mixed speeds
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should be compatible but have warning about mismatched frequencies
         self.assertTrue(result_dict["is_compatible"])
@@ -595,7 +595,7 @@ class TestValidateBuildCompatibility(unittest.TestCase):
             self.data,
             product_ids=["cpu1", "mobo1", "ram1"],
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should have required fields
         self.assertIn("is_compatible", result_dict)

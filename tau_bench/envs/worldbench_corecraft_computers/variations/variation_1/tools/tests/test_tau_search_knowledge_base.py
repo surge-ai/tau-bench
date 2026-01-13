@@ -43,7 +43,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
     def test_search_knowledge_base_no_filters(self):
         """Test searching knowledge base with no filters."""
         result = SearchKnowledgeBase.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return all articles (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -62,7 +62,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             text="boot",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find articles with "boot" in title or body
         self.assertEqual(len(result_list), 1)
@@ -74,7 +74,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             category="troubleshooting",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return articles in troubleshooting category
         self.assertEqual(len(result_list), 1)
@@ -86,7 +86,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             tag="hardware",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return articles with "hardware" tag
         self.assertEqual(len(result_list), 2)
@@ -104,7 +104,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             updated_after="2025-09-02T00:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include articles updated on or after 2025-09-02
         self.assertEqual(len(result_list), 2)
@@ -117,7 +117,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             updated_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should only include articles updated before the date
         self.assertEqual(len(result_list), 2)
@@ -129,7 +129,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             category="troubleshooting",
             tag="boot",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should match articles that satisfy all filters
         self.assertEqual(len(result_list), 1)
@@ -141,7 +141,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
@@ -152,7 +152,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
@@ -160,7 +160,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
     def test_search_knowledge_base_default_limit(self):
         """Test that default limit is 50."""
         result = SearchKnowledgeBase.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
@@ -171,7 +171,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             text="Troubleshoot",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should find kb1
         self.assertEqual(len(result_list), 1)
@@ -184,7 +184,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
     def test_search_knowledge_base_sorted_by_title(self):
         """Test that results are sorted by title ASC, then id ASC."""
         result = SearchKnowledgeBase.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = result
 
         if len(result_list) >= 2:
             # Check that articles are sorted by title ascending
@@ -206,7 +206,7 @@ class TestSearchKnowledgeBase(unittest.TestCase):
             self.data,
             text="nonexistent_term",
         )
-        result_list = json.loads(result)
+        result_list = result
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)

@@ -96,7 +96,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should return tickets for customer1
         self.assertIn("tickets", result_dict)
@@ -115,7 +115,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         ticket_ids = [t["id"] for t in tickets]
@@ -133,7 +133,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         ticket_ids = [t["id"] for t in tickets]
@@ -149,7 +149,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             customer_id="customer1",
             include_resolved=False,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         ticket_ids = [t["id"] for t in tickets]
@@ -166,7 +166,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             customer_id="customer1",
             include_resolved=True,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         ticket_ids = [t["id"] for t in tickets]
@@ -183,7 +183,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             customer_id="customer1",
             tkt_created_after="2025-09-02T00:00:00Z",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
 
@@ -198,7 +198,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             customer_id="customer1",
             tkt_created_before="2025-09-02T12:00:00Z",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
 
@@ -214,7 +214,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             customer_id="customer1",
             tkt_updated_after="2025-09-01T12:00:00Z",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
 
@@ -229,7 +229,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             customer_id="customer1",
             tkt_updated_before="2025-09-03T12:00:00Z",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
 
@@ -245,7 +245,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             tkt_created_before="2025-09-03T00:00:00Z",
             include_resolved=False,
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         ticket_ids = [t["id"] for t in tickets]
@@ -263,7 +263,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should have escalations field
         self.assertIn("escalations", result_dict)
@@ -280,7 +280,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         # Should have resolutions field
         self.assertIn("resolutions", result_dict)
@@ -307,7 +307,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
 
@@ -325,7 +325,7 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
             self.data,
             customer_id="customer1",
         )
-        result_dict = json.loads(result)
+        result_dict = result
 
         tickets = result_dict["tickets"]
         if tickets:

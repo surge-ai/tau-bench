@@ -27,7 +27,7 @@ class GetProduct(Tool):
         # Parse JSON fields
         result = parse_entity_json_fields(product, ["inventory", "specs"])
 
-        return json.dumps(result, default=str)
+        return json.loads(json.dumps(result, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:
