@@ -5,6 +5,8 @@ from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
 
+from .data_utils import validate_enum
+
 
 def _now_iso_from_data(data: Dict[str, Any]) -> str:
     """Deterministic-ish timestamp.
@@ -53,6 +55,10 @@ class CreateRefund(Tool):
           - createdAt
           - processedAt (None)
         """
+        # Validate enum parameters
+        validate_enum(reason, ["customer_remorse", "defective", "incompatible", "shipping_issue", "other"], "reason")
+        validate_enum(status, ["pending", "approved", "denied", "processed", "failed"], "status")
+
         if not _find_payment(data, payment_id):
             raise ValueError(f"Payment {payment_id} not found")
 
@@ -78,7 +84,7 @@ class CreateRefund(Tool):
             data["refund"] = {}
         data["refund"][refund_id] = row
 
-        return json.dumps(row)
+        return json.loads(json.dumps(row))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

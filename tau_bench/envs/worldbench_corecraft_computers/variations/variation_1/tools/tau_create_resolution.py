@@ -4,6 +4,8 @@ from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
 
+from .data_utils import validate_enum
+
 
 def _now_iso_from_data(data: Dict[str, Any]) -> str:
     """Deterministic-ish timestamp.
@@ -38,6 +40,9 @@ class CreateResolution(Tool):
         resolved_by_id: Optional[str] = None,
     ) -> str:
         """Create a resolution for a support ticket."""
+        # Validate enum parameters
+        validate_enum(outcome, ["refund_issued", "replacement_sent", "recommendation_provided", "troubleshooting_steps", "order_updated", "no_action"], "outcome")
+
         # Verify ticket exists
         if not _exists_by_id(data, keys=["support_ticket"], obj_id=ticket_id):
             raise ValueError(f"Ticket {ticket_id} not found")
@@ -69,7 +74,7 @@ class CreateResolution(Tool):
             data["resolution"] = {}
         data["resolution"][resolution_id] = row
 
-        return json.dumps(row)
+        return json.loads(json.dumps(row))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:
