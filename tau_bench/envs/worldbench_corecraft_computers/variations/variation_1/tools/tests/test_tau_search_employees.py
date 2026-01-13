@@ -1,72 +1,15 @@
 import json
-import sys
-import os
 import unittest
 from typing import Dict, Any
 
-# Import the module directly without going through package __init__
-# We're in tests/ subdirectory, so go up one level to tools/
-tests_dir = os.path.dirname(os.path.abspath(__file__))
-tools_dir = os.path.dirname(tests_dir)
-sys.path.insert(0, tools_dir)
-
-# Import dependencies first
-from ..tau_sqlite_utils import build_sqlite_from_data
-from tau_bench.envs.tool import Tool
-
-# Create a mock utils module for tool_impls that need it
-import types
-import sqlite3
-utils_module = types.ModuleType("utils")
-utils_module.get_db_conn = lambda: sqlite3.connect(":memory:")
-sys.modules["utils"] = utils_module
-
-# Mock the models module for Employee
-models_module = types.ModuleType("models")
-class Employee:
-    def __init__(self, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-    
-    def dict(self):
-        return {k: v for k, v in self.__dict__.items()}
-    
-    def __repr__(self):
-        return f"Employee({self.__dict__})"
-
-models_module.Employee = Employee
-sys.modules["models"] = models_module
-
-# Import tool_impls first so it uses our utils module
-import tool_impls.search_employees  # noqa: F401
-
-# Now import the tool module normally
-if tools_dir not in sys.path:
-    sys.path.insert(0, tools_dir)
-
-from tau_search_employees import SearchEmployees
-
-# Patch json.dumps in the tool module to handle Employee objects
-import json as json_module
-_original_dumps = json_module.dumps
-
-def _custom_dumps(obj, **kwargs):
-    """Custom JSON dumps that handles Employee objects."""
-    if isinstance(obj, list):
-        obj = [item.dict() if isinstance(item, Employee) else item for item in obj]
-    elif isinstance(obj, Employee):
-        obj = obj.dict()
-    return _original_dumps(obj, **kwargs)
-
-import tau_search_employees
-tau_search_employees.json.dumps = _custom_dumps
+from ..tau_search_employees import SearchEmployees
 
 
 class TestSearchEmployees(unittest.TestCase):
     def setUp(self):
         """Set up test data with employees."""
         self.data: Dict[str, Any] = {
-            "Employee": {
+            "employee": {
                 "employee1": {
                     "id": "employee1",
                     "name": "John Doe",
@@ -109,12 +52,12 @@ class TestSearchEmployees(unittest.TestCase):
     def test_search_employees_no_filters(self):
         """Test searching employees with no filters."""
         result = SearchEmployees.invoke(self.data)
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should return all employees (up to default limit of 50)
         self.assertIsInstance(result_list, list)
-        self.assertGreater(len(result_list), 0)
-        
+        self.assertEqual(len(result_list), 4)
+
         # Check structure of first employee
         if result_list:
             employee = result_list[0]
@@ -128,17 +71,12 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             employee_id="employee1",
         )
-        result_list = json.loads(result)
-        
-        # Should return at least one employee (may have duplicates from lowercase alias)
-        self.assertGreater(len(result_list), 0)
-        # Should include employee1
-        employee_ids = [e["id"] for e in result_list]
-        self.assertIn("employee1", employee_ids)
-        # Find employee1 in results
-        employee1 = next((e for e in result_list if e["id"] == "employee1"), None)
-        self.assertIsNotNone(employee1)
-        self.assertEqual(employee1["name"], "John Doe")
+        result_list = result
+
+        # Should return exactly one employee
+        self.assertEqual(len(result_list), 1)
+        self.assertEqual(result_list[0]["id"], "employee1")
+        self.assertEqual(result_list[0]["name"], "John Doe")
 
     def test_search_employees_by_name(self):
         """Test searching employees by name (LIKE search)."""
@@ -146,8 +84,8 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             name="John",
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should find employees with "John" in name
         self.assertGreater(len(result_list), 0)
         for employee in result_list:
@@ -159,10 +97,10 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             department="engineering",
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should return employees in engineering department
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 2)
         for employee in result_list:
             self.assertEqual(employee["department"], "engineering")
 
@@ -172,10 +110,10 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             role="Engineer",
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should find employees with "Engineer" in title
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 2)
         for employee in result_list:
             self.assertIn("Engineer", employee["title"])
 
@@ -185,10 +123,10 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             has_permission="edit_order",
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should return employees with edit_order permission
-        self.assertGreater(len(result_list), 0)
+        self.assertEqual(len(result_list), 2)
         for employee in result_list:
             # Permissions should be parsed from JSON
             if "permissions" in employee:
@@ -206,9 +144,10 @@ class TestSearchEmployees(unittest.TestCase):
             department="engineering",
             role="Engineer",
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should match employees that satisfy all filters
+        self.assertEqual(len(result_list), 2)
         for employee in result_list:
             self.assertEqual(employee["department"], "engineering")
             self.assertIn("Engineer", employee["title"])
@@ -219,8 +158,8 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
 
@@ -230,16 +169,16 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
 
     def test_search_employees_default_limit(self):
         """Test that default limit is 50."""
         result = SearchEmployees.invoke(self.data)
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
 
@@ -249,13 +188,12 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             employee_id="employee1",
         )
-        result_list = json.loads(result)
-        
-        # Should find employee1 (may have duplicates)
-        self.assertGreater(len(result_list), 0)
-        employee1 = next((e for e in result_list if e["id"] == "employee1"), None)
-        self.assertIsNotNone(employee1)
-        
+        result_list = result
+
+        # Should find employee1
+        self.assertEqual(len(result_list), 1)
+        employee1 = result_list[0]
+
         # permissions should be parsed from JSON string to list
         if "permissions" in employee1:
             self.assertIsInstance(employee1["permissions"], list)
@@ -265,8 +203,8 @@ class TestSearchEmployees(unittest.TestCase):
     def test_search_employees_sorted_by_name(self):
         """Test that results are sorted by name ASC, then id ASC."""
         result = SearchEmployees.invoke(self.data)
-        result_list = json.loads(result)
-        
+        result_list = result
+
         if len(result_list) >= 2:
             # Check that employees are sorted by name
             for i in range(len(result_list) - 1):
@@ -287,15 +225,15 @@ class TestSearchEmployees(unittest.TestCase):
             self.data,
             employee_id="nonexistent",
         )
-        result_list = json.loads(result)
-        
+        result_list = result
+
         # Should return empty list
         self.assertEqual(len(result_list), 0)
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""
         info = SearchEmployees.get_info()
-        
+
         self.assertEqual(info["type"], "function")
         self.assertEqual(info["function"]["name"], "searchEmployees")
         self.assertIn("description", info["function"])
@@ -312,4 +250,3 @@ class TestSearchEmployees(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
