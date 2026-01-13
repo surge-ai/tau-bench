@@ -9,6 +9,7 @@ from .data_utils import (
     get_datetime_field,
     apply_limit,
     matches_text_search,
+    validate_enum,
 )
 
 
@@ -27,6 +28,10 @@ class SearchEscalations(Tool):
         resolved_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        # Validate enum parameters
+        validate_enum(escalation_type, ["product_specialist", "policy_exception", "technical"], "escalation_type")
+        validate_enum(destination, ["product_management", "operations", "engineering"], "destination")
+
         results: List[Dict[str, Any]] = []
 
         # Parse date filters, will be None if _before or _after is None
@@ -78,7 +83,7 @@ class SearchEscalations(Tool):
         # Apply limit
         results = apply_limit(results, limit)
 
-        return json.dumps(results, default=str)
+        return json.loads(json.dumps(results, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

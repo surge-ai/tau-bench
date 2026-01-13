@@ -9,6 +9,7 @@ from .data_utils import (
     get_datetime_field,
     apply_limit,
     matches_text_search,
+    validate_enum,
 )
 
 
@@ -26,6 +27,9 @@ class SearchResolutions(Tool):
         created_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        # Validate enum parameters
+        validate_enum(outcome, ["recommendation_provided", "order_updated", "refund_issued", "troubleshooting_steps"], "outcome")
+
         results: List[Dict[str, Any]] = []
 
         # Parse date filters, will be None if _before or _after is None
@@ -68,7 +72,7 @@ class SearchResolutions(Tool):
         # Apply limit
         results = apply_limit(results, limit)
 
-        return json.dumps(results, default=str)
+        return json.loads(json.dumps(results, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

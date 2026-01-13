@@ -8,6 +8,7 @@ from .data_utils import (
     parse_iso_datetime,
     get_datetime_field,
     apply_limit,
+    validate_enum,
 )
 
 
@@ -26,6 +27,10 @@ class SearchRefunds(Tool):
         processed_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
+        # Validate enum parameters
+        validate_enum(reason, ["customer_remorse", "defective", "incompatible"], "reason")
+        validate_enum(status, ["pending", "approved", "processed", "rejected"], "status")
+
         results: List[Dict[str, Any]] = []
 
         # Parse date filters, will be None if _before or _after is None
@@ -77,7 +82,7 @@ class SearchRefunds(Tool):
         # Apply limit
         results = apply_limit(results, limit)
 
-        return json.dumps(results, default=str)
+        return json.loads(json.dumps(results, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

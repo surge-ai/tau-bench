@@ -197,6 +197,23 @@ def matches_json_text_search(entity: Dict[str, Any], field: str, text: str) -> b
     return text in json.dumps(value)
 
 
+def validate_enum(value: Optional[str], valid_values: Sequence[str], param_name: str) -> None:
+    """Validate that a value is one of the allowed enum values.
+
+    Args:
+        value: The value to validate (None is allowed and skipped)
+        valid_values: List of valid enum values
+        param_name: Parameter name for error message
+
+    Raises:
+        ValueError: If value is not None and not in valid_values
+    """
+    if value is not None and value not in valid_values:
+        raise ValueError(
+            f"Invalid {param_name}: '{value}'. Must be one of: {', '.join(valid_values)}"
+        )
+
+
 def apply_limit(results: List[Any], limit: Optional[float], max_limit: int = 200) -> List[Any]:
     """Apply a limit to results with a maximum cap.
 
