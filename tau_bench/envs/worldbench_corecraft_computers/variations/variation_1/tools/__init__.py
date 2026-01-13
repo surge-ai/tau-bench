@@ -1,5 +1,6 @@
 from .tau_calculate_price import CalculatePrice
 from .tau_check_warranty_status import CheckWarrantyStatus
+from .tau_create_build import CreateBuild
 from .tau_create_escalation import CreateEscalation
 from .tau_create_refund import CreateRefund
 from .tau_create_resolution import CreateResolution
@@ -15,6 +16,7 @@ from .tau_search_payments import SearchPayments
 from .tau_search_products import SearchProducts
 from .tau_search_shipments import SearchShipments
 from .tau_search_tickets import SearchTickets
+from .tau_update_build import UpdateBuild
 from .tau_update_order_status import UpdateOrderStatus
 from .tau_update_payment_status import UpdatePaymentStatus
 from .tau_update_ticket_status import UpdateTicketStatus
@@ -23,6 +25,7 @@ from .tau_validate_build_compatibility import ValidateBuildCompatibility
 ALL_TOOLS = [
     CalculatePrice,
     CheckWarrantyStatus,
+    CreateBuild,
     CreateEscalation,
     CreateRefund,
     CreateResolution,
@@ -38,6 +41,7 @@ ALL_TOOLS = [
     SearchProducts,
     SearchShipments,
     SearchTickets,
+    UpdateBuild,
     UpdateOrderStatus,
     UpdatePaymentStatus,
     UpdateTicketStatus,
