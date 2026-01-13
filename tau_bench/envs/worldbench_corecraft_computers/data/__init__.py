@@ -44,6 +44,20 @@ def _filter_by_created_at(data: dict[str, Any], cutoff_time: datetime) -> dict[s
     return filtered_data
 
 
+def _inject_ids(data: dict[str, Any]) -> dict[str, Any]:
+    """
+    Inject 'id' field into each entity from the key.
+    Data structure is: { collection_name: { entity_id: { ...fields... } } }
+    """
+    for collection_name, entities in data.items():
+        if not isinstance(entities, dict):
+            continue
+        for entity_id, entity in entities.items():
+            if isinstance(entity, dict) and "id" not in entity:
+                entity["id"] = entity_id
+    return data
+
+
 def load_data(current_time: Optional[str] = None) -> dict[str, Any]:
     data = {}
     json_files = [
@@ -71,6 +85,9 @@ def load_data(current_time: Optional[str] = None) -> dict[str, Any]:
             with open(file_path) as f:
                 key = json_file.replace(".json", "")
                 data[key] = json.load(f)
+
+    # Inject IDs from keys into each entity
+    data = _inject_ids(data)
 
     # Filter data by createdAt if current_time is provided
     if current_time is not None:
