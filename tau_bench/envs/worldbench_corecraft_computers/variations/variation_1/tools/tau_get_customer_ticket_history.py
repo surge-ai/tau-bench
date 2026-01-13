@@ -5,6 +5,7 @@ from tau_bench.envs.tool import Tool
 
 from .data_utils import (
     iter_entities,
+    get_entity_by_id,
     parse_iso_datetime,
     get_datetime_field,
 )
@@ -23,6 +24,11 @@ class GetCustomerTicketHistory(Tool):
     ) -> str:
         if not customer_id:
             raise ValueError("customer_id is required")
+
+        # Verify customer exists
+        customer = get_entity_by_id(data, "customer", customer_id)
+        if not customer:
+            raise ValueError(f"Customer not found: {customer_id}")
 
         # Parse date filters
         created_after_dt = parse_iso_datetime(tkt_created_after, "tkt_created_after")

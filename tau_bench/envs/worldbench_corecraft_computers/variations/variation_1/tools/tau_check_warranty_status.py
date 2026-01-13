@@ -35,7 +35,7 @@ class CheckWarrantyStatus(Tool):
             # Get order
             order = get_entity_by_id(data, "order", order_id)
             if not order:
-                return json.dumps({"is_under_warranty": False})
+                raise ValueError(f"Order not found: {order_id}")
 
             # Parse JSON fields
             order = parse_entity_json_fields(order, ["lineItems"])
@@ -68,7 +68,7 @@ class CheckWarrantyStatus(Tool):
             # Get product
             product = get_entity_by_id(data, "product", product_id)
             if not product:
-                return json.dumps({"is_under_warranty": False})
+                raise ValueError(f"Product not found: {product_id}")
 
             warranty_months = product.get("warrantyMonths", 12)
 

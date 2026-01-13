@@ -40,15 +40,18 @@ class ValidateBuildCompatibility(Tool):
             errors.append(f"Products not found: {', '.join(missing_products)}")
             return json.dumps({"is_compatible": False, "errors": errors, "warnings": warnings})
 
-        # Categorize products
-        cpus = [p for p in products if p.get("category") == "cpu"]
-        motherboards = [p for p in products if p.get("category") == "motherboard"]
-        memory = [p for p in products if p.get("category") == "memory"]
-        psus = [p for p in products if p.get("category") == "psu"]
-        gpus = [p for p in products if p.get("category") == "gpu"]
-        cases = [p for p in products if p.get("category") == "case"]
-        storage = [p for p in products if p.get("category") == "storage"]
-        cooling = [p for p in products if p.get("category") == "cooling"]
+        # Categorize products and sort by id for deterministic behavior
+        def by_id(p: Dict[str, Any]) -> str:
+            return p.get("id", "")
+
+        cpus = sorted([p for p in products if p.get("category") == "cpu"], key=by_id)
+        motherboards = sorted([p for p in products if p.get("category") == "motherboard"], key=by_id)
+        memory = sorted([p for p in products if p.get("category") == "memory"], key=by_id)
+        psus = sorted([p for p in products if p.get("category") == "psu"], key=by_id)
+        gpus = sorted([p for p in products if p.get("category") == "gpu"], key=by_id)
+        cases = sorted([p for p in products if p.get("category") == "case"], key=by_id)
+        storage = sorted([p for p in products if p.get("category") == "storage"], key=by_id)
+        cooling = sorted([p for p in products if p.get("category") == "cooling"], key=by_id)
 
         # Check for multiple CPUs or motherboards
         if len(cpus) > 1:

@@ -22,7 +22,7 @@ class GetProduct(Tool):
         product = get_entity_by_id(data, "product", product_id)
 
         if not product:
-            return json.dumps(None)
+            raise ValueError(f"Product not found: {product_id}")
 
         # Parse JSON fields
         result = parse_entity_json_fields(product, ["inventory", "specs"])
@@ -35,7 +35,7 @@ class GetProduct(Tool):
             "type": "function",
             "function": {
                 "name": "getProduct",
-                "description": "Get detailed information about a product by its ID. Returns the full product record including category, SKU, name, brand, price, inventory, specs, and warranty information. Returns null if the product is not found.",
+                "description": "Get detailed information about a product by its ID. Returns the full product record including category, SKU, name, brand, price, inventory, specs, and warranty information. Raises an error if the product is not found.",
                 "parameters": {
                     "type": "object",
                     "properties": {

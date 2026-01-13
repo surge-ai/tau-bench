@@ -26,12 +26,18 @@ class CalculatePrice(Tool):
 
         # Calculate subtotal
         subtotal = 0.0
+        missing_ids = []
         for pid, qty in zip(product_ids, quantities):
             product = get_entity_by_id(data, "product", pid)
-            if product:
-                price = float(product.get("price", 0) or 0)
-                subtotal += price * int(qty)
-
+            if not product:
+                missing_ids.append(pid)
+                continue
+            price = float(product.get("price", 0) or 0)
+            subtotal += price * int(qty)
+        
+        if missing_ids:
+            raise ValueError(f"Products not found: {', '.join(missing_ids)}")
+        
         # Apply loyalty discount
         discount = 0.0
         if loyalty_tier:

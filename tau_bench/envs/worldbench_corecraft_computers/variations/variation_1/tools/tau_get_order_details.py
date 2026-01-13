@@ -34,13 +34,7 @@ class GetOrderDetails(Tool):
         order = get_entity_by_id(data, "order", order_id)
 
         if not order:
-            return json.dumps({
-                "order": None,
-                "payment": None,
-                "shipment": None,
-                "customer": None,
-                "tickets": []
-            })
+            raise ValueError(f"Order not found: {order_id}")
 
         # Parse JSON fields
         order = parse_entity_json_fields(order, ["lineItems", "shipping"])
@@ -122,7 +116,8 @@ class GetOrderDetails(Tool):
             tickets.append({
                 "id": t.get("id"),
                 "subject": t.get("subject"),
-                "status": t.get("status")
+                "status": t.get("status"),
+                "createdAt": t.get("createdAt")
             })
         # Sort by createdAt DESC, then id ASC
         tickets.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
