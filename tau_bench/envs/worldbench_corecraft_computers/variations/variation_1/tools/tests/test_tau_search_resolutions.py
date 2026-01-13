@@ -1,4 +1,3 @@
-import json
 import unittest
 from typing import Dict, Any
 
@@ -55,8 +54,7 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_no_filters(self):
         """Test searching resolutions with no filters."""
-        result = SearchResolutions.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = SearchResolutions.invoke(self.data)
 
         # Should return all resolutions (up to default limit of 50)
         self.assertIsInstance(result_list, list)
@@ -72,33 +70,30 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_by_resolution_id(self):
         """Test searching resolutions by resolution ID."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             resolution_id="resolution1",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["id"], "resolution1")
 
     def test_search_resolutions_by_ticket_id(self):
         """Test searching resolutions by ticket ID."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             ticket_id="tick-002",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["ticketId"], "tick-002")
 
     def test_search_resolutions_by_outcome(self):
         """Test searching resolutions by outcome."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             outcome="refund_issued",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
         for resolution in result_list:
@@ -106,11 +101,10 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_by_resolved_by_id(self):
         """Test searching resolutions by resolved_by_id."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             resolved_by_id="jordan-lee",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
         for resolution in result_list:
@@ -118,22 +112,20 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_by_linked_refund_id(self):
         """Test searching resolutions by linked refund ID."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             linked_refund_id="ref-003",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 1)
         self.assertEqual(result_list[0]["linkedRefundId"], "ref-003")
 
     def test_search_resolutions_by_details_text(self):
         """Test searching resolutions by details text (case-insensitive)."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             details_text="GPU",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
         for resolution in result_list:
@@ -141,21 +133,19 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_by_details_text_case_insensitive(self):
         """Test that details text search is case-insensitive."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             details_text="gpu",
         )
-        result_list = json.loads(result)
 
         self.assertEqual(len(result_list), 2)
 
     def test_search_resolutions_filter_created_after(self):
         """Test filtering resolutions created after a date."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             created_after="2025-09-03T00:00:00Z",
         )
-        result_list = json.loads(result)
 
         # Should only include resolutions created on or after 2025-09-03
         self.assertEqual(len(result_list), 3)
@@ -164,23 +154,21 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_filter_created_before(self):
         """Test filtering resolutions created before a date."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             created_before="2025-09-02T12:00:00Z",
         )
-        result_list = json.loads(result)
 
         # Should only include resolutions created before the date
         self.assertEqual(len(result_list), 2)
 
     def test_search_resolutions_multiple_filters(self):
         """Test searching with multiple filters."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             outcome="refund_issued",
             resolved_by_id="jordan-lee",
         )
-        result_list = json.loads(result)
 
         # Should match resolutions that satisfy all filters
         self.assertEqual(len(result_list), 2)
@@ -190,38 +178,34 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_with_limit(self):
         """Test limiting the number of results."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             limit=2,
         )
-        result_list = json.loads(result)
 
         # Should return at most 2 results
         self.assertLessEqual(len(result_list), 2)
 
     def test_search_resolutions_limit_max_200(self):
         """Test that limit is capped at 200."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             limit=500,  # Request more than max
         )
-        result_list = json.loads(result)
 
         # Should return at most 200 results
         self.assertLessEqual(len(result_list), 200)
 
     def test_search_resolutions_default_limit(self):
         """Test that default limit is 50."""
-        result = SearchResolutions.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = SearchResolutions.invoke(self.data)
 
         # Should return at most 50 results (default)
         self.assertLessEqual(len(result_list), 50)
 
     def test_search_resolutions_sorted_by_created_at(self):
         """Test that results are sorted by createdAt DESC, then id ASC."""
-        result = SearchResolutions.invoke(self.data)
-        result_list = json.loads(result)
+        result_list = SearchResolutions.invoke(self.data)
 
         if len(result_list) >= 2:
             # Check that resolutions are sorted by createdAt descending
@@ -239,11 +223,10 @@ class TestSearchResolutions(unittest.TestCase):
 
     def test_search_resolutions_no_results(self):
         """Test search with filters that match no resolutions."""
-        result = SearchResolutions.invoke(
+        result_list = SearchResolutions.invoke(
             self.data,
             resolution_id="nonexistent",
         )
-        result_list = json.loads(result)
 
         # Should return empty list
         self.assertEqual(len(result_list), 0)
