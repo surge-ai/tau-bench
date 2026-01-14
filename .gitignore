@@ -1,6 +1,9 @@
 #Run result artifacts
 results/**
 
+# Environment variables (contains API keys)
+.env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
