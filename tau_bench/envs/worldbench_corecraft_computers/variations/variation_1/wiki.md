@@ -18,11 +18,32 @@ All dates and times provided in the database are in EST. You can assume that all
 
 - Each customer has a profile containing customer id, name, email, phone, date of birth, addresses, loyalty tier, and created date.
 
-- Each order has an order id, customer id, status (pending, paid, fulfilled, cancelled, backorder, refunded, partially_refunded), line items (products and quantities), shipping information, build id (if custom-built), created time, and updated time.
+- Each order has an order id, customer id, status, line items (products and quantities), shipping information, build id (if custom-built), created time, and updated time.
+  - Order statuses:
+    - pending: order has been created but payment has not been processed
+    - paid: order has been paid but has not been shipped
+    - fulfilled: order has been shipped
+    - cancelled: order has been cancelled
+    - backorder: items in order are backordered
+    - refunded: full refund has been approved
+    - partially_refunded: partial refund has been approved
+    - refund_requested: refund has been requested but has not yet been approved
 
-- Each payment has a payment id, order id, customer id, amount, method (card, paypal, apple_pay, google_pay, bank_transfer), status (pending, authorized, captured, failed, refunded, disputed, voided, completed), transaction id, processed time, and created time.
+- Each payment has a payment id, order id, customer id, amount, method (card, paypal, apple_pay, google_pay, bank_transfer), status, transaction id, processed time, and created time.
+  - Payment statuses:
+    - pending: payment has been submitted but not processed
+    - captured: payment has been successfully processed
+    - failed: payment was declined
+    - refunded: payment refunded in full
+    - partially_refunded: part of the payment was refunded
 
-- Each support ticket has a ticket id, customer id, order id (optional), build id (optional), ticket type (return, troubleshooting, recommendation, order_issue, shipping, billing, other), channel (web, email, phone, chat), priority (low, normal, high), status (new, open, pending_customer, resolved, closed), subject, body, assigned employee id, resolution id, closure reason, created time, and updated time.
+- Each support ticket has a ticket id, customer id, order id (optional), build id (optional), ticket type (return, troubleshooting, recommendation, order_issue, shipping, billing, other), channel (web, email, phone, chat), priority (low, normal, high), status, subject, body, assigned employee id, resolution id, closure reason, created time, and updated time.
+  - Ticket statuses:
+    - new: newly opened ticket, priority not assigned (aside from default normal) and not assigned to an employee
+    - open: ticket has had an employee assigned and priority assessed
+    - pending_customer: awaiting customer response
+    - resolved: ticket has been successfully resolved - a resolution exists
+    - closed: ticket has been closed and not resolved
 
 - Each product has a product id, category (cpu, motherboard, gpu, memory, storage, psu, case, cooling, prebuilt, workstation, monitor, keyboard, mouse, headset, networking, cable, accessory, bundle), SKU, name, brand, price, inventory, specifications, and warranty months.
 
@@ -37,27 +58,34 @@ All dates and times provided in the database are in EST. You can assume that all
 - Refund reason: Valid reasons are "customer_remorse", "defective", "incompatible", "shipping_issue", or "other". The agent must select the appropriate reason based on the customer's situation.
 
 - Refund status: Default is "pending". If the reason is "defective," the status is always "approved." The agent can set it to "approved" if the refund is authorized.
+  - Refund statuses:
+    - pending: refund has been requested, awaiting human review
+    - approved: human has reviewed the refund and approved
+    - denied: human or agent has denied the refund
+    - processed: refund has been issued to the original payment method
+    - failed: refund was attempted to be processed, but the refund did not succeed
 
-- After creating a refund, the agent should always update the order status to "partially_refunded" (for partial refunds) or "cancelled" (for full refunds), and update the payment status to "refunded".
+- After creating a refund, the agent should always update the order status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds), and update the payment status to "refunded".
 
 ## Update Order Status
 
 - The agent must first obtain the order id and verify the order exists using getOrderDetails or searchOrders.
 
-- Valid order statuses are: "pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded".
+- Valid order statuses are: "pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded", "refund_requested".
 
 - The agent should update order status when:
   - An order is cancelled: set to "cancelled"
+  - A refund is requested: set to "refund_requested"
   - An order is partially refunded: set to "partially_refunded"
-  - An order is fully refunded: set to "cancelled" (or "refunded" if applicable)
+  - An order is fully refunded: set to "refunded"
 
 ## Update Payment Status
 
 - The agent must first obtain the payment id and verify the payment exists using searchPayments or getOrderDetails.
 
-- Valid payment statuses are: "pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed".
+- Valid payment statuses are: "pending", "captured", "failed", "refunded", "partially_refunded".
 
-- The agent should update payment status to "refunded" when a refund has been processed for the payment.
+- The agent should update payment status to "refunded" when a full refund has been processed, or "partially_refunded" for partial refunds.
 
 ## Update Ticket Status
 
@@ -78,9 +106,14 @@ All dates and times provided in the database are in EST. You can assume that all
 
 - The agent must first obtain the ticket id and verify the ticket exists using searchTickets or getCustomerTicketHistory.
 
-- Escalation type: The agent must specify the escalation type (e.g., "product_specialist", "technical", "policy_exception").
+- Escalation type: The agent must specify the escalation type.
+  - Escalation types:
+    - technical: complex technical issue requiring specialized expertise
+    - policy_exception: request requires exception to standard policy
+    - product_specialist: requires product-specific knowledge
+    - insufficient_permission: employee needs to escalate to another employee with appropriate permissions
 
-- Destination: The agent must specify where the escalation is being sent (team/queue/person).
+- Destination: The agent must specify the department to escalate to (operations, order_processing, engineering, help_desk, it_systems, product_management, finance, hr, support).
 
 - Notes: The agent should include relevant notes explaining why the escalation is needed (e.g., "high ticket volume", "complex technical issue").
 

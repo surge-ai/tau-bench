@@ -69,7 +69,7 @@ class SearchPayments(Tool):
                         },
                         "status": {
                             "type": "string",
-                            "enum": ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"],
+                            "enum": ["pending", "captured", "failed", "refunded", "partially_refunded"],
                             "description": "Payment status to filter by"
                         },
                         "created_after": {
