@@ -93,15 +93,17 @@ Field updates (changing status, priority, amounts on existing entities) can be c
 
 ## Create Escalation
 
+**HOW TO CREATE ESCALATIONS:** Use the `process_customer_issue` tool with `auto_escalate=True`. This is the ONLY way to create escalation entities - there is no separate create_escalation tool.
+
 - The agent must first obtain the ticket id and verify the ticket exists.
 
-- Escalation type: The agent must specify the escalation type (e.g., "product_specialist", "technical", "policy_exception").
+- To create an escalation, call `process_customer_issue` with the customer_id, appropriate issue_type (which determines the escalation destination), issue description, and **set auto_escalate=True**.
 
-- Destination: The agent must specify where the escalation is being sent (team/queue/person).
+- Issue type determines escalation destination: Use issue_type "product_specialist" to escalate to the product specialist team.
 
-- Notes: The agent should include relevant notes explaining why the escalation is needed (e.g., "high ticket volume", "complex technical issue").
+- Notes: Include relevant context in the issue_description explaining why the escalation is needed (e.g., "high ticket volume", "complex technical issue").
 
-- After creating an escalation, the agent should update the ticket priority and assign it to the appropriate employee.
+- After creating an escalation, the agent should update the original ticket priority and assign it to the appropriate employee.
 
 ## Create Resolution
 
