@@ -125,7 +125,7 @@ class ProcessCustomerIssue(Tool):
             "type": "function",
             "function": {
                 "name": "process_customer_issue",
-                "description": "Workflow tool: Create support ticket with auto-determined priority based on issue type and customer tier. Optionally auto-escalates high-priority issues. **CRITICAL: Verify all parameters (customer_id, issue_type, description, order_id) are correct before calling. Ticket entities cannot be deleted once created.**",
+                "description": "Workflow tool: Create support ticket with auto-determined priority based on issue type and customer tier. Optionally auto-escalates high-priority issues. **When auto_escalate=True, this tool automatically creates an escalation entity** - this is the primary way to create escalations (there is no separate create_escalation tool). **CRITICAL: Verify all parameters (customer_id, issue_type, description, order_id, auto_escalate) are correct before calling. Ticket entities cannot be deleted once created.**",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -147,7 +147,7 @@ class ProcessCustomerIssue(Tool):
                         },
                         "auto_escalate": {
                             "type": "boolean",
-                            "description": "Force escalation regardless of automatic rules (default: false).",
+                            "description": "When true, creates an escalation entity automatically. This is THE way to create escalations - there is no separate create_escalation tool. Use this when you need to escalate a ticket to specialists or management (default: false).",
                         },
                     },
                     "required": ["customer_id", "issue_type", "description"],
