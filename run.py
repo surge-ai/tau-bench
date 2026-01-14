@@ -52,8 +52,8 @@ def parse_args() -> RunConfig:
         "--task-split",
         type=str,
         default="test",
-        choices=["train", "test", "dev", "simple"],
-        help="The split of tasks to run (simple only available for worldbench_corecraft_computers variation_2)",
+        choices=["train", "test", "dev", "simple", "complex"],
+        help="The split of tasks to run (simple and complex only available for worldbench_corecraft_computers variation_2)",
     )
     parser.add_argument("--start-index", type=int, default=0)
     parser.add_argument("--end-index", type=int, default=-1, help="Run all tasks if -1")

@@ -42,6 +42,11 @@ class MockCorecraftComputersEnv(Env):
                     from tau_bench.envs.worldbench_corecraft_computers.variations.variation_1.tasks_simple import TASKS_SIMPLE as tasks
                 elif variation == "variation_2":
                     from tau_bench.envs.worldbench_corecraft_computers.variations.variation_2.tasks_simple import TASKS_SIMPLE as tasks
+            case "complex":
+                if variation == "variation_1":
+                    raise ValueError(f"Complex tasks not available for variation_1")
+                elif variation == "variation_2":
+                    from tau_bench.envs.worldbench_corecraft_computers.variations.variation_2.tasks_complex import TASKS_COMPLEX as tasks
             case _:
                 raise ValueError(f"Unknown task split: {task_split}")
 

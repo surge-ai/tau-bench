@@ -137,25 +137,21 @@ Field updates (changing status, priority, amounts on existing entities) can be c
 
 ## Search and Retrieve Information
 
+- Use `lookup_by_reference` to find entities by their IDs or other identifiers:
+  - Find orders by order ID (e.g., "ord-250830-110")
+  - Find customers by customer ID, name, email, or phone
+  - Find tickets by ticket ID (e.g., "tick-250828-001") or subject
+  - Find employees by employee ID, name, or email
+
 - Use available search tools to find products by category, brand, price range, stock status, or text search.
 
 - Use available tools to retrieve detailed information about products including specifications and inventory.
-
-- Use available search tools to find customers by id, name, email, phone, loyalty tier, or address.
-
-- Use available tools to find orders by order id, customer id, or status.
 
 - Use available tools to retrieve comprehensive order information including payment, shipment, customer, and related tickets.
 
 - Use available search tools to find payments by order id, status, or date range.
 
 - Use available tools to find shipments by order id, carrier, status, or tracking number.
-
-- Use available search tools to find support tickets by customer id, order id, status, priority, or ticket type.
-
-- Use available tools to retrieve all tickets for a specific customer.
-
-- Use available search tools to find employees by id, name, department, role, or permissions.
 
 - Use available tools to find build configurations by name, customer id, or date range.
 
