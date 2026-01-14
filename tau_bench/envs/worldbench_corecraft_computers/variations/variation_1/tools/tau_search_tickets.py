@@ -1,10 +1,20 @@
 import json
-import sqlite3
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
-from .tool_impls.search_tickets import searchTickets as _orig
+
+from .data_utils import (
+    iter_entities,
+    parse_iso_datetime,
+    get_datetime_field,
+    matches_text_search,
+    apply_limit,
+    validate_enum,
+)
+
+TICKET_STATUSES = ["new", "open", "pending_customer", "resolved", "closed"]
+TICKET_PRIORITIES = ["low", "normal", "high"]
+TICKET_TYPES = ["return", "troubleshooting", "recommendation", "order_issue", "shipping", "billing", "other"]
 
 
 class SearchTickets(Tool):
@@ -24,55 +34,79 @@ class SearchTickets(Tool):
         resolved_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
+        validate_enum(status, TICKET_STATUSES, "status")
+        validate_enum(priority, TICKET_PRIORITIES, "priority")
+        validate_enum(ticket_type, TICKET_TYPES, "ticket_type")
 
-                from .tool_impls import search_tickets as search_tickets_module
-                search_tickets_module.get_db_conn = lambda: conn
+        results: List[Dict[str, Any]] = []
 
-                result = _orig(
-                    ticket_id=ticket_id,
-                    customer_id=customer_id,
-                    assigned_employee_id=assigned_employee_id,
-                    status=status,
-                    priority=priority,
-                    ticket_type=ticket_type,
-                    text=text,
-                    created_after=created_after,
-                    created_before=created_before,
-                    resolved_after=resolved_after,
-                    resolved_before=resolved_before,
-                    limit=limit,
-                )
-                # Convert Pydantic models to dicts for JSON serialization
-                if isinstance(result, list):
-                    result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]
-                return json.dumps(result, default=str)
-            finally:
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    search_tickets_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+        # Parse date filters
+        created_after_dt = parse_iso_datetime(created_after, "created_after")
+        created_before_dt = parse_iso_datetime(created_before, "created_before")
+        resolved_after_dt = parse_iso_datetime(resolved_after, "resolved_after")
+        resolved_before_dt = parse_iso_datetime(resolved_before, "resolved_before")
+
+        for row in iter_entities(data, "support_ticket"):
+            # Exact ticket_id match
+            if ticket_id and row.get("id") != ticket_id:
+                continue
+            # Exact customer_id match
+            if customer_id and row.get("customerId") != customer_id:
+                continue
+            # Exact assigned_employee_id match
+            if assigned_employee_id and row.get("assignedEmployeeId") != assigned_employee_id:
+                continue
+            # Exact status match
+            if status and row.get("status") != status:
+                continue
+            # Exact priority match
+            if priority and row.get("priority") != priority:
+                continue
+            # Exact ticket_type match
+            if ticket_type and row.get("ticketType") != ticket_type:
+                continue
+            # Text search in subject and body
+            if text and not matches_text_search(row, ["subject", "body"], text):
+                continue
+            # Date filtering - createdAt
+            created_at = get_datetime_field(row, "createdAt")
+            if created_at is not None:
+                if created_after_dt and created_at < created_after_dt:
+                    continue
+                if created_before_dt and created_at > created_before_dt:
+                    continue
+            # Date filtering - resolved (uses updatedAt)
+            updated_at = get_datetime_field(row, "updatedAt")
+            if updated_at is not None:
+                if resolved_after_dt and updated_at < resolved_after_dt:
+                    continue
+                if resolved_before_dt and updated_at > resolved_before_dt:
+                    continue
+
+            results.append(dict(row))
+
+        # Sort by priority (high -> normal -> low), then by createdAt DESC, then by id ASC
+        # Using Python's stable sort: sort by least significant key first, then more significant
+        priority_order = {"high": 1, "normal": 2, "low": 3}
+        results.sort(key=lambda t: t.get("id", ""))  # Tertiary: id ASC
+        results.sort(key=lambda t: t.get("createdAt", "") or "", reverse=True)  # Secondary: createdAt DESC
+        results.sort(key=lambda t: priority_order.get(t.get("priority", "normal"), 4))  # Primary: priority ASC
+
+        # Apply limit
+        results = apply_limit(results, limit)
+
+        return json.loads(json.dumps(results, default=str))
 
     @staticmethod
-    def get_info()->Dict[str,Any]:
+    def get_info() -> Dict[str, Any]:
         return {
-            "type":"function",
-            "function":{
-                "name":"searchTickets",
-                "description":"Search for support tickets with various filters. Returns an array of support ticket records matching the criteria, sorted by priority (high to low) and then by creation date (newest first).",
-                "parameters":{
-                    "type":"object",
-                    "properties":{
+            "type": "function",
+            "function": {
+                "name": "searchTickets",
+                "description": "Search for support tickets with various filters. Returns an array of support ticket records matching the criteria, sorted by priority (high to low) and then by creation date (newest first).",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
                         "ticket_id": {
                             "type": "string",
                             "description": "Specific ticket ID to find"
@@ -125,7 +159,7 @@ class SearchTickets(Tool):
                             "description": "Maximum number of results (default 50, max 200)"
                         }
                     },
-                    "required":[]
+                    "required": []
                 }
             }
         }

@@ -5,6 +5,8 @@ from typing import Any, Dict, Optional, List
 
 from tau_bench.envs.tool import Tool
 
+from .data_utils import validate_enum
+
 
 def _now_iso_from_data(data: Dict[str, Any]) -> str:
     """Deterministic-ish timestamp.
@@ -38,6 +40,9 @@ class CreateEscalation(Tool):
         destination: str,
     ) -> str:
         """Create an escalation record linked to an existing support ticket."""
+        # Validate enum parameters
+        validate_enum(escalation_type, ["technical", "policy_exception", "product_specialist"], "escalation_type")
+
         if not _find_ticket(data, ticket_id):
             raise ValueError(f"Ticket {ticket_id} not found")
 
@@ -60,7 +65,7 @@ class CreateEscalation(Tool):
             data["escalation"] = {}
         data["escalation"][escalation_id] = row
 
-        return json.dumps(row)
+        return json.loads(json.dumps(row))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

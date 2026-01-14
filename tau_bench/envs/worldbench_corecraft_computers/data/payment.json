@@ -35,6 +35,7 @@
     "amount": 899.98,
     "failureReason": "insufficient_funds",
     "transactionId": "pi_3OrQ8LKuuB2C26R61Failed",
+    "processedAt": "2025-08-23T10:50:00Z",
     "createdAt": "2025-08-23T10:45:00Z"
   },
   "pay-250828-034": {
@@ -53,6 +54,8 @@
     "status": "failed",
     "amount": 89.98,
     "failureReason": "insufficient_funds",
+    "transactionId": "pi_3PzY9LKuuB2C26R62Failed",
+    "processedAt": "2025-10-21T10:29:00Z",
     "createdAt": "2025-10-21T10:24:00Z"
   },
   "pay-251113-451": {
@@ -70,7 +73,9 @@
     "method": "apple_pay",
     "status": "captured",
     "amount": 2389.98,
-    "createdAt": "2025-08-22T15:06:18.680Z"
+    "createdAt": "2025-08-22T15:06:18.680Z",
+    "processedAt": "2025-08-22T15:07:00Z",
+    "transactionId": "ap_3OrQ8LKuuB2C26R61"
   },
   "pay-251022-047": {
     "orderId": "ord-251022-047",
@@ -89,6 +94,7 @@
     "amount": 59.99,
     "failureReason": "insufficient_funds",
     "transactionId": "pi_3HrQ8LKuuB2C26R61Failed",
+    "processedAt": "2025-08-29T02:34:50.123Z",
     "createdAt": "2025-08-29T02:30:30.431Z"
   },
   "pay-251022-787": {
@@ -106,8 +112,8 @@
     "status": "captured",
     "amount": 2459.89,
     "transactionId": "txn_1Nv58E3gZvLTkf3C0sX00YsL",
-    "processedAt": "2025-08-29T02:31:22Z",
-    "createdAt": "2025-08-29T02:31:21Z"
+    "processedAt": "2025-08-29T02:35:23Z",
+    "createdAt": "2025-08-29T02:35:21Z"
   },
   "pay-251024-041": {
     "orderId": "ord-251024-041",
@@ -152,7 +158,9 @@
     "status": "failed",
     "failureReason": "card expired",
     "amount": 729.98,
-    "createdAt": "2025-08-21T16:01:06.972Z"
+    "createdAt": "2025-08-21T16:01:06.972Z",
+    "processedAt": "2025-08-21T16:02:00Z",
+    "transactionId": "txn_3ErQ8LKuuB2C26R"
   },
   "pay-251018-091": {
     "orderId": "ord-251018-091",
@@ -280,10 +288,10 @@
     "orderId": "ord-250816-004",
     "method": "paypal",
     "status": "captured",
-    "amount": 349.99,
+    "amount": 1609.92,
     "transactionId": "PAYID-SJJEJAJDDJ47372JJJS",
-    "processedAt": "2025-08-16T22:47:08.115Z",
-    "createdAt": "2025-08-16T22:47:07.675Z"
+    "processedAt": "2025-08-16T22:51:08.115Z",
+    "createdAt": "2025-08-16T22:50:07.675Z"
   },
   "pay-250821-001": {
     "orderId": "ord-20250821-001",
@@ -325,9 +333,10 @@
     "orderId": "ord-250824-015",
     "method": "bank_transfer",
     "amount": 1219.96,
-    "transactionId": "z2143986",
     "status": "captured",
-    "createdAt": "2025-08-25T17:20:09.472Z"
+    "createdAt": "2025-08-25T17:20:09.472Z",
+    "processedAt": "2025-08-25T17:25:00Z",
+    "transactionId": "bt_3PrQ8LKuuB2C26R63"
   },
   "pay-250826-009-002": {
     "orderId": "ord-250826-009",
@@ -364,6 +373,7 @@
     "method": "card",
     "status": "captured",
     "transactionId": "txn_ZVz6aSNuPov31O6Fb02",
+    "processedAt": "2025-08-30T08:50:00Z",
     "createdAt": "2025-08-30T08:46:00Z"
   },
   "pay-250901-001": {
@@ -409,6 +419,7 @@
     "amount": 969.72,
     "failureReason": "insufficient_funds",
     "transactionId": "tr_7LmQ4XJppR9K52B83Failed",
+    "processedAt": "2025-08-24T15:05:00Z",
     "createdAt": "2025-08-24T15:01:16.159Z"
   },
   "pay-250829-026": {
@@ -473,8 +484,8 @@
     "method": "card",
     "status": "captured",
     "transactionId": "txn_8974561230",
-    "processedAt": "2025-08-26T12:08:00Z",
-    "createdAt": "2025-08-26T12:07:45Z"
+    "processedAt": "2025-08-26T12:11:00Z",
+    "createdAt": "2025-08-26T12:10:45Z"
   },
   "pay-240315-001": {
     "orderId": "ord-240315-001",
@@ -609,7 +620,7 @@
     "status": "captured",
     "amount": 329.99,
     "transactionId": "ACH_2028082800123511",
-    "processedAt": "2025-08-29T01:37:15.319Z",
+    "processedAt": "2025-08-29T01:37:45.319Z",
     "createdAt": "2025-08-29T01:37:16.579Z"
   },
   "pay-251026-047": {
@@ -672,7 +683,7 @@
     "orderId": "ord-250815-013",
     "method": "card",
     "status": "captured",
-    "amount": 349.99,
+    "amount": 1679.93,
     "transactionId": "ch_3TrQ8LKuuB2C26R61SystemBuild",
     "processedAt": "2025-08-15T16:34:00Z",
     "createdAt": "2025-08-15T16:32:00Z"
@@ -798,8 +809,6 @@
     "createdAt": "2025-10-23T13:45:15Z"
   },
   "pay-251104-428": {
-    "type": "payment",
-    "id": "pay-251104-428",
     "orderId": "ord-251104-428",
     "customerId": "alan-jeong-08912",
     "method": "apple_pay",
@@ -810,7 +819,6 @@
     "createdAt": "2025-11-04T10:32:37Z"
   },
   "pay-251116-008": {
-    "id": "pay-251116-008",
     "orderId": "ord-251116-008",
     "amount": 799.99,
     "status": "captured",
@@ -818,7 +826,6 @@
     "createdAt": "2025-11-16T10:00:00Z"
   },
   "pay-251117-042": {
-    "id": "pay-251117-042",
     "orderId": "ord-251117-042",
     "amount": 799.99,
     "status": "captured",
@@ -826,7 +833,6 @@
     "createdAt": "2025-11-17T14:30:00Z"
   },
   "pay-251118-019": {
-    "id": "pay-251118-019",
     "orderId": "ord-251118-019",
     "amount": 799.99,
     "status": "captured",

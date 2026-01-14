@@ -3,7 +3,14 @@ from typing import Any, Dict
 
 from tau_bench.envs.tool import Tool
 
-_NOT_PROVIDED = object()
+from .data_utils import validate_enum
+
+
+class _NotProvided:
+    pass
+
+
+_NOT_PROVIDED = _NotProvided()
 
 
 class UpdateTicketStatus(Tool):
@@ -11,24 +18,30 @@ class UpdateTicketStatus(Tool):
     def invoke(
         data: Dict[str, Any],
         ticket_id: str,
-        status: Any = _NOT_PROVIDED,
-        assigned_employee_id: Any = _NOT_PROVIDED,
-        priority: Any = _NOT_PROVIDED,
+        status: str | None | _NotProvided = _NOT_PROVIDED,
+        assigned_employee_id: str | None | _NotProvided = _NOT_PROVIDED,
+        priority: str | None | _NotProvided = _NOT_PROVIDED,
     ) -> str:
-        updated = False
+        # Validate enum parameters (allow None for optional fields)
+        if status is not _NOT_PROVIDED and status is not None:
+            validate_enum(status, ["new", "open", "pending_customer", "resolved", "closed"], "status")
+        if priority is not _NOT_PROVIDED and priority is not None:
+            validate_enum(priority, ["low", "normal", "high"], "priority")
 
         ticket_table = data.get("support_ticket")
-        if isinstance(ticket_table, dict) and ticket_id in ticket_table:
-            ticket = ticket_table[ticket_id]
-            if status is not _NOT_PROVIDED:
-                ticket["status"] = status
-            if assigned_employee_id is not _NOT_PROVIDED:
-                ticket["assignedEmployeeId"] = assigned_employee_id
-            if priority is not _NOT_PROVIDED:
-                ticket["priority"] = priority
-            updated = True
+        if not isinstance(ticket_table, dict):
+            raise ValueError("Support ticket table not found in data")
+        if ticket_id not in ticket_table:
+            raise ValueError(f"Ticket {ticket_id} not found")
 
-        return json.dumps({"updated": updated})
+        ticket = ticket_table[ticket_id]
+        if status is not _NOT_PROVIDED:
+            ticket["status"] = status
+        if assigned_employee_id is not _NOT_PROVIDED:
+            ticket["assignedEmployeeId"] = assigned_employee_id
+        if priority is not _NOT_PROVIDED:
+            ticket["priority"] = priority
+        return json.loads(json.dumps(ticket))
 
     @staticmethod
     def get_info()->Dict[str,Any]:
@@ -45,17 +58,17 @@ class UpdateTicketStatus(Tool):
                             "description": "The support ticket ID to update"
                         },
                         "status": {
-                            "type": "string",
-                            "enum": ["new", "open", "pending_customer", "resolved", "closed"],
+                            "type": ["string", "null"],
+                            "enum": ["new", "open", "pending_customer", "resolved", "closed", None],
                             "description": "The new status to set for the ticket"
                         },
                         "assigned_employee_id": {
-                            "type": "string",
-                            "description": "Employee ID to assign the ticket to"
+                            "type": ["string", "null"],
+                            "description": "Employee ID to assign the ticket to, or null to unassign"
                         },
                         "priority": {
-                            "type": "string",
-                            "enum": ["low", "normal", "high"],
+                            "type": ["string", "null"],
+                            "enum": ["low", "normal", "high", None],
                             "description": "The new priority to set for the ticket"
                         }
                     },

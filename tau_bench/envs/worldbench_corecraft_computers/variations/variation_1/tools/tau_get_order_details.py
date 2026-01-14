@@ -1,42 +1,135 @@
 import json
-import sqlite3
-import importlib
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
 
-from .tool_impls.get_order_details import getOrderDetails as _orig_getOrderDetails
+from .data_utils import (
+    iter_entities,
+    get_entity_by_id,
+    parse_iso_datetime,
+    parse_entity_json_fields,
+    get_datetime_field,
+)
 
 
 class GetOrderDetails(Tool):
     @staticmethod
-    def invoke(data: Dict[str, Any], **kwargs) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                # Patch in utils module
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
-                
-                # Patch in get_order_details module (it does "from .utils import get_db_conn")
-                from .tool_impls import get_order_details as get_order_details_module
-                get_order_details_module.get_db_conn = lambda: conn
-                
-                result = _orig_getOrderDetails(**kwargs)
-                return json.dumps(result)
-            finally:
-                # Restore original function
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    get_order_details_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+    def invoke(
+        data: Dict[str, Any],
+        order_id: str = None,
+        created_before: Optional[str] = None,
+        **kwargs,
+    ) -> str:
+        # Handle order_id passed via kwargs
+        if order_id is None:
+            order_id = kwargs.get("order_id")
+
+        if not order_id:
+            raise ValueError("order_id is required")
+
+        # Parse created_before filter
+        created_before_dt = parse_iso_datetime(created_before, "created_before")
+
+        # Get order
+        order = get_entity_by_id(data, "order", order_id)
+
+        if not order:
+            raise ValueError(f"Order not found: {order_id}")
+
+        # Parse JSON fields
+        order = parse_entity_json_fields(order, ["lineItems", "shipping"])
+
+        # Format order
+        formatted_order = {
+            "id": order["id"],
+            "customer_id": order.get("customerId"),
+            "line_items": order.get("lineItems"),
+            "status": order.get("status"),
+            "created_at": order.get("createdAt", ""),
+            "updated_at": order.get("updatedAt", ""),
+        }
+
+        # Get customer
+        customer = None
+        customer_id = order.get("customerId")
+        if customer_id:
+            cust = get_entity_by_id(data, "customer", customer_id)
+            if cust:
+                customer = {
+                    "name": cust.get("name"),
+                    "email": cust.get("email"),
+                    "loyalty_tier": cust.get("loyaltyTier")
+                }
+
+        # Get payment (most recent before created_before)
+        payment = None
+        matching_payments: List[Dict[str, Any]] = []
+        for p in iter_entities(data, "payment"):
+            if p.get("orderId") != order_id:
+                continue
+            created_at = get_datetime_field(p, "createdAt")
+            if created_at is not None and created_before_dt and created_at > created_before_dt:
+                continue
+            matching_payments.append(p)
+        # Sort by createdAt DESC, then id ASC
+        matching_payments.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
+        matching_payments.sort(key=lambda x: x.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
+        if matching_payments:
+            p = matching_payments[0]
+            payment = {
+                "id": p.get("id"),
+                "amount": p.get("amount"),
+                "method": p.get("method"),
+                "status": p.get("status")
+            }
+
+        # Get shipment (most recent before created_before)
+        shipment = None
+        matching_shipments: List[Dict[str, Any]] = []
+        for s in iter_entities(data, "shipment"):
+            if s.get("orderId") != order_id:
+                continue
+            created_at = get_datetime_field(s, "createdAt")
+            if created_at is not None and created_before_dt and created_at > created_before_dt:
+                continue
+            matching_shipments.append(s)
+        # Sort by createdAt DESC, then id ASC
+        matching_shipments.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
+        matching_shipments.sort(key=lambda x: x.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
+        if matching_shipments:
+            s = matching_shipments[0]
+            shipment = {
+                "id": s.get("id"),
+                "tracking_number": s.get("trackingNumber"),
+                "carrier": s.get("carrier"),
+                "status": s.get("status")
+            }
+
+        # Get tickets (all before created_before)
+        tickets: List[Dict[str, Any]] = []
+        for t in iter_entities(data, "support_ticket"):
+            if t.get("orderId") != order_id:
+                continue
+            created_at = get_datetime_field(t, "createdAt")
+            if created_at is not None and created_before_dt and created_at > created_before_dt:
+                continue
+            tickets.append({
+                "id": t.get("id"),
+                "subject": t.get("subject"),
+                "status": t.get("status"),
+                "createdAt": t.get("createdAt")
+            })
+        # Sort by createdAt DESC, then id ASC
+        tickets.sort(key=lambda x: x.get("id", ""))  # Secondary: id ASC
+        tickets.sort(key=lambda x: x.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
+
+        return json.loads(json.dumps({
+            "order": formatted_order,
+            "payment": payment,
+            "shipment": shipment,
+            "customer": customer,
+            "tickets": tickets
+        }, default=str))
 
     @staticmethod
     def get_info() -> Dict[str, Any]:

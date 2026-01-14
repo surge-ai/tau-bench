@@ -1,10 +1,32 @@
 import json
-import sqlite3
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
-from .tool_impls.search_products import searchProducts as _orig
+
+from .data_utils import (
+    iter_entities,
+    parse_entity_json_fields,
+    matches_text_search,
+    apply_limit,
+    validate_enum,
+)
+
+PRODUCT_CATEGORIES = ["cpu", "motherboard", "gpu", "memory", "storage", "psu", "case", "cooling", "prebuilt", "workstation", "monitor", "keyboard", "mouse", "headset", "networking", "cable", "accessory", "bundle"]
+
+
+def _get_inventory_in_stock(entity: Dict[str, Any]) -> Optional[int]:
+    """Get inStock value from inventory field (handles JSON string or dict)."""
+    inventory = entity.get("inventory")
+    if inventory is None:
+        return None
+    if isinstance(inventory, str):
+        try:
+            inventory = json.loads(inventory)
+        except (json.JSONDecodeError, TypeError):
+            return None
+    if isinstance(inventory, dict):
+        return inventory.get("inStock")
+    return None
 
 
 class SearchProducts(Tool):
@@ -23,54 +45,65 @@ class SearchProducts(Tool):
         limit: Optional[float] = None,
         product_id: Optional[str] = None,
     ) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
+        validate_enum(category, PRODUCT_CATEGORIES, "category")
 
-                from .tool_impls import search_products as search_products_module
-                search_products_module.get_db_conn = lambda: conn
+        results: List[Dict[str, Any]] = []
 
-                result = _orig(
-                    category=category,
-                    brand=brand,
-                    min_price=min_price,
-                    max_price=max_price,
-                    price=price,
-                    inStockOnly=inStockOnly,
-                    minStock=minStock,
-                    maxStock=maxStock,
-                    text=text,
-                    limit=limit,
-                    product_id=product_id,
-                )
-                # Convert Pydantic models to dicts for JSON serialization
-                if isinstance(result, list):
-                    result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]
-                return json.dumps(result, default=str)
-            finally:
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    search_products_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+        for row in iter_entities(data, "product"):
+            # Exact product_id match
+            if product_id and row.get("id") != product_id:
+                continue
+            # Exact category match
+            if category and row.get("category") != category:
+                continue
+            # Exact brand match
+            if brand and row.get("brand") != brand:
+                continue
+            # Price filtering
+            row_price = row.get("price")
+            if row_price is not None:
+                if min_price is not None and row_price < min_price:
+                    continue
+                if max_price is not None and row_price > max_price:
+                    continue
+                if price is not None and row_price != price:
+                    continue
+
+            # Stock filtering
+            in_stock = _get_inventory_in_stock(row)
+            if inStockOnly and (in_stock is None or in_stock <= 0):
+                continue
+            if minStock is not None and (in_stock is None or in_stock < minStock):
+                continue
+            if maxStock is not None and (in_stock is None or in_stock > maxStock):
+                continue
+
+            # Text search across name, brand, and SKU
+            if text and not matches_text_search(row, ["name", "brand", "sku"], text):
+                continue
+
+            # Parse JSON fields
+            result_row = parse_entity_json_fields(row, ["inventory", "specs"])
+            results.append(result_row)
+
+        # Sort by name ASC, then id ASC
+        results.sort(key=lambda p: (p.get("name", ""), p.get("id", "")))
+
+        # Apply limit
+        results = apply_limit(results, limit)
+
+        return json.loads(json.dumps(results, default=str))
 
     @staticmethod
-    def get_info()->Dict[str,Any]:
+    def get_info() -> Dict[str, Any]:
         return {
-            "type":"function",
-            "function":{
-                "name":"searchProducts",
-                "description":"Search for products with various filters. Returns an array of product records matching the criteria.",
-                "parameters":{
-                    "type":"object",
-                    "properties":{
+            "type": "function",
+            "function": {
+                "name": "searchProducts",
+                "description": "Search for products with various filters. Returns an array of product records matching the criteria.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
                         "category": {
                             "type": "string",
                             "enum": ["cpu", "motherboard", "gpu", "memory", "storage", "psu", "case", "cooling", "prebuilt", "workstation", "monitor", "keyboard", "mouse", "headset", "networking", "cable", "accessory", "bundle"],
@@ -117,7 +150,7 @@ class SearchProducts(Tool):
                             "description": "Exact product ID filter"
                         }
                     },
-                    "required":[]
+                    "required": []
                 }
             }
         }
