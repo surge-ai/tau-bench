@@ -66,17 +66,20 @@ class FindRelatedEntities(Tool):
             if isinstance(customer_table, dict) and customer_id in customer_table:
                 result["customers"].append(customer_table[customer_id])
 
-        # Find orders
+        # Find orders (track IDs as we go)
+        order_ids = set()
         if customer_id:
             order_table = data.get("order", {})
             if isinstance(order_table, dict):
-                for order in order_table.values():
+                for oid, order in order_table.items():
                     if isinstance(order, dict) and order.get("customerId") == customer_id:
                         result["orders"].append(order)
+                        order_ids.add(oid)
         elif order_id:
             order_table = data.get("order", {})
             if isinstance(order_table, dict) and order_id in order_table:
                 result["orders"].append(order_table[order_id])
+                order_ids.add(order_id)
                 # Get customer from this order
                 order = order_table[order_id]
                 cust_id = order.get("customerId")
@@ -85,25 +88,28 @@ class FindRelatedEntities(Tool):
                     if isinstance(customer_table, dict) and cust_id in customer_table:
                         result["customers"].append(customer_table[cust_id])
 
-        # Find tickets
-        order_ids = {o.get("id") for o in result["orders"]}
+        # Find tickets (track IDs)
+        ticket_ids = set()
         ticket_table = data.get("support_ticket", {})
         if isinstance(ticket_table, dict):
-            for ticket in ticket_table.values():
+            for tid, ticket in ticket_table.items():
                 if isinstance(ticket, dict):
                     if (customer_id and ticket.get("customerId") == customer_id) or \
                        (ticket.get("orderId") in order_ids) or \
-                       (ticket_id and ticket.get("id") == ticket_id):
+                       (ticket_id and tid == ticket_id):
                         result["tickets"].append(ticket)
+                        ticket_ids.add(tid)
 
-        # Find payments
+        # Find payments (track IDs)
+        payment_ids = set()
         payment_table = data.get("payment", {})
         if isinstance(payment_table, dict):
-            for payment in payment_table.values():
+            for pid, payment in payment_table.items():
                 if isinstance(payment, dict):
                     if (payment.get("orderId") in order_ids) or \
-                       (payment_id and payment.get("id") == payment_id):
+                       (payment_id and pid == payment_id):
                         result["payments"].append(payment)
+                        payment_ids.add(pid)
 
         # Find shipments
         shipment_table = data.get("shipment", {})
@@ -113,7 +119,6 @@ class FindRelatedEntities(Tool):
                     result["shipments"].append(shipment)
 
         # Find refunds
-        payment_ids = {p.get("id") for p in result["payments"]}
         refund_table = data.get("refund", {})
         if isinstance(refund_table, dict):
             for refund in refund_table.values():
@@ -121,7 +126,6 @@ class FindRelatedEntities(Tool):
                     result["refunds"].append(refund)
 
         # Find escalations
-        ticket_ids = {t.get("id") for t in result["tickets"]}
         escalation_table = data.get("escalation", {})
         if isinstance(escalation_table, dict):
             for escalation in escalation_table.values():
@@ -135,10 +139,13 @@ class FindRelatedEntities(Tool):
                 if isinstance(resolution, dict) and resolution.get("ticketId") in ticket_ids:
                     result["resolutions"].append(resolution)
 
-        # Find products
+        # Find products (extract from order lineItems)
         all_product_ids = set()
         for order in result["orders"]:
-            all_product_ids.update(order.get("productIds", []))
+            # Orders have lineItems array with productId fields
+            for item in order.get("lineItems", []):
+                if isinstance(item, dict) and "productId" in item:
+                    all_product_ids.add(item["productId"])
         if product_ids:
             all_product_ids.update(product_ids)
 
