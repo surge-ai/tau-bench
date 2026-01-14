@@ -59,7 +59,7 @@ class InitiateRefundProcess(Tool):
 
         # Validate products if specified
         if product_ids:
-            order_product_ids = order.get("productIds", [])
+            order_product_ids = [item.get("productId") for item in order.get("lineItems", [])]
             for pid in product_ids:
                 if pid not in order_product_ids:
                     return json.loads(json.dumps({"error": f"Product {pid} not found in order"}))
