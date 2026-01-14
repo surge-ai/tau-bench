@@ -22,9 +22,9 @@ class LookupByReference(Tool):
         if isinstance(customer_table, dict):
             for customer in customer_table.values():
                 if isinstance(customer, dict):
-                    email = customer.get("email", "").lower()
-                    phone = customer.get("phone", "").lower()
-                    name = customer.get("name", "").lower()
+                    email = (customer.get("email") or "").lower()
+                    phone = (customer.get("phone") or "").lower()
+                    name = (customer.get("name") or "").lower()
                     if (reference_lower in email or
                         reference_lower in phone or
                         reference_lower in name or
@@ -36,8 +36,8 @@ class LookupByReference(Tool):
         if isinstance(order_table, dict):
             for order in order_table.values():
                 if isinstance(order, dict):
-                    order_id = order.get("id", "").lower()
-                    order_number = str(order.get("orderNumber", "")).lower()
+                    order_id = (order.get("id") or "").lower()
+                    order_number = str(order.get("orderNumber") or "").lower()
                     if reference_lower in order_id or reference_lower in order_number:
                         results["orders"].append(order)
 
@@ -46,8 +46,8 @@ class LookupByReference(Tool):
         if isinstance(ticket_table, dict):
             for ticket in ticket_table.values():
                 if isinstance(ticket, dict):
-                    ticket_id = ticket.get("id", "").lower()
-                    subject = ticket.get("subject", "").lower()
+                    ticket_id = (ticket.get("id") or "").lower()
+                    subject = (ticket.get("subject") or "").lower()
                     if reference_lower in ticket_id or reference_lower in subject:
                         results["tickets"].append(ticket)
 
@@ -56,8 +56,8 @@ class LookupByReference(Tool):
         if isinstance(employee_table, dict):
             for employee in employee_table.values():
                 if isinstance(employee, dict):
-                    email = employee.get("email", "").lower()
-                    name = employee.get("name", "").lower()
+                    email = (employee.get("email") or "").lower()
+                    name = (employee.get("name") or "").lower()
                     if reference_lower in email or reference_lower in name or employee.get("id") == reference:
                         results["employees"].append(employee)
 
