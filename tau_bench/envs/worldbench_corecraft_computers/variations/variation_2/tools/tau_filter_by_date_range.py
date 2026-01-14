@@ -41,13 +41,15 @@ class FilterByDateRange(Tool):
 
         if start_date:
             try:
-                start_dt = datetime.fromisoformat(start_date.replace("Z", "+00:00"))
+                # Parse as naive datetime for consistent comparison
+                start_dt = datetime.fromisoformat(start_date.replace("Z", ""))
             except (ValueError, AttributeError):
                 return json.loads(json.dumps({"error": f"Invalid start_date format: {start_date}"}))
 
         if end_date:
             try:
-                end_dt = datetime.fromisoformat(end_date.replace("Z", "+00:00"))
+                # Parse as naive datetime for consistent comparison
+                end_dt = datetime.fromisoformat(end_date.replace("Z", ""))
             except (ValueError, AttributeError):
                 return json.loads(json.dumps({"error": f"Invalid end_date format: {end_date}"}))
 
@@ -62,9 +64,9 @@ class FilterByDateRange(Tool):
                 continue
 
             try:
-                # Parse entity date
+                # Parse entity date as naive datetime for consistent comparison
                 if isinstance(date_value, str):
-                    entity_dt = datetime.fromisoformat(date_value.replace("Z", "+00:00"))
+                    entity_dt = datetime.fromisoformat(date_value.replace("Z", ""))
                 else:
                     continue
 
