@@ -93,17 +93,27 @@ Field updates (changing status, priority, amounts on existing entities) can be c
 
 ## Create Escalation
 
-**HOW TO CREATE ESCALATIONS:** Use the `process_customer_issue` tool with `auto_escalate=True`. This is the ONLY way to create escalation entities - there is no separate create_escalation tool.
+**For EXISTING tickets:** Use the `escalate_ticket` tool to create an escalation record linked to an existing ticket.
+
+**For NEW issues that need immediate escalation:** Use the `process_customer_issue` tool with `auto_escalate=True` to create both a new ticket and escalation in one step.
+
+### Escalating an Existing Ticket:
 
 - The agent must first obtain the ticket id and verify the ticket exists.
 
-- To create an escalation, call `process_customer_issue` with the customer_id, appropriate issue_type (which determines the escalation destination), issue description, and **set auto_escalate=True**.
+- Call `escalate_ticket` with:
+  - `ticket_id`: The existing ticket to escalate
+  - `escalation_type`: Type of escalation (technical, policy_exception, product_specialist)
+  - `destination`: Where to send it (e.g., 'product_specialist_team')
+  - `notes`: Explanation of why escalation is needed (e.g., "High-volume customer with 4 tickets in 30 days")
 
-- Issue type determines escalation destination: Use issue_type "product_specialist" to escalate to the product specialist team.
+- After creating an escalation, the agent should update the ticket priority and assign it to the appropriate employee.
 
-- Notes: Include relevant context in the issue_description explaining why the escalation is needed (e.g., "high ticket volume", "complex technical issue").
+### Creating a New Issue with Escalation:
 
-- After creating an escalation, the agent should update the original ticket priority and assign it to the appropriate employee.
+- Use `process_customer_issue` with `auto_escalate=True` to create a new ticket with an escalation in one atomic operation.
+
+- This is useful when a customer reports a new issue that immediately requires specialist attention.
 
 ## Create Resolution
 

@@ -118,12 +118,12 @@ TASKS_TEST = [
                 },
             ),
             Action(
-                name="process_customer_issue",
+                name="escalate_ticket",
                 kwargs={
-                    "customer_id": "isabella-southgate-36927",
-                    "issue_type": "product_specialist",
-                    "issue_description": "High-volume customer - GraphForce 4070 malfunction",
-                    "auto_escalate": True,
+                    "ticket_id": "tick-250829-112",
+                    "escalation_type": "product_specialist",
+                    "destination": "product_specialist_team",
+                    "notes": "High-volume customer with 4 tickets in 30 days",
                 },
             ),
             Action(

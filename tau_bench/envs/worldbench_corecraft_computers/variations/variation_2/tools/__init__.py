@@ -26,10 +26,11 @@ from .tau_get_shipping_estimates import GetShippingEstimates
 from .tau_update_entity_field import UpdateEntityField
 from .tau_bulk_status_update import BulkStatusUpdate
 
-# Workflow & Composite Operations (3)
+# Workflow & Composite Operations (4)
 from .tau_process_customer_issue import ProcessCustomerIssue
 from .tau_resolve_and_close import ResolveAndClose
 from .tau_initiate_refund_process import InitiateRefundProcess
+from .tau_escalate_ticket import EscalateTicket
 
 ALL_TOOLS = [
     # Generic Query & Lookup (4)
@@ -52,8 +53,9 @@ ALL_TOOLS = [
     # Generic Updates & Batch Operations (2)
     UpdateEntityField,
     BulkStatusUpdate,
-    # Workflow & Composite Operations (3)
+    # Workflow & Composite Operations (4)
     ProcessCustomerIssue,
     ResolveAndClose,
     InitiateRefundProcess,
+    EscalateTicket,
 ]
