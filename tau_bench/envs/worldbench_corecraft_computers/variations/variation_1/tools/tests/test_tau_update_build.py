@@ -114,26 +114,39 @@ class TestUpdateBuild(unittest.TestCase):
         self.assertEqual(result_dict["productIds"], ["cpu1", "mobo1", "ram1"])
 
     def test_update_build_remove_nonexistent_product(self):
-        """Test removing product not in build (no error)."""
-        result_dict = UpdateBuild.invoke(
-            self.data,
-            build_id="build1",
-            remove_product_ids=["nonexistent"],
-        )
+        """Test removing product not in build raises error."""
+        with self.assertRaises(ValueError) as context:
+            UpdateBuild.invoke(
+                self.data,
+                build_id="build1",
+                remove_product_ids=["nonexistent"],
+            )
 
-        # Should not change anything
-        self.assertEqual(result_dict["productIds"], ["cpu1", "gpu1"])
+        error_msg = str(context.exception)
+        self.assertIn("nonexistent", error_msg)
+        self.assertIn("not in build", error_msg)
 
     def test_update_build_add_duplicate_product(self):
-        """Test adding product already in build (no duplicate)."""
+        """Test adding product already in build (duplicates allowed for RAM, etc.)."""
         result_dict = UpdateBuild.invoke(
             self.data,
             build_id="build1",
             add_product_ids=["cpu1"],  # Already in build
         )
 
-        # Should not duplicate
-        self.assertEqual(result_dict["productIds"], ["cpu1", "gpu1"])
+        # Duplicates are now allowed (e.g., multiple RAM sticks)
+        self.assertEqual(result_dict["productIds"], ["cpu1", "cpu1", "gpu1"])
+
+    def test_update_build_multiple_duplicates(self):
+        """Test adding multiple of the same product (like RAM sticks)."""
+        result_dict = UpdateBuild.invoke(
+            self.data,
+            build_id="build1",
+            add_product_ids=["ram1", "ram1", "ram1", "ram1"],  # 4 RAM sticks
+        )
+
+        # Should have all 4 RAM sticks plus original products
+        self.assertEqual(result_dict["productIds"], ["cpu1", "gpu1", "ram1", "ram1", "ram1", "ram1"])
 
     def test_update_build_invalid_build_id(self):
         """Test updating non-existent build."""
@@ -158,6 +171,20 @@ class TestUpdateBuild(unittest.TestCase):
 
         self.assertIn("nonexistent", str(context.exception))
         self.assertIn("not found", str(context.exception))
+
+    def test_update_build_multiple_invalid_products(self):
+        """Test that all non-existent products are listed in error."""
+        with self.assertRaises(ValueError) as context:
+            UpdateBuild.invoke(
+                self.data,
+                build_id="build1",
+                add_product_ids=["bad1", "ram1", "bad2"],
+            )
+
+        error_msg = str(context.exception)
+        self.assertIn("bad1", error_msg)
+        self.assertIn("bad2", error_msg)
+        self.assertIn("Products not found", error_msg)
 
     def test_update_build_missing_build_table(self):
         """Test updating when build table doesn't exist."""

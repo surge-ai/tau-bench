@@ -41,10 +41,10 @@ class CreateBuild(Tool):
         if not get_entity_by_id(data, "customer", customer_id):
             raise ValueError(f"Customer {customer_id} not found")
 
-        # Validate all product IDs exist
-        for product_id in product_ids:
-            if not get_entity_by_id(data, "product", product_id):
-                raise ValueError(f"Product {product_id} not found")
+        # Validate all product IDs exist and collect all not found
+        not_found = [pid for pid in product_ids if not get_entity_by_id(data, "product", pid)]
+        if not_found:
+            raise ValueError(f"Products not found: {', '.join(not_found)}")
 
         # Sort product IDs for deterministic ordering
         sorted_product_ids = sorted(product_ids)

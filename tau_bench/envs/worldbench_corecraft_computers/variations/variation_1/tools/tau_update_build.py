@@ -51,26 +51,31 @@ class UpdateBuild(Tool):
 
         build = build_table[build_id]
 
-        # Validate products to add exist
+        # Validate products to add exist and collect all not found
         if add_product_ids:
-            for product_id in add_product_ids:
-                if not get_entity_by_id(data, "product", product_id):
-                    raise ValueError(f"Product {product_id} not found")
+            not_found = [pid for pid in add_product_ids if not get_entity_by_id(data, "product", pid)]
+            if not_found:
+                raise ValueError(f"Products not found: {', '.join(not_found)}")
+
+        # Update product list (use list to allow duplicates like multiple RAM sticks)
+        current_products = list(build.get("productIds", []))
+
+        # Validate products to remove exist in the build
+        if remove_product_ids:
+            not_in_build = [pid for pid in remove_product_ids if pid not in current_products]
+            if not_in_build:
+                raise ValueError(f"Products not in build: {', '.join(not_in_build)}")
 
         # Update name if provided
         if name is not None:
             build["name"] = name
 
-        # Update product list
-        current_products = set(build.get("productIds", []))
-
         if remove_product_ids:
             for product_id in remove_product_ids:
-                current_products.discard(product_id)
+                current_products.remove(product_id)
 
         if add_product_ids:
-            for product_id in add_product_ids:
-                current_products.add(product_id)
+            current_products.extend(add_product_ids)
 
         # Sort product IDs for deterministic ordering
         build["productIds"] = sorted(current_products)

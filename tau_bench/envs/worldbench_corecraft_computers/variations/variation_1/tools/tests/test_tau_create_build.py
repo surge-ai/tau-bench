@@ -167,6 +167,21 @@ class TestCreateBuild(unittest.TestCase):
         self.assertIn("nonexistent", str(context.exception))
         self.assertIn("not found", str(context.exception))
 
+    def test_create_build_multiple_invalid_products(self):
+        """Test that all non-existent products are listed in error."""
+        with self.assertRaises(ValueError) as context:
+            CreateBuild.invoke(
+                self.data,
+                name="Gaming PC",
+                customer_id="cust1",
+                product_ids=["cpu1", "bad1", "gpu1", "bad2"],
+            )
+
+        error_msg = str(context.exception)
+        self.assertIn("bad1", error_msg)
+        self.assertIn("bad2", error_msg)
+        self.assertIn("Products not found", error_msg)
+
     def test_create_build_mutates_data_in_place(self):
         """Test that the tool adds build to data dict."""
         result_dict = CreateBuild.invoke(
