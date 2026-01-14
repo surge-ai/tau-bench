@@ -42,8 +42,8 @@
         "postalCode": "94110",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard",
+      "carrier": "FedEx Express",
+      "service": "express",
       "eta": "2025-08-15T17:00:00Z"
     },
     "createdAt": "2025-08-13T10:30:00Z",
@@ -151,8 +151,8 @@
         "postalCode": "85260",
         "country": "US"
       },
-      "carrier": "usps_ground",
-      "service": "express",
+      "carrier": "USPS Ground",
+      "service": "standard",
       "eta": "2025-08-22T09:00:00Z"
     },
     "createdAt": "2025-08-18T09:00:00Z",
@@ -271,8 +271,8 @@
         "postalCode": "92109",
         "country": "US"
       },
-      "carrier": "ups_ground",
-      "service": "express",
+      "carrier": "UPS Ground",
+      "service": "standard",
       "eta": "2025-10-29T17:00:00Z"
     },
     "createdAt": "2025-10-24T10:22:00Z",
@@ -372,8 +372,8 @@
         "postalCode": "92324",
         "country": "US"
       },
-      "carrier": "fed_express",
-      "service": "Express"
+      "carrier": "FedEx Express",
+      "service": "express"
     },
     "createdAt": "2025-09-13T11:40:00Z",
     "updatedAt": "2025-09-13T16:45:00Z"
@@ -400,7 +400,7 @@
         "postalCode": "21842",
         "country": "US"
       },
-      "carrier": "fedex_overnight",
+      "carrier": "FedEx Overnight",
       "service": "overnight",
       "eta": "2025-10-29T18:00:00Z"
     },
@@ -474,8 +474,8 @@
         "postalCode": "33131",
         "country": "US"
       },
-      "carrier": "usps_ground",
-      "service": "express",
+      "carrier": "USPS Ground",
+      "service": "standard",
       "eta": "2024-11-30T14:00:00Z"
     },
     "createdAt": "2024-11-27T13:27:00Z",
@@ -554,7 +554,7 @@
         "postalCode": "76011",
         "country": "US"
       },
-      "carrier": "FedEx",
+      "carrier": "FedEx Express",
       "service": "express"
     },
     "createdAt": "2021-08-20T14:30:00Z",
@@ -572,7 +572,11 @@
         "productId": "skyforge-x670e-pro"
       },
       {
-        "qty": 2,
+        "qty": 1,
+        "productId": "pyratech-graphforce-4070-16gb"
+      },
+      {
+        "qty": 1,
         "productId": "hypervolt-ddr5-32gb-5600"
       },
       {
@@ -586,6 +590,10 @@
       {
         "qty": 1,
         "productId": "aeroshell-mid-tower-rgb"
+      },
+      {
+        "qty": 1,
+        "productId": "cryowave-aio-240mm"
       }
     ],
     "status": "paid",
@@ -648,7 +656,7 @@
         "postalCode": "03801",
         "country": "US"
       },
-      "carrier": "fedex_overnight",
+      "carrier": "FedEx Overnight",
       "service": "overnight",
       "eta": "2025-10-25T17:00:00Z"
     },
@@ -714,7 +722,31 @@
     "lineItems": [
       {
         "qty": 1,
-        "productId": "customer-build-zachary"
+        "productId": "titanforge-impressa-mid"
+      },
+      {
+        "qty": 1,
+        "productId": "novachip-fusion-12700k"
+      },
+      {
+        "qty": 1,
+        "productId": "dataforge-sata-2tb-ssd"
+      },
+      {
+        "qty": 1,
+        "productId": "cryonix-z790-apex"
+      },
+      {
+        "qty": 1,
+        "productId": "vortexlabs-horizon-rx820l"
+      },
+      {
+        "qty": 1,
+        "productId": "coreflow-750w-gold-modular"
+      },
+      {
+        "qty": 1,
+        "productId": "cryowave-tower-air-cooler"
       },
       {
         "qty": 1,
@@ -761,7 +793,7 @@
         "postalCode": "02109",
         "country": "US"
       },
-      "carrier": "FedEx",
+      "carrier": "FedEx Express",
       "service": "express",
       "eta": "2025-10-22T17:00:00Z"
     },
@@ -950,8 +982,8 @@
         "postalCode": "60614",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard"
+      "carrier": "FedEx Express",
+      "service": "express"
     },
     "createdAt": "2023-08-12T09:15:00Z",
     "updatedAt": "2023-08-15T16:30:00Z"
@@ -968,7 +1000,7 @@
         "productId": "cryonix-z790-apex"
       },
       {
-        "qty": 2,
+        "qty": 1,
         "productId": "hypervolt-ddr5-32gb-5600"
       },
       {
@@ -977,7 +1009,23 @@
       },
       {
         "qty": 1,
+        "productId": "dataforge-nvme-1tb-gen4"
+      },
+      {
+        "qty": 1,
+        "productId": "dataforge-sata-2tb-ssd"
+      },
+      {
+        "qty": 1,
         "productId": "coreflow-750w-gold-modular"
+      },
+      {
+        "qty": 1,
+        "productId": "aeroshell-mid-tower-rgb"
+      },
+      {
+        "qty": 1,
+        "productId": "cryowave-aio-240mm"
       }
     ],
     "status": "fulfilled",
@@ -991,8 +1039,8 @@
         "postalCode": "94110",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard",
+      "carrier": "FedEx Express",
+      "service": "express",
       "eta": "2024-03-18T17:00:00Z"
     },
     "createdAt": "2024-03-15T14:23:00Z",
@@ -1110,8 +1158,8 @@
         "postalCode": "40204",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard",
+      "carrier": "FedEx Express",
+      "service": "express",
       "eta": "2025-08-29T17:00:00Z"
     },
     "createdAt": "2025-08-25T10:15:00Z",
@@ -1189,7 +1237,7 @@
         "postalCode": "24151",
         "country": "US"
       },
-      "carrier": "fedex_overnight",
+      "carrier": "FedEx Overnight",
       "service": "overnight"
     },
     "createdAt": "2025-11-12T10:22:00Z",
@@ -1271,8 +1319,8 @@
         "postalCode": "V8V4P7",
         "country": "CA"
       },
-      "carrier": "usps_ground",
-      "service": "express",
+      "carrier": "USPS Ground",
+      "service": "standard",
       "eta": "2025-09-07T18:00:00Z"
     },
     "createdAt": "2025-08-26T14:11:32Z",
@@ -1405,7 +1453,7 @@
         "country": "US"
       },
       "carrier": "UPS Ground",
-      "service": "Standard",
+      "service": "standard",
       "eta": "2025-10-24T17:00:00Z"
     },
     "createdAt": "2025-10-17T14:22:00Z",
@@ -1449,7 +1497,7 @@
         "postalCode": "V8V4P7",
         "country": "CA"
       },
-      "carrier": "UPS ground",
+      "carrier": "UPS Ground",
       "service": "standard"
     },
     "createdAt": "2025-10-19T18:34:22Z",
@@ -1473,8 +1521,8 @@
         "postalCode": "80302",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard",
+      "carrier": "FedEx Express",
+      "service": "express",
       "eta": "2025-08-30T13:00:00Z"
     },
     "createdAt": "2025-08-27T19:59:45.383Z",
@@ -1523,8 +1571,8 @@
         "postalCode": "94110",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard",
+      "carrier": "FedEx Express",
+      "service": "express",
       "eta": "2025-08-27T17:00:00Z"
     },
     "createdAt": "2025-08-25T09:15:00Z",
@@ -1535,7 +1583,31 @@
     "lineItems": [
       {
         "qty": 1,
-        "productId": "configurator-hatch-1"
+        "productId": "aeroshell-mid-tower-rgb"
+      },
+      {
+        "qty": 1,
+        "productId": "astralogic-blade-4600"
+      },
+      {
+        "qty": 1,
+        "productId": "skyforge-b550m-micro"
+      },
+      {
+        "qty": 1,
+        "productId": "celestis-sata-1tb-hdd"
+      },
+      {
+        "qty": 1,
+        "productId": "coreflow-650w-bronze"
+      },
+      {
+        "qty": 1,
+        "productId": "vortexlabs-horizon-rx740t"
+      },
+      {
+        "qty": 1,
+        "productId": "cryowave-tower-air-cooler"
       },
       {
         "qty": 1,
@@ -1731,8 +1803,8 @@
         "postalCode": "98101",
         "country": "US"
       },
-      "carrier": "usps_ground",
-      "service": "express",
+      "carrier": "USPS Ground",
+      "service": "standard",
       "eta": "2025-08-25T15:00:00Z"
     },
     "createdAt": "2025-08-22T10:30:00Z",
@@ -1767,8 +1839,8 @@
         "postalCode": "11201",
         "country": "US"
       },
-      "carrier": "usps_ground",
-      "service": "express"
+      "carrier": "USPS Ground",
+      "service": "standard"
     },
     "createdAt": "2025-08-24T17:25:09.232Z",
     "updatedAt": "2025-08-26T17:48:56.868Z"
@@ -1791,8 +1863,8 @@
         "postalCode": "33139",
         "country": "US"
       },
-      "carrier": "usps_ground",
-      "service": "express",
+      "carrier": "USPS Ground",
+      "service": "standard",
       "eta": "2025-07-04T09:00:00Z"
     },
     "createdAt": "2025-07-01T09:00:00Z",
@@ -1803,7 +1875,35 @@
     "lineItems": [
       {
         "qty": 1,
-        "productId": "configurator-marcella-hammond-0"
+        "productId": "aeroshell-compact-itx"
+      },
+      {
+        "qty": 1,
+        "productId": "skyforge-b550m-micro"
+      },
+      {
+        "qty": 1,
+        "productId": "astralogic-vortex-8700x"
+      },
+      {
+        "qty": 1,
+        "productId": "vortexlabs-horizon-rx780"
+      },
+      {
+        "qty": 1,
+        "productId": "hypervolt-ddr4-16gb-3200"
+      },
+      {
+        "qty": 1,
+        "productId": "dataforge-sata-2tb-ssd"
+      },
+      {
+        "qty": 1,
+        "productId": "coreflow-650w-bronze"
+      },
+      {
+        "qty": 1,
+        "productId": "cryowave-aio-240mm"
       }
     ],
     "status": "fulfilled",
@@ -1833,8 +1933,8 @@
         "postalCode": "75219",
         "country": "US"
       },
-      "carrier": "usps_ground",
-      "service": "express",
+      "carrier": "USPS Ground",
+      "service": "standard",
       "eta": "2025-08-27T15:00:00Z"
     },
     "createdAt": "2025-08-24T11:18:00Z",
@@ -1911,8 +2011,8 @@
         "postalCode": "08724",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard"
+      "carrier": "FedEx Express",
+      "service": "express"
     },
     "createdAt": "2020-12-03T15:32:00Z",
     "updatedAt": "2020-12-07T11:00:00Z"
@@ -2014,7 +2114,7 @@
         "postalCode": "98101",
         "country": "US"
       },
-      "carrier": "FedEx",
+      "carrier": "FedEx Express",
       "service": "express",
       "eta": "2025-10-26T17:00:00Z"
     },
@@ -2039,8 +2139,8 @@
         "postalCode": "33139",
         "country": "US"
       },
-      "carrier": "Federal Express",
-      "service": "standard",
+      "carrier": "FedEx Express",
+      "service": "express",
       "eta": "2025-09-16T14:00:00Z"
     },
     "createdAt": "2025-09-10T11:00:00Z",
@@ -2096,7 +2196,7 @@
         "postalCode": "60661",
         "country": "US"
       },
-      "carrier": "FedEx",
+      "carrier": "FedEx Express",
       "service": "express",
       "eta": "2025-11-15T17:00:00Z"
     },
@@ -2207,7 +2307,7 @@
         "postalCode": "59801",
         "country": "US"
       },
-      "carrier": "fedex_express",
+      "carrier": "FedEx Express",
       "service": "express",
       "eta": "2025-11-12T17:00:00Z"
     },
@@ -2317,7 +2417,7 @@
         "postalCode": "76011",
         "country": "US"
       },
-      "carrier": "FedEx",
+      "carrier": "FedEx Express",
       "service": "express"
     },
     "createdAt": "2025-09-02T21:34:00Z",
@@ -2516,7 +2616,7 @@
         "postalCode": "08724",
         "country": "US"
       },
-      "carrier": "fedex_express",
+      "carrier": "FedEx Express",
       "service": "express",
       "eta": "2025-10-25T17:00:00Z"
     },
@@ -2662,23 +2762,5 @@
     },
     "createdAt": "2025-11-04T10:25:00Z",
     "updatedAt": "2025-11-05T17:15:07Z"
-  },
-  "ord-251116-008": {
-    "customerId": "cheryl-kim-25488",
-    "status": "fulfilled",
-    "total": 799.99,
-    "createdAt": "2025-11-16T10:00:00Z"
-  },
-  "ord-251117-042": {
-    "customerId": "sarah-blake-41859",
-    "status": "fulfilled",
-    "total": 799.99,
-    "createdAt": "2025-11-17T14:30:00Z"
-  },
-  "ord-251118-019": {
-    "customerId": "jessica-ferguson-74192",
-    "status": "fulfilled",
-    "total": 799.99,
-    "createdAt": "2025-11-18T09:15:00Z"
   }
 }
