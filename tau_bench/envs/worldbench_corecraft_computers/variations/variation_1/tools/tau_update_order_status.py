@@ -41,7 +41,7 @@ class UpdateOrderStatus(Tool):
                         },
                         "status": {
                             "type": "string",
-                            "enum": ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded"],
+                            "enum": ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded", "refund_requested"],
                             "description": "The new status to set for the order"
                         }
                     },

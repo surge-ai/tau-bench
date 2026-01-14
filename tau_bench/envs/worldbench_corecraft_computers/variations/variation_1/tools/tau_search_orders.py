@@ -85,7 +85,7 @@ class SearchOrders(Tool):
                         },
                         "status": {
                             "type": "string",
-                            "enum": ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded"],
+                            "enum": ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded", "refund_requested"],
                             "description": "Order status to filter by"
                         },
                         "created_after": {

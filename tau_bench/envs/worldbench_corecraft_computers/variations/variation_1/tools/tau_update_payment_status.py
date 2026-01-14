@@ -51,7 +51,7 @@ class UpdatePaymentStatus(Tool):
                         },
                         "status": {
                             "type": "string",
-                            "enum": ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"],
+                            "enum": ["pending", "captured", "failed", "refunded", "partially_refunded"],
                             "description": "The new status to set for the payment"
                         },
                         "failure_reason": {
