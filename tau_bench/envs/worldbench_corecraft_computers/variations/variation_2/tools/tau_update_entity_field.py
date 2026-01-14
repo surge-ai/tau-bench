@@ -72,7 +72,7 @@ class UpdateEntityField(Tool):
             "type": "function",
             "function": {
                 "name": "update_entity_field",
-                "description": "Generic field updater: update any single field on any entity type. More granular than entity-specific update tools.",
+                "description": "Generic field updater: update any single field on any entity type. More granular than entity-specific update tools. **IMPORTANT: Use snake_case for field names (e.g., 'assigned_employee_id' not 'assignedEmployeeId'). For employee references, use the employee ID (e.g., 'david-pereboom'), not email or name.**",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -86,10 +86,10 @@ class UpdateEntityField(Tool):
                         },
                         "field_name": {
                             "type": "string",
-                            "description": "Name of the field to update (e.g., 'status', 'priority', 'amount').",
+                            "description": "Name of the field to update in snake_case. Common fields: 'status', 'priority', 'assigned_employee_id', 'amount', 'quantity'. For employee assignments use 'assigned_employee_id'.",
                         },
                         "field_value": {
-                            "description": "New value for the field (string, number, boolean, object, or array).",
+                            "description": "New value for the field. **For assigned_employee_id, use the employee's ID (e.g., 'david-pereboom'), not their email or name.** Values can be string, number, boolean, object, or array.",
                         },
                     },
                     "required": ["entity_type", "entity_id", "field_name", "field_value"],
