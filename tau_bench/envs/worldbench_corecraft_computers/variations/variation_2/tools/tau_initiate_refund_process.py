@@ -115,7 +115,7 @@ class InitiateRefundProcess(Tool):
                         },
                         "amount": {
                             "type": "number",
-                            "description": "Refund amount (if not specified, full payment amount is refunded).",
+                            "description": "Refund amount in dollars. **Must be calculated based on items being refunded** (e.g., if refunding 4 items at $129.99 each, amount should be 519.96). If omitted, full payment amount is refunded. Do not pass 0 or incorrect amounts.",
                         },
                         "product_ids": {
                             "type": "array",
