@@ -34,16 +34,17 @@ class InitiateRefundProcess(Tool):
         # Find payment for this order
         payment_table = data.get("payment", {})
         payment = None
+        payment_id = None
         if isinstance(payment_table, dict):
-            for p in payment_table.values():
+            for pid, p in payment_table.items():
                 if isinstance(p, dict) and p.get("orderId") == order_id:
                     payment = p
+                    payment_id = pid
                     break
 
         if not payment:
             return json.loads(json.dumps({"error": f"No payment found for order {order_id}"}))
 
-        payment_id = payment.get("id")
         payment_amount = float(payment.get("amount", 0))
 
         # Determine refund amount
