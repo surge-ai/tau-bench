@@ -9,7 +9,7 @@ TASKS_TEST = [
             Action(
                 name="lookup_by_reference",
                 kwargs={
-                    "reference_value": "ord-251104-428",
+                    "reference": "ord-251104-428",
                 },
             ),
             Action(
@@ -23,7 +23,7 @@ TASKS_TEST = [
             Action(
                 name="lookup_by_reference",
                 kwargs={
-                    "reference_value": "coreflow-750w-gold-modular",
+                    "reference": "coreflow-750w-gold-modular",
                 },
             ),
             Action(
@@ -64,13 +64,13 @@ TASKS_TEST = [
             Action(
                 name="lookup_by_reference",
                 kwargs={
-                    "reference_value": "tick-250828-001",
+                    "reference": "tick-250828-001",
                 },
             ),
             Action(
                 name="lookup_by_reference",
                 kwargs={
-                    "reference_value": "David Pereboom",
+                    "reference": "David Pereboom",
                 },
             ),
             Action(
@@ -101,13 +101,13 @@ TASKS_TEST = [
             Action(
                 name="lookup_by_reference",
                 kwargs={
-                    "reference_value": "tick-250829-112",
+                    "reference": "tick-250829-112",
                 },
             ),
             Action(
                 name="lookup_by_reference",
                 kwargs={
-                    "reference_value": "Michael Torres",
+                    "reference": "Michael Torres",
                 },
             ),
             Action(
