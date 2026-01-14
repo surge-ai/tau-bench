@@ -14,7 +14,7 @@ class UpdateOrderStatus(Tool):
         status: str,
     ) -> str:
         # Validate enum parameters
-        validate_enum(status, ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded"], "status")
+        validate_enum(status, ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded", "refund_requested"], "status")
 
         order_table = data.get("order")
         if not isinstance(order_table, dict):

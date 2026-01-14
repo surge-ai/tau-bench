@@ -22,7 +22,7 @@ class UpdatePaymentStatus(Tool):
         failure_reason: str | None | _NotProvided = _NOT_PROVIDED,
     ) -> str:
         # Validate enum parameters
-        validate_enum(status, ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"], "status")
+        validate_enum(status, ["pending", "captured", "failed", "refunded", "partially_refunded"], "status")
 
         payment_table = data.get("payment")
         if not isinstance(payment_table, dict):

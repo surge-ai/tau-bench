@@ -36,7 +36,6 @@ class CreateRefund(Tool):
         data: Dict[str, Any],
         payment_id: str,
         amount: float,
-        currency: str,
         reason: str,
         status: Optional[str] = "pending",
         lines: Optional[List[Dict[str, Any]]] = None,
@@ -48,7 +47,6 @@ class CreateRefund(Tool):
           - type: "refund"
           - paymentId
           - amount
-          - currency
           - reason
           - status
           - lines (list of dicts)
@@ -63,7 +61,7 @@ class CreateRefund(Tool):
             raise ValueError(f"Payment {payment_id} not found")
 
         # Generate deterministic ID based on input parameters
-        id_input = f"{payment_id}|{amount}|{currency}|{reason}|{status or 'pending'}"
+        id_input = f"{payment_id}|{amount}|{reason}|{status or 'pending'}"
         id_hash = hashlib.sha256(id_input.encode()).hexdigest()[:12]
         refund_id = f"refund_{id_hash}"
         row: Dict[str, Any] = {
@@ -71,7 +69,6 @@ class CreateRefund(Tool):
             "type": "refund",
             "paymentId": payment_id,
             "amount": float(amount),
-            "currency": currency,
             "reason": reason,
             "status": status or "pending",
             "lines": lines or [],
@@ -98,7 +95,6 @@ class CreateRefund(Tool):
                     "properties": {
                         "payment_id": {"type": "string", "description": "Payment ID to refund."},
                         "amount": {"type": "number", "description": "Refund amount."},
-                        "currency": {"type": "string", "description": "Currency code, e.g. USD."},
                         "reason": {
                             "type": "string",
                             "enum": ["customer_remorse", "defective", "incompatible", "shipping_issue", "other"],
@@ -115,7 +111,7 @@ class CreateRefund(Tool):
                             "items": {"type": "object"},
                         },
                     },
-                    "required": ["payment_id", "amount", "currency", "reason"],
+                    "required": ["payment_id", "amount", "reason"],
                 },
             },
         }

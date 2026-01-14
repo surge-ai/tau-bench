@@ -41,7 +41,8 @@ class CreateEscalation(Tool):
     ) -> str:
         """Create an escalation record linked to an existing support ticket."""
         # Validate enum parameters
-        validate_enum(escalation_type, ["technical", "policy_exception", "product_specialist"], "escalation_type")
+        validate_enum(escalation_type, ["technical", "policy_exception", "product_specialist", "insufficient_permission"], "escalation_type")
+        validate_enum(destination, ["operations", "order_processing", "engineering", "help_desk", "it_systems", "product_management", "finance", "hr", "support"], "destination")
 
         if not _find_ticket(data, ticket_id):
             raise ValueError(f"Ticket {ticket_id} not found")

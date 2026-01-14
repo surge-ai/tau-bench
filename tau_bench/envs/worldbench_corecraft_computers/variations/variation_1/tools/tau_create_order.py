@@ -8,7 +8,7 @@ from .data_utils import get_entity_by_id, validate_enum
 
 
 # Valid enum values
-VALID_STATUSES = ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded"]
+VALID_STATUSES = ["pending", "paid", "fulfilled", "cancelled", "backorder", "refunded", "partially_refunded", "refund_requested"]
 VALID_CARRIERS = ["UPS Ground", "USPS Ground", "FedEx Express", "FedEx Overnight"]
 VALID_SERVICES = ["standard", "express", "overnight"]
 

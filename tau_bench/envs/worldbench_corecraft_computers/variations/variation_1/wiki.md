@@ -110,15 +110,15 @@ All dates and times provided in the database are in EST. You can assume that all
 
 - The agent must first obtain the order id and verify the order exists and has a valid status for cancellation.
 
-- When cancelling an order, the agent should update the order status to "cancelled".
+- When cancelling an order, the agent should use the updateOrderStatus tool to set the status to "cancelled".
 
-- If the order has an associated payment with status "captured", the agent should process a refund for the full order amount.
+- If the order has an associated payment with status "captured", the agent should process a refund for the full order amount with status "approved".
 
 ## Create and Update Build
 
-- Before creating a build, the agent must validate that all components in the build are compatible.
+- Before creating a build, the agent must validate that all components in the build are compatible using the validateBuildCompatibility tool.
 
-- The agent cannot assume compatibility based on specifications alone - all compatibility must be confirmed through validation.
+- The agent cannot assume compatibility based on specifications alone - all compatibility must be confirmed through validation using the tool.
 
 - Build components: The agent must collect product ids for all components. Valid component types are: cpu, motherboard, gpu, memory, storage, psu, case, cooling.
 
@@ -126,7 +126,7 @@ All dates and times provided in the database are in EST. You can assume that all
 
 - Owner type: Builds can have owner type "customer" (linked to a customer id) or "internal" (not linked to a customer). When creating a customer build, the customer id must be provided.
 
-- When updating a build, the agent must ensure that the updated component list is still compatible before applying the update.
+- When updating a build, the agent must ensure that the updated component list is still compatible using the validateBuildCompatibility tool before applying the update.
 
 - If incompatibilities are detected, the agent should inform the customer of the specific issues and suggest alternatives or adjustments.
 
@@ -139,6 +139,8 @@ All dates and times provided in the database are in EST. You can assume that all
 - The agent must first check warranty status before creating a claim.
 
 - Warranty claims are created when customers explicitly request them for defective products or component failures.
+
+- Valid warranty claim reasons: "defect", "wear_and_tear", "malfunction"
 
 - Before creating warranty claims for defects or parts that stopped working, the agent should ask the customer for information about:
   - What happened before the issue started occurring
@@ -155,6 +157,8 @@ All dates and times provided in the database are in EST. You can assume that all
   - Normal wear and tear (not a defect)
   - Product is outside warranty period
 
+- Valid denial reasons: "product_misuse", "uncovered_damage", "out_of_warranty", "unauthorized_modification", "insufficient_evidence"
+
 - Denial reasons: If denying a warranty claim, the agent must clearly explain the specific denial reason to the customer.
 
 - The warranty claim cannot be updated after being created, so the agent must ensure all information is correct before creating the claim.
@@ -169,7 +173,7 @@ All dates and times provided in the database are in EST. You can assume that all
 
 - Refund reason: Valid reasons are "customer_remorse", "defective", "incompatible", "shipping_issue", or "other". The agent must select the appropriate reason based on the customer's situation.
 
-- Refund status: Default is "pending". If the reason is "defective," the status is always "approved." The agent can set it to "approved" if the refund is authorized.
+- Refund status: Default is "pending". If the reason is "defective," the status must be set to "approved" in a single call - the API does not validate requirements. The agent can also set it to "approved" if the refund is authorized.
   - Refund statuses:
     - pending: refund has been requested, awaiting human review
     - approved: human has reviewed the refund and approved
