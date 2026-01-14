@@ -228,5 +228,24 @@
       "aeroshell-mid-tower-rgb",
       "cryowave-aio-240mm"
     ]
+  },
+  "configurator-alan-jeong-0": {
+    "ownerType": "customer",
+    "customerId": "alan-jeong-08912",
+    "name": "Alan's Custom Build",
+    "createdAt": "2025-11-04T10:20:00Z",
+    "updatedAt": "2025-11-04T10:20:00Z",
+    "componentIds": [
+      "aeroshell-mid-tower-rgb",
+      "novachip-fusion-12700k",
+      "cryonix-z790-apex",
+      "celestis-sata-1tb-hdd",
+      "clarityone-24-1080p-165hz",
+      "cryowave-tower-air-cooler",
+      "pyratech-graphforce-4070-16gb",
+      "hypervolt-ddr5-32gb-5600",
+      "coreflow-750w-gold-modular",
+      "raptorkeys-clickforge-bundle"
+    ]
   }
 }
