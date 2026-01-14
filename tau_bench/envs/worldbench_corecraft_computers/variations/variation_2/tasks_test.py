@@ -30,9 +30,9 @@ TASKS_TEST = [
                 name="initiate_refund_process",
                 kwargs={
                     "order_id": "ord-251104-428",
-                    "payment_id": "pay-251104-428",
-                    "refund_amount": 519.96,
+                    "amount": 519.96,
                     "reason": "defective",
+                    "product_ids": ["coreflow-750w-gold-modular"],
                 },
             ),
             Action(
@@ -163,9 +163,9 @@ TASKS_TEST = [
                 name="initiate_refund_process",
                 kwargs={
                     "order_id": "ord-250816-004",
-                    "payment_id": "pay-250816-004",
-                    "refund_amount": 349.99,
+                    "amount": 349.99,
                     "reason": "defective",
+                    "product_ids": ["skyforge-x670e-pro"],
                 },
             ),
             Action(
@@ -188,9 +188,9 @@ TASKS_TEST = [
                 name="initiate_refund_process",
                 kwargs={
                     "order_id": "ord-250815-013",
-                    "payment_id": "pay-250815-013",
-                    "refund_amount": 349.99,
+                    "amount": 349.99,
                     "reason": "defective",
+                    "product_ids": ["skyforge-x670e-pro"],
                 },
             ),
             Action(
@@ -213,9 +213,9 @@ TASKS_TEST = [
                 name="initiate_refund_process",
                 kwargs={
                     "order_id": "ord-250819-023",
-                    "payment_id": "pay-250819-023",
-                    "refund_amount": 349.99,
+                    "amount": 349.99,
                     "reason": "defective",
+                    "product_ids": ["skyforge-x670e-pro"],
                 },
             ),
             Action(
