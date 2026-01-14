@@ -125,7 +125,7 @@ class ProcessCustomerIssue(Tool):
             "type": "function",
             "function": {
                 "name": "process_customer_issue",
-                "description": "Workflow tool: Create support ticket with auto-determined priority based on issue type and customer tier. Optionally auto-escalates high-priority issues.",
+                "description": "Workflow tool: Create support ticket with auto-determined priority based on issue type and customer tier. Optionally auto-escalates high-priority issues. **CRITICAL: Verify all parameters (customer_id, issue_type, description, order_id) are correct before calling. Ticket entities cannot be deleted once created.**",
                 "parameters": {
                     "type": "object",
                     "properties": {

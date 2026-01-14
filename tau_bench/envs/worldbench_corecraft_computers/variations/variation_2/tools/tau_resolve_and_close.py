@@ -67,7 +67,7 @@ class ResolveAndClose(Tool):
             "type": "function",
             "function": {
                 "name": "resolve_and_close",
-                "description": "Workflow tool: Create resolution and close ticket in one atomic operation.",
+                "description": "Workflow tool: Create resolution and close ticket in one atomic operation. **CRITICAL: Verify all parameters (ticket_id, resolution_type, resolution_notes) are correct before calling. Resolution entities cannot be deleted once created.**",
                 "parameters": {
                     "type": "object",
                     "properties": {

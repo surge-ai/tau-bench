@@ -101,7 +101,7 @@ class InitiateRefundProcess(Tool):
             "type": "function",
             "function": {
                 "name": "initiate_refund_process",
-                "description": "Initiate refund process for an order. Validates order and payment, creates refund record with pending status.",
+                "description": "Initiate refund process for an order. Validates order and payment, creates refund record with pending status. **CRITICAL: Verify all parameters (order_id, reason, amount, product_ids) are correct before calling. Refund entities cannot be deleted once created.**",
                 "parameters": {
                     "type": "object",
                     "properties": {
