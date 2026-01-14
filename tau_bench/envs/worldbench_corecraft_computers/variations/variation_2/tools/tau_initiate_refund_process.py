@@ -20,8 +20,8 @@ class InitiateRefundProcess(Tool):
         data: Dict[str, Any],
         order_id: str,
         reason: str,
+        product_ids: List[str],
         amount: Optional[float] = None,
-        product_ids: Optional[List[str]] = None,
     ) -> str:
         """Initiate refund process for an order. Validates order/payment and creates refund record."""
         # Validate order exists
@@ -57,12 +57,14 @@ class InitiateRefundProcess(Tool):
                     "error": f"Refund amount ${refund_amount} exceeds payment amount ${payment_amount}"
                 }))
 
-        # Validate products if specified
-        if product_ids:
-            order_product_ids = [item.get("productId") for item in order.get("lineItems", [])]
-            for pid in product_ids:
-                if pid not in order_product_ids:
-                    return json.loads(json.dumps({"error": f"Product {pid} not found in order"}))
+        # Validate products (required)
+        if not product_ids:
+            return json.loads(json.dumps({"error": "product_ids is required - must specify which products are being refunded"}))
+
+        order_product_ids = [item.get("productId") for item in order.get("lineItems", [])]
+        for pid in product_ids:
+            if pid not in order_product_ids:
+                return json.loads(json.dumps({"error": f"Product {pid} not found in order"}))
 
         # Generate refund ID
         id_input = f"{payment_id}|{refund_amount}|{reason}"
@@ -79,7 +81,7 @@ class InitiateRefundProcess(Tool):
             "currency": payment.get("currency", "USD"),
             "reason": reason,
             "status": "pending",
-            "productIds": product_ids or [],
+            "productIds": product_ids,
             "createdAt": _now_iso_from_data(data),
             "processedAt": None,
         }
@@ -101,7 +103,7 @@ class InitiateRefundProcess(Tool):
             "type": "function",
             "function": {
                 "name": "initiate_refund_process",
-                "description": "Initiate refund process for an order. Validates order and payment, creates refund record with pending status. **CRITICAL: Verify all parameters (order_id, reason, amount, product_ids) are correct before calling. Refund entities cannot be deleted once created.**",
+                "description": "Initiate refund process for an order. Validates order and payment, creates refund record with pending status. **product_ids is REQUIRED** - you must specify which products are being refunded for audit and quality tracking purposes. **CRITICAL: Verify all parameters (order_id, reason, product_ids, amount) are correct before calling. Refund entities cannot be deleted once created.**",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -120,10 +122,10 @@ class InitiateRefundProcess(Tool):
                         "product_ids": {
                             "type": "array",
                             "items": {"type": "string"},
-                            "description": "Optional list of specific products being refunded.",
+                            "description": "List of product IDs being refunded (REQUIRED). Must specify which products caused the refund for audit trail and quality tracking. Look up product IDs from the order's lineItems.",
                         },
                     },
-                    "required": ["order_id", "reason"],
+                    "required": ["order_id", "reason", "product_ids"],
                 },
             },
         }
