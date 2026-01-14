@@ -57,7 +57,10 @@ class BulkStatusUpdate(Tool):
             # Update status
             old_status = entity.get("status")
             entity["status"] = status
-            entity["updatedAt"] = _now_iso_from_data(data)
+
+            # Update timestamp only for entity types that have updatedAt (orders, tickets)
+            if "updatedAt" in entity:
+                entity["updatedAt"] = _now_iso_from_data(data)
 
             # Set special fields based on status
             if entity_type in ["ticket", "support_ticket"]:

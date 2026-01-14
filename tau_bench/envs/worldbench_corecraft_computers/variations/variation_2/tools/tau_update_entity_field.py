@@ -52,7 +52,7 @@ class UpdateEntityField(Tool):
         # Update the field
         entity[field_name] = field_value
 
-        # Update timestamp if entity has updatedAt field
+        # Update timestamp if entity has updatedAt field (only orders, tickets, builds have it)
         if "updatedAt" in entity:
             entity["updatedAt"] = _now_iso_from_data(data)
 
