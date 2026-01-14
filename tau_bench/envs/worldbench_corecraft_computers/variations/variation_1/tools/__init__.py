@@ -2,6 +2,7 @@ from .tau_calculate_price import CalculatePrice
 from .tau_check_warranty_status import CheckWarrantyStatus
 from .tau_create_build import CreateBuild
 from .tau_create_escalation import CreateEscalation
+from .tau_create_order import CreateOrder
 from .tau_create_refund import CreateRefund
 from .tau_create_resolution import CreateResolution
 from .tau_create_warranty_claim import CreateWarrantyClaim
@@ -28,6 +29,7 @@ ALL_TOOLS = [
     CheckWarrantyStatus,
     CreateBuild,
     CreateEscalation,
+    CreateOrder,
     CreateRefund,
     CreateResolution,
     CreateWarrantyClaim,
