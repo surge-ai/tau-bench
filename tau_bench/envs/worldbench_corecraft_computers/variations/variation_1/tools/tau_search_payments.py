@@ -11,7 +11,7 @@ from .data_utils import (
     validate_enum,
 )
 
-PAYMENT_STATUSES = ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"]
+PAYMENT_STATUSES = ["pending", "captured", "failed", "refunded", "partially_refunded"]
 
 
 class SearchPayments(Tool):
