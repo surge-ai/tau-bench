@@ -3,6 +3,7 @@ from .tau_check_warranty_status import CheckWarrantyStatus
 from .tau_create_escalation import CreateEscalation
 from .tau_create_refund import CreateRefund
 from .tau_create_resolution import CreateResolution
+from .tau_create_warranty_claim import CreateWarrantyClaim
 from .tau_get_customer_ticket_history import GetCustomerTicketHistory
 from .tau_get_order_details import GetOrderDetails
 from .tau_get_product import GetProduct
@@ -26,6 +27,7 @@ ALL_TOOLS = [
     CreateEscalation,
     CreateRefund,
     CreateResolution,
+    CreateWarrantyClaim,
     GetCustomerTicketHistory,
     GetOrderDetails,
     GetProduct,
