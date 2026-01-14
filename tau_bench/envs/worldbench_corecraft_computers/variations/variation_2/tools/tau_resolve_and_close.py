@@ -77,7 +77,7 @@ class ResolveAndClose(Tool):
                         },
                         "resolution_type": {
                             "type": "string",
-                            "description": "Type of resolution: refund_issued, replacement_sent, technical_fix, policy_override, no_action_needed.",
+                            "description": "Type of resolution: refund_issued, replacement_sent, technical_fix, policy_override, no_action_needed, troubleshooting_steps, recommendation_provided.",
                         },
                         "resolution_notes": {
                             "type": "string",
