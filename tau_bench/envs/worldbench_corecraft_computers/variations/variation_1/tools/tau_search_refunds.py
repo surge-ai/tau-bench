@@ -11,14 +11,15 @@ from .data_utils import (
     validate_enum,
 )
 
-PAYMENT_STATUSES = ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"]
 
-
-class SearchPayments(Tool):
+class SearchRefunds(Tool):
     @staticmethod
     def invoke(
         data: Dict[str, Any],
-        order_id: Optional[str] = None,
+        refund_id: Optional[str] = None,
+        payment_id: Optional[str] = None,
+        ticket_id: Optional[str] = None,
+        reason: Optional[str] = None,
         status: Optional[str] = None,
         created_after: Optional[str] = None,
         created_before: Optional[str] = None,
@@ -26,7 +27,9 @@ class SearchPayments(Tool):
         processed_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
-        validate_enum(status, PAYMENT_STATUSES, "status")
+        # Validate enum parameters
+        validate_enum(reason, ["customer_remorse", "defective", "incompatible"], "reason")
+        validate_enum(status, ["pending", "approved", "processed", "rejected"], "status")
 
         results: List[Dict[str, Any]] = []
 
@@ -36,9 +39,18 @@ class SearchPayments(Tool):
         processed_after_dt = parse_iso_datetime(processed_after, "processed_after")
         processed_before_dt = parse_iso_datetime(processed_before, "processed_before")
 
-        for row in iter_entities(data, "payment"):
-            # Exact order_id match
-            if order_id and row.get("orderId") != order_id:
+        for row in iter_entities(data, "refund"):
+            # Exact refund_id match
+            if refund_id and row.get("id") != refund_id:
+                continue
+            # Exact payment_id match
+            if payment_id and row.get("paymentId") != payment_id:
+                continue
+            # Exact ticket_id match
+            if ticket_id and row.get("ticketId") != ticket_id:
+                continue
+            # Exact reason match
+            if reason and row.get("reason") != reason:
                 continue
             # Exact status match
             if status and row.get("status") != status:
@@ -51,7 +63,7 @@ class SearchPayments(Tool):
                 if created_before_dt and created_at > created_before_dt:
                     continue
             # Date filtering - processedAt
-            # If filtering by processedAt, exclude payments that haven't been processed
+            # If filtering by processedAt, exclude refunds that haven't been processed
             processed_at = get_datetime_field(row, "processedAt")
             if processed_after_dt or processed_before_dt:
                 if processed_at is None:
@@ -64,8 +76,8 @@ class SearchPayments(Tool):
             results.append(dict(row))
 
         # Sort by createdAt DESC, then by id ASC
-        results.sort(key=lambda p: p.get("id", ""))  # Secondary: id ASC
-        results.sort(key=lambda p: p.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
+        results.sort(key=lambda r: r.get("id", ""))  # Secondary: id ASC
+        results.sort(key=lambda r: r.get("createdAt", "") or "", reverse=True)  # Primary: createdAt DESC
 
         # Apply limit
         results = apply_limit(results, limit)
@@ -77,35 +89,48 @@ class SearchPayments(Tool):
         return {
             "type": "function",
             "function": {
-                "name": "searchPayments",
-                "description": "Search for payments with various filters. Returns an array of payment records matching the criteria.",
+                "name": "searchRefunds",
+                "description": "Search for refunds with various filters. Returns an array of refund records matching the criteria.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "order_id": {
+                        "refund_id": {
                             "type": "string",
-                            "description": "Order ID to filter by"
+                            "description": "Refund ID to filter by"
+                        },
+                        "payment_id": {
+                            "type": "string",
+                            "description": "Payment ID to filter by"
+                        },
+                        "ticket_id": {
+                            "type": "string",
+                            "description": "Ticket ID to filter by"
+                        },
+                        "reason": {
+                            "type": "string",
+                            "enum": ["customer_remorse", "defective", "incompatible"],
+                            "description": "Refund reason to filter by"
                         },
                         "status": {
                             "type": "string",
-                            "enum": ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"],
-                            "description": "Payment status to filter by"
+                            "enum": ["pending", "approved", "processed", "rejected"],
+                            "description": "Refund status to filter by"
                         },
                         "created_after": {
                             "type": "string",
-                            "description": "Filter payments created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                            "description": "Filter refunds created after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
                         },
                         "created_before": {
                             "type": "string",
-                            "description": "Filter payments created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                            "description": "Filter refunds created before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
                         },
                         "processed_after": {
                             "type": "string",
-                            "description": "Filter payments processed after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
+                            "description": "Filter refunds processed after this date (ISO 8601 format with UTC timezone, e.g., \"2025-08-01T00:00:00Z\")"
                         },
                         "processed_before": {
                             "type": "string",
-                            "description": "Filter payments processed before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
+                            "description": "Filter refunds processed before this date (ISO 8601 format with UTC timezone, e.g., \"2025-09-01T00:00:00Z\")"
                         },
                         "limit": {
                             "type": "number",

@@ -1,10 +1,18 @@
 import json
-import sqlite3
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
-from .tau_sqlite_utils import build_sqlite_from_data
-from .tool_impls.search_employees import searchEmployees as _orig
+
+from .data_utils import (
+    iter_entities,
+    parse_entity_json_fields,
+    matches_json_text_search,
+    apply_limit,
+    validate_enum,
+)
+
+DEPARTMENTS = ["operations", "order_processing", "engineering", "help_desk", "it_systems", "product_management", "finance", "hr", "recruitment", "support"]
+PERMISSIONS = ["issue_refund", "edit_order", "cancel_order", "escalate", "kb_edit", "policy_override"]
 
 
 class SearchEmployees(Tool):
@@ -18,49 +26,54 @@ class SearchEmployees(Tool):
         has_permission: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
-        conn = sqlite3.connect(":memory:")
-        try:
-            build_sqlite_from_data(conn, data)
-            # Patch get_db_conn in both utils and the module that imported it
-            try:
-                from .tool_impls import utils as tool_utils
-                original_get_db_conn = tool_utils.get_db_conn
-                tool_utils.get_db_conn = lambda: conn
+        validate_enum(department, DEPARTMENTS, "department")
+        validate_enum(has_permission, PERMISSIONS, "has_permission")
 
-                from .tool_impls import search_employees as search_employees_module
-                search_employees_module.get_db_conn = lambda: conn
+        results: List[Dict[str, Any]] = []
 
-                result = _orig(
-                    employee_id=employee_id,
-                    name=name,
-                    department=department,
-                    role=role,
-                    has_permission=has_permission,
-                    limit=limit,
-                )
-                # Convert Pydantic models to dicts for JSON serialization
-                if isinstance(result, list):
-                    result = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in result]
-                return json.dumps(result, default=str)
-            finally:
-                try:
-                    tool_utils.get_db_conn = original_get_db_conn
-                    search_employees_module.get_db_conn = original_get_db_conn
-                except:
-                    pass
-        finally:
-            conn.close()
+        for row in iter_entities(data, "employee"):
+            # Exact employee_id match
+            if employee_id and row.get("id") != employee_id:
+                continue
+            # Exact department match
+            if department and row.get("department") != department:
+                continue
+            # Partial name match (case insensitive)
+            if name:
+                row_name = row.get("name", "")
+                if name.lower() not in row_name.lower():
+                    continue
+            # Partial role/title match (case insensitive)
+            if role:
+                row_title = row.get("title", "")
+                if role.lower() not in row_title.lower():
+                    continue
+            # Permission search in JSON field
+            if has_permission and not matches_json_text_search(row, "permissions", has_permission):
+                continue
+
+            # Parse JSON fields
+            result_row = parse_entity_json_fields(row, ["permissions"])
+            results.append(result_row)
+
+        # Sort by name ASC, then by id ASC
+        results.sort(key=lambda e: (e.get("name", ""), e.get("id", "")))
+
+        # Apply limit
+        results = apply_limit(results, limit)
+
+        return json.loads(json.dumps(results, default=str))
 
     @staticmethod
-    def get_info()->Dict[str,Any]:
+    def get_info() -> Dict[str, Any]:
         return {
-            "type":"function",
-            "function":{
-                "name":"searchEmployees",
-                "description":"Search for employees with various filters. Returns an array of employee records matching the criteria.",
-                "parameters":{
-                    "type":"object",
-                    "properties":{
+            "type": "function",
+            "function": {
+                "name": "searchEmployees",
+                "description": "Search for employees with various filters. Returns an array of employee records matching the criteria.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
                         "employee_id": {
                             "type": "string",
                             "description": "Exact employee ID match"
@@ -88,7 +101,7 @@ class SearchEmployees(Tool):
                             "description": "Maximum number of results (default 50, max 200)"
                         }
                     },
-                    "required":[]
+                    "required": []
                 }
             }
         }
