@@ -7,7 +7,7 @@
         "productId": "clarityone-24-1080p-165hz"
       }
     ],
-    "status": "paid",
+    "status": "fulfilled",
     "shipping": {
       "address": {
         "label": "shipping",
@@ -22,7 +22,7 @@
       "eta": "2025-09-02T17:00:00Z"
     },
     "createdAt": "2025-08-30T00:19:22.321Z",
-    "updatedAt": "2025-08-30T00:19:22.321Z"
+    "updatedAt": "2025-08-30T04:56:00Z"
   },
   "ord-250813-042": {
     "customerId": "maria-rodriguez-73841",
@@ -185,7 +185,7 @@
       "eta": "2025-10-31T17:00:00Z"
     },
     "createdAt": "2025-10-23T13:42:00Z",
-    "updatedAt": "2025-10-23T13:48:00Z"
+    "updatedAt": "2025-10-23T13:48:22Z"
   },
   "ord-250828-017": {
     "customerId": "marlowe-greene-81413",
@@ -243,7 +243,7 @@
       "eta": "2025-08-30T13:00:00Z"
     },
     "createdAt": "2025-08-29T02:31:21.061Z",
-    "updatedAt": "2025-08-29T02:31:21.061Z"
+    "updatedAt": "2025-08-29T02:45:38.969Z"
   },
   "ord-251024-608": {
     "customerId": "meredith-helm-784",
@@ -376,7 +376,7 @@
       "service": "Express"
     },
     "createdAt": "2025-09-13T11:40:00Z",
-    "updatedAt": "2025-09-13T12:45:00Z"
+    "updatedAt": "2025-09-13T16:45:00Z"
   },
   "ord-251026-047": {
     "customerId": "daniel-riviera-35192",
@@ -453,7 +453,7 @@
       "service": "standard"
     },
     "createdAt": "2025-08-29T01:30:11.772Z",
-    "updatedAt": "2025-08-29T01:30:11.772Z"
+    "updatedAt": "2025-08-29T01:37:45.319Z"
   },
   "ord-241127-014": {
     "customerId": "aisha-patel-56923",
@@ -653,7 +653,7 @@
       "eta": "2025-10-25T17:00:00Z"
     },
     "createdAt": "2025-10-24T10:22:00Z",
-    "updatedAt": "2025-10-24T10:28:00Z"
+    "updatedAt": "2025-10-24T12:30:00Z"
   },
   "ord-250915-240": {
     "customerId": "Stefano-Rojas-14920",
@@ -766,7 +766,7 @@
       "eta": "2025-10-22T17:00:00Z"
     },
     "createdAt": "2025-10-20T10:34:00Z",
-    "updatedAt": "2025-10-20T10:48:00Z"
+    "updatedAt": "2025-10-20T14:15:00Z"
   },
   "ord-250820-002": {
     "customerId": "james-chen-92847",
@@ -904,7 +904,7 @@
       "eta": "2025-10-23T17:00:00Z"
     },
     "createdAt": "2025-10-20T18:30:00Z",
-    "updatedAt": "2025-10-21T14:30:00Z"
+    "updatedAt": "2025-10-21T15:20:00Z"
   },
   "ord-250829-050": {
     "customerId": "margaret-hopkins-78527",
@@ -930,7 +930,7 @@
       "eta": "2025-09-03T17:00:00Z"
     },
     "createdAt": "2025-08-29T18:16:09.933Z",
-    "updatedAt": "2025-08-29T18:19:00.933Z"
+    "updatedAt": "2025-08-29T18:38:38.555Z"
   },
   "ord-230812-004": {
     "customerId": "david-thompson-18794",
@@ -1334,7 +1334,7 @@
     "lineItems": [
       {
         "qty": 1,
-        "productId": "raptorkeys-clickforge-combo"
+        "productId": "raptorkeys-clickforge-bundle"
       }
     ],
     "status": "pending",
@@ -1409,7 +1409,7 @@
       "eta": "2025-10-24T17:00:00Z"
     },
     "createdAt": "2025-10-17T14:22:00Z",
-    "updatedAt": "2025-10-17T14:30:00Z"
+    "updatedAt": "2025-10-17T14:40:00Z"
   },
   "ord-251019-042": {
     "customerId": "ken-phillips-11534",
@@ -1503,7 +1503,7 @@
       "eta": "2025-08-25T10:00:00Z"
     },
     "createdAt": "2025-08-23T08:00:00Z",
-    "updatedAt": "2025-08-26T13:45:00Z"
+    "updatedAt": "2025-08-29T09:15:00.000Z"
   },
   "ord-250825-043": {
     "customerId": "maria-rodriguez-73841",
@@ -1557,7 +1557,7 @@
     "status": "fulfilled",
     "buildId": "configurator-hatch-1",
     "createdAt": "2025-08-21T16:00:00Z",
-    "updatedAt": "2025-08-21T16:00:00Z"
+    "updatedAt": "2025-08-22T14:30:00Z"
   },
   "ord-250830-006": {
     "customerId": "james-chen-92847",
@@ -1582,7 +1582,7 @@
       "service": "standard"
     },
     "createdAt": "2025-08-30T08:46:00Z",
-    "updatedAt": "2025-08-30T08:46:00Z"
+    "updatedAt": "2025-08-30T08:50:00Z"
   },
   "ord-250823-005": {
     "customerId": "aisha-patel-56923",
@@ -1736,7 +1736,7 @@
       "eta": "2025-08-25T15:00:00Z"
     },
     "createdAt": "2025-08-22T10:30:00Z",
-    "updatedAt": "2025-08-25T18:20:00Z"
+    "updatedAt": "2025-08-27T10:00:00.000Z"
   },
   "ord-250824-015": {
     "customerId": "Stefano-Rojas-14920",
@@ -1771,7 +1771,7 @@
       "service": "express"
     },
     "createdAt": "2025-08-24T17:25:09.232Z",
-    "updatedAt": "2025-08-25T17:25:09.232Z"
+    "updatedAt": "2025-08-26T17:48:56.868Z"
   },
   "ord-250701-015": {
     "customerId": "aisha-patel-56923",
@@ -1887,7 +1887,7 @@
       "service": "standard"
     },
     "createdAt": "2025-10-29T06:23:00Z",
-    "updatedAt": "2025-10-29T06:23:00Z"
+    "updatedAt": "2025-10-29T06:24:00Z"
   },
   "ord-0012334-091": {
     "customerId": "Penny-Whitcomb-02112",
@@ -1915,7 +1915,7 @@
       "service": "standard"
     },
     "createdAt": "2020-12-03T15:32:00Z",
-    "updatedAt": "2020-12-07T10:45:00Z"
+    "updatedAt": "2020-12-07T11:00:00Z"
   },
   "ord-250816-004": {
     "customerId": "tyler-martinez-83467",
@@ -1953,7 +1953,7 @@
         "productId": "vortexlabs-horizon-rx780"
       }
     ],
-    "status": "paid",
+    "status": "fulfilled",
     "buildId": "tylers-rad-zen-storm-rig",
     "shipping": {
       "address": {
@@ -1964,12 +1964,12 @@
         "postalCode": "97214",
         "country": "US"
       },
-      "carrier": "fedex_express",
-      "service": "standard",
+      "carrier": "FedEx Express",
+      "service": "express",
       "eta": "2025-08-23T23:00:00Z"
     },
     "createdAt": "2025-08-16T22:47:12.701Z",
-    "updatedAt": "2025-08-16T22:47:12.701Z"
+    "updatedAt": "2025-08-17T13:41:17.006Z"
   },
   "ord-251022-935": {
     "customerId": "david-thompson-18794",
@@ -2044,7 +2044,7 @@
       "eta": "2025-09-16T14:00:00Z"
     },
     "createdAt": "2025-09-10T11:00:00Z",
-    "updatedAt": "2025-09-10T11:30:00Z"
+    "updatedAt": "2025-09-10T11:45:00Z"
   },
   "ord-250829-023": {
     "customerId": "christina-williams-98512",
@@ -2158,7 +2158,7 @@
       "service": "express"
     },
     "createdAt": "2025-08-25T19:55:00Z",
-    "updatedAt": "2025-08-25T20:12:00Z"
+    "updatedAt": "2025-08-26T08:15:00Z"
   },
   "ord-251018-091": {
     "customerId": "john-cheek-13737",
@@ -2279,7 +2279,7 @@
     "lineItems": [
       {
         "qty": 1,
-        "productId": "graphforce-psu-combo"
+        "productId": "graphforce-psu-bundle"
       }
     ],
     "status": "pending",
@@ -2346,7 +2346,7 @@
       "eta": "2025-08-23T12:00:00Z"
     },
     "createdAt": "2025-08-20T14:00:00Z",
-    "updatedAt": "2025-08-23T16:45:00Z"
+    "updatedAt": "2025-08-25T10:30:00.000Z"
   },
   "ord-250829-055": {
     "customerId": "michael-johnson-34815",
@@ -2419,7 +2419,7 @@
     "status": "paid",
     "buildId": "configurator-umbleby-2",
     "createdAt": "2025-08-15T01:45:09.307Z",
-    "updatedAt": "2025-08-15T01:45:09.307Z"
+    "updatedAt": "2025-08-15T09:17:00Z"
   },
   "ord-251029-047": {
     "customerId": "blair-richards-90536",
@@ -2447,7 +2447,7 @@
       "service": "standard"
     },
     "createdAt": "2025-10-29T19:34:22Z",
-    "updatedAt": "2025-10-29T19:34:22Z"
+    "updatedAt": "2025-10-29T19:36:30Z"
   },
   "ord-236513-115": {
     "customerId": "fred-hemingway-05038",
@@ -2550,7 +2550,7 @@
       "eta": "2025-08-27T00:00:00Z"
     },
     "createdAt": "2025-08-22T13:27:00Z",
-    "updatedAt": "2025-08-22T13:45:00Z"
+    "updatedAt": "2025-08-23T20:00:00Z"
   },
   "ord-251023-378": {
     "customerId": "cheryl-marchant-83175",
@@ -2602,8 +2602,6 @@
     "updatedAt": "2025-10-21T10:22:00Z"
   },
   "ord-251104-428": {
-    "type": "order",
-    "id": "ord-251104-428",
     "customerId": "alan-jeong-08912",
     "buildId": "configurator-alan-jeong-0",
     "lineItems": [
@@ -2666,21 +2664,18 @@
     "updatedAt": "2025-11-05T17:15:07Z"
   },
   "ord-251116-008": {
-    "id": "ord-251116-008",
     "customerId": "cheryl-kim-25488",
     "status": "fulfilled",
     "total": 799.99,
     "createdAt": "2025-11-16T10:00:00Z"
   },
   "ord-251117-042": {
-    "id": "ord-251117-042",
     "customerId": "sarah-blake-41859",
     "status": "fulfilled",
     "total": 799.99,
     "createdAt": "2025-11-17T14:30:00Z"
   },
   "ord-251118-019": {
-    "id": "ord-251118-019",
     "customerId": "jessica-ferguson-74192",
     "status": "fulfilled",
     "total": 799.99,

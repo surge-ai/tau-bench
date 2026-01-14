@@ -46,7 +46,7 @@
     "subject": "Still not shipped",
     "body": "I paid your company almost $3000 for a complete gaming rig nearly two weeks ago I'm extremely disappointed to find that it STILL hasn't shipped. Is this how your company operates? I've gotten zero communication on this and I'm almost ready to refund the whole thing and take my money elsewhere. Anyone home? Where's my computer?!",
     "createdAt": "2025-08-27T02:15:00Z",
-    "updatedAt": "2025-08-27T02:15:00Z"
+    "updatedAt": "2025-08-27T08:49:00.000Z"
   },
   "tick-251025-787": {
     "customerId": "susan-solis-81247",
@@ -60,7 +60,7 @@
     "createdAt": "2025-10-25T16:01:07Z",
     "updatedAt": "2025-10-25T16:01:07Z"
   },
-  "tick-250815-001": {
+  "tick-250828-002": {
     "customerId": "sarah-kim-45632",
     "ticketType": "other",
     "orderId": "ord-250824-003",
@@ -70,7 +70,7 @@
     "subject": "GPU doesn't fit in my case - need return",
     "body": "Hi, the PyraTech GraphForce 4070 I ordered is too big for my case. It's 305mm but my case only supports 280mm max. Card is unopened. Can I return it?",
     "assignedEmployeeId": "alex-morgan",
-    "resolutionId": "res-250815-001",
+    "resolutionId": "res-250828-001",
     "closureReason": "resolved_success",
     "createdAt": "2025-08-15T10:15:00Z",
     "updatedAt": "2025-08-15T14:30:00Z"
@@ -83,7 +83,7 @@
     "status": "resolved",
     "channel": "chat",
     "subject": "Graphics card running very hot",
-    "body": "My GPU is hitting 85-90\u00b0C during gaming and the fans are extremely loud. Is this normal? Should I be worried about damage?",
+    "body": "My GPU is hitting 85-90°C during gaming and the fans are extremely loud. Is this normal? Should I be worried about damage?",
     "assignedEmployeeId": "nadia-petrova",
     "resolutionId": "res-250818-006",
     "closureReason": "resolved_success",
@@ -126,7 +126,7 @@
     "subject": "Need CPU recommendation for my build",
     "body": "Hi, I'm putting together a gaming PC and I have most of the parts picked out (PSU, RAM, GPU, motherboard) but I'm not sure which CPU would be best for this setup. I have the Astralogic Helix 3200 right now but I'm wondering if there's a better option than that. Any recommendations would be appreciated!",
     "createdAt": "2025-10-27T16:22:00Z",
-    "updatedAt": "2025-10-27T16:22:00Z"
+    "updatedAt": "2025-10-27T17:59:00.000Z"
   },
   "tick-251021-087": {
     "customerId": "kidstech-academy-90765",
@@ -188,7 +188,7 @@
     "body": "Hi, I'm really sorry but I'm going to need a refund. My son took my card without my permission and made this purchase. I didn't realize until the package showed up a few hours ago. I need the money ASAP. Can you help?",
     "assignedEmployeeId": "alex-morgan",
     "createdAt": "2025-08-29T15:26:57.355Z",
-    "updatedAt": "2025-08-29T15:26:57.355Z"
+    "updatedAt": "2025-08-29T15:36:57.355Z"
   },
   "tick-251029-847": {
     "customerId": "timothy-smith-84729",
@@ -209,9 +209,9 @@
     "priority": "high",
     "status": "open",
     "subject": "Missing component of Nebulax build",
-    "body": "Hello, I ordered all the parts for a Nebulax build, and paid for them in full, but the coreflow component wasn\u2019t included in the package. Any idea why this is? I need it to complete the build! Can I get it delivered ASAP?",
+    "body": "Hello, I ordered all the parts for a Nebulax build, and paid for them in full, but the coreflow component wasn’t included in the package. Any idea why this is? I need it to complete the build! Can I get it delivered ASAP?",
     "createdAt": "2025-10-24T16:45:00Z",
-    "updatedAt": "2025-10-24T16:45:00Z"
+    "updatedAt": "2025-10-24T17:39:00.000Z"
   },
   "tick-251029-888": {
     "customerId": "john-cheek-13737",
@@ -250,7 +250,7 @@
     "subject": "Wrong shipping address on order",
     "body": "Hi. I placed an order about an hour ago for a Nebula X Workstation and my credit card has already been charged. I just realized that I put in the wrong shipping address. It's supposed to go to my son, Ethan Hopkins at his address: 59 Skye Way Drive, Scranton, PA 18506. It doesn't look like it's shipped yet - is it too late to change the shipping address?",
     "createdAt": "2025-08-29T19:57:19.828Z",
-    "updatedAt": "2025-08-29T19:57:19.828Z"
+    "updatedAt": "2025-08-30T02:45:19.828Z"
   },
   "tick-251025-856": {
     "customerId": "kenji-dawson-74192",
@@ -263,7 +263,7 @@
     "subject": "VoltStorm gaming PC won't turn on",
     "body": "I just received my VoltStorm gaming PC today and I'm really excited to use it, but when I set everything up, plugged it in, and pressed the power button, nothing happened. No lights, no fans spinning, nothing. I've double-checked that it's plugged into the wall outlet and the power supply switch is on. Is there something I'm missing or could this be a defective unit? I'd really appreciate some troubleshooting help.",
     "createdAt": "2025-10-25T18:30:00Z",
-    "updatedAt": "2025-10-25T18:30:00Z"
+    "updatedAt": "2025-10-26T00:41:00.000Z"
   },
   "tick-250830-006": {
     "customerId": "james-chen-92847",
@@ -289,7 +289,7 @@
     "body": "Hi Ruth, need your help with a large corporate order. Customer Corey Sellanz from Sellanz Accounting placed a $22,425 order (10 workstations + peripherals) and is asking to pay via invoice with Net 30 terms instead of card/immediate payment. They provided their Tax ID (36-2847193) and PO number (SA-2025-1113). I'm not sure what our process is for approving these kind of payment arrangements - can you take a look and let me know how to proceed? Original customer ticket: tick-251113-228. Thanks!",
     "assignedEmployeeId": "ruth-gallagher",
     "createdAt": "2025-11-13T14:32:00Z",
-    "updatedAt": "2025-11-13T14:32:00Z"
+    "updatedAt": "2025-11-13T15:20:00.000Z"
   },
   "tick-251019-849": {
     "customerId": "boris-lundgren-28356",
@@ -314,7 +314,7 @@
     "channel": "web",
     "subject": "Refund request for CoreFlow 650W Bronze PSU",
     "body": "Hi, I ordered a CoreFlow 650W Bronze power supply but I realized I don't actually need it for my build. The item is still sealed in its original packaging. Could I please get a refund for this item? Order number is ord-201203-010. Thank you!",
-    "assignedEmployeeId": "jordan-lee",
+    "assignedEmployeeId": "bianca-rossi",
     "resolutionId": "res-251029-012",
     "createdAt": "2025-10-28T10:15:00Z",
     "updatedAt": "2025-10-29T14:30:00Z"
@@ -369,7 +369,7 @@
     "body": "I bought the VortexLabs Horizon RX740T for my granddaughter to play the new Battlefield game, but she's still experiencing lag issues. I'd like to return this GPU and get a recommendation for something more powerful that will work better for gaming. Her case can fit cards up to 300mm in length. The GPU is still in good condition and I have all the original packaging.",
     "assignedEmployeeId": "alex-morgan",
     "createdAt": "2025-10-28T16:20:00Z",
-    "updatedAt": "2025-10-28T16:20:00Z"
+    "updatedAt": "2025-10-28T17:40:00.000Z"
   },
   "tick-250910-060": {
     "customerId": "artemis-hatch-91102",
@@ -407,7 +407,7 @@
     "subject": "Found same item cheaper.",
     "body": "Hello, I have just purchased the cryowave aio 240mm liquid cooler from you, only for an ad to immediately appear on my screen for the same product cheaper on amazon. I have checked and they have the product in stock for 89.99. I see that your policy allows for price matching so can you please partially refund my payment to make up the difference?",
     "createdAt": "2025-09-10T15:50:33Z",
-    "updatedAt": "2025-09-10T16:38:00Z"
+    "updatedAt": "2025-09-10T15:50:33Z"
   },
   "tick-251026-101": {
     "customerId": "rosario-bryan-83214",
@@ -439,7 +439,7 @@
     "customerId": "tyler-martinez-83467",
     "ticketType": "other",
     "orderId": "ord-250825-008",
-    "priority": "high",
+    "priority": "normal",
     "status": "new",
     "channel": "email",
     "subject": "Shipping Status Update Needed",
@@ -464,7 +464,7 @@
     "customerId": "darren-umbleby-38762",
     "orderId": "ord-251029-041",
     "ticketType": "order_issue",
-    "priority": "high",
+    "priority": "normal",
     "status": "new",
     "channel": "web",
     "subject": "Need to upgrade shipping to overnight - order just placed",
@@ -518,20 +518,20 @@
     "subject": "New Keyboard Not Working",
     "body": "Hello, I ordered the SwiftHand K200 keyboard and it was delivered yesterday. I opened it up today to use it, and so far it has not been working properly. The backlights are not turning on and some of the keys don't register when being pressed. Can I send this back and get a new one?",
     "createdAt": "2025-09-09T14:57:00Z",
-    "updatedAt": "2025-09-09T14:57:00Z"
+    "updatedAt": "2025-09-09T15:25:00.000Z"
   },
   "tick-250821": {
     "customerId": "Martin-Brody-19730",
     "orderId": "ord-250821-006",
     "ticketType": "billing",
     "priority": "normal",
-    "status": "new",
+    "status": "open",
     "channel": "phone",
     "subject": "Failed payment",
     "body": "Customer needs to update method of payment on file as his payment was rejected for order:ord-250821-006",
     "assignedEmployeeId": "alex-morgan",
     "createdAt": "2025-08-21T16:04:46.677Z",
-    "updatedAt": "2025-08-21T16:04:46.677Z"
+    "updatedAt": "2025-08-21T16:07:35.457Z"
   },
   "tick-250823-001": {
     "customerId": "alex-rivera-29847",
@@ -558,7 +558,7 @@
     "subject": "Defective keyboard - t and y keys not working",
     "body": "I received my RaptorKeys RK80 keyboard a few days ago and after setting it up, I noticed that the 't' and 'y' keys are not working at all. I've tried plugging it into different USB ports and restarting my computer, but the keys still don't respond. The rest of the keyboard works fine. The monitor I ordered at the same time works great. Can I get a replacement keyboard sent out? This is really frustrating since I need it for work.",
     "createdAt": "2025-10-28T10:32:18Z",
-    "updatedAt": "2025-10-28T10:32:18Z"
+    "updatedAt": "2025-10-28T10:38:18.000Z"
   },
   "tick-250818-015": {
     "customerId": "jennifer-williams-67291",
@@ -596,7 +596,7 @@
     "subject": "Gaming PC randomly shutting down during gameplay",
     "body": "Hi, I recently ordered parts from you guys a couple weeks ago and built a gaming PC. Everything seemed fine at first, but now my PC keeps randomly shutting down whenever I play demanding games from this year. It happens after about 15-20 minutes of gameplay. The system just powers off completely - no blue screen or error messages, just straight to black. When I restart, everything works fine until I start gaming again. I'm really frustrated because I saved up for months for these parts. Do you think this could be a hardware issue? I need help figuring out what's wrong.",
     "createdAt": "2025-08-28T14:22:00Z",
-    "updatedAt": "2025-08-28T14:22:00Z"
+    "updatedAt": "2025-08-28T15:07:00.000Z"
   },
   "tick-250829-001": {
     "customerId": "ezekiel-goodfellow-79223",
@@ -617,8 +617,8 @@
     "priority": "normal",
     "status": "open",
     "channel": "email",
-    "subject": "RAM socket doesn\u2019t fit",
-    "body": "Hi, I ordered some parts from you for my first ever build and I think I must have got something wrong. When I tried to connect the RAM up to the motherboard the socket does not match the connector, I can\u2019t make it fit. Can you tell me what I got wrong please.",
+    "subject": "RAM socket doesn’t fit",
+    "body": "Hi, I ordered some parts from you for my first ever build and I think I must have got something wrong. When I tried to connect the RAM up to the motherboard the socket does not match the connector, I can’t make it fit. Can you tell me what I got wrong please.",
     "createdAt": "2025-09-15T17:35:00Z",
     "updatedAt": "2025-09-15T19:20:00Z"
   },
@@ -724,7 +724,7 @@
     "body": "Hi, I got the CPU you recommended to upgrade my custom build, but when I tried to install it, the CPU doesn't fit in the socket at all. The pins/contacts look completely different. I'm pretty experienced with PC building and this definitely doesn't match. Did I get sent the wrong part or is there a compatibility issue I wasn't told about? This is really frustrating as I was excited to get this upgrade working. Please help!",
     "assignedEmployeeId": "tim-bradley",
     "createdAt": "2025-09-14T23:47:00Z",
-    "updatedAt": "2025-09-14T23:47:00Z"
+    "updatedAt": "2025-09-15T09:08:00.000Z"
   },
   "tick-250830-004": {
     "customerId": "parallax-tech-97634",
@@ -737,10 +737,9 @@
     "body": "I placed an order on 2025-08-20 for 35 DataForge SATA 2TB 2.5\" SSDs and the order shows as backorder. When can we expect these to ship? This is for an urgent deployment.",
     "assignedEmployeeId": "darnell-brooks",
     "createdAt": "2025-08-30T10:15:22.480Z",
-    "updatedAt": "2025-08-30T10:15:22.480Z"
+    "updatedAt": "2025-08-30T11:27:22.480Z"
   },
   "tick-250829-112": {
-    "id": "tick-250829-112",
     "customerId": "isabella-southgate-36927",
     "subject": "Malfunctioning GraphForce 4070",
     "description": "GPU not displaying properly, frequent crashes",
