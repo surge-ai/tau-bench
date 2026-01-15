@@ -109,7 +109,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 ## Cancel Order
 
-- The agent can cancel orders that are in "pending" or "paid" status. Orders that are "fulfilled", "cancelled", or have refund statuses cannot be cancelled.
+- The agent can cancel orders that are in "pending" or "paid" status. Orders that are "fulfilled", "cancelled", or have associated refund data cannot be cancelled.
 
 - The agent must first obtain the order id and verify the order exists and has a valid status for cancellation.
 
@@ -123,7 +123,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - The agent cannot assume compatibility based on specifications alone - all compatibility must be confirmed through validation using the tool before calling createBuild or updateBuild.
 
-- Build components: The agent must collect product ids for all components. The validateBuildCompatibility tool checks compatibility for the following product categories: cpu, motherboard, gpu, memory, storage, psu, case, cooling. Other product categories (such as monitor, keyboard, mouse) can be included in builds but are not validated for compatibility.
+- Build components: The agent must collect product ids for all components. The validateBuildCompatibility tool checks compatibility for the following product categories: cpu, motherboard, gpu, memory, storage, psu, case, cooling. Other product categories (such as monitor, keyboard, mouse) can be included in builds and are considered compatible by default.
 
 - Build name: The agent must ask the customer for a name for the build.
 
@@ -141,7 +141,9 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - Warranty claims are created when customers explicitly request them for defective products or component failures.
 
-- Valid warranty claim reasons: "defect", "wear_and_tear", "malfunction"
+- Valid warranty claim reasons:
+  - "defect": product arrived defective (past 30-day return window, within warranty period)
+  - "malfunction": product stopped working at some point during its warranty period
 
 - Before creating warranty claims for defects or parts that stopped working, the agent should ask the customer for information about:
   - What happened before the issue started occurring
@@ -155,7 +157,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
   - Liquid damage (denial reason: "uncovered_damage")
   - Product was overclocked (if explicitly confirmed by customer) (denial reason: "unauthorized_modification")
   - Improper installation that caused the damage (denial reason: "product_misuse")
-  - Normal wear and tear (not a defect) (denial reason: "uncovered_damage")
+  - Normal cosmetic wear and tear (denial reason: "uncovered_damage")
   - Product is outside warranty period (denial reason: "out_of_warranty")
 
 - Valid denial reasons: "product_misuse", "uncovered_damage", "out_of_warranty", "unauthorized_modification", "insufficient_evidence"
@@ -181,7 +183,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - Refund reason: Valid reasons are "customer_remorse", "defective", "incompatible", "shipping_issue", or "other". The agent must select the appropriate reason based on the customer's situation.
 
-- Refund status: Default is "pending". If the reason is "defective," the status must be set to "approved" in a single call - the API does not validate requirements. The agent can also set it to "approved" if the refund is authorized.
+- Refund status: Default is "pending". The agent can set it to "approved" if explicitly authorized by a human customer support agent.
   - Refund statuses:
     - pending: refund has been requested, awaiting human review
     - approved: human has reviewed the refund and approved
@@ -189,7 +191,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
     - processed: refund has been issued to the original payment method
     - failed: refund was attempted to be processed, but the refund did not succeed
 
-- After creating a refund, the agent should always update the order status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds), and update the payment status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds).
+- After creating a refund, the agent should always update the order status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds), and update the payment status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds). Exception: when cancelling an order and creating a refund as part of that cancellation, the order status should remain "cancelled" (see Cancel Order section).
 
 ## Update Order Status
 
@@ -237,10 +239,6 @@ All dates and times provided in the database are in ISO 8601 extended format in 
     - insufficient_permission: employee needs to escalate to another employee with appropriate permissions
 
 - Destination: The agent must specify the department to escalate to (operations, order_processing, engineering, help_desk, it_systems, product_management, finance, hr, support).
-
-- Notes: The agent should include relevant notes explaining why the escalation is needed (e.g., "high ticket volume", "complex technical issue").
-
-- After creating an escalation, the agent should update the ticket priority and assign it to the appropriate employee.
 
 ## Create Resolution
 
