@@ -100,7 +100,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - Out of stock products: If a product is out of stock but backorderable, the agent should inform the customer that the item is on backorder and may delay shipping. If a product is out of stock and not backorderable, the agent should inform the customer and suggest alternatives.
 
-- Shipping and payment: When creating an order with status "pending", shipping service and carrier information should NOT be set. The agent should advise the customer that shipping details will be configured at checkout.
+- Shipping and payment: When creating an order with status "pending", shipping information (address, service, and carrier) should NOT be set. Shipping information will be collected and configured when the customer completes payment.
 
 - After creating an order, the agent should inform the customer that:
   - A payment link is available in their customer profile to complete payment
@@ -115,7 +115,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - When cancelling an order, the agent should update the order status to "cancelled".
 
-- If the order has an associated payment with status "captured", the agent should create a refund for the order with status "approved". Even if the payment is refunded, in this case the order status should still be "cancelled".
+- If the order has an associated payment with status "captured", the agent should create a refund for the order with status "approved" and update the payment status to "refunded". Even if the payment is refunded, in this case the order status should still be "cancelled".
 
 ## Create and Update Build
 
@@ -140,6 +140,8 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 - The agent must first check warranty status to ensure the product is still under warranty before creating a claim.
 
 - Warranty claims are created when customers explicitly request them for defective products or component failures.
+
+- Important: If a product is defective within the 30-day return window, the agent should process a return/refund rather than a warranty claim. Warranty claims are only for issues discovered after the 30-day return window has passed.
 
 - Valid warranty claim reasons:
   - "defect": product arrived defective (past 30-day return window, within warranty period)
@@ -183,7 +185,9 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - Refund reason: Valid reasons are "customer_remorse", "defective", "incompatible", "shipping_issue", or "other". The agent must select the appropriate reason based on the customer's situation.
 
-- Refund status: Default is "pending". The agent can set it to "approved" if explicitly authorized by a human customer support agent.
+- Refund lines: For refunds, the agent should include the lines field to itemize which products are being refunded. Each line should include the product SKU, quantity being refunded, and the refund amount for that line item.
+
+- Refund status: Default is "pending". The agent can set it to "approved" if explicitly authorized by a human customer support agent, or when creating a refund as part of an order cancellation (since the item has not shipped yet).
   - Refund statuses:
     - pending: refund has been requested, awaiting human review
     - approved: human has reviewed the refund and approved
@@ -191,7 +195,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
     - processed: refund has been issued to the original payment method
     - failed: refund was attempted to be processed, but the refund did not succeed
 
-- After creating a refund, the agent should always update the order status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds), and update the payment status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds). Exception: when cancelling an order and creating a refund as part of that cancellation, the order status should remain "cancelled" (see Cancel Order section).
+- After creating a refund, the agent should always update the order status to "refund_requested" (for partial refunds) or "refunded" (for full refunds), and update the payment status to "partially_refunded" (for partial refunds) or "refunded" (for full refunds). Exception: when cancelling an order and creating a refund as part of that cancellation, the order status should remain "cancelled" (see Cancel Order section).
 
 ## Update Order Status
 
@@ -253,7 +257,7 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 - Resolution workflow: When resolving a ticket, the agent should follow this sequence:
   1. Complete the actions needed to resolve the ticket (e.g., process refund, provide recommendation)
   2. Create the resolution record with the appropriate outcome
-  3. Update the ticket status to "resolved" and link the resolution id
+  3. Update the ticket status to "resolved", link the resolution id, and set the closure reason to "resolved_success"
 
 ## Check Warranty Status
 

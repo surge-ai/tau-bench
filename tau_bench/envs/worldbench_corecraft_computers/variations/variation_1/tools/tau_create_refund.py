@@ -107,7 +107,7 @@ class CreateRefund(Tool):
                         },
                         "lines": {
                             "type": "array",
-                            "description": "Optional line items / breakdown for the refund.",
+                            "description": "Line items for the refund. Each line should be an object with keys: sku (product SKU), qty (quantity being refunded), and amount (price of an individual unit of that line item).",
                             "items": {"type": "object"},
                         },
                     },
