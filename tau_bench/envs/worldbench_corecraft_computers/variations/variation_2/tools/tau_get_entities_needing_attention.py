@@ -26,7 +26,7 @@ class GetEntitiesNeedingAttention(Tool):
                     status = ticket.get("status", "").lower()
                     priority = ticket.get("priority", "").lower()
 
-                    if status in ["open", "pending", "in_progress"]:
+                    if status in ["new", "open", "pending_customer"]:
                         results["open_tickets"].append(ticket)
 
                         if priority in ["high", "urgent"]:

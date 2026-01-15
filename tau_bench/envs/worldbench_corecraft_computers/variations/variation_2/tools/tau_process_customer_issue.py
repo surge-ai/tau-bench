@@ -20,7 +20,6 @@ class ProcessCustomerIssue(Tool):
         data: Dict[str, Any],
         customer_id: str,
         issue_type: str,
-        description: str,
         order_id: Optional[str] = None,
         auto_escalate: bool = False,
     ) -> str:
@@ -67,13 +66,11 @@ class ProcessCustomerIssue(Tool):
             "customerId": customer_id,
             "orderId": order_id,
             "subject": f"{issue_type.replace('_', ' ').title()} - {customer.get('name')}",
-            "description": description,
             "status": "open",
             "priority": priority,
-            "category": issue_type,
+            "ticketType": issue_type,
             "createdAt": _now_iso_from_data(data),
             "updatedAt": _now_iso_from_data(data),
-            "resolvedAt": None,
         }
 
         # Store ticket
@@ -102,7 +99,6 @@ class ProcessCustomerIssue(Tool):
                 "notes": f"Auto-escalated due to {issue_type}",
                 "createdAt": _now_iso_from_data(data),
                 "resolvedAt": None,
-                "status": "pending",
             }
 
             if "escalation" not in data or not isinstance(data["escalation"], dict):
@@ -125,7 +121,7 @@ class ProcessCustomerIssue(Tool):
             "type": "function",
             "function": {
                 "name": "process_customer_issue",
-                "description": "Workflow tool: Create support ticket with auto-determined priority based on issue type and customer tier. Optionally auto-escalates high-priority issues. **When auto_escalate=True, this tool automatically creates an escalation entity** - this is the primary way to create escalations (there is no separate create_escalation tool). **CRITICAL: Verify all parameters (customer_id, issue_type, description, order_id, auto_escalate) are correct before calling. Ticket entities cannot be deleted once created.**",
+                "description": "Workflow tool: Create support ticket with auto-determined priority based on issue type and customer tier. Optionally auto-escalates high-priority issues. **When auto_escalate=True, this tool automatically creates an escalation entity** - this is the primary way to create escalations (there is no separate create_escalation tool). **CRITICAL: Verify all parameters (customer_id, issue_type, order_id, auto_escalate) are correct before calling. Ticket entities cannot be deleted once created.**",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -137,10 +133,6 @@ class ProcessCustomerIssue(Tool):
                             "type": "string",
                             "description": "Type of issue: damaged_product, defective_item, missing_items, wrong_item, shipping_delay, billing_question, general_inquiry.",
                         },
-                        "description": {
-                            "type": "string",
-                            "description": "Detailed description of the issue.",
-                        },
                         "order_id": {
                             "type": "string",
                             "description": "Optional order ID if issue relates to an order.",
@@ -150,7 +142,7 @@ class ProcessCustomerIssue(Tool):
                             "description": "When true, creates an escalation entity automatically. This is THE way to create escalations - there is no separate create_escalation tool. Use this when you need to escalate a ticket to specialists or management (default: false).",
                         },
                     },
-                    "required": ["customer_id", "issue_type", "description"],
+                    "required": ["customer_id", "issue_type"],
                 },
             },
         }

@@ -49,6 +49,20 @@ class UpdateEntityField(Tool):
         entity = entity_table[entity_id]
         old_value = entity.get(field_name)
 
+        # Check if field exists in this entity (helpful warning)
+        if field_name not in entity and old_value is None:
+            # Collect existing fields for helpful error message
+            existing_fields = sorted(entity.keys())
+            return json.loads(json.dumps({
+                "warning": f"Field '{field_name}' does not exist on this {entity_type}. Creating new field.",
+                "suggestion": f"Use get_entity_schema tool with entity_type='{entity_type}' to see valid fields.",
+                "existing_fields": existing_fields,
+                "field_name": field_name,
+                "entity_id": entity_id,
+                "entity_type": entity_type,
+                "will_create_new_field": True,
+            }))
+
         # Update the field
         entity[field_name] = field_value
 
@@ -72,7 +86,7 @@ class UpdateEntityField(Tool):
             "type": "function",
             "function": {
                 "name": "update_entity_field",
-                "description": "Generic field updater: update any single field on any entity type. More granular than entity-specific update tools. **IMPORTANT: Use snake_case for field names (e.g., 'assigned_employee_id' not 'assignedEmployeeId'). For employee references, use the employee ID (e.g., 'david-pereboom'), not email or name.**",
+                "description": "Generic field updater: update any single field on any entity type. More granular than entity-specific update tools. **IMPORTANT: Use camelCase for field names to match the data schema (e.g., 'assignedEmployeeId' not 'assigned_employee_id'). For employee references, use the employee ID (e.g., 'david-pereboom'), not email or name. If unsure about valid field names, use get_entity_schema first to discover available fields.**",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -86,10 +100,10 @@ class UpdateEntityField(Tool):
                         },
                         "field_name": {
                             "type": "string",
-                            "description": "Name of the field to update in snake_case. Common fields: 'status', 'priority', 'assigned_employee_id', 'amount', 'quantity'. For employee assignments use 'assigned_employee_id'.",
+                            "description": "Name of the field to update in camelCase. Common fields: 'status', 'priority', 'assignedEmployeeId', 'amount', 'quantity'. For employee assignments use 'assignedEmployeeId'.",
                         },
                         "field_value": {
-                            "description": "New value for the field. **For assigned_employee_id, use the employee's ID (e.g., 'david-pereboom'), not their email or name.** Values can be string, number, boolean, object, or array.",
+                            "description": "New value for the field. **For assignedEmployeeId, use the employee's ID (e.g., 'david-pereboom'), not their email or name.** Values can be string, number, boolean, object, or array.",
                         },
                     },
                     "required": ["entity_type", "entity_id", "field_name", "field_value"],

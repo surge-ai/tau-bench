@@ -62,21 +62,6 @@ class BulkStatusUpdate(Tool):
             if "updatedAt" in entity:
                 entity["updatedAt"] = _now_iso_from_data(data)
 
-            # Set special fields based on status (use normalized data_key, not original entity_type)
-            if data_key in ["ticket", "support_ticket"]:
-                if status in ["resolved", "closed"] and not entity.get("resolvedAt"):
-                    entity["resolvedAt"] = _now_iso_from_data(data)
-
-            if data_key == "payment":
-                if status == "completed" and not entity.get("completedAt"):
-                    entity["completedAt"] = _now_iso_from_data(data)
-                elif status == "failed" and not entity.get("failedAt"):
-                    entity["failedAt"] = _now_iso_from_data(data)
-
-            if data_key == "shipment":
-                if status == "delivered" and not entity.get("deliveredAt"):
-                    entity["deliveredAt"] = _now_iso_from_data(data)
-
             results["updated"].append({
                 "id": entity_id,
                 "old_status": old_status,

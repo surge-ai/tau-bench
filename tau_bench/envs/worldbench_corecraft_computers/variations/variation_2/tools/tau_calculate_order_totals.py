@@ -29,7 +29,6 @@ class CalculateOrderTotals(Tool):
         # Calculate subtotal
         subtotal = 0.0
         items = []
-        total_weight = 0.0
 
         for pid, qty in zip(product_ids, quantities):
             product = product_table.get(pid)
@@ -37,7 +36,6 @@ class CalculateOrderTotals(Tool):
                 continue
 
             price = float(product.get("price", 0))
-            weight = float(product.get("weight", 0))
             item_total = price * qty
 
             items.append({
@@ -49,7 +47,6 @@ class CalculateOrderTotals(Tool):
             })
 
             subtotal += item_total
-            total_weight += weight * qty
 
         # Apply customer loyalty discount
         loyalty_discount = 0.0
@@ -82,20 +79,14 @@ class CalculateOrderTotals(Tool):
             tax_rate = 0.08  # Default 8%
         tax = discounted_subtotal * tax_rate
 
-        # Calculate shipping based on method and weight
+        # Calculate shipping based on method
         shipping_rates = {
             "standard": 9.99,
             "express": 19.99,
             "overnight": 39.99,
             "free": 0.00,
         }
-        base_shipping = shipping_rates.get((shipping_method or "standard").lower(), 9.99)
-
-        # Add weight-based shipping surcharge
-        if total_weight > 10:
-            base_shipping += (total_weight - 10) * 0.50
-
-        shipping = base_shipping
+        shipping = shipping_rates.get((shipping_method or "standard").lower(), 9.99)
 
         # Calculate total
         total = discounted_subtotal + tax + shipping
@@ -115,7 +106,6 @@ class CalculateOrderTotals(Tool):
             "tax_rate": tax_rate,
             "shipping": round(shipping, 2),
             "shipping_method": shipping_method or "standard",
-            "total_weight": round(total_weight, 2),
             "grand_total": round(total, 2),
         }
 
@@ -127,7 +117,7 @@ class CalculateOrderTotals(Tool):
             "type": "function",
             "function": {
                 "name": "calculate_order_totals",
-                "description": "Calculate comprehensive order totals including subtotal, loyalty/promo discounts, taxes, weight-based shipping, and grand total.",
+                "description": "Calculate comprehensive order totals including subtotal, loyalty/promo discounts, taxes, shipping, and grand total.",
                 "parameters": {
                     "type": "object",
                     "properties": {

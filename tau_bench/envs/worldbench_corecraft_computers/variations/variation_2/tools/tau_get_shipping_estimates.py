@@ -18,8 +18,7 @@ class GetShippingEstimates(Tool):
         if not isinstance(product_table, dict):
             return json.loads(json.dumps({"error": "Product data not available"}))
 
-        # Calculate total weight
-        total_weight = 0.0
+        # Get product information
         products = []
 
         for pid in product_ids:
@@ -27,12 +26,9 @@ class GetShippingEstimates(Tool):
             if not product:
                 return json.loads(json.dumps({"error": f"Product {pid} not found"}))
 
-            weight = float(product.get("weight", 0))
-            total_weight += weight
             products.append({
                 "product_id": pid,
                 "name": product.get("name"),
-                "weight": weight,
             })
 
         # Base shipping rates by method
@@ -51,11 +47,6 @@ class GetShippingEstimates(Tool):
         base_cost = base_rates[method]["cost"]
         base_days = base_rates[method]["days"]
 
-        # Add weight surcharge for heavy items
-        weight_surcharge = 0.0
-        if total_weight > 10:
-            weight_surcharge = (total_weight - 10) * 0.50
-
         # Add destination surcharge (simplified - based on zip code prefix)
         destination_surcharge = 0.0
         if destination_zip:
@@ -63,7 +54,7 @@ class GetShippingEstimates(Tool):
             if destination_zip.startswith("9"):
                 destination_surcharge = 5.00
 
-        total_cost = base_cost + weight_surcharge + destination_surcharge
+        total_cost = base_cost + destination_surcharge
 
         # Calculate estimated delivery date
         # Add 1 day for processing
@@ -85,13 +76,8 @@ class GetShippingEstimates(Tool):
         result = {
             "shipping_method": method,
             "products": products,
-            "weight": {
-                "total_weight_lbs": round(total_weight, 2),
-                "is_oversized": total_weight > 50,
-            },
             "cost_breakdown": {
                 "base_rate": base_cost,
-                "weight_surcharge": round(weight_surcharge, 2),
                 "destination_surcharge": round(destination_surcharge, 2),
                 "total_cost": round(total_cost, 2),
             },
@@ -113,7 +99,7 @@ class GetShippingEstimates(Tool):
             "type": "function",
             "function": {
                 "name": "get_shipping_estimates",
-                "description": "Get shipping cost and delivery time estimates for products, including weight and destination surcharges.",
+                "description": "Get shipping cost and delivery time estimates for products, including destination surcharges.",
                 "parameters": {
                     "type": "object",
                     "properties": {

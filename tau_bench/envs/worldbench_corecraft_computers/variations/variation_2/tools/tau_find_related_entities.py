@@ -50,7 +50,6 @@ class FindRelatedEntities(Tool):
         order_id = source_entity.get("orderId")
         payment_id = source_entity.get("paymentId")
         ticket_id = source_entity.get("ticketId")
-        product_ids = source_entity.get("productIds", [])
 
         # If source is customer, get their orders
         if source_type == "customer":
@@ -142,12 +141,18 @@ class FindRelatedEntities(Tool):
         # Find products (extract from order lineItems)
         all_product_ids = set()
         for order in result["orders"]:
-            # Orders have lineItems array with productId fields
-            for item in order.get("lineItems", []):
-                if isinstance(item, dict) and "productId" in item:
-                    all_product_ids.add(item["productId"])
-        if product_ids:
-            all_product_ids.update(product_ids)
+            # Orders have lineItems - may be JSON string or list
+            line_items = order.get("lineItems", [])
+            if isinstance(line_items, str):
+                try:
+                    line_items = json.loads(line_items)
+                except (json.JSONDecodeError, ValueError):
+                    line_items = []
+
+            if isinstance(line_items, list):
+                for item in line_items:
+                    if isinstance(item, dict) and "productId" in item:
+                        all_product_ids.add(item["productId"])
 
         product_table = data.get("product", {})
         if isinstance(product_table, dict):

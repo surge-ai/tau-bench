@@ -20,7 +20,6 @@ class ResolveAndClose(Tool):
         data: Dict[str, Any],
         ticket_id: str,
         resolution_type: str,
-        resolution_notes: str,
     ) -> str:
         """Workflow tool: Create resolution and close ticket in one atomic operation."""
         # Validate ticket
@@ -39,8 +38,7 @@ class ResolveAndClose(Tool):
             "id": resolution_id,
             "type": "resolution",
             "ticketId": ticket_id,
-            "resolutionType": resolution_type,
-            "description": resolution_notes,
+            "outcome": resolution_type,
             "createdAt": _now_iso_from_data(data),
         }
 
@@ -51,7 +49,6 @@ class ResolveAndClose(Tool):
 
         # Update and close ticket
         ticket["status"] = "resolved"
-        ticket["resolvedAt"] = _now_iso_from_data(data)
         ticket["updatedAt"] = _now_iso_from_data(data)
 
         return json.loads(json.dumps({
@@ -67,7 +64,7 @@ class ResolveAndClose(Tool):
             "type": "function",
             "function": {
                 "name": "resolve_and_close",
-                "description": "Workflow tool: Create resolution and close ticket in one atomic operation. **CRITICAL: Verify all parameters (ticket_id, resolution_type, resolution_notes) are correct before calling. Resolution entities cannot be deleted once created.**",
+                "description": "Workflow tool: Create resolution and close ticket in one atomic operation. **CRITICAL: Verify all parameters (ticket_id, resolution_type) are correct before calling. Resolution entities cannot be deleted once created.**",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -77,14 +74,10 @@ class ResolveAndClose(Tool):
                         },
                         "resolution_type": {
                             "type": "string",
-                            "description": "Type of resolution: refund_issued, replacement_sent, technical_fix, policy_override, no_action_needed, troubleshooting_steps, recommendation_provided.",
-                        },
-                        "resolution_notes": {
-                            "type": "string",
-                            "description": "Detailed notes about how the issue was resolved.",
+                            "description": "Type of resolution (maps to outcome field): refund_issued, replacement_sent, recommendation_provided, troubleshooting_steps, order_updated, no_action.",
                         },
                     },
-                    "required": ["ticket_id", "resolution_type", "resolution_notes"],
+                    "required": ["ticket_id", "resolution_type"],
                 },
             },
         }

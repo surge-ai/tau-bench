@@ -1,5 +1,6 @@
 # Variation 2 Tools - Distinct from Variation 1
 # Focus: Generic operations, batch processing, workflow composition, field-level access
+# Total: 20 tools
 
 # Generic Query & Lookup (4)
 from .tau_query_by_criteria import QueryByCriteria
@@ -7,9 +8,10 @@ from .tau_lookup_by_reference import LookupByReference
 from .tau_search_by_field_value import SearchByFieldValue
 from .tau_filter_by_date_range import FilterByDateRange
 
-# Entity Access & Traversal (4)
+# Entity Access & Traversal (5)
 from .tau_find_related_entities import FindRelatedEntities
 from .tau_get_entity_field import GetEntityField
+from .tau_get_entity_schema import GetEntitySchema
 from .tau_batch_entity_lookup import BatchEntityLookup
 from .tau_list_entities_by_status import ListEntitiesByStatus
 
@@ -38,9 +40,10 @@ ALL_TOOLS = [
     LookupByReference,
     SearchByFieldValue,
     FilterByDateRange,
-    # Entity Access & Traversal (4)
+    # Entity Access & Traversal (5)
     FindRelatedEntities,
     GetEntityField,
+    GetEntitySchema,
     BatchEntityLookup,
     ListEntitiesByStatus,
     # Aggregation & Analytics (3)

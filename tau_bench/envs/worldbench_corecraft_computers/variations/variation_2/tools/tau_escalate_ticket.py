@@ -44,7 +44,6 @@ class EscalateTicket(Tool):
             "notes": notes,
             "createdAt": _now_iso_from_data(data),
             "resolvedAt": None,
-            "status": "pending",
         }
 
         # Store escalation

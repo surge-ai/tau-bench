@@ -28,9 +28,23 @@ class AnalyzeCustomerValue(Tool):
         order_statuses = {}
 
         for order in customer_orders:
-            # Sum up order totals
-            total = float(order.get("total", 0))
-            total_revenue += total
+            # Calculate total from lineItems (Order model doesn't have a total field)
+            line_items = order.get("lineItems", [])
+            if isinstance(line_items, str):
+                try:
+                    line_items = json.loads(line_items)
+                except (json.JSONDecodeError, ValueError):
+                    line_items = []
+
+            order_total = 0.0
+            if isinstance(line_items, list):
+                for item in line_items:
+                    if isinstance(item, dict):
+                        price = float(item.get("price", 0))
+                        qty = int(item.get("qty", 1))
+                        order_total += price * qty
+
+            total_revenue += order_total
 
             # Count statuses
             status = order.get("status", "unknown")
@@ -61,7 +75,7 @@ class AnalyzeCustomerValue(Tool):
                 if isinstance(ticket, dict) and ticket.get("customerId") == customer_id:
                     customer_tickets.append(ticket)
                     status = ticket.get("status", "").lower()
-                    if status in ["open", "pending", "in_progress"]:
+                    if status in ["new", "open", "pending_customer"]:
                         open_tickets += 1
                     elif status in ["resolved", "closed"]:
                         resolved_tickets += 1
