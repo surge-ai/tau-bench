@@ -3,22 +3,23 @@ from typing import Any, Dict, List
 
 from tau_bench.envs.tool import Tool
 
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+except ImportError:
+    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+
 
 class ListEntitiesByStatus(Tool):
     @staticmethod
     def invoke(data: Dict[str, Any], entity_type: str) -> str:
         """Get all entities of a type grouped by their status field."""
-        entity_map = {
-            "order": "order",
-            "ticket": "support_ticket",
-            "support_ticket": "support_ticket",
-            "payment": "payment",
-            "shipment": "shipment",
-            "refund": "refund",
-            "escalation": "escalation",
-        }
+        # Validate entity_type enum
+        error_msg = validate_enum_value(entity_type, VALID_ENTITY_TYPES, "entity_type")
+        if error_msg:
+            return json.loads(json.dumps({"error": error_msg}))
 
-        data_key = entity_map.get(entity_type.lower())
+        data_key = get_entity_data_key(entity_type)
         if not data_key:
             return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
@@ -60,7 +61,8 @@ class ListEntitiesByStatus(Tool):
                     "properties": {
                         "entity_type": {
                             "type": "string",
-                            "description": "Type of entity: order, ticket, payment, shipment, refund, or escalation.",
+                            "description": "Type of entity.",
+                            "enum": VALID_ENTITY_TYPES,
                         },
                     },
                     "required": ["entity_type"],

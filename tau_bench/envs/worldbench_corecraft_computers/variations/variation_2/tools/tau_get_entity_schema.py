@@ -5,9 +5,21 @@ from tau_bench.envs.tool import Tool
 
 # Handle both relative and absolute imports for tests
 try:
-    from .utils import get_entity_data_key, get_entity_table, format_invalid_entity_type_error
+    from .utils import (
+        get_entity_data_key,
+        get_entity_table,
+        format_invalid_entity_type_error,
+        VALID_ENTITY_TYPES,
+        validate_enum_value,
+    )
 except ImportError:
-    from utils import get_entity_data_key, get_entity_table, format_invalid_entity_type_error
+    from utils import (
+        get_entity_data_key,
+        get_entity_table,
+        format_invalid_entity_type_error,
+        VALID_ENTITY_TYPES,
+        validate_enum_value,
+    )
 
 
 class GetEntitySchema(Tool):
@@ -17,9 +29,13 @@ class GetEntitySchema(Tool):
         entity_type: str,
     ) -> str:
         """Get the set of all field names that exist across entities of a given type."""
+        # Validate entity_type enum
+        error_msg = validate_enum_value(entity_type, VALID_ENTITY_TYPES, "entity_type")
+        if error_msg:
+            return json.dumps({"error": error_msg})
+
+        # Get data key (handles aliases like "ticket" -> "support_ticket")
         data_key = get_entity_data_key(entity_type)
-        if not data_key:
-            return json.dumps(format_invalid_entity_type_error(entity_type))
 
         entity_table = get_entity_table(data, entity_type)
         if entity_table is None:
@@ -100,7 +116,8 @@ class GetEntitySchema(Tool):
                     "properties": {
                         "entity_type": {
                             "type": "string",
-                            "description": "Type of entity to inspect: customer, order, ticket, payment, shipment, product, build, employee, refund, escalation, resolution, knowledge_base_article, slack_channel, slack_message.",
+                            "description": "Type of entity to inspect.",
+                            "enum": VALID_ENTITY_TYPES,
                         },
                     },
                     "required": ["entity_type"],

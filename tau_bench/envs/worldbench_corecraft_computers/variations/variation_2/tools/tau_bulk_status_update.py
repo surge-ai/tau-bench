@@ -3,6 +3,12 @@ from typing import Any, Dict, List
 
 from tau_bench.envs.tool import Tool
 
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+except ImportError:
+    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+
 
 def _now_iso_from_data(data: Dict[str, Any]) -> str:
     """Get deterministic timestamp from data or use fallback."""
@@ -22,17 +28,14 @@ class BulkStatusUpdate(Tool):
         status: str,
     ) -> str:
         """Bulk update status for multiple entities (orders, tickets, payments, shipments)."""
-        entity_map = {
-            "order": "order",
-            "ticket": "support_ticket",
-            "support_ticket": "support_ticket",
-            "payment": "payment",
-            "shipment": "shipment",
-        }
+        # Validate entity_type enum
+        allowed_types = ["order", "ticket", "support_ticket", "payment", "shipment"]
+        error_msg = validate_enum_value(entity_type, allowed_types, "entity_type")
+        if error_msg:
+            return json.loads(json.dumps({"error": error_msg}))
 
-        data_key = entity_map.get(entity_type.lower())
-        if not data_key:
-            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
+        # Get data key (handles aliases like "ticket" -> "support_ticket")
+        data_key = get_entity_data_key(entity_type)
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
@@ -93,7 +96,8 @@ class BulkStatusUpdate(Tool):
                     "properties": {
                         "entity_type": {
                             "type": "string",
-                            "description": "Type of entity: order, ticket, payment, or shipment.",
+                            "description": "Type of entity to bulk update.",
+                            "enum": ["order", "ticket", "support_ticket", "payment", "shipment"],
                         },
                         "entity_ids": {
                             "type": "array",

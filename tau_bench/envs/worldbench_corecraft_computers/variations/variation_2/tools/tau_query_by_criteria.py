@@ -3,6 +3,12 @@ from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
 
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+except ImportError:
+    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+
 
 class QueryByCriteria(Tool):
     @staticmethod
@@ -16,25 +22,12 @@ class QueryByCriteria(Tool):
         filters = filters or {}
         results: List[Dict[str, Any]] = []
 
-        # Map entity type to data key
-        entity_map = {
-            "customer": "customer",
-            "order": "order",
-            "ticket": "support_ticket",
-            "support_ticket": "support_ticket",
-            "product": "product",
-            "payment": "payment",
-            "shipment": "shipment",
-            "build": "build",
-            "employee": "employee",
-            "knowledge_base": "knowledge_base_article",
-            "knowledge_base_article": "knowledge_base_article",
-            "refund": "refund",
-            "escalation": "escalation",
-            "resolution": "resolution",
-        }
+        # Validate entity_type enum
+        error_msg = validate_enum_value(entity_type, VALID_ENTITY_TYPES, "entity_type")
+        if error_msg:
+            return json.loads(json.dumps({"error": error_msg}))
 
-        data_key = entity_map.get(entity_type.lower())
+        data_key = get_entity_data_key(entity_type)
         if not data_key:
             return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
 
@@ -113,7 +106,8 @@ class QueryByCriteria(Tool):
                     "properties": {
                         "entity_type": {
                             "type": "string",
-                            "description": "Type of entity to query (customer, order, ticket, product, payment, shipment, build, employee, knowledge_base, refund, escalation, resolution).",
+                            "description": "Type of entity.",
+                            "enum": VALID_ENTITY_TYPES,
                         },
                         "filters": {
                             "type": "object",

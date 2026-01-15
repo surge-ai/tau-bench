@@ -3,6 +3,12 @@ from typing import Any, Dict, List, Optional
 
 from tau_bench.envs.tool import Tool
 
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+except ImportError:
+    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+
 
 class GetEntityField(Tool):
     @staticmethod
@@ -13,25 +19,13 @@ class GetEntityField(Tool):
         fields: Optional[List[str]] = None,
     ) -> str:
         """Get specific field(s) from any entity. Returns just the field values."""
-        entity_map = {
-            "customer": "customer",
-            "order": "order",
-            "ticket": "support_ticket",
-            "support_ticket": "support_ticket",
-            "payment": "payment",
-            "shipment": "shipment",
-            "product": "product",
-            "build": "build",
-            "employee": "employee",
-            "refund": "refund",
-            "escalation": "escalation",
-            "resolution": "resolution",
-            "knowledge_base": "knowledge_base_article",
-        }
+        # Validate entity_type enum
+        error_msg = validate_enum_value(entity_type, VALID_ENTITY_TYPES, "entity_type")
+        if error_msg:
+            return json.loads(json.dumps({"error": error_msg}))
 
-        data_key = entity_map.get(entity_type.lower())
-        if not data_key:
-            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
+        # Get data key (handles aliases like "ticket" -> "support_ticket")
+        data_key = get_entity_data_key(entity_type)
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict) or entity_id not in entity_table:
@@ -70,7 +64,8 @@ class GetEntityField(Tool):
                     "properties": {
                         "entity_type": {
                             "type": "string",
-                            "description": "Type of entity (customer, order, ticket, payment, shipment, product, etc.).",
+                            "description": "Type of entity.",
+                            "enum": VALID_ENTITY_TYPES,
                         },
                         "entity_id": {
                             "type": "string",

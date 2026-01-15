@@ -3,6 +3,12 @@ from typing import Any, Dict
 
 from tau_bench.envs.tool import Tool
 
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+except ImportError:
+    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+
 
 def _now_iso_from_data(data: Dict[str, Any]) -> str:
     """Get deterministic timestamp from data or use fallback."""
@@ -23,24 +29,13 @@ class UpdateEntityField(Tool):
         field_value: Any,
     ) -> str:
         """Generic field updater: update any field on any entity type."""
-        entity_map = {
-            "customer": "customer",
-            "order": "order",
-            "ticket": "support_ticket",
-            "support_ticket": "support_ticket",
-            "payment": "payment",
-            "shipment": "shipment",
-            "product": "product",
-            "build": "build",
-            "employee": "employee",
-            "refund": "refund",
-            "escalation": "escalation",
-            "resolution": "resolution",
-        }
+        # Validate entity_type enum
+        error_msg = validate_enum_value(entity_type, VALID_ENTITY_TYPES, "entity_type")
+        if error_msg:
+            return json.loads(json.dumps({"error": error_msg}))
 
-        data_key = entity_map.get(entity_type.lower())
-        if not data_key:
-            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
+        # Get data key (handles aliases like "ticket" -> "support_ticket")
+        data_key = get_entity_data_key(entity_type)
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict) or entity_id not in entity_table:
@@ -92,7 +87,8 @@ class UpdateEntityField(Tool):
                     "properties": {
                         "entity_type": {
                             "type": "string",
-                            "description": "Type of entity (customer, order, ticket, payment, product, etc.).",
+                            "description": "Type of entity to update.",
+                            "enum": VALID_ENTITY_TYPES,
                         },
                         "entity_id": {
                             "type": "string",

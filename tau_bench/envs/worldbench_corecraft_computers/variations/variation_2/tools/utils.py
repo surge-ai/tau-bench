@@ -26,6 +26,9 @@ ENTITY_TYPE_ALIASES: Dict[str, str] = {
     "ticket": "support_ticket",
 }
 
+# Valid entity type values for enum (includes both data keys and aliases)
+VALID_ENTITY_TYPES: list = sorted(list(VALID_DATA_KEYS) + list(ENTITY_TYPE_ALIASES.keys()))
+
 
 def get_entity_data_key(entity_type: str) -> Optional[str]:
     """
@@ -83,6 +86,31 @@ def get_entity_table(data: Dict[str, Any], entity_type: str) -> Optional[Dict[st
         return None
 
     return entity_table
+
+
+def validate_enum_value(value: str, allowed_values: list, param_name: str) -> Optional[str]:
+    """
+    Validate that a value is in the allowed enum values.
+
+    Args:
+        value: The value to validate
+        allowed_values: List of allowed values
+        param_name: Name of the parameter (for error messages)
+
+    Returns:
+        None if valid, error message string if invalid
+
+    Example:
+        >>> error = validate_enum_value("open", ["open", "closed"], "status")
+        >>> error is None
+        True
+        >>> error = validate_enum_value("invalid", ["open", "closed"], "status")
+        >>> "invalid" in error
+        True
+    """
+    if value not in allowed_values:
+        return f"Invalid {param_name}: '{value}'. Allowed values: {', '.join(allowed_values)}"
+    return None
 
 
 def format_invalid_entity_type_error(entity_type: str) -> Dict[str, Any]:
