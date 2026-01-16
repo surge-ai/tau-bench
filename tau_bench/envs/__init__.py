@@ -12,6 +12,7 @@ def get_env(
     task_split: str,
     user_provider: Optional[str] = None,
     task_index: Optional[int] = None,
+    variation: Optional[str] = None,
 ) -> Env:
     if env_name == "retail":
         from tau_bench.envs.retail import MockRetailDomainEnv
@@ -36,12 +37,15 @@ def get_env(
     elif env_name == "worldbench_corecraft_computers":
         from tau_bench.envs.worldbench_corecraft_computers import MockCorecraftComputersEnv
 
-        return MockCorecraftComputersEnv(
-            user_strategy=user_strategy,
-            user_model=user_model,
-            task_split=task_split,
-            user_provider=user_provider,
-            task_index=task_index,
-        )
+        kwargs = {
+            "user_strategy": user_strategy,
+            "user_model": user_model,
+            "task_split": task_split,
+            "user_provider": user_provider,
+            "task_index": task_index,
+        }
+        if variation is not None:
+            kwargs["variation"] = variation
+        return MockCorecraftComputersEnv(**kwargs)
     else:
         raise ValueError(f"Unknown environment: {env_name}")

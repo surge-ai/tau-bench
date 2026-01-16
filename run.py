@@ -52,8 +52,8 @@ def parse_args() -> RunConfig:
         "--task-split",
         type=str,
         default="test",
-        choices=["train", "test", "dev"],
-        help="The split of tasks to run (only applies to the retail domain for now",
+        choices=["train", "test", "dev", "simple", "complex"],
+        help="The split of tasks to run (simple and complex only available for worldbench_corecraft_computers variation_2)",
     )
     parser.add_argument("--start-index", type=int, default=0)
     parser.add_argument("--end-index", type=int, default=-1, help="Run all tasks if -1")
@@ -69,6 +69,7 @@ def parse_args() -> RunConfig:
     parser.add_argument("--shuffle", type=int, default=0)
     parser.add_argument("--user-strategy", type=str, default="llm", choices=[item.value for item in UserStrategy])
     parser.add_argument("--few-shot-displays-path", type=str, help="Path to a jsonlines file containing few shot displays")
+    parser.add_argument("--variation", type=str, help="Variation to use for worldbench environments (e.g., variation_1, variation_2)")
     args = parser.parse_args()
     print(args)
     return RunConfig(
@@ -90,6 +91,7 @@ def parse_args() -> RunConfig:
         shuffle=args.shuffle,
         user_strategy=args.user_strategy,
         few_shot_displays_path=args.few_shot_displays_path,
+        variation=args.variation,
     )
 
 
