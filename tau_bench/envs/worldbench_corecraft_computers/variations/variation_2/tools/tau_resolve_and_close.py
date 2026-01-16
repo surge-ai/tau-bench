@@ -4,14 +4,11 @@ from typing import Any, Dict, Optional
 
 from tau_bench.envs.tool import Tool
 
-
-def _now_iso_from_data(data: Dict[str, Any]) -> str:
-    """Get deterministic timestamp from data or use fallback."""
-    for k in ("__now", "now", "current_time", "currentTime"):
-        v = data.get(k)
-        if isinstance(v, str) and v.strip():
-            return v
-    return "1970-01-01T00:00:00Z"
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_now_iso_from_data
+except ImportError:
+    from utils import get_now_iso_from_data
 
 
 class ResolveAndClose(Tool):
@@ -30,7 +27,7 @@ class ResolveAndClose(Tool):
         ticket = ticket_table[ticket_id]
 
         # Create resolution
-        res_id_input = f"{ticket_id}|{resolution_type}|{_now_iso_from_data(data)}"
+        res_id_input = f"{ticket_id}|{resolution_type}|{get_now_iso_from_data(data)}"
         res_id_hash = hashlib.sha256(res_id_input.encode()).hexdigest()[:12]
         resolution_id = f"res_{res_id_hash}"
 
@@ -39,7 +36,7 @@ class ResolveAndClose(Tool):
             "type": "resolution",
             "ticketId": ticket_id,
             "outcome": resolution_type,
-            "createdAt": _now_iso_from_data(data),
+            "createdAt": get_now_iso_from_data(data),
         }
 
         # Store resolution
@@ -49,7 +46,7 @@ class ResolveAndClose(Tool):
 
         # Update and close ticket
         ticket["status"] = "resolved"
-        ticket["updatedAt"] = _now_iso_from_data(data)
+        ticket["updatedAt"] = get_now_iso_from_data(data)
 
         return json.loads(json.dumps({
             "success": True,

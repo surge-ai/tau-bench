@@ -5,18 +5,21 @@ from tau_bench.envs.tool import Tool
 
 # Handle both relative and absolute imports for tests
 try:
-    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+    from .utils import (
+        get_entity_data_key,
+        VALID_ENTITY_TYPES,
+        validate_enum_value,
+        get_valid_fields_for_entity_type,
+        get_now_iso_from_data,
+    )
 except ImportError:
-    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
-
-
-def _now_iso_from_data(data: Dict[str, Any]) -> str:
-    """Get deterministic timestamp from data or use fallback."""
-    for k in ("__now", "now", "current_time", "currentTime"):
-        v = data.get(k)
-        if isinstance(v, str) and v.strip():
-            return v
-    return "1970-01-01T00:00:00Z"
+    from utils import (
+        get_entity_data_key,
+        VALID_ENTITY_TYPES,
+        validate_enum_value,
+        get_valid_fields_for_entity_type,
+        get_now_iso_from_data,
+    )
 
 
 class UpdateEntityField(Tool):
@@ -37,6 +40,18 @@ class UpdateEntityField(Tool):
         # Get data key (handles aliases like "ticket" -> "support_ticket")
         data_key = get_entity_data_key(entity_type)
 
+        # Validate field_name is a valid field for this entity type
+        valid_fields = get_valid_fields_for_entity_type(entity_type)
+        if valid_fields is not None and field_name not in valid_fields:
+            sorted_valid_fields = sorted(valid_fields)
+            return json.loads(json.dumps({
+                "error": f"Invalid field name '{field_name}' for entity type '{entity_type}'",
+                "field_name": field_name,
+                "entity_type": entity_type,
+                "valid_fields": sorted_valid_fields,
+                "suggestion": f"Use get_entity_schema tool with entity_type='{entity_type}' to see all valid fields and their types.",
+            }))
+
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict) or entity_id not in entity_table:
             return json.loads(json.dumps({"error": f"{entity_type} {entity_id} not found"}))
@@ -44,26 +59,12 @@ class UpdateEntityField(Tool):
         entity = entity_table[entity_id]
         old_value = entity.get(field_name)
 
-        # Check if field exists in this entity (helpful warning)
-        if field_name not in entity and old_value is None:
-            # Collect existing fields for helpful error message
-            existing_fields = sorted(entity.keys())
-            return json.loads(json.dumps({
-                "warning": f"Field '{field_name}' does not exist on this {entity_type}. Creating new field.",
-                "suggestion": f"Use get_entity_schema tool with entity_type='{entity_type}' to see valid fields.",
-                "existing_fields": existing_fields,
-                "field_name": field_name,
-                "entity_id": entity_id,
-                "entity_type": entity_type,
-                "will_create_new_field": True,
-            }))
-
         # Update the field
         entity[field_name] = field_value
 
         # Update timestamp if entity has updatedAt field (only orders, tickets, builds have it)
         if "updatedAt" in entity:
-            entity["updatedAt"] = _now_iso_from_data(data)
+            entity["updatedAt"] = get_now_iso_from_data(data)
 
         return json.loads(json.dumps({
             "success": True,

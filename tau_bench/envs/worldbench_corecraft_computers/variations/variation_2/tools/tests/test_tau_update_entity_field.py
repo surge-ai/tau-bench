@@ -148,22 +148,50 @@ class TestUpdateEntityField(unittest.TestCase):
         self.assertEqual(result["old_value"], "john@example.com")
         self.assertIsNone(result["new_value"])
 
-    def test_update_nonexistent_field(self):
-        """Test updating a field that doesn't exist creates it."""
+    def test_update_invalid_field_returns_error(self):
+        """Test updating a field that doesn't exist in schema returns error."""
         result = UpdateEntityField.invoke(
             self.data,
             entity_type="customer",
             entity_id="customer1",
-            field_name="newField",
+            field_name="invalidFieldName",
             field_value="newValue",
         )
 
-        self.assertTrue(result["success"])
-        self.assertIsNone(result["old_value"])
-        self.assertEqual(result["new_value"], "newValue")
+        # Should return an error for invalid field name
+        self.assertIn("error", result)
+        self.assertIn("Invalid field name", result["error"])
+        self.assertIn("invalidFieldName", result["error"])
+        self.assertIn("customer", result["error"])
+        self.assertIn("valid_fields", result)
+        self.assertIn("suggestion", result)
+        self.assertEqual(result["field_name"], "invalidFieldName")
+        self.assertEqual(result["entity_type"], "customer")
 
-        # Verify field was created
-        self.assertEqual(self.data["customer"]["customer1"]["newField"], "newValue")
+        # Verify field was NOT created
+        self.assertNotIn("invalidFieldName", self.data["customer"]["customer1"])
+
+    def test_update_invalid_field_shows_valid_fields(self):
+        """Test that error message includes list of valid fields."""
+        result = UpdateEntityField.invoke(
+            self.data,
+            entity_type="order",
+            entity_id="order1",
+            field_name="nonExistentField",
+            field_value="test",
+        )
+
+        self.assertIn("error", result)
+        self.assertIn("valid_fields", result)
+
+        # Check that valid fields includes expected order fields
+        valid_fields = result["valid_fields"]
+        self.assertIn("status", valid_fields)
+        self.assertIn("customerId", valid_fields)
+        self.assertIn("lineItems", valid_fields)
+
+        # Ensure list is sorted
+        self.assertEqual(valid_fields, sorted(valid_fields))
 
     def test_update_sets_updatedAt_for_orders(self):
         """Test that updatedAt is set for orders."""
@@ -258,7 +286,8 @@ class TestUpdateEntityField(unittest.TestCase):
         )
 
         self.assertIn("error", result)
-        self.assertIn("Unknown entity type", result["error"])
+        self.assertIn("Invalid entity_type", result["error"])
+        self.assertIn("invalid_type", result["error"])
 
     def test_update_no_entity_table(self):
         """Test when entity table doesn't exist."""
@@ -290,51 +319,55 @@ class TestUpdateEntityField(unittest.TestCase):
         self.assertIn("error", result)
         self.assertIn("not found", result["error"])
 
-    def test_update_boolean_field(self):
-        """Test updating to boolean value."""
+    def test_update_integer_field_inventory(self):
+        """Test updating inventory integer field."""
+        # Add initial inventory field
+        self.data["product"]["prod1"]["inventory"] = 50
+
         result = UpdateEntityField.invoke(
             self.data,
             entity_type="product",
             entity_id="prod1",
-            field_name="inStock",
-            field_value=True,
+            field_name="inventory",
+            field_value=75,
         )
 
         self.assertTrue(result["success"])
-        self.assertEqual(result["new_value"], True)
-        self.assertEqual(self.data["product"]["prod1"]["inStock"], True)
+        self.assertEqual(result["old_value"], 50)
+        self.assertEqual(result["new_value"], 75)
+        self.assertEqual(self.data["product"]["prod1"]["inventory"], 75)
 
     def test_update_object_field(self):
         """Test updating to object/dict value."""
-        new_address = {"street": "123 Main St", "city": "New York", "zip": "10001"}
+        new_addresses = [{"street": "123 Main St", "city": "New York", "zip": "10001"}]
 
         result = UpdateEntityField.invoke(
             self.data,
             entity_type="customer",
             entity_id="customer1",
-            field_name="address",
-            field_value=new_address,
+            field_name="addresses",  # Use valid field from schema
+            field_value=new_addresses,
         )
 
         self.assertTrue(result["success"])
-        self.assertEqual(result["new_value"], new_address)
-        self.assertEqual(self.data["customer"]["customer1"]["address"], new_address)
+        self.assertEqual(result["new_value"], new_addresses)
+        self.assertEqual(self.data["customer"]["customer1"]["addresses"], new_addresses)
 
-    def test_update_array_field(self):
-        """Test updating to array/list value."""
-        new_tags = ["tag1", "tag2", "tag3"]
+    def test_update_object_field_specs(self):
+        """Test updating specs object field."""
+        new_specs = {"weight": "1.5kg", "dimensions": "10x10x5cm"}
 
         result = UpdateEntityField.invoke(
             self.data,
             entity_type="product",
             entity_id="prod1",
-            field_name="tags",
-            field_value=new_tags,
+            field_name="specs",  # Use valid field from schema
+            field_value=new_specs,
         )
 
         self.assertTrue(result["success"])
-        self.assertEqual(result["new_value"], new_tags)
-        self.assertEqual(self.data["product"]["prod1"]["tags"], new_tags)
+        self.assertEqual(result["new_value"], new_specs)
+        self.assertEqual(self.data["product"]["prod1"]["specs"], new_specs)
 
     def test_update_returns_complete_entity(self):
         """Test that updated entity is returned in response."""
@@ -384,38 +417,33 @@ class TestUpdateEntityField(unittest.TestCase):
         self.assertEqual(self.data["order"]["order1"]["updatedAt"], "2025-12-31T23:59:59Z")
 
     def test_update_all_valid_entity_types(self):
-        """Test all valid entity types."""
-        entity_types = ["customer", "order", "ticket", "support_ticket", "payment", "product"]
+        """Test all valid entity types using valid fields."""
+        test_cases = [
+            ("customer", "customer1", "name", "Updated Name"),
+            ("order", "order1", "status", "completed"),
+            ("ticket", "ticket1", "status", "resolved"),
+            ("support_ticket", "ticket1", "priority", "high"),
+            ("payment", "payment1", "status", "completed"),
+            ("product", "prod1", "name", "Updated Product"),
+        ]
 
         # Add minimal data for missing types
-        self.data.setdefault("payment", {})["payment1"] = {"id": "payment1", "status": "pending"}
+        self.data.setdefault("payment", {})["payment1"] = {
+            "id": "payment1",
+            "status": "pending",
+            "amount": 100.0,
+        }
 
-        for entity_type in entity_types:
-            # Get first entity ID
-            if entity_type == "ticket":
-                entity_id = "ticket1"
-            elif entity_type == "support_ticket":
-                entity_id = "ticket1"
-            elif entity_type == "payment":
-                entity_id = "payment1"
-            elif entity_type == "customer":
-                entity_id = "customer1"
-            elif entity_type == "order":
-                entity_id = "order1"
-            elif entity_type == "product":
-                entity_id = "prod1"
-            else:
-                continue
-
+        for entity_type, entity_id, field_name, field_value in test_cases:
             result = UpdateEntityField.invoke(
                 self.data,
                 entity_type=entity_type,
                 entity_id=entity_id,
-                field_name="testField",
-                field_value="testValue",
+                field_name=field_name,
+                field_value=field_value,
             )
 
-            self.assertTrue(result["success"], f"Failed for {entity_type}")
+            self.assertTrue(result.get("success"), f"Failed for {entity_type}: {result.get('error', 'No error message')}")
 
     def test_update_response_structure(self):
         """Test that response has correct structure."""
@@ -442,8 +470,8 @@ class TestUpdateEntityField(unittest.TestCase):
         self.assertEqual(info["type"], "function")
         self.assertEqual(info["function"]["name"], "update_entity_field")
         self.assertIn("description", info["function"])
-        # BUG: Documentation says snake_case but actual fields are camelCase
-        self.assertIn("snake_case", info["function"]["description"])  # Bug: misleading docs
+        # Should mention camelCase for field names
+        self.assertIn("camelCase", info["function"]["description"])
         self.assertIn("parameters", info["function"])
         self.assertIn("entity_type", info["function"]["parameters"]["properties"])
         self.assertIn("entity_id", info["function"]["parameters"]["properties"])

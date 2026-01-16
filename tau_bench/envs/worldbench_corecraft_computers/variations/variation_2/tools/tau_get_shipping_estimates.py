@@ -9,27 +9,10 @@ class GetShippingEstimates(Tool):
     @staticmethod
     def invoke(
         data: Dict[str, Any],
-        product_ids: List[str],
         destination_zip: Optional[str] = None,
         shipping_method: Optional[str] = "standard",
     ) -> str:
         """Get shipping cost and delivery time estimates for products."""
-        product_table = data.get("product", {})
-        if not isinstance(product_table, dict):
-            return json.loads(json.dumps({"error": "Product data not available"}))
-
-        # Get product information
-        products = []
-
-        for pid in product_ids:
-            product = product_table.get(pid)
-            if not product:
-                return json.loads(json.dumps({"error": f"Product {pid} not found"}))
-
-            products.append({
-                "product_id": pid,
-                "name": product.get("name"),
-            })
 
         # Base shipping rates by method
         base_rates = {
@@ -58,8 +41,11 @@ class GetShippingEstimates(Tool):
 
         # Calculate estimated delivery date
         # Add 1 day for processing
-        total_days = base_days + 1
-
+        if method != "overnight":
+            processing_days=0
+            total_days = base_days + 1
+        else:
+            processing_days=1
         # Get current date (use data timestamp if available for determinism)
         current_date = datetime.now()
         for k in ("__now", "now", "current_time"):
@@ -75,14 +61,13 @@ class GetShippingEstimates(Tool):
 
         result = {
             "shipping_method": method,
-            "products": products,
             "cost_breakdown": {
                 "base_rate": base_cost,
                 "destination_surcharge": round(destination_surcharge, 2),
                 "total_cost": round(total_cost, 2),
             },
             "timing": {
-                "processing_days": 1,
+                "processing_days": processing_days,
                 "transit_days": base_days,
                 "total_days": total_days,
                 "estimated_ship_date": estimated_ship.strftime("%Y-%m-%d"),
@@ -99,15 +84,10 @@ class GetShippingEstimates(Tool):
             "type": "function",
             "function": {
                 "name": "get_shipping_estimates",
-                "description": "Get shipping cost and delivery time estimates for products, including destination surcharges.",
+                "description": "Get shipping cost and delivery time estimates for an order, including destination surcharges.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "product_ids": {
-                            "type": "array",
-                            "items": {"type": "string"},
-                            "description": "List of product IDs to estimate shipping for.",
-                        },
                         "destination_zip": {
                             "type": "string",
                             "description": "Destination ZIP code for delivery (affects cost).",
@@ -117,7 +97,7 @@ class GetShippingEstimates(Tool):
                             "description": "Shipping method: standard, express, overnight, two_day, or free (default: standard).",
                         },
                     },
-                    "required": ["product_ids"],
+                    "required": ["shipping_method", "destination_zip"],
                 },
             },
         }

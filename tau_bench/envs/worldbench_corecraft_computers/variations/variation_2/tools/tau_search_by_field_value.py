@@ -5,9 +5,19 @@ from tau_bench.envs.tool import Tool
 
 # Handle both relative and absolute imports for tests
 try:
-    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+    from .utils import (
+        get_entity_data_key,
+        VALID_ENTITY_TYPES,
+        validate_enum_value,
+        get_valid_fields_for_entity_type,
+    )
 except ImportError:
-    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+    from utils import (
+        get_entity_data_key,
+        VALID_ENTITY_TYPES,
+        validate_enum_value,
+        get_valid_fields_for_entity_type,
+    )
 
 
 class SearchByFieldValue(Tool):
@@ -27,6 +37,18 @@ class SearchByFieldValue(Tool):
         data_key = get_entity_data_key(entity_type)
         if not data_key:
             return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
+
+        # Validate field_name is a valid field for this entity type
+        valid_fields = get_valid_fields_for_entity_type(entity_type)
+        if valid_fields is not None and field_name not in valid_fields:
+            sorted_valid_fields = sorted(valid_fields)
+            return json.loads(json.dumps({
+                "error": f"Invalid field name '{field_name}' for entity type '{entity_type}'",
+                "field_name": field_name,
+                "entity_type": entity_type,
+                "valid_fields": sorted_valid_fields,
+                "suggestion": f"Use get_entity_schema tool with entity_type='{entity_type}' to see all valid fields and their types.",
+            }))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
@@ -63,7 +85,7 @@ class SearchByFieldValue(Tool):
             "type": "function",
             "function": {
                 "name": "search_by_field_value",
-                "description": "Generic search: find all entities of a type where a specific field equals a value. Case-insensitive for strings.",
+                "description": "Generic search: find all entities of a type where a specific field equals a value. Case-insensitive for strings. **Use camelCase for field names (e.g., 'customerId' not 'customer_id'). Use get_entity_schema to discover valid field names.**",
                 "parameters": {
                     "type": "object",
                     "properties": {

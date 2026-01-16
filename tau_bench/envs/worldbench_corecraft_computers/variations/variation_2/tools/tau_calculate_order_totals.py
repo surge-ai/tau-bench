@@ -12,7 +12,7 @@ class CalculateOrderTotals(Tool):
         quantities: Optional[List[int]] = None,
         customer_id: Optional[str] = None,
         promo_code: Optional[str] = None,
-        shipping_method: Optional[str] = None,
+        shipping_cost: Optional[float] = None,
         tax_rate: Optional[float] = None,
     ) -> str:
         """Calculate comprehensive order totals including subtotal, discounts, taxes, and shipping."""
@@ -79,14 +79,10 @@ class CalculateOrderTotals(Tool):
             tax_rate = 0.08  # Default 8%
         tax = discounted_subtotal * tax_rate
 
-        # Calculate shipping based on method
-        shipping_rates = {
-            "standard": 9.99,
-            "express": 19.99,
-            "overnight": 39.99,
-            "free": 0.00,
-        }
-        shipping = shipping_rates.get((shipping_method or "standard").lower(), 9.99)
+        # Use provided shipping cost (from get_shipping_estimates)
+        if shipping_cost is None:
+            shipping_cost = 0.0
+        shipping = shipping_cost
 
         # Calculate total
         total = discounted_subtotal + tax + shipping
@@ -105,7 +101,6 @@ class CalculateOrderTotals(Tool):
             "tax": round(tax, 2),
             "tax_rate": tax_rate,
             "shipping": round(shipping, 2),
-            "shipping_method": shipping_method or "standard",
             "grand_total": round(total, 2),
         }
 
@@ -117,7 +112,7 @@ class CalculateOrderTotals(Tool):
             "type": "function",
             "function": {
                 "name": "calculate_order_totals",
-                "description": "Calculate comprehensive order totals including subtotal, loyalty/promo discounts, taxes, shipping, and grand total.",
+                "description": "Calculate comprehensive order totals including subtotal, loyalty/promo discounts, taxes, shipping, and grand total. Use get_shipping_estimates to obtain the shipping_cost value.",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -139,9 +134,9 @@ class CalculateOrderTotals(Tool):
                             "type": "string",
                             "description": "Promotional code to apply discount.",
                         },
-                        "shipping_method": {
-                            "type": "string",
-                            "description": "Shipping method: standard, express, overnight, or free.",
+                        "shipping_cost": {
+                            "type": "number",
+                            "description": "Shipping cost (obtain from get_shipping_estimates tool). Default: 0.0 if not provided.",
                         },
                         "tax_rate": {
                             "type": "number",

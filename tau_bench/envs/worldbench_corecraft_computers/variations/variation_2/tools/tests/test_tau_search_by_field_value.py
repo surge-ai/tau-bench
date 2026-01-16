@@ -127,8 +127,8 @@ class TestSearchByFieldValue(unittest.TestCase):
         self.assertEqual(result["count"], 0)
         self.assertEqual(len(result["results"]), 0)
 
-    def test_search_nonexistent_field(self):
-        """Test searching by field that doesn't exist."""
+    def test_search_invalid_field_returns_error(self):
+        """Test searching by field that doesn't exist in schema returns error."""
         result = SearchByFieldValue.invoke(
             self.data,
             entity_type="order",
@@ -136,7 +136,33 @@ class TestSearchByFieldValue(unittest.TestCase):
             field_value="value",
         )
 
-        self.assertEqual(result["count"], 0)
+        # Should return an error for invalid field name
+        self.assertIn("error", result)
+        self.assertIn("Invalid field name", result["error"])
+        self.assertIn("nonexistent_field", result["error"])
+        self.assertIn("valid_fields", result)
+        self.assertIn("suggestion", result)
+
+    def test_search_invalid_field_shows_valid_fields(self):
+        """Test that error message includes list of valid fields."""
+        result = SearchByFieldValue.invoke(
+            self.data,
+            entity_type="order",
+            field_name="invalidField",
+            field_value="test",
+        )
+
+        self.assertIn("error", result)
+        self.assertIn("valid_fields", result)
+
+        # Check that valid fields includes expected order fields
+        valid_fields = result["valid_fields"]
+        self.assertIn("status", valid_fields)
+        self.assertIn("customerId", valid_fields)
+        self.assertIn("lineItems", valid_fields)
+
+        # Ensure list is sorted
+        self.assertEqual(valid_fields, sorted(valid_fields))
 
     def test_search_entity_type_alias(self):
         """Test that entity type aliases work."""
@@ -160,7 +186,7 @@ class TestSearchByFieldValue(unittest.TestCase):
         )
 
         self.assertIn("error", result)
-        self.assertIn("Unknown entity type", result["error"])
+        self.assertIn("Invalid entity_type", result["error"])
 
     def test_search_empty_entity_table(self):
         """Test with empty entity table."""
@@ -237,28 +263,18 @@ class TestSearchByFieldValue(unittest.TestCase):
         order_ids = {o["id"] for o in result["results"]}
         self.assertNotIn("order5", order_ids)
 
-    def test_search_boolean_field(self):
-        """Test searching by boolean field."""
-        self.data["product"]["prod4"] = {
-            "id": "prod4",
-            "name": "Test Product",
-            "inStock": True,
-        }
-        self.data["product"]["prod5"] = {
-            "id": "prod5",
-            "name": "Out of Stock Product",
-            "inStock": False,
-        }
-
+    def test_search_string_field_with_valid_category(self):
+        """Test searching by string field with valid category."""
+        # All products already have category field, just search for existing one
         result = SearchByFieldValue.invoke(
             self.data,
             entity_type="product",
-            field_name="inStock",
-            field_value=True,
+            field_name="category",
+            field_value="keyboard",
         )
 
         self.assertEqual(result["count"], 1)
-        self.assertEqual(result["results"][0]["id"], "prod4")
+        self.assertEqual(result["results"][0]["id"], "prod2")
 
     def test_search_string_vs_numeric_mismatch(self):
         """Test that string and numeric values don't match."""
@@ -354,6 +370,7 @@ class TestSearchByFieldValue(unittest.TestCase):
         self.assertEqual(info["function"]["name"], "search_by_field_value")
         self.assertIn("description", info["function"])
         self.assertIn("Case-insensitive", info["function"]["description"])
+        self.assertIn("camelCase", info["function"]["description"])
         self.assertIn("parameters", info["function"])
         self.assertIn("entity_type", info["function"]["parameters"]["properties"])
         self.assertIn("field_name", info["function"]["parameters"]["properties"])

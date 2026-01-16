@@ -5,18 +5,9 @@ from tau_bench.envs.tool import Tool
 
 # Handle both relative and absolute imports for tests
 try:
-    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value, get_now_iso_from_data
 except ImportError:
-    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
-
-
-def _now_iso_from_data(data: Dict[str, Any]) -> str:
-    """Get deterministic timestamp from data or use fallback."""
-    for k in ("__now", "now", "current_time", "currentTime"):
-        v = data.get(k)
-        if isinstance(v, str) and v.strip():
-            return v
-    return "1970-01-01T00:00:00Z"
+    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value, get_now_iso_from_data
 
 
 class BulkStatusUpdate(Tool):
@@ -63,7 +54,7 @@ class BulkStatusUpdate(Tool):
 
             # Update timestamp only for entity types that have updatedAt (orders, tickets)
             if "updatedAt" in entity:
-                entity["updatedAt"] = _now_iso_from_data(data)
+                entity["updatedAt"] = get_now_iso_from_data(data)
 
             results["updated"].append({
                 "id": entity_id,

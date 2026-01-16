@@ -4,14 +4,11 @@ from typing import Any, Dict
 
 from tau_bench.envs.tool import Tool
 
-
-def _now_iso_from_data(data: Dict[str, Any]) -> str:
-    """Get deterministic timestamp from data or use fallback."""
-    for k in ("__now", "now", "current_time", "currentTime"):
-        v = data.get(k)
-        if isinstance(v, str) and v.strip():
-            return v
-    return "1970-01-01T00:00:00Z"
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_now_iso_from_data
+except ImportError:
+    from utils import get_now_iso_from_data
 
 
 class EscalateTicket(Tool):
@@ -42,7 +39,7 @@ class EscalateTicket(Tool):
             "escalationType": escalation_type,
             "destination": destination,
             "notes": notes,
-            "createdAt": _now_iso_from_data(data),
+            "createdAt": get_now_iso_from_data(data),
             "resolvedAt": None,
         }
 

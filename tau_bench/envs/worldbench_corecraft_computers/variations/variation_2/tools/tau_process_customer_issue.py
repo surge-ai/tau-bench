@@ -4,14 +4,11 @@ from typing import Any, Dict, Optional
 
 from tau_bench.envs.tool import Tool
 
-
-def _now_iso_from_data(data: Dict[str, Any]) -> str:
-    """Get deterministic timestamp from data or use fallback."""
-    for k in ("__now", "now", "current_time", "currentTime"):
-        v = data.get(k)
-        if isinstance(v, str) and v.strip():
-            return v
-    return "1970-01-01T00:00:00Z"
+# Handle both relative and absolute imports for tests
+try:
+    from .utils import get_now_iso_from_data
+except ImportError:
+    from utils import get_now_iso_from_data
 
 
 class ProcessCustomerIssue(Tool):
@@ -55,7 +52,7 @@ class ProcessCustomerIssue(Tool):
             priority = "high"
 
         # Generate ticket ID
-        id_input = f"{customer_id}|{issue_type}|{_now_iso_from_data(data)}"
+        id_input = f"{customer_id}|{issue_type}|{get_now_iso_from_data(data)}"
         id_hash = hashlib.sha256(id_input.encode()).hexdigest()[:12]
         ticket_id = f"ticket_{id_hash}"
 
@@ -69,8 +66,8 @@ class ProcessCustomerIssue(Tool):
             "status": "open",
             "priority": priority,
             "ticketType": issue_type,
-            "createdAt": _now_iso_from_data(data),
-            "updatedAt": _now_iso_from_data(data),
+            "createdAt": get_now_iso_from_data(data),
+            "updatedAt": get_now_iso_from_data(data),
         }
 
         # Store ticket
@@ -86,7 +83,7 @@ class ProcessCustomerIssue(Tool):
 
         if should_escalate:
             # Create escalation
-            esc_id_input = f"{ticket_id}|technical|{_now_iso_from_data(data)}"
+            esc_id_input = f"{ticket_id}|technical|{get_now_iso_from_data(data)}"
             esc_id_hash = hashlib.sha256(esc_id_input.encode()).hexdigest()[:12]
             escalation_id = f"esc_{esc_id_hash}"
 
@@ -97,7 +94,7 @@ class ProcessCustomerIssue(Tool):
                 "escalationType": "technical" if issue_type in ["defective_item", "damaged_product"] else "policy_exception",
                 "destination": "product_specialist_team",
                 "notes": f"Auto-escalated due to {issue_type}",
-                "createdAt": _now_iso_from_data(data),
+                "createdAt": get_now_iso_from_data(data),
                 "resolvedAt": None,
             }
 

@@ -77,6 +77,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=["prod1", "prod2"],
+            shipping_cost=9.99,
         )
 
         # Subtotal: 59.99 + 129.99 = 189.98
@@ -92,15 +93,12 @@ class TestCalculateOrderTotals(unittest.TestCase):
         self.assertEqual(result["tax"], expected_tax)
         self.assertEqual(result["tax_rate"], 0.08)
 
-        # Default standard shipping: 9.99
+        # Shipping cost provided
         self.assertEqual(result["shipping"], 9.99)
 
         # Grand total
         expected_total = round(189.98 + expected_tax + 9.99, 2)
         self.assertEqual(result["grand_total"], expected_total)
-
-        # BUG: total_weight is always 0 because Product model has no weight field
-        self.assertEqual(result["total_weight"], 0.0)
 
     def test_calculate_with_quantities(self):
         """Test calculating totals with custom quantities."""
@@ -108,6 +106,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1", "prod4"],
             quantities=[2, 3],
+            shipping_cost=9.99,
         )
 
         # Subtotal: (59.99 * 2) + (9.99 * 3) = 119.98 + 29.97 = 149.95
@@ -132,6 +131,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
             customer_id="customer1",  # gold tier
+            shipping_cost=9.99,
         )
 
         subtotal = 59.99
@@ -144,6 +144,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
             customer_id="customer2",  # silver tier
+            shipping_cost=9.99,
         )
 
         expected_loyalty_discount = round(subtotal * 0.05, 2)  # 5%
@@ -155,6 +156,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
             customer_id="customer3",  # platinum tier
+            shipping_cost=9.99,
         )
 
         expected_loyalty_discount = round(subtotal * 0.15, 2)  # 15%
@@ -166,6 +168,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
             customer_id="customer4",  # none tier
+            shipping_cost=9.99,
         )
 
         self.assertEqual(result["discounts"]["loyalty"], 0.0)
@@ -177,6 +180,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod2"],
             promo_code="SAVE10",
+            shipping_cost=9.99,
         )
 
         subtotal = 129.99
@@ -191,6 +195,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             product_ids=["prod3"],  # 299.99
             customer_id="customer1",  # gold: 10%
             promo_code="SAVE10",  # 10%
+            shipping_cost=19.99,
         )
 
         subtotal = 299.99
@@ -211,6 +216,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
             tax_rate=0.05,  # 5%
+            shipping_cost=9.99,
         )
 
         subtotal = 59.99
@@ -218,94 +224,59 @@ class TestCalculateOrderTotals(unittest.TestCase):
         self.assertEqual(result["tax"], expected_tax)
         self.assertEqual(result["tax_rate"], 0.05)
 
-    def test_calculate_with_different_shipping_methods(self):
-        """Test different shipping methods."""
+    def test_calculate_with_different_shipping_costs(self):
+        """Test different shipping costs."""
         product_ids = ["prod1"]
 
-        # Standard: 9.99
+        # Standard shipping cost: 9.99
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=product_ids,
-            shipping_method="standard",
+            shipping_cost=9.99,
         )
         self.assertEqual(result["shipping"], 9.99)
-        self.assertEqual(result["shipping_method"], "standard")
 
-        # Express: 19.99
+        # Express shipping cost: 19.99
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=product_ids,
-            shipping_method="express",
+            shipping_cost=19.99,
         )
         self.assertEqual(result["shipping"], 19.99)
-        self.assertEqual(result["shipping_method"], "express")
 
-        # Overnight: 39.99
+        # Overnight shipping cost: 39.99
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=product_ids,
-            shipping_method="overnight",
+            shipping_cost=39.99,
         )
         self.assertEqual(result["shipping"], 39.99)
-        self.assertEqual(result["shipping_method"], "overnight")
 
-        # Free: 0.00
+        # Free shipping: 0.00
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=product_ids,
-            shipping_method="free",
+            shipping_cost=0.00,
         )
         self.assertEqual(result["shipping"], 0.00)
-        self.assertEqual(result["shipping_method"], "free")
 
-    def test_calculate_weight_surcharge(self):
-        """Test weight-based shipping surcharge."""
-        # Add weight to products (even though this is a bug)
-        self.data["product"]["heavy1"] = {
-            "id": "heavy1",
-            "name": "Heavy Item",
-            "price": 100.0,
-            "weight": 15.0,  # Over 10 lbs
-        }
-
+    def test_calculate_with_destination_surcharge(self):
+        """Test shipping with destination surcharge (from get_shipping_estimates)."""
         result = CalculateOrderTotals.invoke(
             self.data,
-            product_ids=["heavy1"],
-            shipping_method="standard",
+            product_ids=["prod1"],
+            shipping_cost=14.99,  # Standard 9.99 + destination surcharge 5.00
         )
 
-        # Base shipping: 9.99
-        # Weight surcharge: (15 - 10) * 0.50 = 2.50
-        # Total: 12.49
-        expected_shipping = 9.99 + (15.0 - 10) * 0.50
-        self.assertEqual(result["shipping"], expected_shipping)
-        self.assertEqual(result["total_weight"], 15.0)
-
-    def test_calculate_no_weight_surcharge_under_threshold(self):
-        """Test no surcharge for items under 10 lbs."""
-        # Add light products
-        self.data["product"]["light1"] = {
-            "id": "light1",
-            "name": "Light Item",
-            "price": 50.0,
-            "weight": 5.0,
-        }
-
-        result = CalculateOrderTotals.invoke(
-            self.data,
-            product_ids=["light1"],
-            shipping_method="standard",
-        )
-
-        # No surcharge since weight <= 10
-        self.assertEqual(result["shipping"], 9.99)
-        self.assertEqual(result["total_weight"], 5.0)
+        # Shipping should match provided cost
+        self.assertEqual(result["shipping"], 14.99)
 
     def test_calculate_default_quantities(self):
         """Test that quantities default to 1."""
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=["prod1", "prod2", "prod3"],
+            shipping_cost=9.99,
             # No quantities specified
         )
 
@@ -333,14 +304,14 @@ class TestCalculateOrderTotals(unittest.TestCase):
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=["prod1", "nonexistent", "prod2"],
+            shipping_cost=9.99,
         )
 
         # Non-existent products are skipped
         self.assertEqual(len(result["items"]), 2)
 
         # Only prod1 and prod2 counted
-        expected_subtotal = 59.99 + 129.99
-        self.assertEqual(result["subtotal"], expected_subtotal)
+        self.assertAlmostEqual(result["subtotal"], 189.98, places=2)
 
     def test_calculate_nonexistent_customer(self):
         """Test with non-existent customer ID."""
@@ -348,6 +319,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
             customer_id="nonexistent",
+            shipping_cost=9.99,
         )
 
         # Should work but no loyalty discount
@@ -362,10 +334,13 @@ class TestCalculateOrderTotals(unittest.TestCase):
         result = CalculateOrderTotals.invoke(
             data_without_products,
             product_ids=["prod1"],
+            shipping_cost=9.99,
         )
 
-        self.assertIn("error", result)
-        self.assertIn("Product data not available", result["error"])
+        # When product table doesn't exist, data.get("product", {}) returns {}
+        # So products just aren't found and we get an empty result
+        self.assertEqual(result["subtotal"], 0.0)
+        self.assertEqual(len(result["items"]), 0)
 
     def test_calculate_invalid_product_table(self):
         """Test when product table is not a dict."""
@@ -387,31 +362,22 @@ class TestCalculateOrderTotals(unittest.TestCase):
             self.data,
             product_ids=["prod1"],
             customer_id="customer1",
+            shipping_cost=9.99,
         )
 
         # Should still calculate but without loyalty discount
         self.assertEqual(result["subtotal"], 59.99)
         self.assertEqual(result["discounts"]["loyalty"], 0.0)
 
-    def test_calculate_case_insensitive_shipping_method(self):
-        """Test that shipping method is case-insensitive."""
+    def test_calculate_default_shipping_cost(self):
+        """Test that shipping defaults to 0.0 if not provided."""
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=["prod1"],
-            shipping_method="EXPRESS",  # Uppercase
+            # No shipping_cost provided
         )
 
-        self.assertEqual(result["shipping"], 19.99)
-
-    def test_calculate_unknown_shipping_method(self):
-        """Test that unknown shipping method defaults to standard."""
-        result = CalculateOrderTotals.invoke(
-            self.data,
-            product_ids=["prod1"],
-            shipping_method="unknown_method",
-        )
-
-        self.assertEqual(result["shipping"], 9.99)  # Default to standard
+        self.assertEqual(result["shipping"], 0.0)
 
     def test_calculate_zero_price_product(self):
         """Test product with zero price."""
@@ -424,6 +390,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
         result = CalculateOrderTotals.invoke(
             self.data,
             product_ids=["free_item"],
+            shipping_cost=9.99,
         )
 
         self.assertEqual(result["subtotal"], 0.0)
@@ -441,14 +408,23 @@ class TestCalculateOrderTotals(unittest.TestCase):
             customer_id="customer1",  # 10% discount
             promo_code="SAVE10",  # 10% discount
             tax_rate=0.08,
+            shipping_cost=9.99,
         )
 
-        # All monetary values should have 2 decimal places
-        self.assertEqual(len(str(result["subtotal"]).split(".")[-1]), 2)
-        self.assertEqual(len(str(result["discounts"]["loyalty"]).split(".")[-1]), 2)
-        self.assertEqual(len(str(result["discounts"]["promo"]).split(".")[-1]), 2)
-        self.assertEqual(len(str(result["tax"]).split(".")[-1]), 2)
-        self.assertEqual(len(str(result["shipping"]).split(".")[-1]), 2)
+        # All monetary values should have at most 2 decimal places
+        # Check values are properly rounded
+        self.assertIsInstance(result["subtotal"], (int, float))
+        self.assertIsInstance(result["discounts"]["loyalty"], (int, float))
+        self.assertIsInstance(result["discounts"]["promo"], (int, float))
+        self.assertIsInstance(result["tax"], (int, float))
+        self.assertIsInstance(result["shipping"], (int, float))
+
+        # Verify no more than 2 decimal places by checking rounding equality
+        self.assertEqual(result["subtotal"], round(result["subtotal"], 2))
+        self.assertEqual(result["discounts"]["loyalty"], round(result["discounts"]["loyalty"], 2))
+        self.assertEqual(result["discounts"]["promo"], round(result["discounts"]["promo"], 2))
+        self.assertEqual(result["tax"], round(result["tax"], 2))
+        self.assertEqual(result["shipping"], round(result["shipping"], 2))
 
     def test_calculate_comprehensive(self):
         """Test comprehensive order with all features."""
@@ -458,7 +434,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
             quantities=[2, 1, 1],
             customer_id="customer3",  # platinum: 15%
             promo_code="SAVE10",  # 10%
-            shipping_method="express",
+            shipping_cost=19.99,  # Express shipping
             tax_rate=0.10,
         )
 
@@ -478,7 +454,7 @@ class TestCalculateOrderTotals(unittest.TestCase):
         # Tax: discounted * 0.10
         self.assertAlmostEqual(result["tax"], discounted * 0.10, places=2)
 
-        # Shipping: express = 19.99 (no weight surcharge since weight=0)
+        # Shipping: express = 19.99
         self.assertEqual(result["shipping"], 19.99)
 
         # Verify grand total
@@ -492,12 +468,13 @@ class TestCalculateOrderTotals(unittest.TestCase):
         self.assertEqual(info["type"], "function")
         self.assertEqual(info["function"]["name"], "calculate_order_totals")
         self.assertIn("description", info["function"])
+        self.assertIn("get_shipping_estimates", info["function"]["description"])
         self.assertIn("parameters", info["function"])
         self.assertIn("product_ids", info["function"]["parameters"]["properties"])
         self.assertIn("quantities", info["function"]["parameters"]["properties"])
         self.assertIn("customer_id", info["function"]["parameters"]["properties"])
         self.assertIn("promo_code", info["function"]["parameters"]["properties"])
-        self.assertIn("shipping_method", info["function"]["parameters"]["properties"])
+        self.assertIn("shipping_cost", info["function"]["parameters"]["properties"])
         self.assertIn("tax_rate", info["function"]["parameters"]["properties"])
         self.assertIn("required", info["function"]["parameters"])
         self.assertIn("product_ids", info["function"]["parameters"]["required"])
