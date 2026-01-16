@@ -53,7 +53,7 @@ def get_entity_by_id(data: Dict[str, Any], table_name: str, entity_id: str) -> O
     return None
 
 
-def parse_iso_datetime(date_str: str, param_name: str) -> Optional[datetime]:
+def parse_iso_datetime(date_str: str, param_name: str):
     """Parse and validate an ISO 8601 date string to a datetime object.
 
     Accepts both UTC (with Z suffix) and timezone-aware ISO 8601 formats,
@@ -64,10 +64,8 @@ def parse_iso_datetime(date_str: str, param_name: str) -> Optional[datetime]:
         param_name: Parameter name for error message
 
     Returns:
-        datetime object with UTC timezone, or None if date_str is empty/None
-
-    Raises:
-        ValueError: If date format is invalid or missing timezone
+        datetime object with UTC timezone, None if date_str is empty/None,
+        or error dict if format is invalid
     """
     if not date_str:
         return None
@@ -80,22 +78,16 @@ def parse_iso_datetime(date_str: str, param_name: str) -> Optional[datetime]:
 
         parsed_dt = datetime.fromisoformat(dt_str)
 
-        # If naive datetime, raise error asking for explicit timezone
+        # If naive datetime, return error
         if parsed_dt.tzinfo is None:
-            raise ValueError(
-                f"{param_name} must include timezone information "
-                f'(e.g., "2025-08-01T00:00:00Z" or "2025-08-01T00:00:00-07:00")'
-            )
+            return json.loads(json.dumps({"error": f"{param_name} must include timezone information (e.g., \"2025-08-01T00:00:00Z\" or \"2025-08-01T00:00:00-07:00\")"}))
 
         # Convert to UTC
         return parsed_dt.astimezone(timezone.utc)
     except ValueError:
-        raise
+        return json.loads(json.dumps({"error": f"{param_name} must be in ISO 8601 format with timezone (e.g., \"2025-08-01T00:00:00Z\" or \"2025-08-01T00:00:00-07:00\")"}))
     except (TypeError, AttributeError) as e:
-        raise ValueError(
-            f"{param_name} must be in ISO 8601 format with timezone "
-            f'(e.g., "2025-08-01T00:00:00Z" or "2025-08-01T00:00:00-07:00"): {str(e)}'
-        )
+        return json.loads(json.dumps({"error": f"{param_name} must be in ISO 8601 format with timezone (e.g., \"2025-08-01T00:00:00Z\" or \"2025-08-01T00:00:00-07:00\"): {str(e)}"}))
 
 
 def get_datetime_field(entity: Dict[str, Any], field: str) -> Optional[datetime]:
@@ -197,7 +189,7 @@ def matches_json_text_search(entity: Dict[str, Any], field: str, text: str) -> b
     return text in json.dumps(value)
 
 
-def validate_enum(value: Optional[str], valid_values: Sequence[str], param_name: str) -> None:
+def validate_enum(value: Optional[str], valid_values: Sequence[str], param_name: str):
     """Validate that a value is one of the allowed enum values.
 
     Args:
@@ -205,13 +197,12 @@ def validate_enum(value: Optional[str], valid_values: Sequence[str], param_name:
         valid_values: List of valid enum values
         param_name: Parameter name for error message
 
-    Raises:
-        ValueError: If value is not None and not in valid_values
+    Returns:
+        None if valid, or error dict if invalid
     """
     if value is not None and value not in valid_values:
-        raise ValueError(
-            f"Invalid {param_name}: '{value}'. Must be one of: {', '.join(valid_values)}"
-        )
+        return json.loads(json.dumps({"error": f"Invalid {param_name}: '{value}'. Must be one of: {', '.join(valid_values)}"}))
+    return None
 
 
 def apply_limit(results: List[Any], limit: Optional[float], max_limit: int = 200) -> List[Any]:

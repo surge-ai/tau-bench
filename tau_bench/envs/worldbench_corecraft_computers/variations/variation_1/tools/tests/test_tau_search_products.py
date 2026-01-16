@@ -351,12 +351,12 @@ class TestSearchProducts(unittest.TestCase):
 
     def test_search_products_invalid_category(self):
         """Test that invalid category raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            SearchProducts.invoke(
-                self.data,
-                category="nonexistent_category",
-            )
-        self.assertIn("Invalid category", str(context.exception))
+        result = SearchProducts.invoke(
+            self.data,
+            category="nonexistent_category",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid category", result["error"])
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

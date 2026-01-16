@@ -193,87 +193,78 @@ class TestCreateWarrantyClaim(unittest.TestCase):
 
     def test_create_warranty_claim_invalid_reason(self):
         """Test creating claim with invalid reason."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="prod1",
-                order_id="order1",
-                customer_id="cust1",
-                reason="invalid_reason",
-            )
-
-        self.assertIn("Invalid reason", str(context.exception))
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="prod1",
+            order_id="order1",
+            customer_id="cust1",
+            reason="invalid_reason",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid reason", result["error"])
 
     def test_create_warranty_claim_invalid_status(self):
         """Test creating claim with invalid status."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="prod1",
-                order_id="order1",
-                customer_id="cust1",
-                reason="defect",
-                status="invalid_status",
-            )
-
-        self.assertIn("Invalid status", str(context.exception))
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="prod1",
+            order_id="order1",
+            customer_id="cust1",
+            reason="defect",
+            status="invalid_status",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid status", result["error"])
 
     def test_create_warranty_claim_invalid_denial_reason(self):
         """Test creating claim with invalid denial reason."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="prod1",
-                order_id="order1",
-                customer_id="cust1",
-                reason="defect",
-                status="denied",
-                denial_reason="invalid_denial",
-            )
-
-        self.assertIn("Invalid denial_reason", str(context.exception))
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="prod1",
+            order_id="order1",
+            customer_id="cust1",
+            reason="defect",
+            status="denied",
+            denial_reason="invalid_denial",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid denial_reason", result["error"])
 
     def test_create_warranty_claim_invalid_product(self):
         """Test creating claim for non-existent product."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="nonexistent",
-                order_id="order1",
-                customer_id="cust1",
-                reason="defect",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="nonexistent",
+            order_id="order1",
+            customer_id="cust1",
+            reason="defect",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_warranty_claim_invalid_order(self):
         """Test creating claim for non-existent order."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="prod1",
-                order_id="nonexistent",
-                customer_id="cust1",
-                reason="defect",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="prod1",
+            order_id="nonexistent",
+            customer_id="cust1",
+            reason="defect",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_warranty_claim_invalid_customer(self):
         """Test creating claim for non-existent customer."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="prod1",
-                order_id="order1",
-                customer_id="nonexistent",
-                reason="defect",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="prod1",
+            order_id="order1",
+            customer_id="nonexistent",
+            reason="defect",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_warranty_claim_mutates_data_in_place(self):
         """Test that the tool adds claim to data dict."""
@@ -435,33 +426,31 @@ class TestCreateWarrantyClaim(unittest.TestCase):
 
     def test_create_warranty_claim_rejects_prebuilt_products(self):
         """Test that prebuilt products cannot have warranty claims."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="prebuilt1",
-                order_id="order1",
-                customer_id="cust1",
-                reason="defect",
-            )
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="prebuilt1",
+            order_id="order1",
+            customer_id="cust1",
+            reason="defect",
+        )
 
-        error_msg = str(context.exception)
-        self.assertIn("prebuilt", error_msg)
-        self.assertIn("individual components", error_msg)
+        self.assertIn("error", result)
+        self.assertIn("prebuilt", result["error"])
+        self.assertIn("individual components", result["error"])
 
     def test_create_warranty_claim_rejects_workstation_products(self):
         """Test that workstation products cannot have warranty claims."""
-        with self.assertRaises(ValueError) as context:
-            CreateWarrantyClaim.invoke(
-                self.data,
-                product_id="workstation1",
-                order_id="order1",
-                customer_id="cust1",
-                reason="defect",
-            )
+        result = CreateWarrantyClaim.invoke(
+            self.data,
+            product_id="workstation1",
+            order_id="order1",
+            customer_id="cust1",
+            reason="defect",
+        )
 
-        error_msg = str(context.exception)
-        self.assertIn("workstation", error_msg)
-        self.assertIn("individual components", error_msg)
+        self.assertIn("error", result)
+        self.assertIn("workstation", result["error"])
+        self.assertIn("individual components", result["error"])
 
     def test_create_warranty_claim_all_build_categories_rejected(self):
         """Test that all build product categories are rejected."""
@@ -475,18 +464,17 @@ class TestCreateWarrantyClaim(unittest.TestCase):
                 "price": 1000.0,
             }
 
-            with self.assertRaises(ValueError) as context:
-                CreateWarrantyClaim.invoke(
-                    self.data,
-                    product_id=test_product_id,
-                    order_id="order1",
-                    customer_id="cust1",
-                    reason="defect",
-                )
+            result = CreateWarrantyClaim.invoke(
+                self.data,
+                product_id=test_product_id,
+                order_id="order1",
+                customer_id="cust1",
+                reason="defect",
+            )
 
-            error_msg = str(context.exception)
-            self.assertIn(category, error_msg)
-            self.assertIn("individual components", error_msg)
+            self.assertIn("error", result)
+            self.assertIn(category, result["error"])
+            self.assertIn("individual components", result["error"])
 
 
 if __name__ == "__main__":

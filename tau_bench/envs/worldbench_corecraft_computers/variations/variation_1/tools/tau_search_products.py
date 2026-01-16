@@ -45,7 +45,9 @@ class SearchProducts(Tool):
         limit: Optional[float] = None,
         product_id: Optional[str] = None,
     ) -> str:
-        validate_enum(category, PRODUCT_CATEGORIES, "category")
+        error = validate_enum(category, PRODUCT_CATEGORIES, "category")
+        if error:
+            return error
 
         results: List[Dict[str, Any]] = []
 

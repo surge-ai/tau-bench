@@ -22,13 +22,15 @@ class UpdatePaymentStatus(Tool):
         failure_reason: str | None | _NotProvided = _NOT_PROVIDED,
     ) -> str:
         # Validate enum parameters
-        validate_enum(status, ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"], "status")
+        error = validate_enum(status, ["pending", "authorized", "captured", "failed", "refunded", "disputed", "voided", "completed"], "status")
+        if error:
+            return error
 
         payment_table = data.get("payment")
         if not isinstance(payment_table, dict):
-            raise ValueError("Payment table not found in data")
+            return json.loads(json.dumps({"error": "Payment table not found in data"}))
         if payment_id not in payment_table:
-            raise ValueError(f"Payment {payment_id} not found")
+            return json.loads(json.dumps({"error": f"Payment {payment_id} not found"}))
 
         payment_table[payment_id]["status"] = status
         if failure_reason is not _NOT_PROVIDED:

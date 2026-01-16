@@ -84,15 +84,13 @@ class TestUpdatePaymentStatus(unittest.TestCase):
 
     def test_update_payment_status_nonexistent_payment(self):
         """Test updating non-existent payment raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            UpdatePaymentStatus.invoke(
-                self.data,
-                payment_id="nonexistent",
-                status="captured",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = UpdatePaymentStatus.invoke(
+            self.data,
+            payment_id="nonexistent",
+            status="captured",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
         # Data should not be changed
         self.assertEqual(len(self.data["payment"]), 3)
@@ -183,27 +181,26 @@ class TestUpdatePaymentStatus(unittest.TestCase):
         """Test updating when payments dict is empty raises ValueError."""
         empty_data = {"payment": {}}
 
-        with self.assertRaises(ValueError) as context:
-            UpdatePaymentStatus.invoke(
-                empty_data,
-                payment_id="payment1",
-                status="captured",
-            )
-
-        self.assertIn("not found", str(context.exception))
+        result = UpdatePaymentStatus.invoke(
+            empty_data,
+            payment_id="payment1",
+            status="captured",
+        )
+        self.assertIn("error", result)
+        self.assertIn("not found", result["error"])
 
     def test_update_payment_status_missing_payments_key(self):
         """Test updating when payment key doesn't exist raises ValueError."""
         data_no_payments = {}
 
-        with self.assertRaises(ValueError) as context:
-            UpdatePaymentStatus.invoke(
-                data_no_payments,
-                payment_id="payment1",
-                status="captured",
-            )
+        result = UpdatePaymentStatus.invoke(
+            data_no_payments,
+            payment_id="payment1",
+            status="captured",
+        )
 
-        self.assertIn("table not found", str(context.exception).lower())
+        self.assertIn("error", result)
+        self.assertIn("table not found", result["error"].lower())
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

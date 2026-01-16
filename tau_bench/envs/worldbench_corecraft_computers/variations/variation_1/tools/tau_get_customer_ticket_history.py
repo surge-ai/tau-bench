@@ -23,18 +23,26 @@ class GetCustomerTicketHistory(Tool):
         tkt_updated_before: Optional[str] = None,
     ) -> str:
         if not customer_id:
-            raise ValueError("customer_id is required")
+            return json.loads(json.dumps({"error": "customer_id is required"}))
 
         # Verify customer exists
         customer = get_entity_by_id(data, "customer", customer_id)
         if not customer:
-            raise ValueError(f"Customer not found: {customer_id}")
+            return json.loads(json.dumps({"error": f"Customer not found: {customer_id}"}))
 
         # Parse date filters
         created_after_dt = parse_iso_datetime(tkt_created_after, "tkt_created_after")
+        if isinstance(created_after_dt, dict) and "error" in created_after_dt:
+            return created_after_dt
         created_before_dt = parse_iso_datetime(tkt_created_before, "tkt_created_before")
+        if isinstance(created_before_dt, dict) and "error" in created_before_dt:
+            return created_before_dt
         updated_after_dt = parse_iso_datetime(tkt_updated_after, "tkt_updated_after")
+        if isinstance(updated_after_dt, dict) and "error" in updated_after_dt:
+            return updated_after_dt
         updated_before_dt = parse_iso_datetime(tkt_updated_before, "tkt_updated_before")
+        if isinstance(updated_before_dt, dict) and "error" in updated_before_dt:
+            return updated_before_dt
 
         include_resolved_bool = include_resolved if include_resolved is not None else True
 

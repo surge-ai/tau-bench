@@ -45,9 +45,9 @@ class UpdateBuild(Tool):
         """
         build_table = data.get("build")
         if not isinstance(build_table, dict):
-            raise ValueError("Build table not found in data")
+            return json.loads(json.dumps({"error": "Build table not found in data"}))
         if build_id not in build_table:
-            raise ValueError(f"Build {build_id} not found")
+            return json.loads(json.dumps({"error": f"Build {build_id} not found"}))
 
         build = build_table[build_id]
 
@@ -55,7 +55,7 @@ class UpdateBuild(Tool):
         if add_product_ids:
             not_found = [pid for pid in add_product_ids if not get_entity_by_id(data, "product", pid)]
             if not_found:
-                raise ValueError(f"Products not found: {', '.join(not_found)}")
+                return json.loads(json.dumps({"error": f"Products not found: {', '.join(not_found)}"}))
 
         # Update product list (use list to allow duplicates like multiple RAM sticks)
         current_products = list(build.get("productIds", []))
@@ -64,7 +64,7 @@ class UpdateBuild(Tool):
         if remove_product_ids:
             not_in_build = [pid for pid in remove_product_ids if pid not in current_products]
             if not_in_build:
-                raise ValueError(f"Products not in build: {', '.join(not_in_build)}")
+                return json.loads(json.dumps({"error": f"Products not in build: {', '.join(not_in_build)}"}))
 
         # Update name if provided
         if name is not None:

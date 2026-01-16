@@ -92,14 +92,15 @@ class TestCreateRefund(unittest.TestCase):
 
     def test_create_refund_invalid_payment(self):
         """Test creating refund for non-existent payment."""
-        with self.assertRaises(ValueError):
-            CreateRefund.invoke(
+        result = CreateRefund.invoke(
                 self.data,
                 payment_id="nonexistent",
                 amount=100.0,
                 currency="USD",
                 reason="customer_remorse",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_create_refund_mutates_data_in_place(self):
         """Test that the tool adds refund to data dict."""

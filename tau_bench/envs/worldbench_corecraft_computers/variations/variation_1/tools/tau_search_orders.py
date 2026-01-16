@@ -26,7 +26,9 @@ class SearchOrders(Tool):
         created_before: Optional[str] = None,
         limit: Optional[float] = None,
     ) -> str:
-        validate_enum(status, ORDER_STATUSES, "status")
+        error = validate_enum(status, ORDER_STATUSES, "status")
+        if error:
+            return error
 
         results: List[Dict[str, Any]] = []
 

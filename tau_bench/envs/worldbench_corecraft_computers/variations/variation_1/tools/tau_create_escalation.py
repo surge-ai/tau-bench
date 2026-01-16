@@ -41,10 +41,12 @@ class CreateEscalation(Tool):
     ) -> str:
         """Create an escalation record linked to an existing support ticket."""
         # Validate enum parameters
-        validate_enum(escalation_type, ["technical", "policy_exception", "product_specialist"], "escalation_type")
+        error = validate_enum(escalation_type, ["technical", "policy_exception", "product_specialist"], "escalation_type")
+        if error:
+            return error
 
         if not _find_ticket(data, ticket_id):
-            raise ValueError(f"Ticket {ticket_id} not found")
+            return json.loads(json.dumps({"error": f"Ticket {ticket_id} not found"}))
 
         # Generate deterministic ID based on input parameters
         id_input = f"{ticket_id}|{escalation_type}|{destination}"

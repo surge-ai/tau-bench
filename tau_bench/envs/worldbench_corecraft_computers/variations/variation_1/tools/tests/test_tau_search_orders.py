@@ -134,12 +134,12 @@ class TestSearchOrders(unittest.TestCase):
 
     def test_search_orders_invalid_status(self):
         """Test that invalid status raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            SearchOrders.invoke(
-                self.data,
-                status="pai",  # Invalid status
-            )
-        self.assertIn("Invalid status", str(context.exception))
+        result = SearchOrders.invoke(
+            self.data,
+            status="pai",  # Invalid status
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid status", result["error"])
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

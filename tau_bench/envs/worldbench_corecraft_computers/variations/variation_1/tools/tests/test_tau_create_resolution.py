@@ -86,32 +86,35 @@ class TestCreateResolution(unittest.TestCase):
 
     def test_create_resolution_invalid_ticket(self):
         """Test creating resolution for non-existent ticket."""
-        with self.assertRaises(ValueError):
-            CreateResolution.invoke(
+        result = CreateResolution.invoke(
                 self.data,
                 ticket_id="nonexistent",
                 outcome="troubleshooting_steps",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_create_resolution_invalid_refund(self):
         """Test creating resolution with non-existent refund."""
-        with self.assertRaises(ValueError):
-            CreateResolution.invoke(
+        result = CreateResolution.invoke(
                 self.data,
                 ticket_id="ticket1",
                 outcome="refund_issued",
                 linked_refund_id="nonexistent",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_create_resolution_invalid_employee(self):
         """Test creating resolution with non-existent employee."""
-        with self.assertRaises(ValueError):
-            CreateResolution.invoke(
+        result = CreateResolution.invoke(
                 self.data,
                 ticket_id="ticket1",
                 outcome="troubleshooting_steps",
                 resolved_by_id="nonexistent",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_create_resolution_mutates_data_in_place(self):
         """Test that the tool adds resolution to data dict."""

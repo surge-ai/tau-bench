@@ -70,15 +70,13 @@ class TestUpdateOrderStatus(unittest.TestCase):
 
     def test_update_order_status_nonexistent_order(self):
         """Test updating non-existent order raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            UpdateOrderStatus.invoke(
-                self.data,
-                order_id="nonexistent",
-                status="paid",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = UpdateOrderStatus.invoke(
+            self.data,
+            order_id="nonexistent",
+            status="paid",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
         # Data should not be changed
         self.assertEqual(len(self.data["order"]), 3)
@@ -166,27 +164,26 @@ class TestUpdateOrderStatus(unittest.TestCase):
         """Test updating when orders dict is empty raises ValueError."""
         empty_data = {"order": {}}
 
-        with self.assertRaises(ValueError) as context:
-            UpdateOrderStatus.invoke(
-                empty_data,
-                order_id="order1",
-                status="paid",
-            )
-
-        self.assertIn("not found", str(context.exception))
+        result = UpdateOrderStatus.invoke(
+            empty_data,
+            order_id="order1",
+            status="paid",
+        )
+        self.assertIn("error", result)
+        self.assertIn("not found", result["error"])
 
     def test_update_order_status_missing_orders_key(self):
         """Test updating when order key doesn't exist raises ValueError."""
         data_no_orders = {}
 
-        with self.assertRaises(ValueError) as context:
-            UpdateOrderStatus.invoke(
-                data_no_orders,
-                order_id="order1",
-                status="paid",
-            )
+        result = UpdateOrderStatus.invoke(
+            data_no_orders,
+            order_id="order1",
+            status="paid",
+        )
 
-        self.assertIn("table not found", str(context.exception).lower())
+        self.assertIn("error", result)
+        self.assertIn("table not found", result["error"].lower())
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""
