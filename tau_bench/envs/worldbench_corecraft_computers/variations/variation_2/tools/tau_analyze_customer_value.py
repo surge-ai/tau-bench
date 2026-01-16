@@ -50,6 +50,7 @@ class AnalyzeCustomerValue(Tool):
             status = order.get("status", "unknown")
             order_statuses[status] = order_statuses.get(status, 0) + 1
 
+        # Note: average_order_value uses gross revenue (before refunds) as it represents average order size
         average_order_value = total_revenue / total_orders if total_orders > 0 else 0.0
 
         # Get payment information
@@ -64,6 +65,21 @@ class AnalyzeCustomerValue(Tool):
                     total_paid += amount
                     method = payment.get("method", "unknown")
                     payment_methods[method] = payment_methods.get(method, 0) + 1
+
+        # Get refund information
+        refund_table = data.get("refund", {})
+        total_refunded = 0.0
+        refund_count = 0
+        if isinstance(refund_table, dict):
+            order_ids = {order.get("id") for order in customer_orders}
+            for refund in refund_table.values():
+                if isinstance(refund, dict) and refund.get("orderId") in order_ids:
+                    amount = float(refund.get("amount", 0))
+                    total_refunded += amount
+                    refund_count += 1
+
+        # Calculate net revenue after refunds
+        net_revenue = total_revenue - total_refunded
 
         # Get support ticket metrics
         ticket_table = data.get("support_ticket", {})
@@ -81,9 +97,11 @@ class AnalyzeCustomerValue(Tool):
                         resolved_tickets += 1
 
         # Calculate customer lifetime value (simple version)
-        # LTV = average_order_value * number_of_orders * estimated_retention_factor
+        # LTV uses net revenue to account for returns
+        # LTV = (net_revenue / total_orders) * total_orders * estimated_retention_factor
         retention_factor = 1.5  # Simplified assumption
-        estimated_ltv = average_order_value * total_orders * retention_factor
+        net_average_order_value = net_revenue / total_orders if total_orders > 0 else 0.0
+        estimated_ltv = net_average_order_value * total_orders * retention_factor
 
         result = {
             "customer_id": customer_id,
@@ -91,9 +109,13 @@ class AnalyzeCustomerValue(Tool):
             "loyalty_tier": customer.get("loyaltyTier"),
             "metrics": {
                 "total_orders": total_orders,
-                "total_revenue": round(total_revenue, 2),
+                "gross_revenue": round(total_revenue, 2),
+                "total_refunded": round(total_refunded, 2),
+                "net_revenue": round(net_revenue, 2),
+                "refund_count": refund_count,
                 "total_paid": round(total_paid, 2),
                 "average_order_value": round(average_order_value, 2),
+                "net_average_order_value": round(net_average_order_value, 2),
                 "estimated_lifetime_value": round(estimated_ltv, 2),
             },
             "order_breakdown": order_statuses,
@@ -103,7 +125,7 @@ class AnalyzeCustomerValue(Tool):
                 "open_tickets": open_tickets,
                 "resolved_tickets": resolved_tickets,
             },
-            "customer_segment": _determine_segment(total_revenue, total_orders, len(customer_tickets)),
+            "customer_segment": _determine_segment(net_revenue, total_orders, len(customer_tickets)),
         }
 
         return json.loads(json.dumps(result))

@@ -1,6 +1,6 @@
 # Variation 2 Tools - Distinct from Variation 1
 # Focus: Generic operations, batch processing, workflow composition, field-level access
-# Total: 20 tools
+# Total: 23 tools
 
 # Generic Query & Lookup (4)
 from .tau_query_by_criteria import QueryByCriteria
@@ -20,13 +20,16 @@ from .tau_aggregate_by_field import AggregateByField
 from .tau_analyze_customer_value import AnalyzeCustomerValue
 from .tau_get_entities_needing_attention import GetEntitiesNeedingAttention
 
-# Calculations & Estimates (2)
+# Calculations & Estimates (3)
 from .tau_calculate_order_totals import CalculateOrderTotals
 from .tau_get_shipping_estimates import GetShippingEstimates
+from .tau_get_time_diff import GetTimeDiff
 
-# Generic Updates & Batch Operations (2)
+# Generic Updates & Batch Operations (4)
 from .tau_update_entity_field import UpdateEntityField
 from .tau_bulk_status_update import BulkStatusUpdate
+from .tau_create_and_order_build import CreateAndOrderBuild
+from .tau_modify_build import ModifyBuild
 
 # Workflow & Composite Operations (4)
 from .tau_process_customer_issue import ProcessCustomerIssue
@@ -50,12 +53,15 @@ ALL_TOOLS = [
     AggregateByField,
     AnalyzeCustomerValue,
     GetEntitiesNeedingAttention,
-    # Calculations & Estimates (2)
+    # Calculations & Estimates (3)
     CalculateOrderTotals,
     GetShippingEstimates,
-    # Generic Updates & Batch Operations (2)
+    GetTimeDiff,
+    # Generic Updates & Batch Operations (4)
     UpdateEntityField,
     BulkStatusUpdate,
+    CreateAndOrderBuild,
+    ModifyBuild,
     # Workflow & Composite Operations (4)
     ProcessCustomerIssue,
     ResolveAndClose,

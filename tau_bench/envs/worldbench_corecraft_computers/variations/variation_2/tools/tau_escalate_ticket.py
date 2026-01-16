@@ -18,7 +18,6 @@ class EscalateTicket(Tool):
         ticket_id: str,
         escalation_type: str,
         destination: str,
-        notes: str = "",
     ) -> str:
         """Escalate an existing support ticket by creating an escalation record."""
         # Validate ticket exists
@@ -38,7 +37,6 @@ class EscalateTicket(Tool):
             "ticketId": ticket_id,
             "escalationType": escalation_type,
             "destination": destination,
-            "notes": notes,
             "createdAt": get_now_iso_from_data(data),
             "resolvedAt": None,
         }
@@ -75,10 +73,6 @@ class EscalateTicket(Tool):
                         "destination": {
                             "type": "string",
                             "description": "Escalation destination team/queue/person (e.g., 'product_specialist_team', 'technical_support_team', 'management').",
-                        },
-                        "notes": {
-                            "type": "string",
-                            "description": "Detailed notes explaining why the escalation is needed (e.g., 'High-volume customer with 4 tickets in 30 days', 'Complex technical issue requiring specialist', 'VIP customer - platinum tier').",
                         },
                     },
                     "required": ["ticket_id", "escalation_type", "destination"],

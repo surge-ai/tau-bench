@@ -329,6 +329,43 @@ def get_valid_fields_for_entity_type(entity_type: str) -> Optional[Set[str]]:
     return ENTITY_FIELD_SCHEMAS.get(data_key)
 
 
+def get_valid_date_fields_for_entity_type(entity_type: str) -> Optional[Set[str]]:
+    """
+    Get the set of valid date field names for an entity type.
+
+    Date fields typically end with 'At' or contain date-related keywords.
+
+    Args:
+        entity_type: Entity type name (can use aliases like "ticket")
+
+    Returns:
+        Set of valid date field names, or None if entity type is unknown
+
+    Example:
+        >>> fields = get_valid_date_fields_for_entity_type("order")
+        >>> "createdAt" in fields
+        True
+        >>> "status" in fields
+        False
+    """
+    # Resolve aliases
+    data_key = get_entity_data_key(entity_type)
+    if not data_key:
+        return None
+
+    all_fields = ENTITY_FIELD_SCHEMAS.get(data_key)
+    if not all_fields:
+        return None
+
+    # Filter for date fields - those ending with 'At' or containing date-related keywords
+    date_fields = {
+        field for field in all_fields
+        if field.endswith("At") or "date" in field.lower() or "timestamp" in field.lower()
+    }
+
+    return date_fields
+
+
 def get_now_iso_from_data(data: Dict[str, Any]) -> str:
     """
     Get deterministic timestamp from data or use fallback.

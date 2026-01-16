@@ -26,6 +26,7 @@ def normalize_phone(phone: Optional[str]) -> Optional[str]:
     # Strip leading "1" if it's 11 digits (US/Canada country code)
     if len(digits) == 11 and digits.startswith('1'):
         digits = digits[1:]
+
     return digits
 
 

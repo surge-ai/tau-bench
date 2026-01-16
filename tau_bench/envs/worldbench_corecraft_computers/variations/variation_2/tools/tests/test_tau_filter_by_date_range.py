@@ -188,7 +188,7 @@ class TestFilterByDateRange(unittest.TestCase):
         )
 
         self.assertIn("error", result)
-        self.assertIn("Unknown entity type", result["error"])
+        self.assertIn("Invalid entity_type", result["error"])
 
     def test_filter_invalid_start_date(self):
         """Test with invalid start date format."""
@@ -214,8 +214,22 @@ class TestFilterByDateRange(unittest.TestCase):
         self.assertIn("error", result)
         self.assertIn("Invalid end_date format", result["error"])
 
+    def test_filter_invalid_date_field(self):
+        """Test filtering by invalid date field for entity type."""
+        result = FilterByDateRange.invoke(
+            self.data,
+            entity_type="order",
+            date_field="status",  # status is not a date field
+            start_date="2025-01-01T00:00:00Z",
+        )
+
+        # Should return error about invalid date_field
+        self.assertIn("error", result)
+        self.assertIn("Invalid date_field", result["error"])
+        self.assertIn("valid_date_fields", result)
+
     def test_filter_missing_date_field(self):
-        """Test filtering by date field that doesn't exist on entities."""
+        """Test filtering by date field that doesn't exist in schema."""
         result = FilterByDateRange.invoke(
             self.data,
             entity_type="order",
@@ -223,9 +237,9 @@ class TestFilterByDateRange(unittest.TestCase):
             start_date="2025-01-01T00:00:00Z",
         )
 
-        # Should return empty results
-        self.assertEqual(result["count"], 0)
-        self.assertEqual(len(result["results"]), 0)
+        # Should return error about invalid date_field
+        self.assertIn("error", result)
+        self.assertIn("Invalid date_field", result["error"])
 
     def test_filter_entities_with_null_date_field(self):
         """Test handling entities with null/missing date field."""

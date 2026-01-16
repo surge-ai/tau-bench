@@ -6,9 +6,9 @@ from tau_bench.envs.tool import Tool
 
 # Handle both relative and absolute imports for tests
 try:
-    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+    from .utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value, get_valid_date_fields_for_entity_type
 except ImportError:
-    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value
+    from utils import get_entity_data_key, VALID_ENTITY_TYPES, validate_enum_value, get_valid_date_fields_for_entity_type
 
 
 class FilterByDateRange(Tool):
@@ -29,6 +29,17 @@ class FilterByDateRange(Tool):
         data_key = get_entity_data_key(entity_type)
         if not data_key:
             return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
+
+        # Validate date_field is a valid date field for this entity type
+        valid_date_fields = get_valid_date_fields_for_entity_type(entity_type)
+        if valid_date_fields is None:
+            return json.loads(json.dumps({"error": f"Unknown entity type: {entity_type}"}))
+
+        if valid_date_fields and date_field not in valid_date_fields:
+            return json.loads(json.dumps({
+                "error": f"Invalid date_field: '{date_field}' for entity_type '{entity_type}'",
+                "valid_date_fields": sorted(valid_date_fields)
+            }))
 
         entity_table = data.get(data_key, {})
         if not isinstance(entity_table, dict):
