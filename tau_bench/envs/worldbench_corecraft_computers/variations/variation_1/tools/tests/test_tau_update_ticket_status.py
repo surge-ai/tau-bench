@@ -104,15 +104,13 @@ class TestUpdateTicketStatus(unittest.TestCase):
 
     def test_update_ticket_status_nonexistent_ticket(self):
         """Test updating non-existent ticket raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            UpdateTicketStatus.invoke(
-                self.data,
-                ticket_id="nonexistent",
-                status="open",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = UpdateTicketStatus.invoke(
+            self.data,
+            ticket_id="nonexistent",
+            status="open",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
         # Data should not be changed
         self.assertEqual(len(self.data["support_ticket"]), 3)
@@ -202,27 +200,26 @@ class TestUpdateTicketStatus(unittest.TestCase):
         """Test updating when tickets dict is empty raises ValueError."""
         empty_data = {"support_ticket": {}}
 
-        with self.assertRaises(ValueError) as context:
-            UpdateTicketStatus.invoke(
-                empty_data,
-                ticket_id="ticket1",
-                status="open",
-            )
-
-        self.assertIn("not found", str(context.exception))
+        result = UpdateTicketStatus.invoke(
+            empty_data,
+            ticket_id="ticket1",
+            status="open",
+        )
+        self.assertIn("error", result)
+        self.assertIn("not found", result["error"])
 
     def test_update_ticket_status_missing_tickets_key(self):
         """Test updating when support_ticket key doesn't exist raises ValueError."""
         data_no_tickets = {}
 
-        with self.assertRaises(ValueError) as context:
-            UpdateTicketStatus.invoke(
-                data_no_tickets,
-                ticket_id="ticket1",
-                status="open",
-            )
+        result = UpdateTicketStatus.invoke(
+            data_no_tickets,
+            ticket_id="ticket1",
+            status="open",
+        )
 
-        self.assertIn("table not found", str(context.exception).lower())
+        self.assertIn("error", result)
+        self.assertIn("table not found", result["error"].lower())
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

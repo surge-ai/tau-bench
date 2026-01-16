@@ -41,19 +41,21 @@ class CreateResolution(Tool):
     ) -> str:
         """Create a resolution for a support ticket."""
         # Validate enum parameters
-        validate_enum(outcome, ["refund_issued", "replacement_sent", "recommendation_provided", "troubleshooting_steps", "order_updated", "no_action"], "outcome")
+        error = validate_enum(outcome, ["refund_issued", "replacement_sent", "recommendation_provided", "troubleshooting_steps", "order_updated", "no_action"], "outcome")
+        if error:
+            return error
 
         # Verify ticket exists
         if not _exists_by_id(data, keys=["support_ticket"], obj_id=ticket_id):
-            raise ValueError(f"Ticket {ticket_id} not found")
+            return json.loads(json.dumps({"error": f"Ticket {ticket_id} not found"}))
 
         # Verify refund exists if provided
         if linked_refund_id and not _exists_by_id(data, keys=["refund"], obj_id=linked_refund_id):
-            raise ValueError(f"Refund {linked_refund_id} not found")
+            return json.loads(json.dumps({"error": f"Refund {linked_refund_id} not found"}))
 
         # Verify employee exists if provided
         if resolved_by_id and not _exists_by_id(data, keys=["employee"], obj_id=resolved_by_id):
-            raise ValueError(f"Employee {resolved_by_id} not found")
+            return json.loads(json.dumps({"error": f"Employee {resolved_by_id} not found"}))
 
         # Generate deterministic ID based on input parameters
         id_input = f"{ticket_id}|{outcome}|{resolved_by_id or ''}|{linked_refund_id or ''}"

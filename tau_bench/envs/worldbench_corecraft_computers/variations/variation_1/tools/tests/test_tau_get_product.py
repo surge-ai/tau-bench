@@ -81,12 +81,12 @@ class TestGetProduct(unittest.TestCase):
 
     def test_get_product_nonexistent(self):
         """Test getting a non-existent product raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            GetProduct.invoke(
-                self.data,
-                product_id="nonexistent",
-            )
-        self.assertIn("nonexistent", str(context.exception))
+        result = GetProduct.invoke(
+            self.data,
+            product_id="nonexistent",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_get_product_parses_inventory_json(self):
         """Test that inventory JSON field is parsed."""
@@ -194,19 +194,21 @@ class TestGetProduct(unittest.TestCase):
 
     def test_get_product_missing_product_id(self):
         """Test that missing product_id raises an error."""
-        with self.assertRaises(ValueError):
-            GetProduct.invoke(
+        result = GetProduct.invoke(
                 self.data,
                 product_id="",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_get_product_empty_product_id(self):
         """Test that empty product_id raises an error."""
-        with self.assertRaises(ValueError):
-            GetProduct.invoke(
+        result = GetProduct.invoke(
                 self.data,
                 product_id=None,
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

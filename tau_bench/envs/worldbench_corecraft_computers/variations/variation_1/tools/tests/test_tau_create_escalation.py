@@ -61,13 +61,14 @@ class TestCreateEscalation(unittest.TestCase):
 
     def test_create_escalation_invalid_ticket(self):
         """Test creating escalation for non-existent ticket."""
-        with self.assertRaises(ValueError):
-            CreateEscalation.invoke(
+        result = CreateEscalation.invoke(
                 self.data,
                 ticket_id="nonexistent",
                 escalation_type="technical",
                 destination="engineering",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_create_escalation_mutates_data_in_place(self):
         """Test that the tool adds escalation to data dict."""

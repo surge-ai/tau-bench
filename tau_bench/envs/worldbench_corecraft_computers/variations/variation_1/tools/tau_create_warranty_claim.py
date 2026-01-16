@@ -62,28 +62,32 @@ class CreateWarrantyClaim(Tool):
           - updatedAt
         """
         # Validate enum parameters
-        validate_enum(status, VALID_STATUSES, "status")
-        validate_enum(reason, VALID_REASONS, "reason")
-        validate_enum(denial_reason, VALID_DENIAL_REASONS, "denial_reason")
+        error = validate_enum(status, VALID_STATUSES, "status")
+        if error:
+            return error
+
+        error = validate_enum(reason, VALID_REASONS, "reason")
+        if error:
+            return error
+
+        error = validate_enum(denial_reason, VALID_DENIAL_REASONS, "denial_reason")
+        if error:
+            return error
 
         # Validate referenced entities exist
         product = get_entity_by_id(data, "product", product_id)
         if not product:
-            raise ValueError(f"Product {product_id} not found")
+            return json.loads(json.dumps({"error": f"Product {product_id} not found"}))
 
         # Check if product is a build category (prebuilt/workstation)
         product_category = product.get("category", "")
         if product_category in BUILD_PRODUCT_CATEGORIES:
-            raise ValueError(
-                f"Cannot create warranty claim for {product_category} products. "
-                f"Warranty claims must be filed for individual components within the build. "
-                f"Please identify the specific component that is defective and create a claim for that part."
-            )
+            return json.loads(json.dumps({"error": f"Cannot create warranty claim for {product_category} products. Warranty claims must be filed for individual components within the build. Please identify the specific component that is defective and create a claim for that part."}))
 
         if not get_entity_by_id(data, "order", order_id):
-            raise ValueError(f"Order {order_id} not found")
+            return json.loads(json.dumps({"error": f"Order {order_id} not found"}))
         if not get_entity_by_id(data, "customer", customer_id):
-            raise ValueError(f"Customer {customer_id} not found")
+            return json.loads(json.dumps({"error": f"Customer {customer_id} not found"}))
 
         # Generate deterministic ID based on input parameters
         id_input = f"{product_id}|{order_id}|{customer_id}|{reason}|{status or 'pending_review'}"

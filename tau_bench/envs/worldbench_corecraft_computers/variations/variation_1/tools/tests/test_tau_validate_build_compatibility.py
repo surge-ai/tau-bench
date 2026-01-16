@@ -483,11 +483,12 @@ class TestValidateBuildCompatibility(unittest.TestCase):
 
     def test_validate_build_compatibility_empty_product_ids(self):
         """Test validating build with empty product_ids."""
-        with self.assertRaises(ValueError):
-            ValidateBuildCompatibility.invoke(
+        result = ValidateBuildCompatibility.invoke(
                 self.data,
                 product_ids=[],
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_validate_build_compatibility_sata_ports_exceeded(self):
         """Test validating build with too many SATA devices."""

@@ -123,23 +123,23 @@ class TestCalculatePrice(unittest.TestCase):
 
     def test_loyalty_discount_invalid_tier(self):
         """Test that invalid loyalty tier raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            CalculatePrice.invoke(
-                self.data,
-                product_ids=["prod1"],
-                loyalty_tier="invalid",
-            )
-        self.assertIn("Invalid loyalty_tier", str(context.exception))
+        result = CalculatePrice.invoke(
+            self.data,
+            product_ids=["prod1"],
+            loyalty_tier="invalid",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid loyalty_tier", result["error"])
 
     def test_loyalty_discount_case_sensitive(self):
         """Test that loyalty tier is case-sensitive (must match exactly)."""
-        with self.assertRaises(ValueError) as context:
-            CalculatePrice.invoke(
-                self.data,
-                product_ids=["prod1"],
-                loyalty_tier="GOLD",  # Should be "gold" (lowercase)
+        result = CalculatePrice.invoke(
+            self.data,
+            product_ids=["prod1"],
+            loyalty_tier="GOLD",  # Should be "gold" (lowercase)
             )
-        self.assertIn("Invalid loyalty_tier", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("Invalid loyalty_tier", result["error"])
 
     def test_shipping_standard(self):
         """Test standard shipping rate."""
@@ -186,33 +186,33 @@ class TestCalculatePrice(unittest.TestCase):
 
     def test_shipping_invalid_service(self):
         """Test that invalid shipping service raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            CalculatePrice.invoke(
-                self.data,
-                product_ids=["prod1"],
-                shipping_service="invalid",
+        result = CalculatePrice.invoke(
+            self.data,
+            product_ids=["prod1"],
+            shipping_service="invalid",
             )
-        self.assertIn("Invalid shipping_service", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("Invalid shipping_service", result["error"])
 
     def test_missing_product(self):
         """Test that missing products raise ValueError."""
-        with self.assertRaises(ValueError) as context:
-            CalculatePrice.invoke(
-                self.data,
-                product_ids=["prod1", "nonexistent"],
-                quantities=[1, 1],
+        result = CalculatePrice.invoke(
+            self.data,
+            product_ids=["prod1", "nonexistent"],
+            quantities=[1, 1],
             )
-        self.assertIn("nonexistent", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_quantity_mismatch_error(self):
         """Test that mismatched product_ids and quantities raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            CalculatePrice.invoke(
-                self.data,
-                product_ids=["prod1", "prod2"],
-                quantities=[1],  # Mismatch: 2 products but 1 quantity
+        result = CalculatePrice.invoke(
+            self.data,
+            product_ids=["prod1", "prod2"],
+            quantities=[1],  # Mismatch: 2 products but 1 quantity
             )
-        self.assertIn("must have same length", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("must have same length", result["error"])
 
     def test_complex_scenario(self):
         """Test a complex scenario with all features."""

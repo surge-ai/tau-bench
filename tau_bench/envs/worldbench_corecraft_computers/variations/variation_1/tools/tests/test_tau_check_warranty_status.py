@@ -211,28 +211,29 @@ class TestCheckWarrantyStatus(unittest.TestCase):
 
     def test_check_warranty_nonexistent_order(self):
         """Test checking warranty for non-existent order raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            CheckWarrantyStatus.invoke(
-                self.data,
-                order_id="nonexistent_order",
+        result = CheckWarrantyStatus.invoke(
+            self.data,
+            order_id="nonexistent_order",
             )
-        self.assertIn("nonexistent_order", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("nonexistent_order", result["error"])
 
     def test_check_warranty_nonexistent_product(self):
         """Test checking warranty for non-existent product raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            CheckWarrantyStatus.invoke(
-                self.data,
-                product_id="nonexistent_product",
-            )
-        self.assertIn("nonexistent_product", str(context.exception))
+        result = CheckWarrantyStatus.invoke(
+            self.data,
+            product_id="nonexistent_product",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent_product", result["error"])
 
     def test_check_warranty_no_order_or_product_id(self):
         """Test that providing neither order_id nor product_id raises an error."""
-        with self.assertRaises(ValueError):
-            CheckWarrantyStatus.invoke(
+        result = CheckWarrantyStatus.invoke(
                 self.data,
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_check_warranty_with_custom_current_date(self):
         """Test checking warranty with a custom current_time in data."""

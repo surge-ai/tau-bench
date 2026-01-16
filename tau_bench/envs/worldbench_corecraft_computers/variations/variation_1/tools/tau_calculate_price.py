@@ -22,14 +22,19 @@ class CalculatePrice(Tool):
         shipping_service: Optional[str] = None,
     ) -> str:
         """Calculate subtotal/discount/shipping/total for a list of products."""
-        validate_enum(loyalty_tier, LOYALTY_TIERS, "loyalty_tier")
-        validate_enum(shipping_service, SHIPPING_SERVICES, "shipping_service")
+        error = validate_enum(loyalty_tier, LOYALTY_TIERS, "loyalty_tier")
+        if error:
+            return error
+
+        error = validate_enum(shipping_service, SHIPPING_SERVICES, "shipping_service")
+        if error:
+            return error
 
         if quantities is None:
             quantities = [1] * len(product_ids)
 
         if len(product_ids) != len(quantities):
-            raise ValueError("product_ids and quantities must have same length")
+            return json.loads(json.dumps({"error": "product_ids and quantities must have same length"}))
 
         # Calculate subtotal
         subtotal = 0.0
@@ -41,9 +46,9 @@ class CalculatePrice(Tool):
                 continue
             price = float(product.get("price", 0) or 0)
             subtotal += price * int(qty)
-        
+
         if missing_ids:
-            raise ValueError(f"Products not found: {', '.join(missing_ids)}")
+            return json.loads(json.dumps({"error": f"Products not found: {', '.join(missing_ids)}"}))
         
         # Apply loyalty discount
         discount = 0.0

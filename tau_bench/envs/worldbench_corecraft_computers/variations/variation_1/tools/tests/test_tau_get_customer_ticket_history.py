@@ -294,12 +294,12 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
 
     def test_get_ticket_history_empty_result(self):
         """Test getting history for nonexistent customer raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            GetCustomerTicketHistory.invoke(
-                self.data,
-                customer_id="nonexistent_customer",
+        result = GetCustomerTicketHistory.invoke(
+            self.data,
+            customer_id="nonexistent_customer",
             )
-        self.assertIn("nonexistent_customer", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("nonexistent_customer", result["error"])
 
     def test_get_ticket_history_tickets_sorted(self):
         """Test that tickets are sorted by createdAt DESC, then id ASC."""
@@ -351,11 +351,12 @@ class TestGetCustomerTicketHistory(unittest.TestCase):
 
     def test_get_ticket_history_empty_customer_id(self):
         """Test that empty customer_id raises an error."""
-        with self.assertRaises(ValueError):
-            GetCustomerTicketHistory.invoke(
+        result = GetCustomerTicketHistory.invoke(
                 self.data,
                 customer_id="",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_get_info(self):
         """Test that get_info returns the correct structure."""

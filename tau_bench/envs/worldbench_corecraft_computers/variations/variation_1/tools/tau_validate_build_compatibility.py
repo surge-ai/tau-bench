@@ -17,7 +17,7 @@ class ValidateBuildCompatibility(Tool):
             product_ids = kwargs.get("product_ids", [])
 
         if not product_ids:
-            raise ValueError("product_ids array is required")
+            return json.loads(json.dumps({"error": "product_ids array is required"}))
 
         errors = []
         warnings = []

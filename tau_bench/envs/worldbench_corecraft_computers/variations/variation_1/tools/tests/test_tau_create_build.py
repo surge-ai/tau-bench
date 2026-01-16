@@ -143,44 +143,38 @@ class TestCreateBuild(unittest.TestCase):
 
     def test_create_build_invalid_customer(self):
         """Test creating build for non-existent customer."""
-        with self.assertRaises(ValueError) as context:
-            CreateBuild.invoke(
-                self.data,
-                name="Gaming PC",
-                customer_id="nonexistent",
-                product_ids=["cpu1", "gpu1"],
+        result = CreateBuild.invoke(
+            self.data,
+            name="Gaming PC",
+            customer_id="nonexistent",
+            product_ids=["cpu1", "gpu1"],
             )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_build_invalid_product(self):
         """Test creating build with non-existent product."""
-        with self.assertRaises(ValueError) as context:
-            CreateBuild.invoke(
-                self.data,
-                name="Gaming PC",
-                customer_id="cust1",
-                product_ids=["cpu1", "nonexistent"],
+        result = CreateBuild.invoke(
+            self.data,
+            name="Gaming PC",
+            customer_id="cust1",
+            product_ids=["cpu1", "nonexistent"],
             )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_build_multiple_invalid_products(self):
         """Test that all non-existent products are listed in error."""
-        with self.assertRaises(ValueError) as context:
-            CreateBuild.invoke(
-                self.data,
-                name="Gaming PC",
-                customer_id="cust1",
-                product_ids=["cpu1", "bad1", "gpu1", "bad2"],
-            )
+        result = CreateBuild.invoke(
+            self.data,
+            name="Gaming PC",
+            customer_id="cust1",
+            product_ids=["cpu1", "bad1", "gpu1", "bad2"],
+        )
 
-        error_msg = str(context.exception)
-        self.assertIn("bad1", error_msg)
-        self.assertIn("bad2", error_msg)
-        self.assertIn("Products not found", error_msg)
+        self.assertIn("error", result)
+        self.assertIn("bad1", result["error"])
+        self.assertIn("bad2", result["error"])
 
     def test_create_build_mutates_data_in_place(self):
         """Test that the tool adds build to data dict."""

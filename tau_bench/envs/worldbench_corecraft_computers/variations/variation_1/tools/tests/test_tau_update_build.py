@@ -115,16 +115,14 @@ class TestUpdateBuild(unittest.TestCase):
 
     def test_update_build_remove_nonexistent_product(self):
         """Test removing product not in build raises error."""
-        with self.assertRaises(ValueError) as context:
-            UpdateBuild.invoke(
-                self.data,
-                build_id="build1",
-                remove_product_ids=["nonexistent"],
-            )
+        result = UpdateBuild.invoke(
+            self.data,
+            build_id="build1",
+            remove_product_ids=["nonexistent"],
+        )
 
-        error_msg = str(context.exception)
-        self.assertIn("nonexistent", error_msg)
-        self.assertIn("not in build", error_msg)
+        self.assertIn("nonexistent", result["error"])
+        self.assertIn("not in build", result["error"])
 
     def test_update_build_add_duplicate_product(self):
         """Test adding product already in build (duplicates allowed for RAM, etc.)."""
@@ -150,54 +148,49 @@ class TestUpdateBuild(unittest.TestCase):
 
     def test_update_build_invalid_build_id(self):
         """Test updating non-existent build."""
-        with self.assertRaises(ValueError) as context:
-            UpdateBuild.invoke(
-                self.data,
-                build_id="nonexistent",
-                name="New Name",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = UpdateBuild.invoke(
+            self.data,
+            build_id="nonexistent",
+            name="New Name",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_update_build_invalid_product_to_add(self):
         """Test adding non-existent product."""
-        with self.assertRaises(ValueError) as context:
-            UpdateBuild.invoke(
-                self.data,
-                build_id="build1",
-                add_product_ids=["nonexistent"],
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = UpdateBuild.invoke(
+            self.data,
+            build_id="build1",
+            add_product_ids=["nonexistent"],
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_update_build_multiple_invalid_products(self):
         """Test that all non-existent products are listed in error."""
-        with self.assertRaises(ValueError) as context:
-            UpdateBuild.invoke(
-                self.data,
-                build_id="build1",
-                add_product_ids=["bad1", "ram1", "bad2"],
-            )
+        result = UpdateBuild.invoke(
+            self.data,
+            build_id="build1",
+            add_product_ids=["bad1", "ram1", "bad2"],
+        )
 
-        error_msg = str(context.exception)
-        self.assertIn("bad1", error_msg)
-        self.assertIn("bad2", error_msg)
-        self.assertIn("Products not found", error_msg)
+        self.assertIn("error", result)
+        self.assertIn("bad1", result["error"])
+        self.assertIn("bad2", result["error"])
+        self.assertIn("Products not found", result["error"])
 
     def test_update_build_missing_build_table(self):
         """Test updating when build table doesn't exist."""
         data_no_builds = {"customer": {}, "product": {}}
 
-        with self.assertRaises(ValueError) as context:
-            UpdateBuild.invoke(
-                data_no_builds,
-                build_id="build1",
-                name="New Name",
-            )
+        result = UpdateBuild.invoke(
+            data_no_builds,
+            build_id="build1",
+            name="New Name",
+        )
 
-        self.assertIn("table not found", str(context.exception).lower())
+        self.assertIn("error", result)
+        self.assertIn("table not found", result["error"].lower())
 
     def test_update_build_updates_timestamp(self):
         """Test that updatedAt is updated."""

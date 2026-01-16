@@ -17,12 +17,12 @@ class GetProduct(Tool):
             product_id = kwargs.get("product_id")
 
         if not product_id:
-            raise ValueError("product_id is required")
+            return json.loads(json.dumps({"error": "product_id is required"}))
 
         product = get_entity_by_id(data, "product", product_id)
 
         if not product:
-            raise ValueError(f"Product not found: {product_id}")
+            return json.loads(json.dumps({"error": f"Product not found: {product_id}"}))
 
         # Parse JSON fields
         result = parse_entity_json_fields(product, ["inventory", "specs"])

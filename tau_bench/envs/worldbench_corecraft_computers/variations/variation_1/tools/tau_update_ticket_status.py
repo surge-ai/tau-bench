@@ -24,15 +24,19 @@ class UpdateTicketStatus(Tool):
     ) -> str:
         # Validate enum parameters (allow None for optional fields)
         if status is not _NOT_PROVIDED and status is not None:
-            validate_enum(status, ["new", "open", "pending_customer", "resolved", "closed"], "status")
+            error = validate_enum(status, ["new", "open", "pending_customer", "resolved", "closed"], "status")
+            if error:
+                return error
         if priority is not _NOT_PROVIDED and priority is not None:
-            validate_enum(priority, ["low", "normal", "high"], "priority")
+            error = validate_enum(priority, ["low", "normal", "high"], "priority")
+            if error:
+                return error
 
         ticket_table = data.get("support_ticket")
         if not isinstance(ticket_table, dict):
-            raise ValueError("Support ticket table not found in data")
+            return json.loads(json.dumps({"error": "Support ticket table not found in data"}))
         if ticket_id not in ticket_table:
-            raise ValueError(f"Ticket {ticket_id} not found")
+            return json.loads(json.dumps({"error": f"Ticket {ticket_id} not found"}))
 
         ticket = ticket_table[ticket_id]
         if status is not _NOT_PROVIDED:

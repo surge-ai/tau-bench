@@ -155,105 +155,94 @@ class TestCreateOrder(unittest.TestCase):
 
     def test_create_order_invalid_customer(self):
         """Test creating order for non-existent customer."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
-                customer_id="nonexistent",
-                line_items=[{"productId": "cpu1", "qty": 1}],
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        result = CreateOrder.invoke(
+            self.data,
+            customer_id="nonexistent",
+            line_items=[{"productId": "cpu1", "qty": 1}],
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_order_invalid_product(self):
         """Test creating order with non-existent product."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
+        result = CreateOrder.invoke(
+            self.data,
                 customer_id="cust1",
                 line_items=[{"productId": "nonexistent", "qty": 1}],
             )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_order_multiple_invalid_products(self):
         """Test that all non-existent products are listed in error."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
-                customer_id="cust1",
-                line_items=[
-                    {"productId": "cpu1", "qty": 1},
-                    {"productId": "bad1", "qty": 1},
-                    {"productId": "bad2", "qty": 1},
+        result = CreateOrder.invoke(
+            self.data,
+            customer_id="cust1",
+            line_items=[
+                {"productId": "cpu1", "qty": 1},
+                {"productId": "bad1", "qty": 1},
+                {"productId": "bad2", "qty": 1},
                 ],
             )
 
-        error_msg = str(context.exception)
-        self.assertIn("bad1", error_msg)
-        self.assertIn("bad2", error_msg)
-        self.assertIn("Products not found", error_msg)
+        self.assertIn("bad1", result["error"])
+        self.assertIn("bad2", result["error"])
+        self.assertIn("Products not found", result["error"])
 
     def test_create_order_invalid_build(self):
         """Test creating order with non-existent build."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
-                customer_id="cust1",
-                line_items=[{"productId": "cpu1", "qty": 1}],
-                build_id="nonexistent",
-            )
-
-        self.assertIn("nonexistent", str(context.exception))
-        self.assertIn("not found", str(context.exception))
+        
+        result = CreateOrder.invoke(
+            self.data,
+            customer_id="cust1",
+            line_items=[{"productId": "cpu1", "qty": 1}],
+            build_id="nonexistent",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_create_order_empty_line_items(self):
         """Test creating order with empty line items."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
-                customer_id="cust1",
-                line_items=[],
-            )
-
-        self.assertIn("at least one line item", str(context.exception))
+        result = CreateOrder.invoke(
+            self.data,
+            customer_id="cust1",
+            line_items=[],
+        )
+        self.assertIn("error", result)
+        self.assertIn("at least one line item", result["error"])
 
     def test_create_order_invalid_status(self):
         """Test creating order with invalid status."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
-                customer_id="cust1",
-                line_items=[{"productId": "cpu1", "qty": 1}],
-                status="invalid_status",
-            )
-
-        self.assertIn("Invalid status", str(context.exception))
+        result = CreateOrder.invoke(
+            self.data,
+            customer_id="cust1",
+            line_items=[{"productId": "cpu1", "qty": 1}],
+            status="invalid_status",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid status", result["error"])
 
     def test_create_order_invalid_carrier(self):
         """Test creating order with invalid carrier."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
-                customer_id="cust1",
-                line_items=[{"productId": "cpu1", "qty": 1}],
-                shipping_carrier="invalid_carrier",
-            )
-
-        self.assertIn("Invalid shipping_carrier", str(context.exception))
+        result = CreateOrder.invoke(
+            self.data,
+            customer_id="cust1",
+            line_items=[{"productId": "cpu1", "qty": 1}],
+            shipping_carrier="invalid_carrier",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid shipping_carrier", result["error"])
 
     def test_create_order_invalid_service(self):
         """Test creating order with invalid service."""
-        with self.assertRaises(ValueError) as context:
-            CreateOrder.invoke(
-                self.data,
-                customer_id="cust1",
-                line_items=[{"productId": "cpu1", "qty": 1}],
-                shipping_service="invalid_service",
-            )
-
-        self.assertIn("Invalid shipping_service", str(context.exception))
+        result = CreateOrder.invoke(
+            self.data,
+            customer_id="cust1",
+            line_items=[{"productId": "cpu1", "qty": 1}],
+            shipping_service="invalid_service",
+        )
+        self.assertIn("error", result)
+        self.assertIn("Invalid shipping_service", result["error"])
 
     def test_create_order_mutates_data_in_place(self):
         """Test that the tool adds order to data dict."""

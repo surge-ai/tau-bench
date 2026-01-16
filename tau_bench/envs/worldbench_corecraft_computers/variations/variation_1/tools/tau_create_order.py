@@ -51,35 +51,43 @@ class CreateOrder(Tool):
           - updatedAt
         """
         # Validate enum parameters
-        validate_enum(status, VALID_STATUSES, "status")
-        validate_enum(shipping_carrier, VALID_CARRIERS, "shipping_carrier")
-        validate_enum(shipping_service, VALID_SERVICES, "shipping_service")
+        error = validate_enum(status, VALID_STATUSES, "status")
+        if error:
+            return error
+
+        error = validate_enum(shipping_carrier, VALID_CARRIERS, "shipping_carrier")
+        if error:
+            return error
+
+        error = validate_enum(shipping_service, VALID_SERVICES, "shipping_service")
+        if error:
+            return error
 
         # Validate customer exists
         if not get_entity_by_id(data, "customer", customer_id):
-            raise ValueError(f"Customer {customer_id} not found")
+            return json.loads(json.dumps({"error": f"Customer {customer_id} not found"}))
 
         # Validate all product IDs in line items exist
         if not line_items:
-            raise ValueError("Order must have at least one line item")
+            return json.loads(json.dumps({"error": "Order must have at least one line item"}))
 
         product_ids = [item.get("productId") or item.get("product_id") for item in line_items]
         not_found = [pid for pid in product_ids if pid and not get_entity_by_id(data, "product", pid)]
         if not_found:
-            raise ValueError(f"Products not found: {', '.join(not_found)}")
+            return json.loads(json.dumps({"error": f"Products not found: {', '.join(not_found)}"}))
 
         # Validate line items have required fields
         for i, item in enumerate(line_items):
             product_id = item.get("productId") or item.get("product_id")
             qty = item.get("qty") or item.get("quantity")
             if not product_id:
-                raise ValueError(f"Line item {i} missing productId")
+                return json.loads(json.dumps({"error": f"Line item {i} missing productId"}))
             if not qty or qty < 1:
-                raise ValueError(f"Line item {i} must have qty >= 1")
+                return json.loads(json.dumps({"error": f"Line item {i} must have qty >= 1"}))
 
         # Validate build exists if provided
         if build_id and not get_entity_by_id(data, "build", build_id):
-            raise ValueError(f"Build {build_id} not found")
+            return json.loads(json.dumps({"error": f"Build {build_id} not found"}))
 
         # Normalize line items to consistent format
         normalized_items = []

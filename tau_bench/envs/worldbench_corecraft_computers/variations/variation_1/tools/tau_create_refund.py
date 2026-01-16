@@ -56,11 +56,16 @@ class CreateRefund(Tool):
           - processedAt (None)
         """
         # Validate enum parameters
-        validate_enum(reason, ["customer_remorse", "defective", "incompatible", "shipping_issue", "other"], "reason")
-        validate_enum(status, ["pending", "approved", "denied", "processed", "failed"], "status")
+        error = validate_enum(reason, ["customer_remorse", "defective", "incompatible", "shipping_issue", "other"], "reason")
+        if error:
+            return error
+
+        error = validate_enum(status, ["pending", "approved", "denied", "processed", "failed"], "status")
+        if error:
+            return error
 
         if not _find_payment(data, payment_id):
-            raise ValueError(f"Payment {payment_id} not found")
+            return json.loads(json.dumps({"error": f"Payment {payment_id} not found"}))
 
         # Generate deterministic ID based on input parameters
         id_input = f"{payment_id}|{amount}|{currency}|{reason}|{status or 'pending'}"

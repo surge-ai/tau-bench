@@ -150,12 +150,12 @@ class TestGetOrderDetails(unittest.TestCase):
 
     def test_get_order_details_nonexistent_order(self):
         """Test getting details for non-existent order raises ValueError."""
-        with self.assertRaises(ValueError) as context:
-            GetOrderDetails.invoke(
-                self.data,
-                order_id="nonexistent",
-            )
-        self.assertIn("nonexistent", str(context.exception))
+        result = GetOrderDetails.invoke(
+            self.data,
+            order_id="nonexistent",
+        )
+        self.assertIn("error", result)
+        self.assertIn("nonexistent", result["error"])
 
     def test_get_order_details_includes_customer(self):
         """Test that customer information is included."""
@@ -273,19 +273,21 @@ class TestGetOrderDetails(unittest.TestCase):
 
     def test_get_order_details_missing_order_id(self):
         """Test that missing order_id raises an error."""
-        with self.assertRaises(ValueError):
-            GetOrderDetails.invoke(
+        result = GetOrderDetails.invoke(
                 self.data,
                 order_id="",
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_get_order_details_none_order_id(self):
         """Test that None order_id raises an error."""
-        with self.assertRaises(ValueError):
-            GetOrderDetails.invoke(
+        result = GetOrderDetails.invoke(
                 self.data,
                 order_id=None,
-            )
+)
+
+        self.assertIn("error", result)
 
     def test_get_order_details_date_format(self):
         """Test that dates are in correct format."""

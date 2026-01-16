@@ -25,16 +25,18 @@ class GetOrderDetails(Tool):
             order_id = kwargs.get("order_id")
 
         if not order_id:
-            raise ValueError("order_id is required")
+            return json.loads(json.dumps({"error": "order_id is required"}))
 
         # Parse created_before filter
         created_before_dt = parse_iso_datetime(created_before, "created_before")
+        if isinstance(created_before_dt, dict) and "error" in created_before_dt:
+            return created_before_dt
 
         # Get order
         order = get_entity_by_id(data, "order", order_id)
 
         if not order:
-            raise ValueError(f"Order not found: {order_id}")
+            return json.loads(json.dumps({"error": f"Order not found: {order_id}"}))
 
         # Parse JSON fields
         order = parse_entity_json_fields(order, ["lineItems", "shipping"])

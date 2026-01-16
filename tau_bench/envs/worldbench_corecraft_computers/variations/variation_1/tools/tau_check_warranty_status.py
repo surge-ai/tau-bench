@@ -25,7 +25,7 @@ class CheckWarrantyStatus(Tool):
         purchase_date: Optional[str] = None,
     ) -> str:
         if not order_id and not product_id:
-            raise ValueError("Either order_id or product_id is required")
+            return json.loads(json.dumps({"error": "Either order_id or product_id is required"}))
 
         warranty_months = 12
         purchase_dt = None
@@ -35,7 +35,7 @@ class CheckWarrantyStatus(Tool):
             # Get order
             order = get_entity_by_id(data, "order", order_id)
             if not order:
-                raise ValueError(f"Order not found: {order_id}")
+                return json.loads(json.dumps({"error": f"Order not found: {order_id}"}))
 
             # Parse JSON fields
             order = parse_entity_json_fields(order, ["lineItems"])
@@ -68,13 +68,15 @@ class CheckWarrantyStatus(Tool):
             # Get product
             product = get_entity_by_id(data, "product", product_id)
             if not product:
-                raise ValueError(f"Product not found: {product_id}")
+                return json.loads(json.dumps({"error": f"Product not found: {product_id}"}))
 
             warranty_months = product.get("warrantyMonths", 12)
 
             # Use provided purchase date or default
             if purchase_date:
                 purchase_dt = parse_iso_datetime(purchase_date, "purchase_date")
+                if isinstance(purchase_dt, dict) and "error" in purchase_dt:
+                    return purchase_dt
             else:
                 purchase_dt = CURRENT_DATE
 
