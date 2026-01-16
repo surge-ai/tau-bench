@@ -72,11 +72,14 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - Each escalation has an escalation id, ticket id, escalation type, destination department, notes, created time, and resolved time (optional).
   - Escalation types:
-    - technical: complex technical issue requiring specialized expertise
-    - policy_exception: request requires exception to standard policy
-    - product_specialist: requires product-specific knowledge
-    - insufficient_permission: employee needs to escalate to another employee with appropriate permissions
-  - Destination departments: operations, order_processing, engineering, help_desk, it_systems, product_management, finance, hr, support
+    - technical: complex technical issue requiring specialized expertise (→ engineering)
+    - policy_exception: request requires exception to standard policy (→ operations)
+    - product_specialist: requires product-specific knowledge (→ product_management)
+    - warranty: warranty disputes, eligibility, or coverage questions (→ product_management)
+    - order_fulfillment: order modifications, shipping, or delivery issues (→ order_processing)
+    - billing_payment: payment disputes or billing errors (→ finance)
+    - support_escalation: policy questions or complex situations requiring senior support (→ support)
+  - Destination departments: operations, order_processing, engineering, product_management, finance, support
 
 - Each product has a product id, category, SKU, name, brand, price, inventory (inStock, backorderable), specifications, and warranty months.
   - Product categories: cpu, motherboard, gpu, memory, storage, psu, case, cooling, prebuilt, workstation, monitor, keyboard, mouse, bundle
@@ -235,14 +238,127 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 
 - The agent must first obtain the ticket id and verify the ticket exists.
 
-- Escalation type: The agent must specify the escalation type.
-  - Escalation types:
-    - technical: complex technical issue requiring specialized expertise
-    - policy_exception: request requires exception to standard policy
-    - product_specialist: requires product-specific knowledge
-    - insufficient_permission: employee needs to escalate to another employee with appropriate permissions
+- Escalation type: The agent must specify the escalation type based on the nature of the issue. Each escalation type maps to a specific destination department.
 
-- Destination: The agent must specify the department to escalate to (operations, order_processing, engineering, help_desk, it_systems, product_management, finance, hr, support).
+### Escalation Types
+
+**technical**
+- Use for: Complex technical issues requiring specialized expertise beyond the agent's capabilities
+- Destination: engineering
+- Examples:
+  - Hardware failures requiring in-depth diagnostics
+  - Software bugs or system errors that need engineering investigation
+  - Performance issues requiring technical analysis
+  - BIOS/firmware problems
+  - Complex compatibility issues that cannot be resolved through standard validation
+
+**policy_exception**
+- Use for: Requests that require exceptions to standard company policies
+- Destination: operations
+- Examples:
+  - Return/refund requests outside the normal return window
+  - Special pricing or discount requests beyond standard offers
+  - Requests for policy exceptions or modifications to standard rules
+
+**product_specialist**
+- Use for: Issues requiring deep product-specific knowledge (excluding warranty matters)
+- Destination: product_management
+- Examples:
+  - Detailed questions about product specifications or capabilities
+  - Product comparison requests requiring expert knowledge
+  - Custom build recommendations for specialized use cases
+  - Questions about product roadmaps or future availability
+  - Product catalog or compatibility questions
+
+**warranty**
+- Use for: All warranty-related matters requiring expert review
+- Destination: product_management
+- Examples:
+  - Warranty disputes or coverage disagreements
+  - Warranty eligibility questions
+  - Warranty coverage determinations for specific failures
+  - Claims that need product management review
+
+**order_fulfillment**
+- Use for: Order, shipping, and delivery issues requiring warehouse or logistics intervention
+- Destination: order_processing
+- Examples:
+  - Order modifications (cancellations, address changes, item changes)
+  - Stuck or delayed orders
+  - Shipping and fulfillment complications
+  - Delivery issues requiring warehouse coordination
+
+**billing_payment**
+- Use for: Financial and payment issues
+- Destination: finance
+- Examples:
+  - Payment processing disputes
+  - Billing errors or discrepancies
+  - Invoice or payment record corrections
+  - Complex financial reconciliation issues
+
+**support_escalation**
+- Use for: Issues requiring senior support staff or management review
+- Destination: support
+- Examples:
+  - Complex customer situations requiring experienced support agents
+  - Policy questions and clarifications (edge cases, interpretation, getting information about policies the agent doesn't have)
+  - Customer service quality concerns
+  - Situations requiring management review
+  - Escalation to human agent
+
+### Destination Departments
+
+**operations**
+- Use for: Policy exceptions and management approval requirements
+- Examples:
+  - Policy exceptions requiring management approval
+  - Return/refund requests outside the normal return window
+  - Special pricing or discount requests beyond standard offers
+  - Requests for exceptions or modifications to standard company policies
+  - Special accommodations requiring operational management decision
+
+**order_processing**
+- Use for: Order-related issues that require manual intervention or logistics coordination
+- Examples:
+  - Order modifications (cancellations, address changes, item changes)
+  - Stuck or delayed orders requiring warehouse intervention
+  - Shipping and fulfillment complications
+  - Complex delivery issues
+
+**engineering**
+- Use for: Technical issues requiring hardware/software engineering expertise
+- Examples:
+  - Complex technical issues beyond basic troubleshooting
+  - Product defects requiring engineering investigation
+  - System bugs or firmware issues
+  - Hardware failures requiring in-depth diagnostics
+  - Technical architecture questions
+
+**product_management**
+- Use for: Product-related decisions, specialist knowledge, and warranty matters
+- Examples:
+  - Warranty disputes, eligibility questions, and coverage determinations
+  - Product catalog or compatibility questions requiring expert knowledge
+  - Detailed product specifications and capabilities
+  - Custom build recommendations for specialized use cases
+  - Product feature requests or roadmap questions
+
+**finance**
+- Use for: Financial matters and payment issues
+- Examples:
+  - Payment processing disputes
+  - Billing errors or discrepancies
+  - Complex financial reconciliation issues
+  - Invoice or payment record corrections
+
+**support**
+- Use for: Escalating to senior support staff or support management
+- Examples:
+  - Complex customer situations requiring experienced support agents
+  - Policy questions and clarifications (edge cases, interpretation, getting information about policies the agent doesn't have)
+  - Customer service quality concerns
+  - Situations requiring management review
 
 ## Create Resolution
 
@@ -274,6 +390,20 @@ All dates and times provided in the database are in ISO 8601 extended format in 
 - Compatibility validation will return status and any warnings about potential issues.
 
 - The agent cannot confirm compatibility based on assumptions - all compatibility must be validated.
+
+## Product Recommendations
+
+- When recommending products to customers, the agent should consider compatibility with their existing components.
+
+- If a customer is replacing or upgrading a PC part, the agent should:
+  - Ask the customer about their existing components if not already known
+  - Use the validateBuildCompatibility tool to verify that the parts the agent is considering recommending are compatible with the customer's existing parts
+  - Inform the customer of any compatibility concerns before recommending a product
+  - Even if there are compatibility concerns, the customer can still request to place an order for the product
+
+- The agent should only recommend products after verifying compatibility when the customer's existing components are known or provided.
+
+- If compatibility information is not available or the customer does not provide details about existing components, the agent should inform the customer of that
 
 ## Calculate Price
 
