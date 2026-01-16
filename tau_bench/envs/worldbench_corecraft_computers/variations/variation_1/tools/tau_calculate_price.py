@@ -61,6 +61,7 @@ class CalculatePrice(Tool):
         result = {
             "subtotal": round(subtotal * 100) / 100,
             "discount": round(discount * 100) / 100,
+            "cost_without_shipping": round(subtotal * 100) / 100 - round(discount * 100) / 100,
             "shipping": shipping,
             "total": round(total * 100) / 100,
         }
@@ -72,7 +73,7 @@ class CalculatePrice(Tool):
             "type": "function",
             "function": {
                 "name": "calculate_price",
-                "description": "Calculate price breakdown (subtotal/discount/shipping/total) for a list of product IDs.",
+                "description": "Calculate price breakdown (subtotal/discount/cost_without_shipping/shipping/total) for a list of product IDs.",
                 "parameters": {
                     "type": "object",
                     "properties": {

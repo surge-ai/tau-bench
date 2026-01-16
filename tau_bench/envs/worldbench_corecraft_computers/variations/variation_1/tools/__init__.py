@@ -12,10 +12,13 @@ from .tau_get_product import GetProduct
 from .tau_search_builds import SearchBuilds
 from .tau_search_customers import SearchCustomers
 from .tau_search_employees import SearchEmployees
+from .tau_search_escalations import SearchEscalations
 from .tau_search_knowledge_base import SearchKnowledgeBase
 from .tau_search_orders import SearchOrders
 from .tau_search_payments import SearchPayments
 from .tau_search_products import SearchProducts
+from .tau_search_refunds import SearchRefunds
+from .tau_search_resolutions import SearchResolutions
 from .tau_search_shipments import SearchShipments
 from .tau_search_tickets import SearchTickets
 from .tau_update_build import UpdateBuild
@@ -39,10 +42,13 @@ ALL_TOOLS = [
     SearchBuilds,
     SearchCustomers,
     SearchEmployees,
+    SearchEscalations,
     SearchKnowledgeBase,
     SearchOrders,
     SearchPayments,
     SearchProducts,
+    SearchRefunds,
+    SearchResolutions,
     SearchShipments,
     SearchTickets,
     UpdateBuild,

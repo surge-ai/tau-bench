@@ -38,7 +38,7 @@ class SearchProducts(Tool):
         min_price: Optional[float] = None,
         max_price: Optional[float] = None,
         price: Optional[float] = None,
-        inStockOnly: Optional[str] = None,
+        inStockOnly: Optional[bool] = None,
         minStock: Optional[float] = None,
         maxStock: Optional[float] = None,
         text: Optional[str] = None,
@@ -126,8 +126,8 @@ class SearchProducts(Tool):
                             "description": "Exact price filter"
                         },
                         "inStockOnly": {
-                            "type": "string",
-                            "description": "Set to any non-empty value (e.g., \"true\") to only return products with inventory > 0"
+                            "type": "boolean",
+                            "description": "Set to True to only return products with inventory > 0"
                         },
                         "minStock": {
                             "type": "number",
