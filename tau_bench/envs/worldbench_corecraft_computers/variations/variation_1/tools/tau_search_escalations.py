@@ -29,8 +29,8 @@ class SearchEscalations(Tool):
         limit: Optional[float] = None,
     ) -> str:
         # Validate enum parameters
-        validate_enum(escalation_type, ["technical", "policy_exception", "product_specialist", "insufficient_permission"], "escalation_type")
-        validate_enum(destination, ["operations", "order_processing", "engineering", "help_desk", "it_systems", "product_management", "finance", "hr", "support"], "destination")
+        validate_enum(escalation_type, ["technical", "policy_exception", "product_specialist", "warranty", "order_fulfillment", "billing_payment", "support_escalation"], "escalation_type")
+        validate_enum(destination, ["operations", "order_processing", "engineering", "product_management", "finance", "support"], "destination")
 
         results: List[Dict[str, Any]] = []
 
@@ -105,12 +105,12 @@ class SearchEscalations(Tool):
                         },
                         "escalation_type": {
                             "type": "string",
-                            "enum": ["technical", "policy_exception", "product_specialist", "insufficient_permission"],
+                            "enum": ["technical", "policy_exception", "product_specialist", "warranty", "order_fulfillment", "billing_payment", "support_escalation"],
                             "description": "Escalation type to filter by"
                         },
                         "destination": {
                             "type": "string",
-                            "enum": ["operations", "order_processing", "engineering", "help_desk", "it_systems", "product_management", "finance", "hr", "support"],
+                            "enum": ["operations", "order_processing", "engineering", "product_management", "finance", "support"],
                             "description": "Escalation destination to filter by"
                         },
                         "notes_text": {
